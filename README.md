@@ -1,8 +1,12 @@
-# TP-Admin. #
-TP-Admin 是一个开源的，以ThinkPHP为底层架构的一个通用后台。[在线演示站点](http://tp-admin.hhailuo.com/) 
+# TP-Admin #
+TP-Admin 是一个开源的，以ThinkPHP为底层架构的一个通用后台。
+
+# 演示站点 #
+[在线演示站点](http://tp-admin.hhailuo.com/)
+用户名: admin 密码: admin
 
 # 安装 #
-* 下载最新版本的TP-Admin源码。 
+* 下载最新版本的TP-Admin源码。
 * 创建数据库，导入Docs/tp-admin.sql。
 * 重命名Conf/database.example.php => Conf/database.php，并修改其中具体参数。
 * 安装成功，登陆后台。默认用户名密码为 admin / admin。
