@@ -125,8 +125,8 @@ class content_form {
 		if($errortips) $this->formValidator .= '$("#'.$field.'").formValidator({onshow:"",onfocus:"'.$errortips.'"}).inputValidator({min:'.$minlength.',max:'.$maxlength.',onerror:"'.$errortips_max.'"});';
 		$str = '<input type="text" style="width:400px;'.($style_color ? 'color:'.$style_color.';' : '').($style_font_weight ? 'font-weight:'.$style_font_weight.';' : '').'" name="info['.$field.']" id="'.$field.'" value="'.$value.'" style="'.$style.'" class="measure-input " onkeyup="strlen_verify(this, \'title_len\', '.$maxlength.');"/><input type="hidden" name="style_color" id="style_color" value="'.$style_color.'">
 		<input type="hidden" name="style_font_weight" id="style_font_weight" value="'.$style_font_weight.'">';
-		if(defined('IN_ADMIN')) $str .= '<input type="button" class="button" id="check_title_alt" value="'.L('check_title').'" onclick="$.get(\'__URL__/public_check_title?modelid='.$this->modelid.'&sid=\'+Math.random()*5, {data:$(\'#title\').val()}, function(data){if(data==\'1\') {$(\'#check_title_alt\').val(\''.L('title_repeat').'\');$(\'#check_title_alt\').css(\'background-color\',\'#FFCC66\');} else if(data==\'0\') {$(\'#check_title_alt\').val(\''.L('title_not_repeat').'\');$(\'#check_title_alt\').css(\'background-color\',\'#F8FFE1\')}})" style="width:73px;"/><img src="'.IMG_PATH.'/admin/icon/colour.png" width="15" height="16" onclick="colorpicker(\''.$field.'_colorpanel\',\'set_title_color\');" style="cursor:hand"/> 
-		<img src="'.IMG_PATH.'/admin/icon/bold.png" width="10" height="10" onclick="input_font_bold()" style="cursor:hand"/> <span id="'.$field.'_colorpanel" style="position:absolute;" class="colorpanel"></span>';
+		if(defined('IN_ADMIN')) $str .= '<input type="button" class="button" id="check_title_alt" value="'.L('check_title').'" onclick="$.get(\'__URL__/public_check_title?modelid='.$this->modelid.'&sid=\'+Math.random()*5, {data:$(\'#title\').val()}, function(data){if(data==\'1\') {$(\'#check_title_alt\').val(\''.L('title_repeat').'\');$(\'#check_title_alt\').css(\'background-color\',\'#FFCC66\');} else if(data==\'0\') {$(\'#check_title_alt\').val(\''.L('title_not_repeat').'\');$(\'#check_title_alt\').css(\'background-color\',\'#F8FFE1\')}})" style="width:73px;"/>
+		<span id="'.$field.'_colorpanel" style="position:absolute;" class="colorpanel"></span>';
 		$str .= L('can_enter').'<B><span id="title_len">'.$maxlength.'</span></B> '.L('characters');
 		return $str;
 	}
@@ -202,11 +202,11 @@ class content_form {
 		<div class="bk10"></div>';
 		$string .= $str."<div class='picBut cu'><a herf='javascript:void(0);' onclick=\"javascript:attachupload('{$field}_images', '".L('attachment_upload')."','{$field}',attaches,'{$upload_number},{$upload_allowext},{$isselectimage}','images','".U('Upfile/upload')."')\"/> ".L('select_pic')." </a></div>";
 		return $string;
-	}	
+	}
 	function number($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$setting = string2array($setting);
-		$size = $setting['size'];		
+		$size = $setting['size'];
 		if(!$value) $value = $defaultvalue;
 		return "<input type='text' name='info[$field]' id='$field' value='$value' class='input-text' size='$size' {$formattribute} {$css}>";
 	}
@@ -226,7 +226,7 @@ class content_form {
 				$timesystem = 0;
 			} else {
 				$timesystem = 1;
-			}			
+			}
 		} elseif($fieldtype=='datetime') {
 			$isdatetime = 1;
 			$timesystem = 1;
@@ -259,7 +259,7 @@ class content_form {
 		}
 		return "<input type='hidden' name='info[$field][]' value='-1'>".form::checkbox($array,$posids,"name='info[$field][]'",'',$setting['width']);
 	}
-	
+
 	function keyword($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		if(!$value) $value = $defaultvalue;
