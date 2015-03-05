@@ -1,0 +1,151 @@
+<extend name="Public:form_layout" />
+<block name="title"><title>相关文章</title></block>
+<block name="main">
+  <form name="searchform" action="" method="get">
+    <input type="hidden" value="<?php echo $modelid;?>" name="modelid">
+    <table width="100%" cellspacing="0" class="search-form">
+      <tbody>
+        <tr>
+          <td align="center">
+            <div class="explain-col">
+              <?php echo $catstring; ?>
+              <label>标题：<input name="keywords" type="text" value="<?php echo stripslashes($_GET['keywords'])?>" style="width:300px;" class="input-text" /></label>
+              <input type="submit" name="dosubmit" class="button" value="搜索" />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+  <div class="table-list">
+    <table width="100%" cellspacing="0" >
+      <thead>
+        <tr>
+          <th>标题</th>
+          <th width="100">所属栏目</th>
+          <th width="200">添加时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach($infos as $r) { ?>
+        <tr onclick="select_list(this,'<?php echo safe_replace($r['title']);?>',<?php echo $r['id'];?>,<?php echo $r['catid']; ?>)" class="cu <?php echo "v" . $r['id']; ?>" title="点击选择">
+          <td align='left' ><?php echo $r['title'];?></td>
+          <td align='center'><?php echo $categorys[$r['catid']]['catname'];?></td>
+          <td align='center'><?php echo date('Y-m-d H:i:s',$r['inputtime']);?></td>
+        </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+    <div id="pages"><?php echo $pages;?></div>
+  </div>
+  <style type="text/css">
+  .line_ff9966,.line_ff9966:hover td{
+    background-color:#FF9966;
+  }
+  .line_fbffe4,.line_fbffe4:hover td {
+    background-color:#fbffe4;
+  }
+  </style>
+  <SCRIPT LANGUAGE="JavaScript">
+  <!--
+  function select_list(obj,title,id,catid) {
+    var relation_ids = $('#relation',window.parent.document).val();
+    var relation_cats_obj = $('#relation_cats',window.parent.document);
+    var relation_title_obj = $('#relation_title',window.parent.document);
+    if (relation_cats_obj.length > 0) {
+      relation_cats = relation_cats_obj.val();
+    };
+
+    if (relation_title_obj.length > 0) {
+      relation_title = relation_title_obj.val();
+    };
+
+    
+    var sid = 'v'+catid+id;
+    if($(obj).attr('class')=='line_ff9966' || $(obj).attr('class')==null) {
+      $(obj).attr('class','line_fbffe4');
+      $('#'+sid,window.parent.document).remove();
+      if(relation_ids !='' ) {
+        var r_arr = relation_ids.split('|');
+        if (relation_cats_obj.length > 0) {
+          var r_c_arr = relation_cats.split('|');  
+        };
+
+        if (relation_title_obj.length > 0) {
+          var r_t_arr = relation_title.split('|');  
+        };
+
+        var newsrelation_ids = '';
+        var newsrelation_cats = '';
+        $.each(r_arr, function(i, n){
+          if(n!=id) {
+            if(i==0) {
+              newsrelation_ids = n;
+              if (r_c_arr) {
+                newsrelation_cats = r_c_arr[i];
+                newsrelation_title = r_t_arr[i];
+              }
+            } else {
+              newsrelation_ids = newsrelation_ids+'|'+n;
+              if (r_c_arr) {
+                newsrelation_cats = newsrelation_cats + '|' + r_c_arr[i];
+
+                newsrelation_title = newsrelation_title + '|' + r_t_arr[i];
+              }
+            }
+          }
+        });
+        $('#relation',window.parent.document).val(newsrelation_ids);
+        if (relation_cats_obj.length > 0) {
+          $('#relation_cats',window.parent.document).val(newsrelation_cats);
+        }
+
+        if (relation_title_obj.length > 0) {
+          $('#newsrelation_title',window.parent.document).val(newsrelation_title);
+        }
+      }
+    } else {
+      $(obj).attr('class','line_ff9966');
+      var str = "<li id='"+sid+"'>·<span>"+title+"</span><a href='javascript:;' class='close' onclick=\"remove_relation('"+sid+"',"+id+")\"></a></li>";
+      $('#relation_text',window.parent.document).append(str);
+      if(relation_ids =='' ) {
+        $('#relation',window.parent.document).val(id);
+        
+        if (relation_cats_obj.length > 0) {
+          $('#relation_cats',window.parent.document).val(catid);
+        }
+        
+        if (relation_title_obj.length > 0) {
+          $('#relation_title',window.parent.document).val(title);
+        }
+
+      } else {
+        relation_ids = relation_ids+'|'+id;
+        $('#relation',window.parent.document).val(relation_ids);
+        
+        if (relation_cats_obj.length > 0) {
+          relation_cats += '|' + catid;
+          $('#relation_cats',window.parent.document).val(relation_cats);
+        }
+        
+        if (relation_title_obj.length > 0) {
+          relation_title += '|' + title;
+          $('#relation_title',window.parent.document).val(relation_title);
+        }
+
+      }
+    }
+  }
+
+  $(function(){
+    var relation_ids = $('#relation',window.parent.document).val();
+    if(relation_ids !='' ) {
+      var r_arr = relation_ids.split('|');
+      $.each(r_arr, function(i, n) {
+        $(".v" + n).attr("class", "line_ff9966");
+      });
+    }
+  })
+//-->
+</SCRIPT>
+</block>

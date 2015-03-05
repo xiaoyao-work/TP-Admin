@@ -1,0 +1,46 @@
+<extend name="Public:list_layout" />
+<block name="title"><title>用户报名</title></block>
+<block name="subnav">
+  <a class="on" href="#"><em>报名管理</em></a>
+</block>
+<block name="main">
+<form name="myform" action="__URL__/listorder" method="post">
+  <div class="table-list">
+    <table width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th width="35" align="center"><input type="checkbox" value="" id="check_box" onclick="selectall('valueid[]');"></th>
+          <th width="35" align="center">ID</th>
+          <th align="center">姓名</th>
+          <th align="center">电话</th>
+          <th align="center">身份证</th>
+          <th align="center">报名时间</th>
+          <th width="12%" align="center">管理操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($feedbacks as $key => $value) { ?>
+        <tr>
+          <td align="center" width="10%"><input type="checkbox" name="valueid[]" value="<?php echo $value['id']?>"></td>
+          <td align="center" width="10%"><?php echo $value['id']; ?></td>
+          <td align="center"><?php echo $value['name']; ?></td>
+          <td align="center"><?php echo $value['phone'];?></td>
+          <td align="center"><?php echo $value['card'];?></td>
+          <td align="center"><?php echo date("Y-m-d H:i:s", $value['inputtime']);?></td>
+          <td align="center" width="12%">
+            <a href='__URL__/delete?valueid=<?php echo $value['id']?>' onClick="return confirm('确认删除『 <?php echo new_addslashes($value['title']); ?> 』 吗？')">删除</a> 
+          </td>
+        </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  </div>
+  <div class="btn"> 
+    <input type="submit" class="button" name="dosubmit" onClick="document.myform.action='__URL__/delete'" value="删除"/>
+  </div>
+  <div id="pages"><?php echo $pages; ?></div>
+</form>
+<script type="text/javascript">
+  window.top.$('#display_center_id').css('display','none');
+  </script>
+</block>

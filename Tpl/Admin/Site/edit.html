@@ -1,0 +1,156 @@
+<extend name="Public:form_layout" />
+<block name="title"><title>修改站点</title></block>
+<block name="subheader">
+  <style type="text/css">
+  .radio-label{ border-top:1px solid #e4e2e2; border-left:1px solid #e4e2e2}
+  .radio-label td{ border-right:1px solid #e4e2e2; border-bottom:1px solid #e4e2e2;background:#f6f9fd}
+  </style>
+</block>
+<block name="subnav">
+  <a class="add fb" href="__URL__/add"><em>添加站点</em></a>　    <a href="__URL__/index"><em>管理站点</em></a>
+</block>
+<block name="main">
+  <form action="__URL__/edit?siteid=<?php echo $data['id']?>" method="post" id="myform">
+    <fieldset>
+      <legend><?php echo L('basic_configuration')?></legend>
+      <table width="100%"  class="table_form">
+        <tr>
+          <th width="80"><?php echo L('site_name')?>：</th>
+          <td class="y-bg"><input type="text" class="input-text" name="info[name]" id="name" size="30" value="<?php echo $data['name']?>" /></td>
+        </tr>
+        <tr>
+          <th><?php echo L('site_dirname')?>：</th>
+          <td class="y-bg"><input type="text" class="input-text" name="info[dirname]" id="dirname" size="30" value="<?php echo $data['dirname']?>" /></td>
+        </tr>
+        <tr>
+          <th><?php echo L('site_domain')?>：</th>
+          <td class="y-bg"><input type="text" class="input-text" name="info[domain]" id="domain"  size="30" value="<?php echo $data['domain']?>" /></td>
+        </tr>
+      </table>
+    </fieldset>
+    <div class="bk10"></div>
+    <fieldset>
+      <legend><?php echo L('seo_configuration')?></legend>
+      <table width="100%"  class="table_form">
+        <tr>
+          <th width="80"><?php echo L('site_title')?>：</th>
+          <td class="y-bg"><input type="text" class="input-text" name="info[site_title]" id="site_title" size="30" value="<?php echo $data['site_title']?>" /></td>
+        </tr>
+        <tr>
+          <th><?php echo L('keyword_name')?>：</th>
+          <td class="y-bg"><input type="text" class="input-text" name="info[keywords]" id="keywords" size="30" value="<?php echo $data['keywords']?>" /></td>
+        </tr>
+        <tr>
+          <th><?php echo L('description')?>：</th>
+          <td class="y-bg"><input type="text" class="input-text" name="info[description]" id="description" size="30" value="<?php echo $data['description']?>" /></td>
+        </tr>
+      </table>
+    </fieldset>
+    <div class="bk10"></div>
+    <fieldset>
+      <legend>附件配置</legend>
+      <table width="100%"  class="table_form">
+        <tr>
+          <th width="130" valign="top"><?php echo L('site_att_upload_maxsize')?></th>
+          <td class="y-bg"><input type="text" class="input-text" name="setting[upload_maxsize]" id="upload_maxsize" size="10" value="<?php echo $setting['upload_maxsize'] ? $setting['upload_maxsize'] : '2000' ?>"/> KB </td>
+        </tr>
+        <tr>
+          <th width="130" valign="top"><?php echo L('site_att_allow_ext')?></th>
+          <td class="y-bg"><input type="text" class="input-text" name="setting[upload_allowext]" id="upload_allowext" size="50" value="<?php echo $setting['upload_allowext']?>"/></td>
+        </tr>
+        <tr>
+          <th><?php echo L('site_att_gb_check')?></th>
+          <td class="y-bg"><?php echo check_gd(); ?></td>
+        </tr>
+        <tr>
+          <th><?php echo L('site_att_watermark_enable')?></th>
+          <td class="y-bg">
+            <input class="radio_style" name="setting[watermark_enable]" value="1" <?php echo $setting['watermark_enable']==1 ? 'checked="checked"' : ''?> type="radio"> <?php echo L('site_att_watermark_open')?>&nbsp;&nbsp;&nbsp;&nbsp;
+            <input class="radio_style" name="setting[watermark_enable]" value="0" <?php echo $setting['watermark_enable']==0 ? 'checked="checked"' : ''?> type="radio"> <?php echo L('site_att_watermark_close')?>
+          </td>
+        </tr>
+        <tr>
+          <th><?php echo L('site_att_watermark_condition')?></th>
+          <td class="y-bg"><?php echo L('site_att_watermark_minwidth')?>
+            <input type="text" class="input-text" name="setting[watermark_minwidth]" id="watermark_minwidth" size="10" value="<?php echo $setting['watermark_minwidth'] ? $setting['watermark_minwidth'] : '300' ?>" /> X <?php echo L('site_att_watermark_minheight')?><input type="text" class="input-text" name="setting[watermark_minheight]" id="watermark_minheight" size="10" value="<?php echo $setting['watermark_minheight'] ? $setting['watermark_minheight'] : '300' ?>" /> PX
+          </td>
+        </tr>
+        <tr>
+          <th width="130" valign="top"><?php echo L('site_att_watermark_img')?></th>
+          <td class="y-bg"><input type="text" name="setting[watermark_img]" id="watermark_img" size="30" value="<?php echo $setting['watermark_img'] ? $setting['watermark_img'] : 'mark.gif' ?>"/><?php echo L('site_att_watermark_img_desc')?></td>
+        </tr>
+        <tr>
+          <th width="130" valign="top"><?php echo L('site_att_watermark_pct')?></th>
+          <td class="y-bg"><input type="text" class="input-text" name="setting[watermark_pct]" id="watermark_pct" size="10" value="<?php echo $setting['watermark_pct'] ? $setting['watermark_pct'] : '100' ?>" />  <?php echo L('site_att_watermark_pct_desc')?></td>
+        </tr>
+        <tr>
+          <th width="130" valign="top"><?php echo L('site_att_watermark_quality')?></th>
+          <td class="y-bg"><input type="text" class="input-text" name="setting[watermark_quality]" id="watermark_quality" size="10" value="<?php echo $setting['watermark_quality'] ? $setting['watermark_quality'] : '80' ?>" /> <?php echo L('site_att_watermark_quality_desc')?></td>
+        </tr>
+      </table>
+    </fieldset>
+    <div class="bk15"></div>
+    <input type="submit" class="button" id="dosubmit" name="dosubmit" value="<?php echo L('submit')?>" />
+  </form>
+</block>
+<block name="footer">
+  <script type="text/javascript">
+  $(function(){
+    $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true,width:'200',height:'50'}, function(){this.close();$(obj).focus();})}});
+    $("#name").formValidator({
+      onshow:"请输入站点名称",onfocus:"请输入站点名称"
+    }).inputValidator({
+      min:1,onerror:"站点名称必填"
+    }).ajaxValidator({
+      type : "get",
+      url : "__URL__/public_name",
+      data :"siteid=<?php echo $data['id'];?>",datatype : "html",
+      async:'true',
+      success : function(data){
+        if( data == "1" ){return true;} else { return false;}
+      },
+      buttons: $("#dosubmit"),
+      onerror : "该站点已存在",
+      onwait : "验证中"
+    }).defaultPassed();
+
+    $("#dirname").formValidator({
+      onshow:"请输入站点名称，该名称为站点域名前缀",
+      onfocus:"请输入站点名称，该名称为站点域名前缀"
+    }).inputValidator({
+      min:1,onerror:"<?php echo L("input").L('site_dirname')?>"
+    }).regexValidator({
+      regexp:"username",
+      datatype:"enum",
+      param:'i',
+      onerror:"<?php echo L('site_dirname_err_msg')?>"
+    }).ajaxValidator({
+      type : "get",
+      url : "__URL__/public_dirname",
+      data :"siteid=<?php echo $data['id'];?>",
+      datatype : "html",
+      async:'false',
+      success : function(data){
+        if( data == "1" ){return true;}else{return false;}
+      },
+      buttons: $("#dosubmit"),
+      onerror : "该目录已经存在",
+      onwait : "<?php echo L('connecting')?>"
+    }).defaultPassed();
+
+    $("#domain").formValidator({
+      onshow:"请填写域名，格式应该为http://www.hhailuo.com",
+      onfocus:"请填写域名，格式应该为http://www.hhailuo.com",
+      tipcss:{width:'300px'},
+      empty:false
+    }).inputValidator({
+      onerror:"请填写域名，格式应该为http://www.hhailuo.com"
+    }).regexValidator({
+      regexp:"http:\/\/(.+)[^\/]$",
+      onerror:"格式应该为http://www.hhailuo.com，请不要以‘/’结束"
+    }).defaultPassed();
+
+    /*$("#template").formValidator({onshow:"<?php echo L('style_name_point')?>",onfocus:"<?php echo L('select_at_least_1')?>"}).inputValidator({min:1,onerror:"<?php echo L('select_at_least_1')?>"}).defaultPassed();*/
+  })
+  </script>
+</block>

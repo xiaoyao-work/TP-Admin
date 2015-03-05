@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>管理员管理</title>
+  <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
+  <script language="javascript" type="text/javascript" src="__PUBLIC__/js/admin/formvalidator.js" charset="UTF-8"></script>
+  <script language="javascript" type="text/javascript" src="__PUBLIC__/js/admin/formvalidatorregex.js" charset="UTF-8"></script>
+</head>
+<body>
+  <div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+      <a class="add fb" href="__GROUP__/User/add"><em>添加管理员</em></a>&nbsp;&nbsp;&nbsp;<a class="" href="__GROUP__/User/index"><em>管理员列表</em></a>
+    </div>
+  </div>
+  <style type="text/css">
+  html{_overflow-y:scroll}
+  </style>
+  <div class="pad-lr-10">
+    <form name="myform" id="myform" action="__GROUP__/User/add" method="post">
+      <table cellpadding=0 cellspacing=0 class="table_form" width="100%">
+        <tr>
+          <td width="10%" >帐号</td>
+          <td width="90%">
+            <input type="text" class="input-text" name="account" id="account" value="" size="40"/>
+          </td>
+        </tr>
+        <tr>
+          <td width="10%">密码</td>
+          <td width="90%">
+            <input type="password" class="input-text " name="pwd" id="password" value="" size="40"/>
+          </td>
+        </tr>
+        <tr>
+          <td width="10%">重复密码</td>
+          <td width="90%">
+            <input type="password" class="input-text " name="re_pwd" id="pwdconfirm" value="" size="40"/>
+          </td>
+        </tr>
+        <tr>
+          <td width="10%" >状态</td>
+          <td width="90%">
+            <label style="float:left;width:75px">
+              <input type="radio" class="input_radio " name="status" id="status_1" checked value="1"> 启用
+            </label>
+            <label style="float:left;width:75px">
+              <input type="radio" class="input_radio " name="status" id="status_2"  value="0" > 禁用
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td width="10%">角色</td>
+          <td width="90%"> 
+            <select id="role_id" name="role_id">
+              <option value="0">请选择角色</option>
+              <?php foreach ($roles as $key => $role) { ?>
+                <option value="<?php echo $role['id']; ?>"><?php echo $role['name']; ?></option>
+              <?php } ?>
+            </select>
+          </td>
+        </tr>
+      </table>
+      <div class="bk15"></div>
+      <div class="btn"> 
+        <input type="submit" name="dosubmit" id="dosubmit" value="提交" class='button'>&nbsp;<input type="reset" value="重置" class='button'>
+      </div>
+    </form>
+  </div>
+  <script type="text/javascript">
+  $(function(){
+    $.formValidator.initConfig({autotip:true,formid:"myform",onerror:function(msg){}});
+    $("#password").formValidator({onshow:"密码应该为6-20位之间",onfocus:"密码应该为6-20位之间"}).inputValidator({min:6,max:20,onerror:"密码应该为6-20位之间"});
+    $("#pwdconfirm").formValidator({onshow:"请再次输入密码。",onfocus:"请再次输入密码。",oncorrect:"密码输入一致"}).compareValidator({desid:"password",operateor:"=",onerror:"两次密码不一致。"});
+    $("#account").formValidator({onshow:"请输入管理员名称",onfocus:"请输入管理员名称",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入管理员名称"});
+    $("#role_id").formValidator({onshow:"请选择角色",onfocus:"请选择角色",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请选择角色"});
+    // .ajaxValidator({type:"get",url:"__URL__/public_check_poster",data:"",datatype:"html",cached:false,async:'true',success : function(data) {if( data == "1" ) { return true; } else { return false; } }, error: function(){alert("服务器没有返回数据，可能服务器忙，请重试");}, onerror : "该广告已存在", onwait : "正进行合法性校验..."});
+  });
+  </script>
+</body>
+</html>

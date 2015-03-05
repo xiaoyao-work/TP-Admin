@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>菜单修改</title>
+  <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
+  <script src="__PUBLIC__/js/admin/jquery.artDialog.source.js?skin=default"></script>
+  <script src="__PUBLIC__/js/admin/plugins/iframeTools.source.js"></script>
+  <script language="javascript" type="text/javascript" src="__PUBLIC__/js/admin/formvalidator.js" charset="UTF-8"></script>
+  <script language="javascript" type="text/javascript" src="__PUBLIC__/js/admin/formvalidatorregex.js" charset="UTF-8"></script>
+</head>
+<body>
+  <div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+      <a class="add fb" href="__GROUP__/Menu/add"><em>添加菜单</em></a>　    <a href="__GROUP__/Menu/index"><em>菜单管理</em></a>
+    </div>
+  </div>
+  <div class="pad-lr-10">
+    <form name="myform" id="myform" action="__GROUP__/Menu/edit" method="post">
+      <input name="nid" type="hidden" value="<?php echo $nid; ?>" />
+      <table cellpadding=0 cellspacing=0 class="table_form" width="100%">
+        <tr>
+          <td width="10%" align="right">上级菜单:</td>
+          <td width="90%"> 
+            <select id="pid" name="pid">
+              <?php if(isset($_GET['menu_id'])) { ?>
+              <option value="0" <?php if ($_GET['menu_id'] == 0){echo "selected";} ?>>顶级菜单</option>
+              <?php foreach ($menus as $key => $menu) { ?>
+              <option value="<?php echo $menu['id']; ?>" <?php if (isset($_GET['menu_id']) && $_GET['menu_id'] == $menu['id']){echo "selected";} ?>><?php echo cat_empty_deal($menu, $menu[$key+1]['pid'], 'pid', '&nbsp;&nbsp;&nbsp;').$menu['title']; ?></option>
+              <?php } } else { ?>
+              <option value="0">顶级菜单</option>
+              <?php foreach ($menus as $key => $menu) { ?>
+              <option value="<?php echo $menu['id']; ?>" <?php if ($node['pid'] == $menu['id']){echo "selected";} ?>><?php echo cat_empty_deal($menu, $menu[$key+1]['pid'], 'pid', '&nbsp;&nbsp;&nbsp;').$menu['title']; ?></option>
+              <?php } } ?>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td width="10%" align="right">菜单名:</td>
+          <td width="90%">
+            <input type="text" class="input-text" name="title" id="title" value="<?php echo $node['title']; ?>" size="40"/>
+          </td>
+        </tr>
+        <tr>
+          <td width="10%" align="right">模块名:</td>
+          <td width="90%">
+            <input type="text" class="input-text " name="module" id="module" value="<?php echo $node['module']; ?>" size="40"/>
+          </td>
+        </tr>
+        <tr>
+          <td width="10%" align="right">方法名:</td>
+          <td width="90%">
+            <input type="text" class="input-text " name="action" id="action" value="<?php echo $node['action']; ?>" size="40"/>
+          </td>
+        </tr>
+        <tr>
+          <td width="10%" align="right">URL附加参数:</td>
+          <td width="90%">
+            <input type="text" class="input-text" name="params" value="<?php echo $node['params']; ?>" size="40"/>
+          </td>
+        </tr>
+        <tr>
+          <td width="10%" align="right">排序</td>
+          <td width="90%">
+            <input type="text" class="input-text" name="sort" id="sort" value="<?php echo $node['sort']; ?>" size="40"/>
+          </td>
+        </tr>
+        <tr>
+          <td width="10%" align="right">状态:</td>
+          <td width="90%">
+            <label style="float:left;width:75px">
+              <input type="radio" class="input_radio " name="status" id="status_1" <?php echo ($node['status'] ? 'checked' : '' ); ?> value="1"> 启用
+            </label>
+            <label style="float:left;width:75px">
+              <input type="radio" class="input_radio " name="status" id="status_2"  <?php echo ($node['status'] ? '' : 'checked' ); ?>  value="0" > 禁用
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td width="10%" align="right">描述:</td>
+          <td width="90%"><textarea name="remark" rows="3" cols="60"  id="remark"/><?php echo $node['remark']; ?></textarea>
+          </td>
+        </tr>
+      </table>
+      <div class="bk15"></div>
+      <div class="btn"> 
+        <input type="submit" name="dosubmit" id="dosubmit" value="提交" class='button'>&nbsp;<input type="reset" value="重置" class='button'>
+      </div>
+    </form>
+  </div>
+  <script type="text/javascript">
+  <!--
+  $(function(){
+    $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true,width:'200',height:'50'}, function(){this.close();$(obj).focus();})}});
+    $("#title").formValidator({onshow:"请输入对应的中文语言名称",onfocus:"请输入对应的中文语言名称",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入对应的中文语言名称"}).defaultPassed();
+    $("#module").formValidator({onshow:"请输入模块名,首字母需大写",onfocus:"请输入模块名,首字母需大写",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入模块名,首字母需大写"}).defaultPassed();
+    $("#action").formValidator({tipid:'a_tip',onshow:"请输入方法名",onfocus:"请输入方法名",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入方法名"}).defaultPassed();
+  });
+  //-->
+  </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>管理员管理</title>
+  <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
+  <style type="text/css">
+    input#start_time, input#end_time {
+      background: white url(__PUBLIC__/images/admin/input_date.png) no-repeat right 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="bk15"></div>
+  <div class="pad-lr-10">
+    <form name="searchform" action="__GROUP__/Log/search" method="get">
+      <table width="100%" cellspacing="0" class="search-form">
+        <tbody>
+          <tr>
+            <td>
+              <div class="explain-col">
+                <script type="text/javascript" src="__PUBLIC__/js/JSCal/jscal2.js"></script>
+                <script type="text/javascript" src="__PUBLIC__/js/JSCal/lang/cn.js"></script>
+                <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/jscal2.css">
+                <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/border-radius.css">
+                <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/win2k/win2k.css">
+                用户名:<input type="text" size="20" name="account" class="input-text" value="<?php if($_REQUEST['account']) echo $_REQUEST['account']; ?>" />
+                ip:<input type="text" size="20" name="login_ip" class="input-text" />
+                登陆状态:<select name="status">
+                <option value="all" <?php if($_REQUEST['status'] == 'all') echo 'selected'; ?>>全部</option>
+                <option value="1" <?php if($_REQUEST['status'] == '1') echo 'selected'; ?>>操作成功</option>
+                <option value="0" <?php if($_REQUEST['status'] == '0') echo 'selected'; ?>>操作失败</option>
+              </select>
+              时间: <input type="text" name="start_time" id="start_time" value="<?php if($_REQUEST['start_time']) echo $_REQUEST['start_time']; ?>" size="21" class="input-text" readonly=""><script type="text/javascript">
+              Calendar.setup({
+                weekNumbers: true,
+                inputField : "start_time",
+                trigger    : "start_time",
+                dateFormat: "%Y-%m-%d %H:%M:%S",
+                showTime: true,
+                minuteStep: 1,
+                onSelect   : function() {this.hide();}
+              });</script>  至  <input type="text" name="end_time" id="end_time" value="<?php if($_REQUEST['end_time']) echo $_REQUEST['end_time']; ?>" size="21" class="input-text" readonly=""><script type="text/javascript">
+              Calendar.setup({
+                weekNumbers: true,
+                inputField : "end_time",
+                trigger    : "end_time",
+                dateFormat: "%Y-%m-%d %H:%M:%S",
+                showTime: true,
+                minuteStep: 1,
+                onSelect   : function() {this.hide();}
+              });</script><input type="submit" value="确定搜索" class="button" name="dosubmit">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
+<div class="pad-lr-10 table-list">
+  <table width="100%" cellspacing="0">
+    <thead>
+      <tr>
+        <th width="100px">用户名</th>
+        <th width="100px">模块</th>
+        <th width="100px">操作</th>
+        <th>文件</th>
+        <th width="150px">时间</th>
+        <th width="100px">状态</th>
+        <th width="200px">IP地址</th>
+      </tr>
+    </thead>
+    <tbody>
+      <volist name="list" id="vo">
+        <tr>
+          <td align="center"><?php echo $vo['username']; ?></td>
+          <td align="center"><?php echo $vo['module']; ?></td>
+          <td align="center"><?php echo $vo['action']; ?></td>
+          <td><div><?php echo $vo['querystring']; ?></td>
+          <td align="center"><?php echo $vo["date"]; ?></td>
+          <td align="center">
+            <?php echo $vo['status'] == 1 ? "操作成功" : "<font style='color:red'>操作失败</font>"; ?>
+          </td>
+          <td align="center"><?php echo get_location($vo["ip"]); ?></td>
+        </tr>
+      </volist>
+    </tbody>
+  </table>
+</div>
+<div class="bk15"></div>
+<div id="pages">
+  <?php echo $page; ?>
+</div>
+</body>
+</html>

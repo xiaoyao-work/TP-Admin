@@ -1,0 +1,57 @@
+<extend name="Public:list_layout" />
+<block name="title"><title>学历类型列表</title></block>
+<block name="subheader">
+  <script src="__PUBLIC__/js/admin/jquery.artDialog.source.js?skin=default"></script>
+  <script src="__PUBLIC__/js/admin/plugins/iframeTools.source.js"></script>
+</block>
+<block name="subnav">
+  <a class="add fb" href="__URL__/add"><em>添加学历</em></a>　    <a class="on" href="__URL__/index"><em>学历</em></a>
+</block>
+<block name="search">
+</block>
+<block name="main">
+  <form name="myform" action="__URL__/listorder" method="post">
+    <div class="table-list">
+      <table width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th width="16"><input type="checkbox" value="" id="check_box" onclick="selectall('ids[]');"></th>
+            <th width="37">排序</th>
+            <th width="40">ID</th>
+            <th>名称</th>
+            <th width="200">管理操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($jobs as $key => $value) { ?>
+          <tr>
+            <td align="center"><input class="inputcheckbox " name="ids[]" value="<?php echo $value['id']; ?>" type="checkbox"></td>
+            <td align="center"><input name="listorders[<?php echo $value['id']; ?>]" type="text" size="3" value="<?php echo $value['sort']; ?>" class="input-text-c input-text"></td>
+            <td align="center"><?php echo $value['id']; ?></td>
+            <td><?php echo $value['name']; ?></td>
+            <td align="center">
+              <a href="__URL__/edit?id=<?php echo $value['id'] ?>">修改</a> |
+              <a href="__URL__/delete?id=<?php echo $value['id']; ?>" onClick="return confirm('确认删除『 <?php echo addslashes($value['name']); ?> 』 吗？')">删除</a>
+            </td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+    <div class="btn"><label for="check_box">全选/取消</label>
+      <input name="submit" type="submit" class="button" value="排序">&nbsp;
+      <input name="deletesubmit" type="submit" class="button" value="删除" onclick="document.myform.action='<?php echo U('JobEducation/delete'); ?>';return confirm('确认要删除 『 选中 』 吗？')">&nbsp;
+    </div>
+  </form>
+  <script language="javascript" type="text/javascript" src="__PUBLIC__/js/admin/cookie.js"></script>
+  <script type="text/javascript">
+  setcookie('refersh_time', 0);
+  function refersh_window() {
+    var refersh_time = getcookie('refersh_time');
+    if(refersh_time==1) {
+      window.location.reload();
+    }
+  }
+  setInterval("refersh_window()", 3000);
+  </script>
+</block>
