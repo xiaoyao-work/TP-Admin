@@ -6,7 +6,7 @@ TP-Admin 是一个开源的，以ThinkPHP为底层架构的一个通用后台。
 
 # 演示站点 #
 [在线演示站点](http://tp-admin.hhailuo.com/)
-用户名: admin 密码: admin
+用户名: tp-admin 密码: tp-admin
 
 # 安装 #
 * 下载最新版本的TP-Admin源码。
