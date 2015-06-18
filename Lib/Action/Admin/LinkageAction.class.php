@@ -130,6 +130,15 @@ class LinkageAction extends CommonAction {
     }
   }
 
+  /**
+   * 字段添加=>联动菜单
+   */
+  public function public_get_list() {
+    $menus = $this->db->where( array('keyid' => 0, 'siteid' => array( 'IN', array( '0', $this->siteid ) ) ) )->order('listorder asc, id asc')->select();
+    $this->assign('infos', $menus);
+    $this->display();
+  }
+
   private function delete_operate($id) {
     $linkages = $this->db->where(array('parentid' => $id))->select();
     foreach ($linkages as $key => $linkage) {

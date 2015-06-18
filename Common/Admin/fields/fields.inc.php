@@ -17,12 +17,12 @@ $fields = array(
 	// 'groupid'=>'会员组',
 	'islink'=>'转向链接',
 	'template'=>'模板',
-	'pages'=>'分页选择',
+	// 'pages'=>'分页选择',
 	'typeid'=>'类别',
 	'readpoint'=>'积分、点数',
 	'linkage'=>'联动菜单',
-	'downfiles'=>'多文件上传',
-	'map'=>'地图字段',
+	// 'downfiles'=>'多文件上传',
+	// 'map'=>'地图字段',
 	'omnipotent'=>'万能字段'
 	);
 	//不允许删除的字段，这些字段讲不会在字段添加处显示

@@ -203,4 +203,27 @@
     }
     return $temp;
   }
-  ?>
+
+  /**
+   * 调用关联菜单
+   * @param $linkageid 联动菜单id
+   * @param $id 生成联动菜单的样式id
+   * @param $defaultvalue 默认值
+   */
+  function menu_linkage($linkageid = 0, $id = 'linkid', $defaultvalue = 0) {
+    return '';
+  }
+
+  /**
+   * 联动菜单层级
+   */
+
+  function menu_linkage_level($linkageid,$keyid,$infos,$result=array()) {
+    if(array_key_exists($linkageid,$infos)) {
+      $result[]=$infos[$linkageid]['name'];
+      return menu_linkage_level($infos[$linkageid]['parentid'],$keyid,$infos,$result);
+    }
+    krsort($result);
+    return implode(' > ',$result);
+  }
+?>

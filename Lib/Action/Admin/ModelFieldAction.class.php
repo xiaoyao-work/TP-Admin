@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
 *  模型字段管理类
 */
@@ -89,7 +89,7 @@ class ModelFieldAction extends CommonAction {
       //附加属性值
       $_POST['info']['setting'] = array2string($_POST['setting']);
       $fieldid = intval($_POST['fieldid']);
-      
+
       $_POST['info']['unsetgroupids'] = isset($_POST['unsetgroupids']) ? implode(',',$_POST['unsetgroupids']) : '';
       $_POST['info']['unsetroleids'] = isset($_POST['unsetroleids']) ? implode(',',$_POST['unsetroleids']) : '';
       if ($this->db->where(array('fieldid'=>$fieldid,'siteid'=>$this->siteid))->save($_POST['info']) !== false) {
@@ -99,7 +99,7 @@ class ModelFieldAction extends CommonAction {
       }
     } else {
       import("ORG.Util.Form");
-      require MODEL_PATH.'fields.inc.php'; 
+      require MODEL_PATH.'fields.inc.php';
       $modelid = intval($_GET['modelid']);
       $fieldid = intval($_GET['fieldid']);
       $model = $this->model_db->find($modelid);

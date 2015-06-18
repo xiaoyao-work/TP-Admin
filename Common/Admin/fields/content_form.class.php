@@ -80,6 +80,7 @@ class content_form {
 		if($errortips || $minlength) $this->formValidator .= '$("#'.$field.'").formValidator({onshow:"",onfocus:"'.$errortips.'"}).inputValidator({min:1,onerror:"'.$errortips.'"});';
 		return '<input type="text" name="info['.$field.']" id="'.$field.'" size="'.$size.'" value="'.$value.'" class="input-text" '.$formattribute.' '.$css.'>';
 	}
+
 	function textarea($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$setting = string2array($setting);
@@ -95,6 +96,7 @@ class content_form {
 		if($maxlength) $str .= L('can_enter').'<B><span id="'.$field.'_len">'.$maxlength.'</span></B> '.L('characters');
 		return $str;
 	}
+
 	function editor($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		extract(string2array($setting));
@@ -106,12 +108,14 @@ class content_form {
 		if($minlength) $this->formValidator .= '$("#'.$field.'").formValidator({'.$allow_empty.'onshow:"",onfocus:"'.$errortips.'"}).functionValidator({fun:function(val,elem){var oEditor = CKEDITOR.instances.'.$field.';var data = oEditor.getData();if($(\'#islink\').attr(\'checked\')){return true;} else if(($(\'#islink\').attr(\'checked\')==false) && (data==\'\')){return "'.$errortips.'";} else if (data==\'\' || $.trim(data)==\'\') {return "'.$errortips.'";e}return true;}});';
 		return "<div id='{$field}_tip'></div>".'<textarea name="info['.$field.']" id="'.$field.'" boxid="'.$field.'">'.stripslashes($value).'</textarea>'.form::editor($field,$toolbar,'content',$this->catid,'',$allowupload,1,'',$height,$disabled_page);
 	}
+
 	function catid($field, $value, $fieldinfo) {
 		if(!$value) $value = $this->catid;
 		$publish_str = '';
 		if(defined('IN_ADMIN')) $publish_str = " <a href='javascript:;' onclick=\"omnipotent('selectid','".U('Content/add_othors')."','".L('publish_to_othor_category')."',1);return false;\" style='color:#B5BFBB'>[".L('publish_to_othor_category')."]</a><ul class='list-dot-othors' id='add_othors_text'></ul>";
 		return '<input type="hidden" name="info['.$field.']" value="'.$value.'">'.$this->categorys[$value]['catname'].$publish_str;
 	}
+
 	function title($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$style_arr = explode(';',$this->data['style']);
@@ -130,6 +134,7 @@ class content_form {
 		$str .= L('can_enter').'<B><span id="title_len">'.$maxlength.'</span></B> '.L('characters');
 		return $str;
 	}
+
 	function box($field, $value, $fieldinfo) {
 		$setting = string2array($fieldinfo['setting']);
 		if($value=='') $value = $this->fields[$field]['defaultvalue'];
@@ -164,6 +169,7 @@ class content_form {
 		}
 		return $string;
 	}
+
 	function image($field, $value, $fieldinfo) {
 		$setting = string2array($fieldinfo['setting']);
 		extract($setting);
@@ -180,6 +186,7 @@ class content_form {
 			return $str."<input type='text' name='info[$field]' id='$field' value='$value' size='$size' class='input-text' />  <input type='button' class='button' onclick=\"attachupload('{$field}_images', '".L('attachment_upload')."','{$field}',thumb_images,'1,{$upload_allowext},$isselectimage,$images_width,$images_height,$watermark','image','".U("Upfile/upload")."');return false;\"/ value='".L('upload_pic')."'>".$html;
 		}
 	}
+
 	function images($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$list_str = '';
@@ -203,6 +210,7 @@ class content_form {
 		$string .= $str."<div class='picBut cu'><a herf='javascript:void(0);' onclick=\"javascript:attachupload('{$field}_images', '".L('attachment_upload')."','{$field}',attaches,'{$upload_number},{$upload_allowext},{$isselectimage}','images','".U('Upfile/upload')."')\"/> ".L('select_pic')." </a></div>";
 		return $string;
 	}
+
 	function number($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$setting = string2array($setting);
@@ -210,6 +218,7 @@ class content_form {
 		if(!$value) $value = $defaultvalue;
 		return "<input type='text' name='info[$field]' id='$field' value='$value' class='input-text' size='$size' {$formattribute} {$css}>";
 	}
+
 	function datetime($field, $value, $fieldinfo) {
 		extract(string2array($fieldinfo['setting']));
 		$isdatetime = 0;
@@ -265,6 +274,7 @@ class content_form {
 		if(!$value) $value = $defaultvalue;
 		return "<input type='text' name='info[$field]' id='$field' value='$value' style='width:280px' {$formattribute} {$css} class='input-text'>";
 	}
+
 	function author($field, $value, $fieldinfo) {
 		return '<input type="text" name="info['.$field.']" value="'.$value.'" size="30">';
 	}
@@ -324,6 +334,7 @@ class content_form {
 			<span id=\"paginationtype1\" style=\"display:none\"><input name=\"info[maxcharperpage]\" type=\"text\" id=\"maxcharperpage\" value=\"10000\" size=\"8\" maxlength=\"8\">".L('page_maxlength')."</span>";
 		}
 	}
+
 	function typeid($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$setting = string2array($setting);
@@ -344,6 +355,7 @@ class content_form {
 		}
 		return form::select($data,$value,'name="info['.$field.']" id="'.$field.'" '.$formattribute.' '.$css,L('copyfrom_tips'));
 	}
+
 	function readpoint($field, $value, $fieldinfo) {
 		$paytype = $this->data['paytype'];
 		if($paytype) {
@@ -355,11 +367,13 @@ class content_form {
 		}
 		return '<input type="text" name="info['.$field.']" value="'.$value.'" size="5"><input type="radio" name="info[paytype]" value="0" '.$checked1.'> '.L('point').' <input type="radio" name="info[paytype]" value="1" '.$checked2.'>'.L('money');
 	}
+
 	function linkage($field, $value, $fieldinfo) {
 		$setting = string2array($fieldinfo['setting']);
 		$linkageid = $setting['linkageid'];
 		return menu_linkage($linkageid,$field,$value);
 	}
+
 	function downfiles($field, $value, $fieldinfo) {
 		extract(string2array($fieldinfo['setting']));
 		$list_str = '';
@@ -382,6 +396,7 @@ class content_form {
 		$string .= $str."<input type=\"button\"  class=\"button\" value=\"".L('multiple_file_list')."\" onclick=\"javascript:flashupload('{$field}_multifile', '".L('attachment_upload')."','{$field}',change_multifile,'{$upload_number},{$upload_allowext},{$isselectimage}','content','$this->catid','{$authkey}')\"/>    <input type=\"button\" class=\"button\" value=\"".L('add_remote_url')."\" onclick=\"add_multifile('{$field}')\">";
 		return $string;
 	}
+
 	function map($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$setting = string2array($setting);

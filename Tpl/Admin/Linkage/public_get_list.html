@@ -1,0 +1,34 @@
+<extend name="Public:form_layout" />
+<block name="title"><title>在列表中选择</title></block>
+<block name="main">
+  <div class="common-form">
+    <div class="table-list">
+      <table width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th width="10%">ID</th>
+            <th width="20%" align="left">菜单名字</th>
+            <th width="30%" align="left">菜单描述</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if(is_array($infos)) { foreach($infos as $info) { ?>
+          <tr onclick="return_id(<?php echo $info['id']; ?>)" title="点击选择" class="cu">
+            <td width="10%" align="center"><?php echo $info['id']; ?></td>
+            <td width="20%" ><?php echo $info['name']; ?></td>
+            <td width="30%" ><?php echo $info['description']; ?></td>
+          </tr>
+          <?php } } ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</form>
+<SCRIPT LANGUAGE="JavaScript">
+  function return_id(linkageid) {
+    $("#rightMain", window.top.document).contents().find('#linkageid').val(linkageid);
+    window.parent.art.dialog({id:'selectid'}).close();
+  }
+</SCRIPT>
+</div>
+</block>
