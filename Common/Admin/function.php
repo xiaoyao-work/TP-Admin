@@ -219,7 +219,7 @@
       define('LINKAGE_INIT_1', 1);
       $html .= '<script type="text/javascript" src="'.JS_PATH.'/linkage/linkagesel.js"></script>';
     }
-    $html .= $defaultvalue ? '<input type="hidden" name="info[\'' . $id .'\']" value="'.$defaultvalue.'">' : '<input type="hidden" name="info[\'' . $id .'\']" value="">';
+    $html .= $defaultvalue ? '<input type="hidden" name="info[\'' . $id .'\']" value="'.$defaultvalue.'" id="'. $id . '-' . $linkageid .'">' : '<input type="hidden" name="info[\'' . $id .'\']" value="" id="'. $id . '-' . $linkageid .'">';
     $html .='<select class="tp-admin-select-'.$id.'" id="'.$id.'" width="100"></select>';
     $html .= '<script type="text/javascript">
           $(function(){
@@ -228,10 +228,16 @@
               selStyle: "margin-left: 3px;",
               select:  "#' . $id . '",
               dataReader: {id: "id", name: "name", cell: "_child"},
-              defVal: 0,
+              defVal: ' . ($defaultvalue ? $defaultvalue : 0) . ',
               head: false
             };
-            var linkageSel = new LinkageSel(opts);
+            var linkageSel_'.$linkageid.' = new LinkageSel(opts);
+            linkageSel_'.$linkageid.'.onChange(function(){
+              var input = $("#'. $id . '-' . $linkageid .'")
+              ids = this.getSelectedDataArr("id");
+              console.log(ids);
+              input.val(ids.pop());
+            });
           });
     </script>';
 
