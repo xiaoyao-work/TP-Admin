@@ -211,19 +211,31 @@
    * @param $defaultvalue 默认值
    */
   function menu_linkage($linkageid = 0, $id = 'linkid', $defaultvalue = 0) {
-    return '';
-  }
-
-  /**
-   * 联动菜单层级
-   */
-
-  function menu_linkage_level($linkageid,$keyid,$infos,$result=array()) {
-    if(array_key_exists($linkageid,$infos)) {
-      $result[]=$infos[$linkageid]['name'];
-      return menu_linkage_level($infos[$linkageid]['parentid'],$keyid,$infos,$result);
+    load('extend');
+    $linkages = D('Linkage')->where(array('keyid' => $linkageid))->order('listorder asc')->field('id, name, parentid')->select();
+    $tree = list_to_tree($linkages, 'id', 'parentid');
+    $html = "";
+    if(!defined('LINKAGE_INIT_1')) {
+      define('LINKAGE_INIT_1', 1);
+      $html .= '<script type="text/javascript" src="'.JS_PATH.'/linkage/linkagesel.js"></script>';
     }
-    krsort($result);
-    return implode(' > ',$result);
+    $html .= $defaultvalue ? '<input type="hidden" name="info[\'' . $id .'\']" value="'.$defaultvalue.'">' : '<input type="hidden" name="info[\'' . $id .'\']" value="">';
+    $html .='<select class="tp-admin-select-'.$id.'" id="'.$id.'" width="100"></select>';
+    $html .= '<script type="text/javascript">
+          $(function(){
+            var opts = {
+              data: ' . json_encode($tree) . ',
+              selStyle: "margin-left: 3px;",
+              select:  "#' . $id . '",
+              dataReader: {id: "id", name: "name", cell: "_child"},
+              defVal: 0,
+              head: false
+            };
+            var linkageSel = new LinkageSel(opts);
+          });
+    </script>';
+
+    return $html;
   }
+
 ?>
