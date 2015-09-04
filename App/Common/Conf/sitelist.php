@@ -3,9 +3,9 @@ return array (
   1 => 
   array (
     'id' => '1',
-    'name' => '红海螺',
+    'name' => '红海螺-房产',
     'dirname' => 'www',
-    'domain' => 'http://www.hhailuo.com',
+    'domain' => 'http://www.esf.cdfdc.com',
     'site_title' => 'XiaoYaoCMS',
     'keywords' => 'XiaoYaoCMS 房地产CMS 微信公众平台',
     'description' => 'XiaoYaoCMS 房产门户系统，集成微信公众平台',
@@ -23,15 +23,15 @@ return array (
   \'watermark_quality\' => \'80\',
 )',
     'uuid' => '3d3fd04a-6433-11e1-b487-1c750850a1c3',
-    'url' => 'www.hhailuo.com',
+    'url' => 'www.esf.cdfdc.com',
   ),
   2 => 
   array (
     'id' => '2',
-    'name' => '红海螺-房产',
-    'dirname' => 'house',
-    'domain' => 'http://www.house.hhailuo.com',
-    'site_title' => '红海螺-房产',
+    'name' => '澧县',
+    'dirname' => 'lx',
+    'domain' => 'http://lx.esf.cdfdc.com',
+    'site_title' => '澧县房地产信息网',
     'keywords' => '',
     'description' => '',
     'release_point' => NULL,
@@ -48,7 +48,7 @@ return array (
   \'watermark_quality\' => \'80\',
 )',
     'uuid' => '',
-    'url' => 'www.house.hhailuo.com',
+    'url' => 'lx.esf.cdfdc.com',
   ),
 );
 ?>
