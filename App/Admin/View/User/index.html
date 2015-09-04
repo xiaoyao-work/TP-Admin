@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>管理员管理</title>
+  <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
+</head>
+<body>
+  <div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+      <a class="add fb" href="__MODULE__/User/add"><em>添加管理员</em></a>&nbsp;&nbsp;&nbsp;<a class="on" href="__MODULE__/User/index"><em>管理员列表</em></a>
+    </div>
+  </div>
+  <style type="text/css">
+  html{_overflow-y:scroll}
+  </style>
+  <div class="pad-lr-10 table-list">
+    <form name="myform" id="myform" action="" method="post">
+      <table width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th width="10%">序号</th>
+            <th width="10%" align="left">用户名</th>
+            <th width="10%" align="left">所属角色</th>
+            <th width="10%" align="left">最后登录IP</th>
+            <th width="20%" align="left">最后登录时间</th>
+            <th width="15%" align="left">E-mail</th>
+            <th width="10%">真实姓名</th>
+            <th width="15%">管理操作</th>
+          </tr>
+        </thead>
+        <tbody>
+            <?php foreach($users as $key => $user) { ?>
+            <tr>
+              <td width="10%" align="center"><?php echo $user['id']; ?></td>
+              <td width="10%"><?php echo $user['account']; ?></td>
+              <td width="10%"><?php echo $user['name']; ?></td>
+              <td width="10%"><?php echo $user['last_login_ip']; ?></td>
+              <td width="20%"><?php echo date('Y-m-d H:i:s', $user['last_login_time']); ?></td>
+              <td width="15%"><?php echo $user['email']; ?></td>
+              <td width="10%" align="center"><?php echo $user['realname']; ?></td>
+              <td width="15%" align="center">
+                <a href="__MODULE__/User/edit/nid/<?php echo $user['id']; ?>">修改</a> | 
+                <?php if($user['role_id'] != 1) { ?>
+                <a onclick="return ConfirmDel();" href="__MODULE__/User/del/nid/<?php echo $user['id']; ?>">删除</a>
+                <?php } else { ?>
+                <font color="#cccccc">删除</font>
+                <?php } ?>
+              </td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </body>
+  </html>

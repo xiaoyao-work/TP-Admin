@@ -1,0 +1,153 @@
+<extend name="Public:form_layout" />
+<block name="title"><title>添加站点</title></block>
+<block name="subheader">
+  <style type="text/css">
+  .radio-label{ border-top:1px solid #e4e2e2; border-left:1px solid #e4e2e2}
+  .radio-label td{ border-right:1px solid #e4e2e2; border-bottom:1px solid #e4e2e2;background:#f6f9fd}
+  </style>
+</block>
+<block name="subnav">
+  <a class="add fb" href="__CONTROLLER__/add"><em>添加站点</em></a>　    <a href="__CONTROLLER__/index"><em>管理站点</em></a>
+</block>
+<block name="main">
+  <form action="__CONTROLLER__/add" method="post" id="myform">
+    <fieldset>
+      <legend>基本信息</legend>
+      <table width="100%"  class="table_form">
+        <tr>
+          <th width="80">站点名称：</th>
+          <td class="y-bg"><input type="text" class="input-text" name="info[name]" id="name" size="30" /></td>
+        </tr>
+        <tr>
+          <th>站点目录：</th>
+          <td class="y-bg"><input type="text" class="input-text" name="info[dirname]" id="dirname" size="30"/></td>
+        </tr>
+        <tr>
+          <th>站点域名：</th>
+          <td class="y-bg"><input type="text" class="input-text" name="info[domain]" id="domain"  size="30"/></td>
+        </tr>
+      </table>
+    </fieldset>
+    <div class="bk10"></div>
+    <fieldset>
+      <legend>SEO配置</legend>
+      <table width="100%"  class="table_form">
+        <tr>
+          <th width="80">站点标题：</th>
+          <td class="y-bg"><input type="text" class="input-text" name="info[site_title]" id="site_title" size="30" /></td>
+        </tr>
+        <tr>
+          <th>关键词：</th>
+          <td class="y-bg"><input type="text" class="input-text" name="info[keywords]" id="keywords" size="30"/></td>
+        </tr>
+        <tr>
+          <th>描述：</th>
+          <td class="y-bg"><input type="text" class="input-text" name="info[description]" id="description" size="30" /></td>
+        </tr>
+      </table>
+    </fieldset>
+    <div class="bk10"></div>
+    <fieldset>
+      <legend>附件配置</legend>
+      <table width="100%"  class="table_form">
+        <tr>
+          <th width="130" valign="top">允许上传附件大小</th>
+          <td class="y-bg"><input type="text" class="input-text" name="setting[upload_maxsize]" id="upload_maxsize" size="10" value="2048"/> KB </td>
+        </tr>
+        <tr>
+          <th width="130" valign="top">允许上传附件类型</th>
+          <td class="y-bg"><input type="text" class="input-text" name="setting[upload_allowext]" id="upload_allowext" size="50" value="jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf"/></td>
+        </tr>
+        <tr>
+          <th>GD库功能检测</th>
+          <td class="y-bg"><?php echo check_gd(); ?></td>
+        </tr>
+        <tr>
+          <th>是否开启图片水印</th>
+          <td class="y-bg">
+            <input class="radio_style" name="setting[watermark_enable]" value="1" type="radio">启用&nbsp;&nbsp;&nbsp;&nbsp;
+            <input class="radio_style" name="setting[watermark_enable]" value="0" checked type="radio">关闭
+          </td>
+        </tr>
+        <tr>
+          <th>水印添加条件</th>
+          <td class="y-bg">宽
+            <input type="text" class="input-text" name="setting[watermark_minwidth]" id="watermark_minwidth" size="10" value="300" /> X 高<input type="text" class="input-text" name="setting[watermark_minheight]" id="watermark_minheight" size="10" value="300" /> PX
+          </td>
+        </tr>
+        <tr>
+          <th width="130" valign="top">水印图片</th>
+          <td class="y-bg"><input type="text" name="setting[watermark_img]" id="watermark_img" size="30" value="<?php echo $setting['watermark_img'] ? $setting['watermark_img'] : 'mark.gif' ?>"/>水印存放路径:statics/images/water</td>
+        </tr>
+        <tr>
+          <th width="130" valign="top">水印透明度</th>
+          <td class="y-bg"><input type="text" class="input-text" name="setting[watermark_pct]" id="watermark_pct" size="10" value="100" /> 请设置为0-100之间的数字，0代表完全透明，100代表不透明</td>
+        </tr>
+        <tr>
+          <th width="130" valign="top">JPEG 水印质量</th>
+          <td class="y-bg"><input type="text" class="input-text" name="setting[watermark_quality]" id="watermark_quality" size="10" value="80" /> 水印质量请设置为0-100之间的数字,决定 jpg 格式图片的质量</td>
+        </tr>
+      </table>
+    </fieldset>
+    <div class="bk15"></div>
+    <input type="submit" class="button" id="dosubmit" name="dosubmit" value="提交" />
+  </form>
+</block>
+<block name="footer">
+  <script type="text/javascript">
+  $(function(){
+    $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true,width:'200',height:'50'}, function(){this.close();$(obj).focus();})}});
+    $("#name").formValidator({
+      onshow:"请输入站点名称",onfocus:"请输入站点名称"
+    }).inputValidator({
+      min:1,onerror:"站点名称必填"
+    }).ajaxValidator({
+      type : "get",
+      url : "__CONTROLLER__/public_name",
+      async:'true',
+      success : function(data){
+        if( data == "1" ){return true;} else { return false;}
+      },
+      buttons: $("#dosubmit"),
+      onerror : "该站点已存在",
+      onwait : "验证中"
+    });
+
+    $("#dirname").formValidator({
+      onshow:"请输入站点目录",
+      onfocus:"请输入站点目录"
+    }).inputValidator({
+      min:1,onerror:"请输入站点目录"
+    }).regexValidator({
+      regexp:"username",
+      datatype:"enum",
+      param:'i',
+      onerror:"只能包括数字、字母、下划线三种类型。"
+    }).ajaxValidator({
+      type : "get",
+      url : "__CONTROLLER__/public_dirname",
+      data :"siteid=<?php echo $data['id'];?>",
+      datatype : "html",
+      async:'false',
+      success : function(data){
+        if( data == "1" ){return true;}else{return false;}
+      },
+      buttons: $("#dosubmit"),
+      onerror : "站点目录已存在。",
+      onwait : "正在连接，请稍候。"
+    });
+
+    $("#domain").formValidator({
+      onshow:"请填写域名，格式应该为http://www.hhailuo.com",
+      onfocus:"请填写域名，格式应该为http://www.hhailuo.com",
+      tipcss:{width:'300px'},
+      empty:false
+    }).inputValidator({
+      onerror:"请填写域名，格式应该为http://www.hhailuo.com"
+    }).regexValidator({
+      regexp:"http:\/\/(.+)[^\/]$",
+      onerror:"格式应该为http://www.hhailuo.com，请不要以‘/’结束"
+    });
+  })
+  </script>
+</block>

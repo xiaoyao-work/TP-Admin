@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+  <title>密码修改</title>
+  <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/formvalidator.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/formvalidatorregex.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $.formValidator.initConfig({autotip:true,formid:"myform",onerror:function(msg){}});
+    $("#old_password").formValidator({empty:true,onshow:"不修改密码请留空",onfocus:"密码应该为6-20位之间",oncorrect:"旧密码输入正确"}).inputValidator({min:5,max:20,onerror:"密码应该为6-20位之间"}).ajaxValidator({
+      type : "get",
+      url : "__CONTROLLER__/public_password_ajx",
+      data :"",
+      datatype : "html",
+      async:'false',
+      success : function(data){ if( data == 1 ) { return true; } else { return false; } },
+      buttons: $("#dosubmit"),
+      onerror : "旧密码输入错误",
+      onwait : "请稍候..."
+    });
+    $("#new_password").formValidator({empty:true,onshow:"不修改密码请留空。",onfocus:"密码应该为6-20位之间"}).inputValidator({min:5,max:20,onerror:"密码应该为6-20位之间"});
+    $("#new_pwdconfirm").formValidator({empty:true,onshow:"不修改密码请留空。",onfocus:"请输入两次密码不同。",oncorrect:"密码输入一致"}).compareValidator({desid:"new_password",operateor:"=",onerror:"请输入两次密码不同。"});
+  })
+</script>
+</head>
+<body>
+  <div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+    </div>
+  </div>
+  <div class="pad_10">
+    <div class="common-form">
+      <form name="myform" id="myform" action="__MODULE__/Changpwd/edit" method="post">
+        <table width="100%" class="table_form contentWrap">
+          <tr>
+            <td width="80">用户名</td>
+            <td><?php echo $account; ?> (真实姓名 <?php echo $realname?>)</td>
+          </tr>
+          <tr>
+            <td>邮箱</td>
+            <td>
+              <?php echo $email; ?>
+            </td>
+          </tr>
+          <tr>
+            <td>老密码</td>
+            <td><input type="password" name="old_pwd" id="old_password" class="input-text"></input></td>
+          </tr>
+          <tr>
+            <td>新密码</td>
+            <td><input type="password" name="new_pwd" id="new_password" class="input-text"></input></td>
+          </tr>
+          <tr>
+            <td>新密码确认</td>
+            <td><input type="password" name="re_pwd" id="new_pwdconfirm" class="input-text"></input></td>
+          </tr>
+        </table>
+        <div class="bk15"></div>
+        <input name="dosubmit" type="submit" value="提交" class="button" id="dosubmit">
+      </form>
+    </div>
+  </div>
+</body>
+</html>

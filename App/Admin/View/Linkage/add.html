@@ -1,0 +1,42 @@
+<extend name="Public:form_layout" />
+<block name="title"><title><?php echo $big_menu[1]; ?></title></block>
+<block name="subheader">
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $.formValidator.initConfig({autotip:true,formid:"myform",onerror:function(msg){}});
+    $("#name").formValidator({onshow:"请输入菜单名称批量添加以换行分隔",onfocus:"菜单名称不能为空。"}).inputValidator({min:1,max:999,onerror:"菜单名称不能为空。"});
+  })
+  </script>
+</block>
+<block name="main">
+  <div class="common-form">
+    <form name="myform" action="__CONTROLLER__/add" method="post" id="myform">
+      <table width="100%" class="table_form contentWrap">
+        <tbody>
+          <tr>
+            <td>上级菜单</td>
+            <td>
+            <?php echo $linkage['name']; ?>
+            <input type="hidden" name="parentid" value="<?php echo $linkage['id']; ?>" />
+            <input type="hidden" name="keyid" value="<?php echo $linkage['keyid']; ?>" />
+            </td>
+          </tr>
+          <tr>
+            <td>菜单名称</td>
+            <td>
+              <textarea name="info[name]" rows="2" cols="20" id="name" class="inputtext" style="height:90px;width:150px;"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td>菜单描述</td>
+            <td>
+              <textarea name="info[description]" rows="2" cols="20" id="description" class="inputtext" style="height:45px;width:300px;"></textarea>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="bk15"></div>
+      <input name="dosubmit" type="submit" value="提交" class="dialog" id="dosubmit">
+    </form>
+  </div>
+</block>

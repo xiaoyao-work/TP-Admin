@@ -1,0 +1,23 @@
+<?php foreach ($menulist as $key => $menu) { ?>
+<h3 class="f14"><span class="switchs cu on" title="展开与收缩"></span><?php echo $menu['title']; ?></h3>
+<ul>
+<?php foreach($menu['childs'] as $child_menu){ ?>
+  <li id="_MP<?php echo $child_menu['id']; ?>" class="sub_menu">
+    <a href="javascript:_MP(<?php echo $child_menu['id']; ?>,'__MODULE__/<?php echo $child_menu['module']; ?>/<?php echo $child_menu['action']; ?>?cid=<?php echo $child_menu['id'] . ($child_menu['params'] ? ('&'. $child_menu['params']) : ''); ?>');" hidefocus="true" style="outline:none;"><?php echo $child_menu['title']; ?></a>
+  </li>
+<?php } echo "</ul>"; } ?>
+<script type="text/javascript">
+$(".switchs").each(function(i){
+  var ul = $(this).parent().next();
+  $(this).click(
+  function(){
+    if(ul.is(':visible')){
+      ul.hide();
+      $(this).removeClass('on');
+        }else{
+      ul.show();
+      $(this).addClass('on');
+    }
+  })
+});
+</script>

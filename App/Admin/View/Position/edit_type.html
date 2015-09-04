@@ -1,0 +1,36 @@
+<extend name="Public:form_layout" />
+<block name="title"><title>添加类型</title></block>
+<block name="subheader">
+  <script type="text/javascript">
+  $(function(){
+    $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true,width:'200',height:'50'}, function(){this.close();$(obj).focus();})}});
+    $("#type_name").formValidator({onshow:"请输入分类名称",onfocus:"请输入分类名称"}).inputValidator({min:1,onerror:"请输入分类名称"}).ajaxValidator({type : "get",url : "__CONTROLLER__/public_check_name",data :"typeid=<?php echo $type['id']; ?>",datatype : "html",async:'false',success : function(data){  if( data==1){return true;}else{return false;}},buttons: $("#dosubmit"),onerror : "分类名称已存在。",onwait : "正在连接，请稍候。"}).defaultPassed();
+  });
+  </script>
+</block>
+<block name="main">
+  <form action="__CONTROLLER__/edit_type" method="post" name="myform" id="myform">
+    <input type="hidden" value="<?php echo $type['id']; ?>" name="typeid" />
+    <table cellpadding="2" cellspacing="1" class="table_form" width="100%">
+      <tbody>
+        <tr>
+          <th width="100">分类名称：</th>
+          <td><input type="text" name="type[name]" id="type_name" size="30" class="input-text" value="<?php echo $type['name']; ?>"></td>
+        </tr>
+        <tr>
+          <th width="100">模型名称：</th>
+          <td><input type="text" name="type[module]" id="module" size="30" class="input-text" value="<?php echo $type['module']; ?>"></td>
+        </tr>
+        <tr>
+          <th width="100">排序权值：</th>
+          <td><input type="text" name="type[listorder]" id="listorder" size="5" class="input-text" value="<?php echo $type['listorder']; ?>"></td>
+        </tr>
+        <tr>
+          <th>分类描述：</th>
+          <td><textarea name="type[description]" id="description" cols="50" rows="6"><?php echo $type['description']; ?></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+    <input type="hidden" name="forward" value="__CONTROLLER__/list_type"> <input type="submit" name="dosubmit" id="dosubmit" class="dialog" value=" 提交 ">
+  </form>
+</block>

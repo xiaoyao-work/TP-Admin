@@ -1,0 +1,56 @@
+<?php defined('THINK_PATH') or exit('No permission resources.'); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <block name="title"><title>后台管理中心</title></block>
+  <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
+  <style type="text/css">
+  html{_overflow-y:scroll}
+  .filetree *{white-space:nowrap;}
+  .filetree span.folder, .filetree span.file{display:auto;padding:1px 0 1px 16px;}
+  </style>
+</head>
+<body>
+  <div class="bk10"></div>
+  <link rel="stylesheet" href="__PUBLIC__/css/admin/jquery.treeview.css" type="text/css">
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.treeview.js"></script>
+  <script language="JavaScript">
+  $(document).ready(function(){
+    $("#category_tree").treeview({
+      control: "#treecontrol",
+      persist: "cookie",
+      cookieId: "treeview-black"
+    });
+  });
+  </script>
+  <div id="treecontrol">
+    <span style="display:none">
+      <a href="javascript:void(0)"></a>
+      <a href="javascript:void(0)"></a>
+    </span>
+    <a href="javascript:void(0)"><img src="IMG_PATH/admin/minus.gif"> <img src="IMG_PATH/admin/application_side_expand.png"> 展开/收缩</a>
+  </div>
+  <ul class="filetree  treeview">
+    <li class="collapsable">
+      <div class="hitarea collapsable-hitarea"></div><span class="folder"><a href="javascript:void(0)" target="right">新闻推荐位</a></span>
+    </li>
+    <li class="collapsable">
+      <div class="hitarea collapsable-hitarea"></div><span class="folder"><a href="javascript:void(0)" target="right">楼盘推荐位</a></span>
+    </li>
+    <li class="collapsable lastCollapsable">
+      <div class="hitarea collapsable-hitarea lastCollapsable-hitarea"></div><span class="folder"><a href="javascript:void(0)" target="right">专题推荐位</a></span>
+    </li>
+  </ul>
+</body>
+</html>

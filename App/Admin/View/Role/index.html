@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>角色管理</title>
+  <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
+</head>
+<body>
+  <div class="subnav">
+    <div class="content-menu ib-a blue line-x">
+      <a class="add fb" href="__MODULE__/Role/add"><em>添加角色</em></a>&nbsp;&nbsp;&nbsp;<a class="on" href="__MODULE__/Role/index"><em>角色管理</em></a>
+    </div>
+  </div>
+  <style type="text/css">
+  html{_overflow-y:scroll}
+  </style>
+  <div class="pad-lr-10">
+    <form name="myform" action="__CONTROLLER__/listorder" method="post">
+      <div class="table-list">
+        <table width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th width="10%" align="center">排序</th>
+              <th width="10%" align="center">ID</th>
+              <th width="15%" align="left">角色名称</th>
+              <th width="265" align="left">角色描述</th>
+              <th width="5%" align="left">状态</th>
+              <th class="text-c">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($roles as $key => $role) { ?>
+            <tr>
+              <td align="center" width="10%"><input name='listorders[<?php echo $role['id']; ?>]' type='text' size='3' value='<?php echo $role['listorder']?>' class="input-text-c"></td>
+              <td align="center" width="10%"><?php echo $role['id']?></td>
+              <td width="15%"><?php echo $role['name']; ?></td>
+              <td width="265"><?php echo $role['remark']; ?></td>
+              <td width="5%"><?php echo ($role['status']==1) ? "<font color='red'>√</font>" : "<font color='blue'>×</font>"; ?></td>
+              <td class="text-c">
+                <?php if($role['id'] !='1' ) { ?>
+                <a href="__MODULE__/Role/limits/role_id/<?php echo $role['id']; ?>">权限分配</a> | <a href="__MODULE__/Role/edit/nid/<?php echo $role['id']; ?>">修改</a> | <a onclick="return ConfirmDel();" href="__MODULE__/Role/del/nid/<?php echo $role['id']; ?>">删除</a>
+                <?php } else { ?>
+                <font color="#cccccc">修改 | 删除 | 权限分配</font>
+                <?php } ?>
+              </td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
+      <div class="btn">
+        <input name="dosubmit" type="submit" class="button" value="排序">
+      </div>
+      <div id="pages"><?php echo $pages?></div>
+    </form>
+  </div>
+</body>
+</html>

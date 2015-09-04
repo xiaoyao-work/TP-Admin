@@ -1,0 +1,142 @@
+/*容器样式*/
+body{ font-size: 13px; margin: 0; padding: 0; }
+ul, ol, li { list-style: none; margin: 0; padding: 0; }
+.bk, .bk3, .bk6, .bk8, .bk10, .bk15, .bk20, .bk30 {
+  clear: both; font-size: 1px; height: 0; line-height: 1px;
+}
+.bk10 {height: 10px;}
+.bk3 {height: 3px;}
+.col-tab{ width: 480px;}
+.col-tab .content{border:1px solid #dce3ed;_zoom:1; padding: 10px; position: relative;}
+.cu-li li, .cu-span span { cursor: hand; cursor: pointer; }
+.col-tab ul.tabBut li { background: #EAEEF4; padding: 0 8px;}
+.col-tab ul.tabBut li { float: left; border: 1px solid #DCE3ED; height: 25px; line-height: 26px; margin-right: 5px;}
+.col-tab ul.tabBut { height: 27px; padding-left: 14px; position: relative; bottom: -1px; }
+.col-tab ul.tabBut li.on { position: relative; background: white; border-bottom: 0; height: 26px; _height: 27px; font-weight: 700; z-index: 2;}
+.col-tab .contentList {
+  border: 1px solid #DCE3ED;
+  _zoom: 1;
+}
+.img_upload {
+  position: relative;
+}
+.hidden {
+  display: none;
+}
+#file_upload {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.btupload, .addnew {
+  vertical-align: middle;
+  border: none;
+  cursor: pointer;
+}
+.addnew {
+  background-position: left bottom;
+}
+.btupload, .addnew { 
+  background-image: url(../../images/admin/swfBnt.png);
+  background-repeat: no-repeat;
+  margin-right: 10px; 
+  width: 75px; 
+  height: 28px;
+  line-height: 28px;
+  color: white; 
+}
+.btupload{
+  text-align: center;
+  position: absolute;
+  left: 90px;
+  top: 0;
+  text-decoration: none;
+}
+.onShow {
+  position: absolute;
+  background: url(../../images/admin/msg_bg.png) no-repeat;
+  color: #444;
+  line-height: 28px;
+  padding: 2px 10px 2px 23px; 
+  margin-left: 10px;
+  left: 160px;
+  top: 0;
+  background-position: 3px -144px;
+  color: #959595;
+}
+
+.lh24 {
+  margin-top: 33px;
+  @margin-top: 10px;
+  line-height: 24px;
+}
+.pad-10 { 
+  padding: 10px; 
+  overflow: hidden;
+}
+
+#attachment_list {
+  overflow: hidden;
+}
+#attachment_list li {
+  width: 25%;
+  overflow: hidden;
+  padding: 10px 0;
+  float: left;
+}
+
+#attachment_list .img-wrap a.on .icon {
+  background: url(../../images/admin/msg_bg.png) no-repeat left -249px;
+  width: 16px;
+  height: 18px;
+  bottom: 4px;
+  right: 3px;
+  z-index: 100;
+  position: absolute;
+  overflow: hidden;
+}
+#attachment_list .img-wrap a:hover, .attachment-list .img-wrap a.on {
+  border-color: #d0def1;
+  background: #f3f6fa;
+}
+#attachment_list .img-wrap a {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  border: 1px solid #eee;
+  width: 101px;
+  height: 91px;
+}
+#attachment_list .img-wrap {
+  text-align: center;
+  overflow: hidden;
+  background: #fff;
+  border: none;
+  position: relative;
+}
+#attachment_list .img-wrap {
+  width: 104px;
+  height: 94px;
+  overflow: hidden;
+  margin: auto;
+}
+.img-wrap {
+  border: 1px solid #eee;
+  text-align: center;
+  overflow: hidden;
+  background: #fff;
+}
+
+
+/*附件列表样式*/
+.img-wrap{border:1px solid #eee;text-align:center;overflow:hidden;background:#fff}
+.img-wrap a{display:table-cell;vertical-align:middle;text-align:center;*display:block;}
+
+.attachment-list{overflow:hidden}
+.attachment-list li{width:25%;*width:24.99%; overflow:hidden; padding:10px 0; float:left}
+.attachment-list .img-wrap{width:104px;height:94px;overflow:hidden; margin:auto;}
+.attachment-list .img-wrap {text-align:center;overflow:hidden; background:#fff; border:none; position:relative}
+.attachment-list .img-wrap a{display:table-cell;vertical-align:middle;text-align:center;*display:block;border:1px solid #eee;width:101px; height:91px;*font-size:67px;}
+.attachment-list .img-wrap a:hover,.attachment-list .img-wrap a.on{border-color:#d0def1; background:#f3f6fa}
+.attachment-list .img-wrap a.off .icon{background: url(images/off.png) no-repeat; height:17px;bottom:5px;*bottom:3px; right:3px; z-index:100; position: absolute; overflow:hidden; width:98px;}
+.attachment-list .img-wrap a.on .icon{background: url(../../images/admin/msg_bg.png) no-repeat left -249px;width:16px; height:18px;bottom:4px;*bottom:2px; right:3px; z-index:100; position: absolute; overflow:hidden}

@@ -1,0 +1,78 @@
+<?php
+defined('THINK_PATH') or exit('No permission resources.'); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>快速进入</title>
+  <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
+  <style type="text/css">
+  <!--
+  .showMsg{border: 1px solid #1e64c8; zoom:1; width:450px; height:172px;position:absolute;top:44%;left:50%;margin:-87px 0 0 -225px}
+  .showMsg h5{background-image: url(__PUBLIC__/images/admin/msg_img/msg.png);background-repeat: no-repeat; color:#fff; padding-left:35px; height:25px; line-height:26px;*line-height:28px; overflow:hidden; font-size:14px; text-align:left}
+  .showMsg .content{ margin-top:50px; font-size:14px; height:64px; position:relative}
+  #search_div{ position:absolute; top:23px; border:1px solid #dfdfdf; text-align:left; padding:1px; left:89px;*left:88px; width:263px;*width:260px; background-color:#FFF; display:none; font-size:12px}
+  #search_div li{ line-height:24px;}
+  #search_div li a{  padding-left:6px;display:block}
+  #search_div li a:hover{ background-color:#e2eaff}
+  -->
+  </style>
+</head>
+<body>
+  <div class="showMsg" style="text-align:center">
+    <h5>快速进入</h5>
+    <div class="content">
+      <input type="text" size="41" id="cat_search" value="输入“拼音”或者“栏目名称”可快速搜索" onfocus="if(this.value == this.defaultValue) this.value = ''" onblur="if(this.value.replace(' ','') == '') this.value = this.defaultValue;">
+      <ul id="search_div"></ul>
+    </div>
+  </div>
+  <script type="text/javascript">
+  if(window.top.$("#current_pos").data('clicknum')==1 || window.top.$("#current_pos").data('clicknum')==null) {
+    parent.document.getElementById('display_center_id').style.display='';
+    parent.document.getElementById('center_frame').src = '__CONTROLLER__/public_categorys';
+    window.top.$("#current_pos").data('clicknum',0);
+  }
+  $(function(){
+    var resizeTimer = null;
+    $('#cat_search').keyup(function() {
+        if(resizeTimer){
+          clearTimeout(resizeTimer)
+        }
+        resizeTimer = setTimeout(function(){
+            var value = $("#cat_search").val();
+            if (value.length > 0){
+              $.getJSON('__MODULE__/Category/public_ajax_search', {catname: value}, function(data){
+                if (data != null) {
+                  var str = '';
+                  $.each(data, function(i,n){
+                    if(n.type=='1') {
+                      str += '<li><a href="__MODULE__/Content/index?catid='+n.id +'">'+n.catname+'</a></li>';
+                    } else {
+                      str += '<li><a href="__MODULE__/Content/index?catid='+n.id+'">'+n.catname+'</a></li>';
+                    }
+                  });
+                  $('#search_div').html(str);
+                  $('#search_div').show();
+                } else {
+                  $('#search_div').hide();
+                }
+              });
+            } else {
+              $('#search_div').hide();
+            }
+        },400);
+    });
+  })
+  </script>
+</body>
+</html>
