@@ -93,7 +93,7 @@ class PublicController extends Controller {
 			$_SESSION['lastLoginTime'] = $authInfo['last_login_time'];
 
 			// 站点ID设置
-			$_SESSION['siteid'] = 1;
+			$_SESSION['siteid'] = SITEID;
 			if($authInfo['role_id']==1) {
 				$_SESSION['administrator']      =   true;
 			}

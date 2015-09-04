@@ -74,6 +74,7 @@ class RoleController extends CommonController {
       $mod = D('Access');
       $site = $_POST['site'];
       if (!empty($_POST['menuid'])) {
+        $_POST['menuid'][] = 1;
         $sql = "INSERT INTO ". C("DB_PREFIX") ."access (`role_id`,`node_id`,`siteid`) VALUES ";
         foreach ($_POST['menuid'] as $key => $value) {
           $value = intval($value);

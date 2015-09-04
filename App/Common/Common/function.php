@@ -36,10 +36,10 @@ function get_siteid() {
 	static $siteid;
 	if (!empty($siteid)) return $siteid;
 	if (defined('IN_ADMIN')) {
-		if ($siteid = $_SESSION['siteid']) {
+		if ($siteid == $_SESSION['siteid']) {
 			$siteid = $siteid;
 		} else {
-			return '';
+			return 1;
 		}
 	} else {
 		$siteid = SITEID;
@@ -53,7 +53,7 @@ function get_siteid() {
 */
 function set_siteid( $id ) {
 	if ( !empty($id) ) {
-		session( 'siteid', $id );
+		session('siteid', $id );
 	}
 }
 

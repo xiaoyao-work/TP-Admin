@@ -15,7 +15,7 @@ class MenuModel extends Model {
     protected $tableName = 'node';
 
     public function accessList() {
-        $sql = "SELECT node.*, group.id as b_id, group.title as b_title, group.name as b_name, group.sort as b_sort, group.status as b_stutas FROM  __PREFIX__node AS node, __PREFIX__group AS group WHERE node.level=2 AND node.group_id=group.id AND node.status=1 ORDER BY group.id ASC, node.sort desc";
+        $sql = "SELECT node.*, group.id as b_id, group.title as b_title, group.name as b_name, group.sort as b_sort, group.status as b_stutas FROM  {C('DB_PREFIX')}node AS node, {C('DB_PREFIX')}group AS group WHERE node.level=2 AND node.group_id=group.id AND node.status=1 ORDER BY group.id ASC, node.sort desc";
         $list = $this->query($sql);
         return $list;
     }

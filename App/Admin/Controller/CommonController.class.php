@@ -20,7 +20,7 @@ class CommonController extends Controller {
 		$this->siteid = get_siteid();
 		// 用户权限检查
 		if (C('USER_AUTH_ON') && !in_array(CONTROLLER_NAME, explode(',', C('NOT_AUTH_MODULE')))) {
-			if (!RBAC::AccessDecision(CONTROLLER_NAME)) {
+			if (!RBAC::AccessDecision()) {
 				//检查认证识别号
 				if (!$_SESSION[C('USER_AUTH_KEY')]) {
 					//跳转到认证网关

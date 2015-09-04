@@ -21,9 +21,9 @@ class IndexController extends CommonController {
 			$top_menu = $model->where(array('pid' => 0, 'status' => 1))->order('sort desc, id asc')->select();
 			$sites = D('Site')->select();
 		} else {
-			$top_menu = $model->table( __PREFIX__ . 'access as access, ' . __PREFIX__ . 'node as node')->where("node.pid = 0 AND node.status = 1 AND node.id = access.node_id AND access.role_id = {$_SESSION['user_info']['role_id']} AND access.siteid=" . $this->siteid)->order('node.sort desc, node.id asc')->select();
+			$top_menu = $model->table( C('DB_PREFIX') . 'access as access, ' . C('DB_PREFIX') . 'node as node')->where("node.pid = 0 AND node.status = 1 AND node.id = access.node_id AND access.role_id = {$_SESSION['user_info']['role_id']} AND access.siteid=" . $this->siteid)->order('node.sort desc, node.id asc')->select();
 
-			$sites = M()->table( __PREFIX__ . 'access as access, ' . __PREFIX__ . 'site as site' )->where( "access.siteid = site.id AND access.role_id = {$_SESSION['user_info']['role_id']}" )->group('access.siteid')->select();
+			$sites = M()->table( C('DB_PREFIX') . 'access as access, ' . C('DB_PREFIX') . 'site as site' )->where( "access.siteid = site.id AND access.role_id = {$_SESSION['user_info']['role_id']}" )->group('access.siteid')->select();
 		}
 
 		$site_info = get_site_info( get_siteid() );
@@ -41,13 +41,13 @@ class IndexController extends CommonController {
 		if ($_SESSION[C('ADMIN_AUTH_KEY')]) {
 			$menulist = $model->where("pid = %d AND status = 1", $mid)->order('sort desc')->select();
 		} else {
-			$menulist = $model->table( __PREFIX__ . 'access as access, ' . __PREFIX__ . 'node as node')->where("node.pid = %d AND node.status = 1 AND node.id = access.node_id AND access.role_id = %d AND access.siteid = %d", array($mid, $_SESSION['user_info']['role_id'], $this->siteid))->order('node.sort desc')->select();
+			$menulist = $model->table( C('DB_PREFIX') . 'access as access, ' . C('DB_PREFIX') . 'node as node')->where("node.pid = %d AND node.status = 1 AND node.id = access.node_id AND access.role_id = %d AND access.siteid = %d", array($mid, $_SESSION['user_info']['role_id'], $this->siteid))->order('node.sort desc')->select();
 		}
 		foreach ($menulist as $key => $value) {
 			if ($_SESSION[C('ADMIN_AUTH_KEY')]) {
 				$childs = $model->where( array( 'pid' => $value['id'], 'status' => 1 ) )->order('sort desc')->select();
 			} else {
-				$childs = $model->table( __PREFIX__ . 'access as access, ' . __PREFIX__ . 'node as node')->where("node.pid = {$value['id']} AND node.status = 1 AND node.id = access.node_id AND access.role_id = {$_SESSION['user_info']['role_id']} AND access.siteid=" . $this->siteid)->order('node.sort desc')->select();
+				$childs = $model->table( C('DB_PREFIX') . 'access as access, ' . C('DB_PREFIX') . 'node as node')->where("node.pid = {$value['id']} AND node.status = 1 AND node.id = access.node_id AND access.role_id = {$_SESSION['user_info']['role_id']} AND access.siteid=" . $this->siteid)->order('node.sort desc')->select();
 			}
 			$menulist[$key]['childs'] = $childs;
 		}
