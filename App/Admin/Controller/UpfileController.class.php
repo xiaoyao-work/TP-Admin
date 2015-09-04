@@ -21,48 +21,41 @@ class UpfileController extends Controller {
   public function upload() {
     header('Content-Type:text/html;charset=utf-8');
     if (IS_POST) {
-      import("ORG.Net.UploadFile");
-      $savefolder =  '/uploads/' . date("Y/m/d")."/";
-      $path = UPLOAD_PATH . $savefolder;
-      $upload = new UploadFile();  // 实例化上传类
+      $data = array();
+      $upload = new \Think\Upload();  // 实例化上传类
       $site_setting = get_site_setting(get_siteid());
       $upload->maxSize  = $site_setting['upload_maxsize']*1024; // 设置附件上传大小
       $upload->saveRule = "time";  // 文件名设置
       $upload->allowExts  = array_intersect(explode('|', $_POST['filetype_post']), explode('|', $site_setting['upload_allowext'])); // 设置附件上传类型
-      $upload->uploadReplace = $overflow;
-      if (!is_dir($path)) {
-        mkdir($path,0777,true);
-      }
-      $data = array();
-      $upload->savePath =  $path;
+      $upload->rootPath = UPLOAD_PATH;
+      /*if (!is_dir(UPLOAD_PATH)) {
+        mkdir(UPLOAD_PATH,0777,true);
+      }*/
+
       if (isset($_FILES)) {
-        if(!$upload->upload()) {
+        $info = $upload->upload();
+        if(!$info) {
           // 上传错误提示错误信息
           $data['status'] = 'error';
-          $data['error_info'] = $upload->getErrorMsg();
+          $data['error_info'] = $upload->getError();
         } else {
-          // 上传成功 获取上传文件信息
-          $info =  $upload->getUploadFileInfo();
           // 将附件插入附件表
           $attach_info = array(
             'name' => $info[0]["name"],
-            'path' => $savefolder.$info[0]["savename"],
-            'url' => UPLOAD_URL . $savefolder.$info[0]["savename"],
+            'path' => UPLOAD_PATH . $info[0]["savepath"] . $info[0]["savename"],
+            'url' => UPLOAD_URL . $info[0]["savepath"] . $info[0]["savename"],
             'size' => $info[0]['size'],
-            'ext'  => $info[0]['extension'],
+            'ext'  => $info[0]['ext'],
             'upload_time' => time(),
             'upload_ip' => get_client_ip(),
             );
 
-
-          if (in_array( $info[0]['extension'], array('jpg','gif','png','jpeg'))) {
-            $mine_type = mime_content_type( $path . $info[0]["savename"] );
-            $compression_filename = D("Attachment")->gd_compression_image( $path, $mine_type, $info[0]["savename"] );
-            $attach_info['compression_image'] = $savefolder . $compression_filename;
-
-            $attachment['compression_url'] = UPLOAD_URL . $savefolder . $compression_filename;
-
-            $image_source = D("Attachment")->gd_create_image( $mine_type, $path.$info[0]["savename"] );
+          if (in_array( $info[0]['ext'], array('jpg','gif','png','jpeg'))) {
+            $mine_type = mime_content_type($attach_info['path']);
+            $compression_filename = D("Attachment")->gd_compression_image(UPLOAD_PATH . $info[0]["savepath"], $mine_type, $info[0]["savename"]);
+            $attach_info['compression_image'] = UPLOAD_PATH . $info[0]["savepath"] . $compression_filename;
+            $attach_info['compression_url'] = UPLOAD_URL . $info[0]["savepath"] . $compression_filename;
+            $image_source = D("Attachment")->gd_create_image($mine_type, $attach_info['path']);
 
             if ( $image_source ) {
               $attach_info['width'] = imagesx($image_source);
@@ -71,10 +64,9 @@ class UpfileController extends Controller {
           }
 
           if (isset($_SESSION['user_info'])) {
-            $attach_info['userid'] = $_SESSION['user_info']['id'];
+            $attach_info['user_id'] = $_SESSION['user_info']['id'];
             $attach_info['category_id'] = 1;
           }
-
           if($attachment_id = D("Attachment")->add($attach_info)) {
             $data['attachment_id'] = $attachment_id;
             $data['stutas'] = 'success';
@@ -83,7 +75,7 @@ class UpfileController extends Controller {
           } else {
             // echo M()->getLastSql();
             $data['status'] = 'error';
-            $data['error_info'] = $upload->getErrorMsg();
+            $data['error_info'] = $upload->getError();
           }
         }
       } else {
@@ -95,9 +87,10 @@ class UpfileController extends Controller {
         $funcNum = $_GET['CKEditorFuncNum'];
         $url = $data['attachment_info']['path'];
         $message = isset($data['error_info']) ? $data['error_info'] : "";
-        exit("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>");
+        $this->ajaxReturn("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>", 'EVAL');
       } else {
-        exit(json_encode($data));
+        $this->ajaxReturn(json_encode($data), 'EVAL');
+        // exit(json_encode($data));
       }
     } else {
       $args = $_GET['args'];

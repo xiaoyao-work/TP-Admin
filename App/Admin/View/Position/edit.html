@@ -43,7 +43,7 @@ defined('IN_ADMIN') or exit('No permission resources.');
         </tr>
         <tr id="module">
           <th width="100">所属模型  </th>
-          <td>
+          <td id="load_model">
             <?php echo $modelstr;?>
           </td>
         </tr>
@@ -81,7 +81,7 @@ defined('IN_ADMIN') or exit('No permission resources.');
       $("#category, #module").show();
     }
   }
-  type_change($('#typeid'));
+
   function category_load(obj) {
     var modelid = $(obj).attr('value');
     $.get('__CONTROLLER__/public_category_load?modelid='+modelid,function(data){

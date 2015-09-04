@@ -28,6 +28,9 @@
       <table width="100%" cellspacing="0" class="search-form">
         <tr>
           <td>
+            <?php foreach ($_GET as $key => $value) {
+              echo "<input type='hidden' name='$key' value='$value'>";
+            } ?>
             <div class="lh26 explain-col"> 时间：<input type="text" name="start_time" id="start_time" value="<?php echo $_GET['start_time']; ?>" size="10" class="date input-text" readonly="">
               <script type="text/javascript">
               Calendar.setup({
@@ -52,9 +55,6 @@
               </script>
               <label>名称</label>
               <input type="text" value="<?php echo $_GET['filename']; ?>" class="input-text" size="10" name="filename">
-              <?php foreach ($_GET as $key => $value) {
-                echo "<input type='hidden' name='$key' value='$value'>";
-              } ?>
               <input type="submit" value="搜索" class="button" name="search">
             </div>
           </td>

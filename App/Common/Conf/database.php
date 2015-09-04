@@ -5,7 +5,7 @@ return array(
   'DB_PORT'         => 3306,
   // 普通配置
   'DB_USER'         => 'root', // 用户名
-  'DB_PWD'          => '', // 密码
+  'DB_PWD'          => 'root', // 密码
   'DB_HOST'         => '127.0.0.1',
   'DB_NAME'         =>'tp-admin',
   // DSN 配置 采用DSN配置，必须也同时普通配置。

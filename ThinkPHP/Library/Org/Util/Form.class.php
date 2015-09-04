@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 
 namespace Org\Util;
-
+use Org\Util\Tree;
 class Form {
   /**
    * 编辑器
@@ -59,8 +59,8 @@ class Form {
         $str .="flashupload:true,alowuploadexts:'".$alowuploadexts."',allowbrowser:'".$allowbrowser."',allowuploadnum:'".$allowuploadnum."',\r\n";
       }
       if($allowupload) {
-        $str .= "filebrowserUploadUrl : '__GROUP__/Upfile/upload',\r\n";
-        $str .= "filebrowserBrowseUrl: '__GROUP__/Attachment/album_list',\r\n";
+        $str .= "filebrowserUploadUrl : '" . __MODULE__  . "/Upfile/upload',\r\n";
+        $str .= "filebrowserBrowseUrl: '" . __MODULE__  . "/Attachment/album_list',\r\n";
       }
       if($color) {
         $str .= "extraPlugins : 'uicolor',uiColor: '$color',";
@@ -173,8 +173,7 @@ return $str;
    * @param intval $siteid 如果设置了siteid 那么则按照siteid取
    */
   public static function select_category($file = '',$catid = 0, $str = '', $default_option = '', $modelid = 0, $type = -1, $onlysub = 0,$siteid = 0,$is_push = 0) {
-    require_once "Tree.class.php";
-    $tree = new tree();
+    $tree = new Tree();
     if(!$siteid) $siteid = get_siteid();
     if ($modelid) {
       $result = D('Category')->where('siteid = %d and modelid = %d', $siteid, $modelid)->select();

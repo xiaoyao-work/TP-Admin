@@ -86,7 +86,7 @@ class ContentModel extends Model {
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data);
         $systeminfo = $this->parse_field($inputinfo['system']);
-        $systeminfo = array_merge($systeminfo,array('username' => $_SESSION['user_info']['account'], 'siteid' => get_siteid(),'updatetime' => time(), 'status' => 99));
+        $systeminfo = array_merge($systeminfo,array('username' => $_SESSION['user_info']['account'], 'siteid' => get_siteid(),'updatetime' => time()));
         if($data['inputtime'] && !is_numeric($data['inputtime'])) {
             $systeminfo['inputtime'] = strtotime($data['inputtime']);
         } elseif(!$data['inputtime']) {
@@ -176,6 +176,7 @@ class ContentModel extends Model {
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data);
         $systeminfo = $this->parse_field($inputinfo['system']);
+        $systeminfo['siteid'] = get_siteid();
         $systeminfo = array_merge($systeminfo,array('updatetime' => time()));
         if($data['inputtime'] && !is_numeric($data['inputtime'])) {
             $systeminfo['inputtime'] = strtotime($data['inputtime']);
@@ -201,7 +202,6 @@ class ContentModel extends Model {
             $this->set_field();
             $content_data = $this->parse_field($inputinfo['model']);
             $result = ($this->where("id = %d", $contentid)->save($content_data) !== false);
-
             // 发布到推荐位
             $position_model = D('PositionData');
             $position_model->where( array("id" => $contentid , "modelid" => $modelid) )->delete();

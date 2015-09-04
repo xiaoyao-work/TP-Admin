@@ -61,9 +61,9 @@
             }
             ?>
             <?php if($_SESSION['user_info']['role_id']==1) { ?>
-            <h6><?php echo L('c_status');?></h6>
-            <span class="ib" style="width:90px"><label><input type="radio" name="status" value="99" checked/> <?php echo L('c_publish');?> </label></span>
-            <?php if($workflowid) { ?><label><input type="radio" name="status" value="1" > <?php echo L('c_check');?> </label><?php } ?>
+            <h6>状态</h6>
+            <span class="ib" style="width:90px"><label><input type="radio" name="info[status]" value="99" checked/> 发布 </label></span>
+            <label><input type="radio" name="info[status]" value="1" > 审核 </label>
             <?php } ?>
           </div>
         </div>

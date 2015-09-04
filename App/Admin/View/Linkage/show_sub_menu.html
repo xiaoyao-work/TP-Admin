@@ -33,7 +33,7 @@
 
               <a href="javascript:art.dialog.open('<?php echo U('Admin/Linkage/add','keyid=' . $value['keyid'] . '&parentid='.$value['id']); ?>', { id:'add', title:'添加子菜单菜单',  width:'540px', height:'320px', ok:function(){ var d = this.iframe.contentWindow; var form = d.document.getElementById('dosubmit'); form.click(); return false; }, cancel: true, lock: true});void(0);">添加子菜单</a>
               | <a href="javascript:art.dialog.open('<?php echo U('Admin/Linkage/edit','id='.$value['id']); ?>', { id:'edit', title:'添加子菜单菜单',  width:'540px', height:'320px', ok:function(){ var d = this.iframe.contentWindow; var form = d.document.getElementById('dosubmit'); form.click(); return false; }, cancel: true, lock: true});void(0);">修改</a>
-              | <a onclick="return ConfirmDel('<?php echo L('confirm',NULL,array('message' => $value['name'].'及其子栏目') );?>');" href="__CONTROLLER__/delete/id/<?php echo $value['id']; ?>">删除</a>
+              | <a onclick="return ConfirmDel('确认删除<?php echo $value['name']; ?>及其子栏目?');" href="__CONTROLLER__/delete/id/<?php echo $value['id']; ?>">删除</a>
             </td>
 
           </tr>

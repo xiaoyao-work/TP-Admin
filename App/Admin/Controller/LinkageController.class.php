@@ -30,7 +30,8 @@ class LinkageController extends CommonController {
 
   public function show_sub_menu() {
     $parentid = isset($_GET['parentid']) ? intval($_GET['parentid']) : 0;
-    $menus = $this->db->where(array('parentid' => $parentid, 'keyid' => array( 'NEQ' , 0 ), 'siteid' => array( 'IN', array( '0', $this->siteid ) ) ))->order('listorder asc, id asc')->select();
+    $keyid = $_GET['keyid'];
+    $menus = $this->db->where(array('parentid' => $parentid, 'keyid' => array( 'NEQ' , 0 ), 'keyid' => $keyid, 'siteid' => array( 'IN', array( '0', $this->siteid ) ) ))->order('listorder asc, id asc')->select();
       // $big_menu = array('javascript:art.dialog.open(\''. U('add','parentid=0'). '\', { id:\'add\', title:\'添加联动菜单\',  width:\'540px\', height:\'320px\', ok:function(){ var d = this.iframe.contentWindow; var form = d.document.getElementById(\'dosubmit\'); form.click(); return false; }, cancel: true, lock: true});void(0);', '添加联动菜单');
     $this->assign('menus', $menus);
       // $this->assign('big_menu', $big_menu);
@@ -57,14 +58,14 @@ class LinkageController extends CommonController {
         }
       }
       $this->assign('dialog','add');
-      $this->success(L('add_success'));
+      $this->success('添加成功');
     } else {
       if (intval($_GET['parentid']) == 0) {
-        $linkage = array('name' => L('no_parent_menu'), 'id' => 0, 'keyid' => $_GET['keyid'] );
+        $linkage = array('name' => '作为一级菜单', 'id' => 0, 'keyid' => $_GET['keyid'] );
       } else {
         $linkage = $this->db->where(array('id' => intval($_GET['parentid'])))->find();
         if (!$linkage) {
-          $linkage = array('name' => L('no_parent_menu'), 'id' => 0, 'keyid' => $_GET['keyid'] );
+          $linkage = array('name' => '作为一级菜单', 'id' => 0, 'keyid' => $_GET['keyid'] );
         }
       }
       $this->assign('linkage', $linkage);
@@ -79,7 +80,7 @@ class LinkageController extends CommonController {
       $data['siteid'] = $this->siteid;
       $linkageid = $this->db->add($data);
       $this->assign('dialog','add');
-      $this->success(L('add_success'));
+      $this->success('添加成功');
     } else {
       $this->display();
     }
@@ -91,15 +92,15 @@ class LinkageController extends CommonController {
       $data = $_POST['info'];
       if($this->db->where(array('id' => intval($_POST['linkageid'])))->save($data) !== false ) {
         $this->assign('dialog','add');
-        $this->success(L('update_success'));
+        $this->success('操作成功');
       } else {
         $this->assign('dialog','add');
-        $this->error(L('operation_failure'));
+        $this->error('操作失败');
       }
     } else {
       $linkage = $this->db->where(array('id' => intval($_GET['id'])))->find();
       if (!$linkage) {
-        $this->error(L('information_does_not_exist'));
+        $this->error('该信息不存在');
       }
       $this->assign('linkage', $linkage);
       $this->display();
@@ -114,18 +115,18 @@ class LinkageController extends CommonController {
         $this->db->where(array('id'=>$k))->save(array('listorder'=>$v));
       }
     }
-    $this->success(L('operation_success'));
+    $this->success('操作成功');
   }
 
   public function delete() {
     $this->delete_operate($_GET['id']);
-    $this->success(L('operation_success'));
+    $this->success('操作成功');
   }
 
   public function delete_top() {
     $this->db->where( array( 'id' => intval($_GET['id']) ) )->delete();
     $this->db->where( array( 'keyid' => intval($_GET['id']) ) )->delete();
-    $this->success(L('operation_success'));
+    $this->success('操作成功');
   }
 
   public function ajax_linkage_select() {

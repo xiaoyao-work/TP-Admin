@@ -71,7 +71,13 @@ class ContentController extends CommonController {
           }
         }
       }
-      $data = $this->db->content_list(array_merge(array('catid' => $_GET['catid'], 'status' => 99),$search), "listorder desc, id desc");
+      $search['catid'] = intval($_GET['catid']);
+
+      // 审核权限判断
+      if($_SESSION['user_info']['role_id'] != 1) {
+        $search['status'] = 99;
+      }
+      $data = $this->db->content_list($search, "listorder desc, id desc");
       $this->assign('catid', $_GET['catid']);
       $this->assign('contents',$data['data']);
       $this->assign('pages',$data['page']);
@@ -98,7 +104,6 @@ class ContentController extends CommonController {
           $this->success('添加成功，<span id="secondid">2</span>秒后关闭！');
         }
       } else {
-        echo $this->db->getLastSql();
         $this->error('添加失败！');
       }
     } else {
@@ -120,7 +125,7 @@ class ContentController extends CommonController {
       $this->assign('category', $category);
       $this->display();
 
-      /*load('extend');
+      /*
       $catid = intval($_GET['catid']);
       $category = $this->category_db->where("siteid = %d and id = %d", $this->siteid, $catid)->find();
 
@@ -190,10 +195,11 @@ class ContentController extends CommonController {
       $forminfos = $content_form->get($content);
       $this->assign('formValidator', $content_form->formValidator);
       $this->assign('catid', $catid);
+      $this->assign('status', $content['status']);
       $this->assign('forminfos', $forminfos);
       $this->assign('content_id', $content['id']);
       $this->assign('modelid', $modelid);
-      /*load('extend');
+      /*
       $catid = intval($_GET['catid']);
       $category = $this->category_db->where("siteid = %d and id = %d", $this->siteid, $catid)->find();
       $this->db->set_model($category['modelid']);
@@ -344,7 +350,6 @@ class ContentController extends CommonController {
     echo $categorys;
   }
 
-
   public function show_relation() {
     $modelid = intval($_GET['modelid']);
     $categorys = $this->category_db->where('siteid = %d',$this->siteid)->select();
@@ -357,10 +362,9 @@ class ContentController extends CommonController {
     $id = intval($_GET['id']);
     $model = D("Content");
     $model->set_model($modelid);
-    $r = $model->get_content( $id );
-
+    $r = $model->get_content($id);
     if( !empty($r['relation'])) {
-      $relation = $r['relation']['ids'];
+      $relation = string2array($r['relation']);
       $relation_ids = explode( '|', $relation['ids'] );
       if ( empty($relation_ids) ) {
         exit( json_encode( array() ) );

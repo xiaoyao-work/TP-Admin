@@ -9,6 +9,7 @@
 
 namespace Admin\Model;
 use Think\Model;
+use Think\Page as Page;
 
 /**
  * 日志操作模型
@@ -16,7 +17,6 @@ use Think\Model;
 class LogModel extends Model {
 	public function log_list($where="1=1") {
 		$logs = $this->where($where)->page((isset($_GET['p']) ? $_GET['p'] : 0).',25')->order('id desc')->select();
-		import("ORG.Util.Page");
 		$count      = $this->where($where)->count();
 		$Page       = new Page($count,25);
 		$show       = $Page->show();
@@ -32,8 +32,8 @@ class LogModel extends Model {
 		$data['action'] = ACTION_NAME;
 		$data['querystring'] = U( CONTROLLER_NAME . '/' . ACTION_NAME );
 		$data['status'] = $status;
-		$data['userid'] = $_SESSION['user_info']['user_id'];
-		return $this->add($data);
+		$data['userid'] = $_SESSION['user_info']['id'];
+		$this->add($data);
 	}
 
 	public function loginLog( $status = 1 ) {

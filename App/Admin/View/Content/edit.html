@@ -62,6 +62,11 @@
               }
             }
             ?>
+            <?php if($_SESSION['user_info']['role_id']==1) { ?>
+            <h6>状态</h6>
+            <span class="ib" style="width:90px"><label><input type="radio" name="info[status]" value="99" <?php if ($status == 99 ) { echo "checked"; } ?>/> 发布 </label></span>
+            <label><input type="radio" name="info[status]" value="1" <?php if ($status == 1 ) { echo "checked"; } ?>> 审核 </label>
+            <?php } ?>
           </div>
         </div>
       </div>
