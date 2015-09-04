@@ -15,7 +15,7 @@ TP-Admin 是一个开源的，以ThinkPHP3.2.*为底层架构的一个通用后�
 * 安装成功，登陆后台。默认用户名密码为 admin / admin。
 
 # 问题反馈 #
-Have a bug or an issue with this system? Open a  [ here on ](https://github.com/476552238li/TP-Admin/issues)  GitHub。
+Have a bug or an issue with this system? Open a  [ here on ](https://github.com/476552238li/TP-Admin-V2.0/issues)  GitHub。
 
 # Creator #
 TP-Admin 是由 [李志亮](http://www.hhailuo.com) 创建和维护。鼓励代码共享但请尊重[原作者](http://www.hhailuo.com)的著作权
