@@ -33,14 +33,9 @@ function get_site_seo_info($siteid = "") {
 * 获取当前的站点ID
 */
 function get_siteid() {
-	static $siteid;
-	if (!empty($siteid)) return $siteid;
 	if (defined('IN_ADMIN')) {
-		if ($siteid == $_SESSION['siteid']) {
-			$siteid = $siteid;
-		} else {
-			return 1;
-		}
+		$siteid = $_SESSION['siteid'];
+		$siteid = empty($siteid) ? 1 : $siteid;
 	} else {
 		$siteid = SITEID;
 	}
@@ -51,9 +46,13 @@ function get_siteid() {
 /**
 * 设置站点
 */
-function set_siteid( $id ) {
-	if ( !empty($id) ) {
-		session('siteid', $id );
+function set_siteid($id) {
+	if (!empty($id)) {
+		if (defined('IN_ADMIN')) {
+			session('siteid', $id);
+		} else {
+			define("SITEID", $id);
+		}
 	}
 }
 

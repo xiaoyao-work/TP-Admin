@@ -25,7 +25,8 @@ class IndexController extends CommonController {
 
 			$sites = M()->table( C('DB_PREFIX') . 'access as access, ' . C('DB_PREFIX') . 'site as site' )->where( "access.siteid = site.id AND access.role_id = {$_SESSION['user_info']['role_id']}" )->group('access.siteid')->select();
 		}
-
+		$role = D('Role')->find($_SESSION['user_info']['role_id']);
+		$_SESSION['user_info']['name'] = $role['name'];
 		$site_info = get_site_info( get_siteid() );
 		$this->assign('sites', $sites);
 		$this->assign('site_info', $site_info);
@@ -81,7 +82,7 @@ class IndexController extends CommonController {
 		if (empty($siteid)) {
 			$this->error( '参数错误', 'Index/index' );
 		}
-		set_siteid( $siteid );
+		set_siteid($siteid);
 		$this->redirect('Index/index');
 	}
 

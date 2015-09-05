@@ -9,13 +9,8 @@ $seo = get_site_seo_info();
   <title><?php echo $seo['title']; ?> - 后台管理中心</title>
   <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
   <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
-  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
-  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
-  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
   <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
   <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
-  <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
   <script type="text/javascript" src="__PUBLIC__/js/admin/formvalidator.js"></script>
   <script type="text/javascript" src="__PUBLIC__/js/admin/formvalidatorregex.js"></script>
   <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
@@ -49,10 +44,10 @@ $seo = get_site_seo_info();
   <div class="header" style="width: auto;">
     <div class="logo lf">
       <a href="<?php echo $site_info['domain']; ?>" target="_blank">
-        <span class="invisible">XYCMS</span>
+        <span class="invisible">TP-Admin</span>
       </a>
     </div>
-    <div class="rt-col">
+    <!-- <div class="rt-col">
       <div class="tab_style white cut_line text-r">
         <a href="javascript:art.dialog({id:'member',content:'开发中……', title:'后台地图', width:'700', height:'500', lock:true});void(0);" onclick="lock_screen()"><img src="__PUBLIC__/images/admin/lockscreen.png">锁屏</a><span>|</span>
         <ul id="Skin">
@@ -62,13 +57,14 @@ $seo = get_site_seo_info();
           <li class="s4 styleswitch" rel="styles4"></li>
         </ul>
       </div>
-    </div>
+    </div> -->
     <div class="col-auto">
       <div class="log white cut_line">
         您好！<?php echo $user_info['account']; ?> [<?php echo $user_info['name']; ?>]<span>|</span><a href="__MODULE__/Public/loginout">[退出]</a><span>|</span>
-        <a href="<?php echo $site_info['domain']; ?>" target="_blank" id="site_homepage">站点首页</a><span>|</span>
+        <a href="<?php echo $site_info['domain']; ?>" target="_blank" id="site_homepage">站点首页</a>
+        <!-- <span>|</span>
         <a href="javascript:art.dialog({id:'member',content:'开发中……', title:'后台地图', width:'700', height:'500', lock:true});void(0);">会员中心</a><span>|</span>
-        <a href="javascript:art.dialog({id:'search',content:'开发中……', title:'后台地图', width:'700', height:'500', lock:true});void(0);" id="site_search">搜索</a>
+        <a href="javascript:art.dialog({id:'search',content:'开发中……', title:'后台地图', width:'700', height:'500', lock:true});void(0);" id="site_search">搜索</a> -->
       </div>
       <ul class="nav white" id="top_menu">
         <?php foreach ($top_menu as $key => $value) { ?>
@@ -88,7 +84,7 @@ $seo = get_site_seo_info();
         <div id="leftMain">
         </div>
       </div>
-      <a href="javascript:;" id="openClose" style="outline: invert none medium; height: 577px;" hidefocus="hidefocus" class="open" title="展开与关闭"><span class="hidden">展开</span></a>
+      <a href="javascript:;" id="openClose" hidefocus="hidefocus" class="open" title="展开与关闭"><span class="hidden">展开</span></a>
     </div>
     <div class="col-1 lf cat-menu" id="display_center_id" style="display:none;" height="100%">
       <div class="content">
@@ -97,16 +93,16 @@ $seo = get_site_seo_info();
     </div>
     <div class="col-auto mr8">
       <div class="crumbs">
-        <div class="shortcut cu-span">
+        <!-- <div class="shortcut cu-span">
           <a href="javascript:art.dialog({id:'create_index',content:'开发中……', title:'后台地图', width:'700', height:'500', lock:true});void(0);" target="right"><span>生成首页</span></a>
           <a href="javascript:art.dialog({id:'clean_cache',content:'开发中……', title:'后台地图', width:'700', height:'500', lock:true});void(0);" target="right"><span>更新缓存</span></a>
           <a href="javascript:art.dialog({id:'map',content:'开发中……', title:'后台地图', width:'700', height:'500', lock:true});void(0);"><span>后台地图</span></a>
-        </div>
+        </div> -->
         当前位置：<span id="current_pos">我的面板 &gt; 首页</span>
       </div>
       <div class="col-1">
         <div class="content" style="position:relative; overflow:hidden">
-          <iframe name="right" id="rightMain" src="__MODULE__/Index/main" frameborder="false" scrolling="auto" style="border: none; margin-bottom: 30px; height: 508px;" width="100%" height="auto" allowtransparency="true"></iframe>
+          <iframe name="right" id="rightMain" src="__MODULE__/Index/main" frameborder="false" scrolling="auto" width="100%" height="auto" allowtransparency="true"></iframe>
           <!-- <div class="fav-nav">
             <div id="panellist"></div>
             <div id="paneladd"><a class="panel-add" href="javascript:add_panel();"><em>添加</em></a></div>
@@ -118,7 +114,7 @@ $seo = get_site_seo_info();
       </div>
     </div>
   </div>
-  <div class="tab-web-panel hidden" style="position: absolute; z-index: 999; background-color: rgb(255, 255, 255); left: 722px; top: 80px; display: none; background-position: initial initial; background-repeat: initial initial;">
+  <div class="tab-web-panel hidden">
     <ul>
       <?php foreach ($sites as $key => $site) { ?>
       <li style="margin:0"><a href="__MODULE__/Index/change_site/siteid/<?php echo $site['id']; ?>"><?php echo $site['name']; ?></a></li>
@@ -165,7 +161,7 @@ $seo = get_site_seo_info();
     var str=getWindowSize();
     var strs= new Array(); //定义一数组
     strs=str.toString().split(","); //字符分割
-    var heights = strs[0]-150,Body = $('body');$('#rightMain').height(heights);
+    var heights = strs[0]-112,Body = $('body');$('#rightMain').height(heights);
     //iframe.height = strs[0]-46;
     if(strs[1]<980){
       $('.header').css('width',980+'px');
@@ -178,10 +174,10 @@ $seo = get_site_seo_info();
       Body.attr('scroll','no');
       Body.addClass('objbody');
     }
-    var openClose = $("#rightMain").height()+39;
-    $('#center_frame').height(openClose+9);
-    $("#openClose").height(openClose+30);
-    $("#Scroll").height(openClose-20);
+    var openClose = $("#rightMain").height();
+    $('#center_frame').height(openClose + 22);
+    $("#openClose").height(openClose + 22);
+    $("#Scroll").height(openClose + 22);
     windowW();
   }
   wSize();
