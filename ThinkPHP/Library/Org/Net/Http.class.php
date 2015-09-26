@@ -159,7 +159,7 @@ class Http {
         $showname = basename($showname);
 		if(!empty($filename)) {
 			$finfo 	= 	new \finfo(FILEINFO_MIME);
-			$type 	= 	$finfo->file($filename);
+			$type 	= 	$finfo->file($filename);			
 		}else{
 			$type	=	"application/octet-stream";
 		}

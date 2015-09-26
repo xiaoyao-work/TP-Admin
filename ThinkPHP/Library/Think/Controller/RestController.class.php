@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace Think\Controller;
 use Think\Controller;
+use Think\App;
 /**
  * ThinkPHP REST控制器类
  */
@@ -45,8 +46,7 @@ class RestController extends Controller {
             // 资源类型非法 则用默认资源类型访问
             $this->_type   =  $this->defaultType;
         }else{
-            // 检测实际资源类型
-            $this->_type   =  $this->getAcceptType() == __EXT__ ? __EXT__ : $this->defaultType;
+            $this->_type   =  __EXT__ ;
         }
 
         // 请求方式检测
@@ -71,13 +71,13 @@ class RestController extends Controller {
         if( 0 === strcasecmp($method,ACTION_NAME.C('ACTION_SUFFIX'))) {
             if(method_exists($this,$method.'_'.$this->_method.'_'.$this->_type)) { // RESTFul方法支持
                 $fun  =  $method.'_'.$this->_method.'_'.$this->_type;
-                $this->$fun();
+                App::invokeAction($this,$fun);
             }elseif($this->_method == $this->defaultMethod && method_exists($this,$method.'_'.$this->_type) ){
                 $fun  =  $method.'_'.$this->_type;
-                $this->$fun();
+                App::invokeAction($this,$fun);
             }elseif($this->_type == $this->defaultType && method_exists($this,$method.'_'.$this->_method) ){
                 $fun  =  $method.'_'.$this->_method;
-                $this->$fun();
+                App::invokeAction($this,$fun);
             }elseif(method_exists($this,'_empty')) {
                 // 如果定义了_empty操作 则调用
                 $this->_empty($method,$args);
@@ -96,7 +96,6 @@ class RestController extends Controller {
      */
     protected function getAcceptType(){
         $type = array(
-            'html'  =>  'text/html,application/xhtml+xml,*/*',
             'xml'   =>  'application/xml,text/xml,application/x-xml',
             'json'  =>  'application/json,text/x-json,application/jsonrequest,text/json',
             'js'    =>  'text/javascript,application/javascript,application/x-javascript',
@@ -109,7 +108,8 @@ class RestController extends Controller {
             'png'   =>  'image/png',
             'jpg'   =>  'image/jpg,image/jpeg,image/pjpeg',
             'gif'   =>  'image/gif',
-            'csv'   =>  'text/csv'
+            'csv'   =>  'text/csv',
+            'html'  =>  'text/html,application/xhtml+xml,*/*'
         );
         
         foreach($type as $key=>$val){
