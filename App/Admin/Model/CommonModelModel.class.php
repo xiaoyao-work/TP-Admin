@@ -94,9 +94,7 @@ class ContentModel extends Model {
         } else {
             $systeminfo['inputtime'] = $data['inputtime'];
         }
-        $systeminfo['sysadd'] = defined('IN_ADMIN') ? 1 : 0;
 
-        // $systeminfo = array_map('strip_tags', $systeminfo);
         if (($contentid = $this->add($systeminfo)) !== false) {
             // 更新URL地址
             if($data['islink']==1) {
