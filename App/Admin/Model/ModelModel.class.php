@@ -16,7 +16,7 @@ class ModelModel extends Model {
         if(is_array($sqls)) {
             foreach($sqls as $sql) {
                 if(trim($sql) != '') {
-                    echo $this->execute($sql, true);
+                    $this->execute($sql);
                 }
             }
         } else {
@@ -50,16 +50,10 @@ class ModelModel extends Model {
 
     /**
     * 删除表
-    *
+    * @param string $tablename 表名
     */
     public function drop_table($tablename) {
         $tablename = C('DB_PREFIX').$tablename;
         return $this->execute("DROP TABLE $tablename;", true);
-        /*$tablearr = $this->list_tables();
-        if(in_array($tablename, $tablearr)) {
-        return $this->query("DROP TABLE $tablename");
-        } else {
-        return false;
-        }*/
     }
 }
