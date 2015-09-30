@@ -16,11 +16,11 @@ class ModelModel extends Model {
         if(is_array($sqls)) {
             foreach($sqls as $sql) {
                 if(trim($sql) != '') {
-                    $this->query($sql);
+                    echo $this->execute($sql, true);
                 }
             }
         } else {
-            $this->query($sqls);
+            $this->execute($sqls);
         }
         return true;
     }
@@ -54,7 +54,7 @@ class ModelModel extends Model {
     */
     public function drop_table($tablename) {
         $tablename = C('DB_PREFIX').$tablename;
-        return $this->query("DROP TABLE $tablename");
+        return $this->execute("DROP TABLE $tablename;", true);
         /*$tablearr = $this->list_tables();
         if(in_array($tablename, $tablearr)) {
         return $this->query("DROP TABLE $tablename");
