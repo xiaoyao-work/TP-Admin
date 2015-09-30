@@ -29,7 +29,7 @@ class ModelFieldModel extends Model {
     public function drop_field($tablename,$field) {
         $fields = $this->get_fields($tablename);
         if(array_key_exists($field, $fields)) {
-            return $this->db->query("ALTER TABLE `$tablename` DROP `$field`;");
+            return $this->db->execute("ALTER TABLE `$tablename` DROP `$field`;");
         } else {
             return false;
         }
