@@ -19,7 +19,7 @@ define('APP_DEBUG',true);
 define('BUILD_DIR_SECURE', false);
 // 定义应用目录
 define('APP_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR);
-define('RUNTIME_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Rumtime' . DIRECTORY_SEPARATOR);
+define('RUNTIME_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Runtime' . DIRECTORY_SEPARATOR);
 
 // 引入ThinkPHP入口文件
 require dirname(__DIR__) . '/ThinkPHP/ThinkPHP.php';
