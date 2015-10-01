@@ -142,7 +142,7 @@
         </tr>
         <tr>
           <th><strong>显示在列表页</strong></th>
-          <td><input type="radio" name="info[islist]" value="1" <?php if($model_field['islist']) echo 'checked';?>> 是 <input type="radio" name="info[islist]" value="0" <?php if($model_field['islist']) echo 'checked';?>> 否</td>
+          <td><input type="radio" name="info[islist]" value="1" <?php if($model_field['islist']) echo 'checked';?>> 是 <input type="radio" name="info[islist]" value="0" <?php if(!$model_field['islist']) echo 'checked';?>> 否</td>
         </tr>
         <tr>
           <th><strong>在前台投稿中显示</strong></th>
