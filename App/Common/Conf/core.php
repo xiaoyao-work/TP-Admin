@@ -7,7 +7,7 @@ $core_config = array(
     'config'    =>  array(
         THINK_PATH.'Conf/convention.php',   // 系统惯例配置
         CONF_PATH.'config'.CONF_EXT,      // 应用公共配置
-        COMMON_PATH.'Conf/batabase.php',
+        COMMON_PATH.'Conf/database.php',
     ),
 
     // 别名定义
