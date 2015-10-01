@@ -26,9 +26,8 @@ class ModelModel extends Model {
     }
 
     public function sql_split($sql) {
-        if(mysql_get_server_info() > '4.1' && C('DB_CHARSET')) {
-            $sql = preg_replace("/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=".C('DB_CHARSET'),$sql);
-        }
+        $db_charset = C('DB_CHARSET') ? C('DB_CHARSET') : 'utf8';
+        $sql = preg_replace("/TYPE=(InnoDB|MyISAM|MEMORY)( DEFAULT CHARSET=[^; ]+)?/", "ENGINE=\\1 DEFAULT CHARSET=".$db_charset,$sql);
         if(C('DB_PREFIX') != "tb_") $sql = str_replace("tb_", C('DB_PREFIX'), $sql);
         $sql = str_replace("\r", "\n", $sql);
         $ret = array();
