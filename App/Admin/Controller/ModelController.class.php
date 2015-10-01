@@ -107,6 +107,9 @@ class ModelController extends CommonController {
             // $types = $this->type_db->where("siteid = %d", $this->siteid)->select();
             $this->assign("types",$this->modelTypes);
             $model = $this->db->where(array('siteid' => $this->siteid))->find($_GET['modelid']);
+            if (empty($model)) {
+                $this->error('模型不存在！');
+            }
             $this->assign('model',$model);
             $this->display();
         }
@@ -115,13 +118,16 @@ class ModelController extends CommonController {
     public function delete() {
         $modelid = intval($_GET['modelid']);
         $model = $this->db->find($modelid);
-        $model_table = $model['tablename'];
-        $this->field_db->where(array('modelid'=>$modelid,'siteid'=>$this->siteid))->delete();
-        $this->db->drop_table($model_table);
-        if ($model['typeid'] != 2) {
-            $this->db->drop_table($model_table.'_data');
+        if (empty($model)) {
+            $this->error('模型不存在！');
         }
         if ($this->db->where(array('siteid' => $this->siteid,'id' => $modelid))->delete() !== false) {
+            $model_table = $model['tablename'];
+            $this->field_db->where(array('modelid'=>$modelid,'siteid'=>$this->siteid))->delete();
+            $this->db->drop_table($model_table);
+            if ($model['typeid'] != 2) {
+                $this->db->drop_table($model_table.'_data');
+            }
             $this->success('删除成功');
         } else {
             $this->error('删除失败');
