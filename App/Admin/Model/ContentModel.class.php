@@ -272,7 +272,7 @@ class ContentModel extends Model {
         $fields = $this->query("DESC ".$this->trueTableName);
         $this->my_fields = array();
         foreach ($fields as $key => $value) {
-            $this->my_fields[$key] = $value['Field'];
+            $this->my_fields[$key] = $value['field'];
         }
     }
 }

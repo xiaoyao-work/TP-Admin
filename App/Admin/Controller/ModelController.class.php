@@ -33,7 +33,7 @@ class ModelController extends CommonController {
      */
     protected $modelTypes = array(
         self::NEWS_MODEL => '内容模型',
-        self::HOUSE_MODEL => '房产模型',
+        // self::HOUSE_MODEL => '房产模型',
         self::COMMON_MODEL => '通用模型'
         );
 
@@ -118,85 +118,15 @@ class ModelController extends CommonController {
         $model_table = $model['tablename'];
         $this->field_db->where(array('modelid'=>$modelid,'siteid'=>$this->siteid))->delete();
         $this->db->drop_table($model_table);
-        $this->db->drop_table($model_table.'_data');
+        if ($model['typeid'] != 2) {
+            $this->db->drop_table($model_table.'_data');
+        }
         if ($this->db->where(array('siteid' => $this->siteid,'id' => $modelid))->delete() !== false) {
             $this->success('删除成功');
         } else {
             $this->error('删除失败');
         }
     }
-
-
-    /*public function list_type() {
-        $types = $this->type_db->where("siteid = ".$this->siteid)->order("listorder desc")->select();
-        $this->assign('types',$types);
-        $this->display();
-    }
-
-    public function add_type() {
-        if (IS_POST) {
-            $this->checkToken();
-            $data = $_POST['type'];
-            $data['siteid'] = (isset($this->siteid) ? $this->siteid : 1);
-            if ($this->type_db->add($data)) {
-                $this->success("添加成功!", $_POST['forward']);
-            } else {
-                // $this->error("更新失败! 最后执行SQL:".$this->db->getLastSql());
-                $this->error("添加失败! ");
-            }
-        } else {
-            $this->display();
-        }
-    }
-
-    public function listorder_type() {
-        if (isset($_POST['listorder']) && is_array($_POST['listorder'])) {
-            $listorder = $_POST['listorder'];
-            foreach ($listorder as $k => $v) {
-                $this->type_db->where(array('id'=>$k))->save(array('listorder'=>$v));
-            }
-        }
-        $this->success('排序成功');
-    }
-
-    public function edit_type() {
-        if (IS_POST) {
-            $this->checkToken();
-            if ($this->type_db->where(array('siteid' => $this->siteid,'id' => $_POST['typeid']))->save($_POST['type']) !==false) {
-                $this->assign('dialog','edit');
-                $this->success("更新成功!", $_POST['forward']);
-            } else {
-                $this->assign('dialog','edit');
-                // $this->error("更新失败! 最后执行SQL:".$this->db->getLastSql());
-                $this->error("更新失败! ");
-            }
-        } else {
-            $type = $this->type_db->where(array('siteid' => $this->siteid))->find($_GET['typeid']);
-            $this->assign('type',$type);
-            $this->display();
-        }
-    }
-
-    public function delete_type() {
-        if ($this->type_db->where(array('siteid' => $this->siteid,'id' => $_GET['typeid']))->delete() !== false) {
-            $this->success('删除成功', $_POST['forward']);
-        } else {
-            $this->error('删除失败', $_POST['forward']);
-        }
-    }
-
-    public function public_check_type_name() {
-        if (!isset($_GET['type_name'])) exit("0");
-        $where = array('name' => $_GET['type_name']);
-        if (isset($_GET['typeid'])) {
-            $where['id'] = array('NEQ',$_GET['typeid']);
-        }
-        if($this->type_db->where($where)->find()) {
-            exit("0");
-        } else {
-            exit("1");
-        }
-    }*/
 
     public function public_check_name() {
         if (!isset($_GET['field']) || !($_GET[$_GET['clientid']])) exit("0");
