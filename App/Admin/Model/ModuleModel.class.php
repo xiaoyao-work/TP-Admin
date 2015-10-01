@@ -67,7 +67,7 @@ class ModuleModel extends Model {
         require MODEL_PATH.'content_input.class.php';
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data);
-        $inputinfo = array_merge($inputinfo['system'], $inputinfo['model']);
+        $inputinfo = $inputinfo['system'];
         // 匹配数据库字段，防止SQL语句出错
         $systeminfo = $this->parseField($inputinfo);
 
