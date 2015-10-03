@@ -19,7 +19,9 @@ class AttachmentController extends CommonController {
         parent::__construct();
         $this->db = D("Attachment");
     }
-    public function index() {}
+    public function index() {
+        echo "等待开发中……";
+    }
 
     public function album_list() {
         $search = array();

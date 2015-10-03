@@ -11,6 +11,32 @@ namespace Admin\Model;
 use Think\Model;
 
 class ModelModel extends Model {
+    /**
+     * 资讯模型
+     */
+    const NEWS_MODEL = 0;
+    /**
+     * 房产模型
+     */
+    const HOUSE_MODEL = 1;
+    /**
+     * 通用模型
+     */
+    const COMMON_MODEL = 2;
+
+    /**
+     * 模型类别
+     */
+    public static $modelTypes = array(
+        self::NEWS_MODEL => '内容模型',
+        // self::HOUSE_MODEL => '房产模型',
+        self::COMMON_MODEL => '通用模型'
+        );
+
+    public function getModelTypes() {
+        return self::$modelTypes;
+    }
+
     public function sql_execute($sql) {
         $sqls = $this->sql_split($sql);
         if(is_array($sqls)) {

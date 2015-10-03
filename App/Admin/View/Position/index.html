@@ -4,7 +4,7 @@ defined('IN_ADMIN') or exit('No permission resources.');
 <extend name="Public:list_layout" />
 <block name="title"><title>推荐位管理</title></block>
 <block name="subnav">
-  <a class="add fb" href="__CONTROLLER__/add"><em>添加推荐位</em></a>　    <a class="on" href="__CONTROLLER__/index"><em>推荐位管理</em></a><span>|</span><!-- <a href="__CONTROLLER__/add_type"><em>添加类别</em></a><span>|</span><a href="__CONTROLLER__/list_type"><em>分类管理</em></a> -->
+  <a class="add fb" href="__CONTROLLER__/add"><em>添加推荐位</em></a>　    <a class="on" href="__CONTROLLER__/index"><em>推荐位管理</em></a><span>|</span>
 </block>
 <block name="search">
   <table width="100%" cellspacing="0" class="search-form">
@@ -13,9 +13,8 @@ defined('IN_ADMIN') or exit('No permission resources.');
         <td>
           <div class="explain-col">
             所有分类: &nbsp;&nbsp; <a href="__CONTROLLER__/index" <?php if( !isset($_GET['typeid']) ) { echo "class='on'"; } ?>>全部</a> &nbsp;&nbsp;
-            <a href="__CONTROLLER__/index/typeid/0" <?php if( $_GET['typeid'] === 0 ) { echo "class='on'"; } ?>>默认分类</a>&nbsp;
             <?php foreach ($types as $key => $type) { ?>
-            <a href="__CONTROLLER__/index/typeid/<?php echo $type['id']; ?>" <?php if($_GET['typeid'] == $type['id']) { echo "class='on'"; } ?>><?php echo $type['name']; ?></a>&nbsp;
+            <a href="__CONTROLLER__/index/typeid/<?php echo $key; ?>" <?php if($_GET['typeid'] == $key) { echo "class='on'"; } ?>><?php echo $type; ?></a>&nbsp;
             <?php } ?>
           </div>
         </td>

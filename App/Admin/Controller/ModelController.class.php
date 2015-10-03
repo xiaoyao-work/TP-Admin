@@ -15,35 +15,13 @@ use Admin\Controller\CommonController;
 */
 define('MODEL_PATH', APP_PATH.'Admin'.DIRECTORY_SEPARATOR.'Common'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR);
 class ModelController extends CommonController {
-    /**
-     * 资讯模型
-     */
-    const NEWS_MODEL = 0;
-    /**
-     * 房产模型
-     */
-    const HOUSE_MODEL = 1;
-    /**
-     * 通用模型
-     */
-    const COMMON_MODEL = 2;
-
-    /**
-     * 模型类别
-     */
-    protected $modelTypes = array(
-        self::NEWS_MODEL => '内容模型',
-        // self::HOUSE_MODEL => '房产模型',
-        self::COMMON_MODEL => '通用模型'
-        );
-
-    protected $db, $type_db, $field_db;
+    protected $db, $fieldDb, $modelTypes;
 
     function __construct() {
         parent::__construct();
         $this->db = D("Model");
-        $this->field_db = D("ModelField");
-        // $this->type_db = D("ModelType");
+        $this->fieldDb = D("ModelField");
+        $this->modelTypes = $this->db->getModelTypes();
     }
 
     public function index() {
@@ -123,7 +101,7 @@ class ModelController extends CommonController {
         }
         if ($this->db->where(array('siteid' => $this->siteid,'id' => $modelid))->delete() !== false) {
             $model_table = $model['tablename'];
-            $this->field_db->where(array('modelid'=>$modelid,'siteid'=>$this->siteid))->delete();
+            $this->fieldDb->where(array('modelid'=>$modelid,'siteid'=>$this->siteid))->delete();
             $this->db->drop_table($model_table);
             if ($model['typeid'] != 2) {
                 $this->db->drop_table($model_table.'_data');
@@ -134,6 +112,9 @@ class ModelController extends CommonController {
         }
     }
 
+    /**
+     * 模型名称重复异步检测
+     */
     public function public_check_name() {
         if (!isset($_GET['field']) || !($_GET[$_GET['clientid']])) exit("0");
         $where = array($_GET['field'] => $_GET[$_GET['clientid']]);
