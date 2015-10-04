@@ -13,7 +13,7 @@ use Think\Model;
 class UserModel extends Model
 {
     public function adminList() {
-        $sql = "SELECT user.*, role.name, role.id as role_id FROM {C('DB_PREFIX')}user AS user, {C('DB_PREFIX')}role AS role, {C('DB_PREFIX')}role_user as ru WHERE user.id = ru.user_id and ru.role_id = role.id ORDER BY user.id ASC";
+        $sql = "SELECT user.*, role.name, role.id as role_id FROM " . C('DB_PREFIX') . "user AS user, " . C('DB_PREFIX') . "role AS role, " . C('DB_PREFIX') . "role_user as ru WHERE user.id = ru.user_id and ru.role_id = role.id ORDER BY user.id ASC";
         $list = $this->query($sql);
         return $list;
     }
