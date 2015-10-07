@@ -109,7 +109,7 @@ class ModuleModel extends Model {
         require MODEL_PATH.'content_input.class.php';
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data);
-        $inputinfo = array_merge($inputinfo['system'], $inputinfo['model']);
+        $inputinfo = $inputinfo['system'];
         $systeminfo = $this->parseField($inputinfo);
         $systeminfo['siteid'] = get_siteid();
         // 设置更新时间

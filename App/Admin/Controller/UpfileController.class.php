@@ -48,6 +48,7 @@ class UpfileController extends Controller {
                         );
 
                     if (in_array( $info[0]['ext'], array('jpg','gif','png','jpeg'))) {
+                        // $mine_type = (version_compare(PHP_VERSION, '5.3.0') >= 0) ? finfo_file(finfo_open(FILEINFO_MIME_TYPE), $attach_info['path']) : mime_content_type($attach_info['path']);
                         $mine_type = mime_content_type($attach_info['path']);
                         $compression_filename = D("Attachment")->gd_compression_image(UPLOAD_PATH . $info[0]["savepath"], $mine_type, $info[0]["savename"]);
                         $attach_info['compression_image'] = UPLOAD_PATH . $info[0]["savepath"] . $compression_filename;

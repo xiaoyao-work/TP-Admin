@@ -77,7 +77,7 @@ class content_form {
 		$minlength = $this->fields[$field]['minlength'];
 		if($errortips || $minlength) $this->formValidator .= '$("#'.$field.'").formValidator({onshow:"",onfocus:"'.$errortips.'"}).inputValidator({min:1,onerror:"'.$errortips.'"})';
 		if (!empty($this->fields[$field]['pattern'])) {
-			$this->formValidator .= '.functionValidator({fun: public function(value, _this) { return '.$this->fields[$field]['pattern'].'.test(value); }, onerror:\''. $errortips .'\'})';
+			$this->formValidator .= '.functionValidator({fun: function(value, _this) { return '.$this->fields[$field]['pattern'].'.test(value); }, onerror:\''. $errortips .'\'})';
 		}
 		$this->formValidator .= ';';
 		return '<input type="text" name="info['.$field.']" id="'.$field.'" size="'.$size.'" value="'.$value.'" class="input-text" '.$formattribute.' '.$css.'>';
