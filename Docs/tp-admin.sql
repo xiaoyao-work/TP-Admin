@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2015-10-03 21:11:41
--- 服务器版本： 5.5.38
--- PHP Version: 5.6.2
+-- Generation Time: 2015-10-07 14:44:42
+-- 服务器版本： 5.5.38-0ubuntu0.14.04.1-log
+-- PHP Version: 5.5.9-1ubuntu4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `tp-admin`
+-- Database: `tp_admin`
 --
 
 -- --------------------------------------------------------
@@ -37,117 +37,142 @@ CREATE TABLE IF NOT EXISTS `xy_access` (
 --
 
 INSERT INTO `xy_access` (`role_id`, `node_id`, `siteid`) VALUES
-(2, 2, 1),
+(2, 0, 1),
 (2, 1, 1),
-(2, 41, 1),
-(2, 25, 1),
-(2, 69, 1),
-(2, 63, 1),
-(2, 186, 1),
-(2, 185, 1),
-(2, 184, 1),
-(2, 183, 1),
-(2, 182, 1),
-(2, 180, 1),
-(2, 179, 1),
-(2, 178, 1),
-(2, 177, 1),
-(2, 176, 1),
-(2, 181, 1),
-(2, 197, 1),
-(2, 47, 1),
-(2, 46, 1),
-(2, 45, 1),
-(2, 196, 1),
-(2, 43, 1),
-(2, 175, 1),
-(2, 174, 1),
-(2, 173, 1),
-(2, 172, 1),
-(2, 171, 1),
-(2, 170, 1),
-(2, 169, 1),
-(2, 168, 1),
-(2, 167, 1),
-(2, 166, 1),
-(2, 165, 1),
-(2, 164, 1),
-(2, 163, 1),
-(2, 162, 1),
-(2, 161, 1),
-(2, 160, 1),
-(2, 159, 1),
-(2, 158, 1),
-(2, 157, 1),
-(2, 156, 1),
-(2, 155, 1),
-(2, 154, 1),
-(2, 153, 1),
-(2, 152, 1),
-(2, 151, 1),
-(2, 150, 1),
-(2, 149, 1),
-(2, 148, 1),
-(2, 147, 1),
-(2, 146, 1),
-(2, 141, 1),
-(2, 140, 1),
-(2, 139, 1),
-(2, 138, 1),
-(2, 95, 1),
-(2, 145, 1),
-(2, 144, 1),
-(2, 143, 1),
-(2, 142, 1),
-(2, 94, 1),
-(2, 137, 1),
-(2, 136, 1),
-(2, 135, 1),
-(2, 134, 1),
-(2, 90, 1),
-(2, 97, 1),
-(2, 195, 1),
-(2, 236, 1),
-(2, 234, 1),
-(2, 229, 1),
-(2, 216, 1),
-(2, 215, 1),
-(2, 214, 1),
-(2, 213, 1),
-(2, 199, 1),
-(2, 198, 1),
-(2, 194, 1),
-(2, 192, 1),
-(2, 188, 1),
-(2, 212, 1),
-(2, 211, 1),
-(2, 210, 1),
-(2, 209, 1),
-(2, 204, 1),
-(2, 203, 1),
-(2, 202, 1),
-(2, 201, 1),
-(2, 200, 1),
-(2, 208, 1),
-(2, 207, 1),
-(2, 206, 1),
-(2, 205, 1),
-(2, 191, 1),
-(2, 190, 1),
-(2, 189, 1),
-(2, 187, 1),
-(2, 133, 1),
-(2, 96, 1),
-(2, 32, 1),
+(2, 1, 2),
+(2, 3, 1),
 (2, 5, 1),
-(2, 58, 1),
-(2, 59, 1),
-(2, 53, 2),
-(2, 66, 2),
-(2, 32, 2),
 (2, 5, 2),
+(2, 11, 1),
+(2, 12, 1),
+(2, 16, 1),
+(2, 19, 1),
+(2, 21, 1),
+(2, 25, 1),
+(2, 32, 1),
+(2, 32, 2),
+(2, 41, 1),
+(2, 43, 1),
+(2, 43, 2),
+(2, 45, 1),
+(2, 45, 2),
+(2, 46, 2),
+(2, 47, 2),
+(2, 53, 1),
+(2, 53, 2),
+(2, 58, 1),
 (2, 58, 2),
-(2, 59, 2);
+(2, 59, 1),
+(2, 59, 2),
+(2, 62, 1),
+(2, 63, 1),
+(2, 66, 1),
+(2, 66, 2),
+(2, 68, 1),
+(2, 69, 1),
+(2, 114, 1),
+(2, 115, 1),
+(2, 116, 1),
+(2, 196, 1),
+(2, 196, 2),
+(2, 245, 1),
+(2, 245, 2),
+(2, 246, 1),
+(2, 246, 2),
+(2, 247, 1),
+(2, 247, 2),
+(2, 248, 1),
+(2, 248, 2),
+(2, 249, 1),
+(2, 249, 2),
+(2, 253, 1),
+(2, 254, 1),
+(2, 254, 2),
+(2, 255, 2),
+(2, 256, 2),
+(2, 257, 1),
+(2, 257, 2),
+(2, 258, 1),
+(2, 258, 2),
+(2, 259, 1),
+(2, 259, 2),
+(2, 260, 1),
+(2, 260, 2),
+(2, 261, 1),
+(2, 261, 2),
+(2, 262, 1),
+(2, 262, 2),
+(2, 263, 1),
+(2, 263, 2),
+(2, 264, 1),
+(2, 264, 2),
+(2, 265, 1),
+(2, 265, 2),
+(2, 266, 1),
+(2, 266, 2),
+(2, 267, 1),
+(2, 267, 2),
+(2, 268, 1),
+(2, 268, 2),
+(2, 269, 1),
+(2, 269, 2),
+(2, 271, 1),
+(2, 273, 1),
+(2, 276, 1),
+(2, 276, 2),
+(2, 277, 1),
+(2, 277, 2),
+(2, 278, 2),
+(2, 279, 2),
+(2, 280, 1),
+(2, 280, 2),
+(2, 281, 1),
+(2, 281, 2),
+(2, 282, 1),
+(2, 282, 2),
+(2, 283, 2),
+(2, 284, 2),
+(2, 285, 1),
+(2, 285, 2),
+(2, 286, 1),
+(2, 286, 2),
+(2, 287, 1),
+(2, 287, 2),
+(2, 288, 1),
+(2, 288, 2),
+(2, 289, 1),
+(2, 289, 2),
+(2, 290, 1),
+(2, 290, 2),
+(2, 291, 1),
+(2, 291, 2),
+(2, 293, 1),
+(2, 294, 1),
+(2, 295, 1),
+(2, 297, 1),
+(2, 300, 1),
+(2, 300, 2),
+(2, 301, 1),
+(2, 301, 2),
+(2, 302, 1),
+(2, 302, 2),
+(2, 303, 2),
+(2, 304, 2),
+(2, 305, 1),
+(2, 305, 2),
+(2, 306, 1),
+(2, 306, 2),
+(2, 307, 1),
+(2, 307, 2),
+(2, 308, 1),
+(2, 308, 2),
+(2, 309, 1),
+(2, 309, 2),
+(2, 310, 1),
+(2, 310, 2),
+(2, 311, 1),
+(2, 311, 2),
+(2, 312, 1);
 
 -- --------------------------------------------------------
 
@@ -174,9 +199,7 @@ CREATE TABLE IF NOT EXISTS `xy_attachment` (
   `height` smallint(6) DEFAULT NULL,
   `compression_url` varchar(255) DEFAULT NULL,
   `siteid` tinyint(4) NOT NULL DEFAULT '1' COMMENT '站点ID'
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1417594363 ;
 
 --
 -- 表的结构 `xy_category`
@@ -208,18 +231,33 @@ CREATE TABLE IF NOT EXISTS `xy_category` (
   `hits` int(10) NOT NULL DEFAULT '0',
   `items` mediumint(8) NOT NULL DEFAULT '0',
   `type` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- 转存表中的数据 `xy_category`
 --
 
 INSERT INTO `xy_category` (`id`, `siteid`, `catname`, `catdir`, `parentdir`, `arrparentid`, `parentid`, `child`, `arrchildid`, `modelid`, `module`, `title`, `keywords`, `description`, `listorder`, `image`, `url`, `level`, `setting`, `ismenu`, `sethtml`, `letter`, `hits`, `items`, `type`) VALUES
-(1, 1, '头条', 'toutiao', '', '0', 0, 0, '1', 16, '内容模型', '', '', '', 0, '', '', 1, 'array (\n  ''meta_title'' => '''',\n  ''meta_keywords'' => '''',\n  ''meta_description'' => '''',\n)', 1, 0, '', 0, 0, 1),
+(1, 1, '头条', 'toutiao', '', '0', 0, 1, '1,7', 16, '内容模型', '', '', '', 0, '', '', 1, 'array (\n  ''meta_title'' => '''',\n  ''meta_keywords'' => '''',\n  ''meta_description'' => '''',\n)', 1, 0, '', 0, 0, 1),
 (2, 1, '导购', 'daogou', '', '0', 0, 0, '2', 16, '内容模型', '', '', '', 0, '', '', 1, 'array (\n  ''meta_title'' => '''',\n  ''meta_keywords'' => '''',\n  ''meta_description'' => '''',\n)', 1, 0, '', 0, 0, 1),
 (3, 1, '快讯', 'kuaixun', '', '0', 0, 0, '3', 16, '内容模型', '', '', '', 0, '', '', 1, 'array (\n  ''meta_title'' => '''',\n  ''meta_keywords'' => '''',\n  ''meta_description'' => '''',\n)', 1, 0, '', 0, 0, 1),
 (4, 1, '热点', 'redian', 'top/', '0,6', 6, 0, '4', 16, '内容模型', '', '', '', 0, '', '', 2, 'array (\n  ''meta_title'' => '''',\n  ''meta_keywords'' => '''',\n  ''meta_description'' => '''',\n)', 1, 0, '', 0, 0, 1),
-(6, 1, '顶级栏目', 'top', '', '0', 0, 1, '6,4', 16, '内容模型', '', '', '', 0, '', '', 1, 'array (\n  ''meta_title'' => '''',\n  ''meta_keywords'' => '''',\n  ''meta_description'' => '''',\n)', 1, 0, '', 0, 0, 1);
+(6, 1, '顶级栏目', 'top', '', '0', 0, 1, '6,4', 16, '内容模型', '', '', '', 0, '', '', 1, 'array (\n  ''meta_title'' => '''',\n  ''meta_keywords'' => '''',\n  ''meta_description'' => '''',\n)', 1, 0, '', 0, 0, 1),
+(7, 1, 'iii', '888', 'toutiao/', '0,1', 1, 0, '7', 16, '内容模型', '', '', '', 0, '', '', 2, 'array (\n  ''meta_title'' => '''',\n  ''meta_keywords'' => '''',\n  ''meta_description'' => '''',\n)', 1, 0, '', 0, 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `xy_feedback`
+--
+
+CREATE TABLE IF NOT EXISTS `xy_feedback` (
+`id` int(11) unsigned NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `name` varchar(50) NOT NULL COMMENT '称呼',
+  `email` varchar(50) NOT NULL COMMENT '邮箱',
+  `content` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户留言' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -617,7 +655,7 @@ INSERT INTO `xy_linkage` (`id`, `name`, `style`, `parentid`, `child`, `arrchildi
 (3363, '天津市', '0', 3780, 0, '3363', 3360, 0, '', 'array (\n  ''level'' => ''0'',\n)', 0),
 (3362, '上海市', '0', 3780, 0, '3362', 3360, 0, '', 'array (\n  ''level'' => ''0'',\n)', 0),
 (3361, '北京市', '0', 3780, 0, '3361', 3360, 0, '', 'array (\n  ''level'' => ''0'',\n)', 0),
-(3360, '城市列表', '2', 0, 0, '', 0, 0, '', 'array (\n  ''level'' => ''0'',\n)', 0),
+(3360, '城市列表', '1', 0, 0, '', 0, 0, '', 'array (\n  ''level'' => ''0'',\n)', 0),
 (3781, '特别行政区', '', 0, 1, '3781,3393,3394', 3360, 32, '', NULL, 0),
 (3731, '海西州', '', 3389, 0, '3731', 3360, 0, '', NULL, 0),
 (3732, '银川市', '', 3390, 0, '3732', 3360, 0, '', NULL, 0),
@@ -685,7 +723,8 @@ CREATE TABLE IF NOT EXISTS `xy_log` (
   `ip` varchar(50) NOT NULL COMMENT 'IP',
   `date` datetime NOT NULL COMMENT '时间',
   `status` tinyint(1) NOT NULL COMMENT '0：登陆失败; 1：操作成功；2：无权限'
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33003 ;
+
 -- --------------------------------------------------------
 
 --
@@ -700,17 +739,49 @@ CREATE TABLE IF NOT EXISTS `xy_model` (
   `controller` varchar(255) NOT NULL,
   `description` varchar(200) NOT NULL DEFAULT '',
   `typeid` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `issystem` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `issearch` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `listfields` varchar(255) NOT NULL DEFAULT '',
+  `setup` mediumtext NOT NULL,
   `listorder` smallint(3) unsigned NOT NULL DEFAULT '0',
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `postgroup` varchar(100) NOT NULL DEFAULT '',
+  `ispost` tinyint(1) unsigned NOT NULL DEFAULT '0'
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
 
 --
 -- 转存表中的数据 `xy_model`
 --
 
-INSERT INTO `xy_model` (`id`, `siteid`, `name`, `tablename`, `controller`, `description`, `typeid`, `listorder`, `status`) VALUES
-(16, 1, '内容模型', 'news', 'Content', '新闻模型', 0, 0, 0),
-(35, 1, '通用模型', 'test', '', '', 2, 0, 0);
+INSERT INTO `xy_model` (`id`, `siteid`, `name`, `tablename`, `controller`, `description`, `typeid`, `issystem`, `issearch`, `listfields`, `setup`, `listorder`, `status`, `postgroup`, `ispost`) VALUES
+(16, 1, '内容模型', 'news', 'Content', '新闻模型', 0, 0, 0, '', '', 0, 0, '', 0),
+(23, 1, '通用模型', 'model_common', '', '', 2, 0, 0, '', '', 0, 0, '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `xy_model_common`
+--
+
+CREATE TABLE IF NOT EXISTS `xy_model_common` (
+`id` mediumint(8) NOT NULL,
+  `siteid` smallint(5) NOT NULL,
+  `title` varchar(80) NOT NULL DEFAULT '',
+  `listorder` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `username` char(20) NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `inputtime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updatetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `image` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- 转存表中的数据 `xy_model_common`
+--
+
+INSERT INTO `xy_model_common` (`id`, `siteid`, `title`, `listorder`, `username`, `status`, `inputtime`, `updatetime`, `image`) VALUES
+(3, 1, '通用模型测试', 0, 'xiaoyao', 0, '2015-10-01 16:04:51', '2015-10-01 16:04:53', 'http://tp-admin.hhailuo.com/Uploads/2015-09-25/5604db32ae3f9.jpg'),
+(4, 1, '通用模', 0, 'xiaoyao', 0, '2015-10-01 16:12:09', '2015-10-07 06:43:39', 'http://tp-admin.hhailuo.com/Uploads/2015-09-25/5604db32ae3f9.jpg');
 
 -- --------------------------------------------------------
 
@@ -742,12 +813,12 @@ CREATE TABLE IF NOT EXISTS `xy_model_field` (
   `issearch` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `isadd` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `islist` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `isfulltext` tinyint(1) NOT NULL DEFAULT '0',
+  `isfulltext` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `isposition` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `listorder` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `disabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `isomnipotent` tinyint(1) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=132 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=113 ;
 
 --
 -- 转存表中的数据 `xy_model_field`
@@ -756,13 +827,13 @@ CREATE TABLE IF NOT EXISTS `xy_model_field` (
 INSERT INTO `xy_model_field` (`fieldid`, `modelid`, `siteid`, `field`, `name`, `tips`, `css`, `minlength`, `maxlength`, `pattern`, `errortips`, `formtype`, `setting`, `formattribute`, `unsetgroupids`, `unsetroleids`, `iscore`, `issystem`, `isunique`, `isbase`, `issearch`, `isadd`, `islist`, `isfulltext`, `isposition`, `listorder`, `disabled`, `isomnipotent`) VALUES
 (54, 16, 1, 'catid', '栏目', '', '', 1, 6, '/^[0-9]{1,6}$/', '请选择栏目', 'catid', 'array (\n  ''defaultvalue'' => '''',\n)', '', '-99', '-99', 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0),
 (55, 16, 1, 'typeid', '类别', '', '', 0, 0, '', '', 'typeid', 'array (\n  ''minnumber'' => '''',\n  ''defaultvalue'' => '''',\n)', '', '', '', 0, 1, 0, 1, 1, 1, 0, 0, 0, 2, 1, 0),
-(56, 16, 1, 'title', '标题', '', 'inputtitle', 1, 80, '', '请输入标题', 'title', '', '', '', '', 0, 1, 0, 1, 1, 1, 1, 0, 1, 4, 0, 0),
-(57, 16, 1, 'keywords', '关键词', '多关键词之间用空格或者“,”隔开', '', 0, 40, '', '', 'keyword', 'array (\r\n  ''size'' => ''100'',\r\n  ''defaultvalue'' => '''',\r\n)', '', '-99', '-99', 0, 1, 0, 1, 1, 1, 1, 0, 0, 7, 0, 0),
-(58, 16, 1, 'description', '摘要', '', '', 0, 255, '', '', 'textarea', 'array (\r\n  ''width'' => ''98'',\r\n  ''height'' => ''46'',\r\n  ''defaultvalue'' => '''',\r\n  ''enablehtml'' => ''0'',\r\n)', '', '', '', 0, 1, 0, 1, 0, 1, 1, 0, 1, 10, 0, 0),
+(56, 16, 1, 'title', '标题', '', 'inputtitle', 1, 80, '', '请输入标题', 'title', '', '', '', '', 0, 1, 0, 1, 1, 1, 0, 1, 1, 4, 0, 0),
+(57, 16, 1, 'keywords', '关键词', '多关键词之间用空格或者“,”隔开', '', 0, 40, '', '', 'keyword', 'array (\r\n  ''size'' => ''100'',\r\n  ''defaultvalue'' => '''',\r\n)', '', '-99', '-99', 0, 1, 0, 1, 1, 1, 0, 1, 0, 7, 0, 0),
+(58, 16, 1, 'description', '摘要', '', '', 0, 255, '', '', 'textarea', 'array (\r\n  ''width'' => ''98'',\r\n  ''height'' => ''46'',\r\n  ''defaultvalue'' => '''',\r\n  ''enablehtml'' => ''0'',\r\n)', '', '', '', 0, 1, 0, 1, 0, 1, 0, 1, 1, 10, 0, 0),
 (59, 16, 1, 'updatetime', '更新时间', '', '', 0, 0, '', '', 'datetime', 'array (\r\n  ''dateformat'' => ''int'',\r\n  ''format'' => ''Y-m-d H:i:s'',\r\n  ''defaulttype'' => ''1'',\r\n  ''defaultvalue'' => '''',\r\n)', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 12, 0, 0),
-(60, 16, 1, 'content', '内容', '', '', 1, 999999, '', '内容不能为空', 'editor', 'array (\n  ''toolbar'' => ''full'',\n  ''defaultvalue'' => '''',\n  ''enablekeylink'' => ''1'',\n  ''replacenum'' => ''2'',\n  ''link_mode'' => ''0'',\n  ''enablesaveimage'' => ''1'',\n  ''height'' => '''',\n  ''disabled_page'' => ''0'',\n)', '', '', '', 0, 0, 0, 1, 0, 1, 1, 0, 0, 13, 0, 0),
+(60, 16, 1, 'content', '内容', '', '', 1, 999999, '', '内容不能为空', 'editor', 'array (\n  ''toolbar'' => ''full'',\n  ''defaultvalue'' => '''',\n  ''enablekeylink'' => ''1'',\n  ''replacenum'' => ''2'',\n  ''link_mode'' => ''0'',\n  ''enablesaveimage'' => ''1'',\n  ''height'' => '''',\n  ''disabled_page'' => ''0'',\n)', '', '', '', 0, 0, 0, 1, 0, 1, 0, 1, 0, 13, 0, 0),
 (61, 16, 1, 'thumb', '缩略图', '', '', 0, 100, '', '', 'image', 'array (\n  ''size'' => ''50'',\n  ''defaultvalue'' => '''',\n  ''show_type'' => ''1'',\n  ''upload_maxsize'' => ''1024'',\n  ''upload_allowext'' => ''jpg|jpeg|gif|png|bmp'',\n  ''watermark'' => ''0'',\n  ''isselectimage'' => ''1'',\n  ''images_width'' => '''',\n  ''images_height'' => '''',\n)', '', '', '', 0, 1, 0, 0, 0, 1, 0, 0, 1, 14, 0, 0),
-(62, 16, 1, 'relation', '相关文章', '', '', 0, 0, '', '', 'omnipotent', 'array (\n  ''formtext'' => ''<input type=\\''hidden\\'' name=\\''info[relation][ids]\\'' id=\\''relation\\'' value=\\''{FIELD_VALUE_IDS}\\'' style=\\''50\\'' >\r\n<input type=\\''hidden\\'' name=\\''info[relation][cats]\\'' id=\\''relation_cats\\'' \r\nvalue=\\''{FIELD_VALUE_CATS}\\'' style=\\''50\\'' >\r\n<input type=\\''hidden\\'' name=\\''info[relation][title]\\'' id=\\''relation_title\\'' value=\\''{FIELD_VALUE_TITLE}\\''>\r\n<ul class="list-dot" id="relation_text"></ul>\r\n<div>\r\n<input type=\\''button\\'' value="添加相关" onclick="omnipotent(\\''selectid\\'',\\''{URL_ADD_RELATION}?modelid={MODELID}\\'',\\''添加相关文章\\'',1)" class="button" style="width:66px;">\r\n<span class="edit_content">\r\n<input type=\\''button\\'' value="显示已有" onclick="show_relation(\\''{URL_SHOW_RELATION}\\'',{MODELID},{ID})" class="button" style="width:66px;">\r\n</span>\r\n</div>'',\n  ''fieldtype'' => ''text'',\n  ''minnumber'' => ''1'',\n)', '', '', '', 0, 0, 0, 0, 0, 0, 1, 0, 0, 15, 0, 0),
+(62, 16, 1, 'relation', '相关文章', '', '', 0, 0, '', '', 'omnipotent', 'array (\n  ''formtext'' => ''<input type=\\''hidden\\'' name=\\''info[relation][ids]\\'' id=\\''relation\\'' value=\\''{FIELD_VALUE_IDS}\\'' style=\\''50\\'' >\r\n<input type=\\''hidden\\'' name=\\''info[relation][cats]\\'' id=\\''relation_cats\\'' \r\nvalue=\\''{FIELD_VALUE_CATS}\\'' style=\\''50\\'' >\r\n<input type=\\''hidden\\'' name=\\''info[relation][title]\\'' id=\\''relation_title\\'' value=\\''{FIELD_VALUE_TITLE}\\''>\r\n<ul class="list-dot" id="relation_text"></ul>\r\n<div>\r\n<input type=\\''button\\'' value="添加相关" onclick="omnipotent(\\''selectid\\'',\\''{URL_ADD_RELATION}?modelid={MODELID}\\'',\\''添加相关文章\\'',1)" class="button" style="width:66px;">\r\n<span class="edit_content">\r\n<input type=\\''button\\'' value="显示已有" onclick="show_relation(\\''{URL_SHOW_RELATION}\\'',{MODELID},{ID})" class="button" style="width:66px;">\r\n</span>\r\n</div>'',\n  ''fieldtype'' => ''text'',\n  ''minnumber'' => ''1'',\n)', '', '', '', 0, 0, 0, 0, 0, 0, 0, 1, 0, 15, 0, 0),
 (64, 16, 1, 'inputtime', '发布时间', '', '', 0, 0, '', '', 'datetime', 'array (\n  ''fieldtype'' => ''int'',\n  ''format'' => ''Y-m-d H:i:s'',\n  ''defaulttype'' => ''0'',\n)', '', '', '', 0, 1, 0, 0, 0, 0, 0, 0, 1, 17, 0, 0),
 (65, 16, 1, 'posids', '推荐位', '', '', 0, 0, '', '', 'posid', 'array (\n  ''cols'' => ''4'',\n  ''width'' => ''125'',\n)', '', '', '', 0, 1, 0, 1, 0, 0, 0, 0, 0, 18, 0, 0),
 (67, 16, 1, 'url', 'URL', '', '', 0, 100, '', '', 'text', 'array (\n  ''size'' => '''',\n  ''defaultvalue'' => '''',\n  ''ispassword'' => ''0'',\n)', '', '', '', 1, 1, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0),
@@ -774,11 +845,15 @@ INSERT INTO `xy_model_field` (`fieldid`, `modelid`, `siteid`, `field`, `name`, `
 (73, 16, 1, 'username', '用户名', '', '', 0, 20, '', '', 'text', '', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 98, 0, 0),
 (74, 16, 1, 'islink', '转向链接', '', '', 0, 0, '', '', 'islink', 'array (\n  ''size'' => '''',\n)', '', '', '', 0, 1, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0),
 (76, 16, 1, 'copyfrom', '来源', '', '', 0, 0, '', '', 'copyfrom', 'array (\n  ''defaultvalue'' => '''',\n)', '', '', '', 0, 0, 0, 1, 0, 1, 0, 0, 0, 5, 0, 0),
-(113, 35, 1, 'inputtime', '发布时间', '', '', 0, 0, '', '', 'datetime', 'array (  ''fieldtype'' => ''datetime'',  ''format'' => ''Y-m-d H:i:s'',  ''defaulttype'' => ''1'',)', '', '', '', 0, 1, 0, 0, 0, 0, 0, 0, 1, 17, 0, 0),
-(112, 35, 1, 'updatetime', '更新时间', '', '', 0, 0, '', '', 'datetime', 'array (\n  ''fieldtype'' => ''datetime'',\n  ''format'' => ''Y-m-d H:i:s'',\n  ''defaulttype'' => ''0'',\n)', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 12, 0, 0),
-(111, 35, 1, 'title', '标题', '', 'inputtitle', 1, 80, '', '请输入标题', 'title', '', '', '', '', 0, 1, 0, 1, 1, 1, 1, 1, 1, 4, 0, 0),
-(114, 35, 1, 'listorder', '排序', '', '', 0, 6, '', '', 'number', '', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 51, 0, 0),
-(115, 35, 1, 'image', '图片测试', '', '', 0, 0, '', '', 'image', 'array (  ''size'' => '''',  ''defaultvalue'' => '''',  ''show_type'' => ''0'',  ''upload_allowext'' => ''gif|jpg|jpeg|png|bmp'',  ''watermark'' => ''0'',  ''isselectimage'' => ''1'',  ''images_width'' => '''',  ''images_height'' => '''',)', '', '', '', 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0);
+(110, 23, 1, 'inputtime', '发布时间', '', '', 0, 0, '', '', 'datetime', 'array (\n  ''fieldtype'' => ''datetime'',\n  ''format'' => ''Y-m-d H:i:s'',\n  ''defaulttype'' => ''0'',\n)', '', '', '', 0, 1, 0, 0, 0, 0, 0, 0, 1, 17, 0, 0),
+(111, 23, 1, 'listorder', '排序', '', '', 0, 6, '', '', 'number', '', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 51, 0, 0),
+(112, 23, 1, 'image', '图片测试', '', '', 0, 0, '', '', 'image', 'array (\n  ''size'' => '''',\n  ''defaultvalue'' => '''',\n  ''show_type'' => ''0'',\n  ''upload_allowext'' => ''gif|jpg|jpeg|png|bmp'',\n  ''watermark'' => ''0'',\n  ''isselectimage'' => ''1'',\n  ''images_width'' => '''',\n  ''images_height'' => '''',\n)', '', '', '', 0, 1, 0, 1, 0, 1, 0, 0, 0, 5, 0, 0),
+(109, 23, 1, 'updatetime', '更新时间', '', '', 0, 0, '', '', 'datetime', 'array (\r\n  ''dateformat'' => ''datetime'',\r\n  ''format'' => ''Y-m-d H:i:s'',\r\n  ''defaulttype'' => ''0'',\r\n  ''defaultvalue'' => '''',\r\n)', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 12, 0, 0),
+(108, 23, 1, 'title', '标题', '', 'inputtitle', 1, 80, '', '请输入标题', 'title', '', '', '', '', 0, 1, 0, 1, 0, 1, 1, 1, 1, 4, 0, 0),
+(104, 16, 1, 'email', 'email', '', '', 1, 0, '/^[\\w\\-\\.]+@[\\w\\-\\.]+(\\.\\w+)+$/', '邮箱地址不争取', 'text', 'array (\n  ''size'' => ''50'',\n  ''defaultvalue'' => '''',\n  ''ispassword'' => ''0'',\n)', '', '', '', 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0),
+(105, 16, 1, 'test', '地图测试', '', '', 0, 0, '', '', 'map', 'array (\n  ''maptype'' => ''2'',\n  ''api_key'' => '''',\n  ''defaultcity'' => '''',\n  ''hotcitys'' => '''',\n  ''width'' => '''',\n  ''height'' => '''',\n)', '', '', '', 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0),
+(106, 16, 1, 'file_test', '多文件上传', '', '', 0, 0, '', '', 'downfiles', 'array (\n  ''upload_allowext'' => ''gif|jpg|jpeg|png|bmp'',\n  ''isselectimage'' => ''0'',\n  ''upload_number'' => ''10'',\n  ''downloadlink'' => ''1'',\n  ''downloadtype'' => ''1'',\n)', '', '', '', 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0),
+(107, 16, 1, 'test_author', '测试作者', '', '', 0, 0, '', '', 'author', 'array (\n  ''defaultvalue'' => '''',\n)', '', '', '', 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -794,6 +869,15 @@ CREATE TABLE IF NOT EXISTS `xy_model_type` (
   `description` varchar(255) NOT NULL,
   `listorder` smallint(5) NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- 转存表中的数据 `xy_model_type`
+--
+
+INSERT INTO `xy_model_type` (`id`, `name`, `module`, `siteid`, `description`, `listorder`) VALUES
+(1, '楼盘分类', 'House', 1, '楼盘分类，包括新房，小区，二手房等模型', 2),
+(2, '二手房出售', 'Sale', 1, '', 0),
+(3, '二手房出租', 'Rent', 1, '', 0);
 
 -- --------------------------------------------------------
 
@@ -820,7 +904,8 @@ CREATE TABLE IF NOT EXISTS `xy_news` (
   `username` char(20) NOT NULL,
   `inputtime` int(10) unsigned NOT NULL DEFAULT '0',
   `updatetime` int(10) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 -- --------------------------------------------------------
 
 --
@@ -828,7 +913,7 @@ CREATE TABLE IF NOT EXISTS `xy_news` (
 --
 
 CREATE TABLE IF NOT EXISTS `xy_news_data` (
-  `id` mediumint(8) unsigned NOT NULL DEFAULT '0',
+`id` mediumint(8) unsigned NOT NULL,
   `content` mediumtext NOT NULL,
   `readpoint` smallint(5) unsigned NOT NULL DEFAULT '0',
   `paginationtype` tinyint(1) NOT NULL,
@@ -837,8 +922,13 @@ CREATE TABLE IF NOT EXISTS `xy_news_data` (
   `paytype` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `allow_comment` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `relation` text NOT NULL,
-  `copyfrom` varchar(255) NOT NULL DEFAULT ''
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `copyfrom` varchar(255) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL DEFAULT '',
+  `test` varchar(255) NOT NULL DEFAULT '',
+  `file_test` mediumtext NOT NULL,
+  `test_author` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 -- --------------------------------------------------------
 
 --
@@ -855,7 +945,7 @@ CREATE TABLE IF NOT EXISTS `xy_node` (
   `sort` smallint(6) unsigned DEFAULT NULL,
   `pid` smallint(6) unsigned NOT NULL,
   `params` varchar(255) NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=313 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=315 ;
 
 --
 -- 转存表中的数据 `xy_node`
@@ -948,7 +1038,7 @@ INSERT INTO `xy_node` (`id`, `module`, `action`, `title`, `status`, `remark`, `s
 (306, 'ModelField', 'listorder', '字段排序', 1, '', 0, 301, ''),
 (311, 'Attachment', 'album_list', '图库', 1, '', 0, 310, ''),
 (260, 'Content', 'public_getsite_categorys', '异步加载栏目', 1, '', 0, 247, ''),
-(266, 'Module', 'index', '内容管理', 1, '', 0, 265, 'moduleid=35'),
+(266, 'Module', 'index', '内容管理', 1, '', 0, 265, 'moduleid=23'),
 (258, 'Content', 'init', '内容管理首页', 1, '', 0, 247, ''),
 (256, 'Content', 'delete', '删除', 1, '', 0, 247, ''),
 (257, 'Content', 'public_categorys', '侧边栏', 1, '', 0, 247, ''),
@@ -959,7 +1049,9 @@ INSERT INTO `xy_node` (`id`, `module`, `action`, `title`, `status`, `remark`, `s
 (248, 'Category', 'index', '栏目管理', 1, '', 3, 246, ''),
 (249, 'Model', 'index', '模型管理', 1, '', 2, 246, ''),
 (305, 'ModelField', 'disabled', '禁用字段', 1, '', 0, 301, ''),
-(304, 'ModelField', 'delete', '删除字段', 1, '', 0, 301, '');
+(304, 'ModelField', 'delete', '删除字段', 1, '', 0, 301, ''),
+(313, 'Module', 'add', '添加', 1, '', 0, 266, 'moduleid=23'),
+(314, 'Module', 'edit', '修改', 1, '', 0, 266, 'moduleid=23');
 
 -- --------------------------------------------------------
 
@@ -978,7 +1070,18 @@ CREATE TABLE IF NOT EXISTS `xy_position` (
   `siteid` smallint(5) unsigned NOT NULL DEFAULT '0',
   `thumb` char(200) NOT NULL,
   `typeid` smallint(5) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+
+--
+-- 转存表中的数据 `xy_position`
+--
+
+INSERT INTO `xy_position` (`id`, `modelid`, `catid`, `name`, `maxnum`, `extention`, `listorder`, `siteid`, `thumb`, `typeid`) VALUES
+(4, -1, -1, '楼盘首页推荐', 20, NULL, 0, 0, '', 1),
+(9, -1, -1, '二手房首页优质出售房源推荐', 20, NULL, 0, 1, '', 2),
+(8, -1, -1, '首页出售房源', 20, NULL, 0, 1, '', 2),
+(10, -1, -1, '二手房首页优质出租房源推荐', 20, NULL, 0, 1, '', 3),
+(11, -1, -1, '边栏推荐房源', 20, NULL, 0, 1, '', 2);
 
 -- --------------------------------------------------------
 
@@ -987,7 +1090,7 @@ CREATE TABLE IF NOT EXISTS `xy_position` (
 --
 
 CREATE TABLE IF NOT EXISTS `xy_position_data` (
-  `id` int(8) unsigned NOT NULL DEFAULT '0',
+`id` int(8) unsigned NOT NULL,
   `catid` smallint(5) unsigned NOT NULL DEFAULT '0',
   `posid` smallint(5) unsigned NOT NULL DEFAULT '0',
   `module` char(20) DEFAULT NULL,
@@ -999,7 +1102,18 @@ CREATE TABLE IF NOT EXISTS `xy_position_data` (
   `expiration` int(10) NOT NULL,
   `synedit` tinyint(1) NOT NULL DEFAULT '1',
   `type` char(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=950 ;
+
+--
+-- 转存表中的数据 `xy_position_data`
+--
+
+INSERT INTO `xy_position_data` (`id`, `catid`, `posid`, `module`, `modelid`, `thumb`, `data`, `siteid`, `listorder`, `expiration`, `synedit`, `type`) VALUES
+(3, 0, 4, 'House', 0, 'http://www.cdfdc.com/wechat/Uploads/2014/01/23/1390468861.jpg', 'array (\n  ''title'' => ''金色世纪'',\n  ''url'' => ''/xiaoyaocms/Wx/Index/project/id/3.html'',\n  ''description'' => '''',\n  ''inputtime'' => 1401410857,\n)', 1, 3, 0, 1, ''),
+(949, 0, 9, 'Sale', 0, '', NULL, 1, 0, 0, 1, ''),
+(948, 0, 9, 'Sale', 0, '', NULL, 1, 0, 0, 1, ''),
+(11, 0, 10, 'Rent', 0, '', NULL, 1, 0, 0, 1, ''),
+(10, 0, 10, 'Rent', 0, '', NULL, 1, 0, 0, 1, '');
 
 -- --------------------------------------------------------
 
@@ -1013,7 +1127,7 @@ CREATE TABLE IF NOT EXISTS `xy_role` (
   `pid` smallint(6) DEFAULT NULL,
   `status` tinyint(1) unsigned DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- 转存表中的数据 `xy_role`
@@ -1046,7 +1160,30 @@ INSERT INTO `xy_role_user` (`role_id`, `user_id`) VALUES
 (2, '42'),
 (2, '43'),
 (2, '44'),
-(2, '45');
+(2, '45'),
+(2, '46'),
+(2, '47'),
+(2, '48'),
+(2, '49');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `xy_session`
+--
+
+CREATE TABLE IF NOT EXISTS `xy_session` (
+  `session_id` varchar(255) NOT NULL,
+  `session_expire` int(11) NOT NULL,
+  `session_data` blob
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `xy_session`
+--
+
+INSERT INTO `xy_session` (`session_id`, `session_expire`, `session_data`) VALUES
+('040170a11972af96898788db3b250423', 1390961087, '');
 
 -- --------------------------------------------------------
 
@@ -1074,35 +1211,8 @@ CREATE TABLE IF NOT EXISTS `xy_site` (
 --
 
 INSERT INTO `xy_site` (`id`, `name`, `dirname`, `domain`, `site_title`, `keywords`, `description`, `release_point`, `default_style`, `template`, `setting`, `uuid`) VALUES
-(1, '红海螺-房产', 'www', 'http://www.esf.cdfdc.com', 'XiaoYaoCMS', 'XiaoYaoCMS 房地产CMS 微信公众平台', 'XiaoYaoCMS 房产门户系统，集成微信公众平台', '', 'default', 'Admin', 'array (\n  ''upload_maxsize'' => ''1024'',\n  ''upload_allowext'' => ''jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf'',\n  ''watermark_enable'' => ''0'',\n  ''watermark_minwidth'' => ''300'',\n  ''watermark_minheight'' => ''300'',\n  ''watermark_img'' => ''/mark.png'',\n  ''watermark_pct'' => ''85'',\n  ''watermark_quality'' => ''80'',\n)', '3d3fd04a-6433-11e1-b487-1c750850a1c3'),
-(2, '澧县', 'lx', 'http://lx.esf.cdfdc.com', '澧县房地产信息网', '', '', NULL, NULL, NULL, 'array (\n  ''upload_maxsize'' => ''2048'',\n  ''upload_allowext'' => ''jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf'',\n  ''watermark_enable'' => ''0'',\n  ''watermark_minwidth'' => ''300'',\n  ''watermark_minheight'' => ''300'',\n  ''watermark_img'' => ''mark.gif'',\n  ''watermark_pct'' => ''100'',\n  ''watermark_quality'' => ''80'',\n)', '');
-
--- --------------------------------------------------------
-
---
--- 表的结构 `xy_test`
---
-
-CREATE TABLE IF NOT EXISTS `xy_test` (
-`id` mediumint(8) NOT NULL,
-  `siteid` smallint(5) NOT NULL,
-  `title` varchar(80) NOT NULL DEFAULT '',
-  `listorder` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `username` char(20) NOT NULL,
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `inputtime` datetime DEFAULT NULL,
-  `updatetime` datetime DEFAULT NULL,
-  `image` varchar(255) NOT NULL DEFAULT ''
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
-
---
--- 转存表中的数据 `xy_test`
---
-
-INSERT INTO `xy_test` (`id`, `siteid`, `title`, `listorder`, `username`, `status`, `inputtime`, `updatetime`, `image`) VALUES
-(5, 1, '通用模型测试', 0, 'admin', 0, '2015-10-17 16:31:00', '2015-10-01 16:32:36', 'http://tp2.cdfdc.com/Uploads/2015-09-04/55e9514e56230.png'),
-(6, 1, '通用模型测试', 0, 'admin', 0, '2015-10-06 16:34:00', '2015-10-01 16:34:58', 'http://tp2.cdfdc.com/Uploads/2015-09-04/55e9514e56230.png'),
-(7, 1, '通用模型测试', 0, 'admin', 0, '2015-10-01 23:56:54', '2015-10-01 23:57:00', 'http://tp-admin.hhailuo.com/Uploads/2015-09-25/5604db32ae3f9.jpg');
+(1, '红海螺', 'www', 'http://www.hhailuo.co', 'XiaoYaoCMS', 'XiaoYaoCMS 房地产CMS 微信公众平台', 'XiaoYaoCMS 房产门户系统，集成微信公众平台', '', 'default', 'Admin', 'array (\n  ''upload_maxsize'' => ''1024'',\n  ''upload_allowext'' => ''jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf'',\n  ''watermark_enable'' => ''0'',\n  ''watermark_minwidth'' => ''300'',\n  ''watermark_minheight'' => ''300'',\n  ''watermark_img'' => ''/mark.png'',\n  ''watermark_pct'' => ''85'',\n  ''watermark_quality'' => ''80'',\n)', '3d3fd04a-6433-11e1-b487-1c750850a1c3'),
+(2, '红海螺-房产', 'house', 'http://www.house.hhailuo.com', '红海螺-房产', '', '', NULL, NULL, NULL, 'array (\n  ''upload_maxsize'' => ''2048'',\n  ''upload_allowext'' => ''jpg|jpeg|gif|bmp|png|doc|docx|xls|xlsx|ppt|pptx|pdf|txt|rar|zip|swf'',\n  ''watermark_enable'' => ''0'',\n  ''watermark_minwidth'' => ''300'',\n  ''watermark_minheight'' => ''300'',\n  ''watermark_img'' => ''mark.gif'',\n  ''watermark_pct'' => ''100'',\n  ''watermark_quality'' => ''80'',\n)', '');
 
 -- --------------------------------------------------------
 
@@ -1120,15 +1230,15 @@ CREATE TABLE IF NOT EXISTS `xy_user` (
   `last_login_ip` varchar(40) DEFAULT NULL,
   `status` tinyint(1) DEFAULT '0',
   `role_id` tinyint(2) unsigned DEFAULT '0'
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- 转存表中的数据 `xy_user`
 --
 
 INSERT INTO `xy_user` (`id`, `account`, `password`, `realname`, `email`, `last_login_time`, `last_login_ip`, `status`, `role_id`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '', 1443876184, NULL, 1, 1),
-(45, 'tp-admin', 'b990e224fe46ed9cf0a8cd8c49d59629', '', '', 1441377928, NULL, 1, 2);
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '', 1444200173, NULL, 1, 1),
+(2, 'tp-admin', 'b990e224fe46ed9cf0a8cd8c49d59629', '', '', 1444150419, NULL, 1, 2);
 
 --
 -- Indexes for dumped tables
@@ -1138,7 +1248,7 @@ INSERT INTO `xy_user` (`id`, `account`, `password`, `realname`, `email`, `last_l
 -- Indexes for table `xy_access`
 --
 ALTER TABLE `xy_access`
- ADD KEY `groupId` (`role_id`), ADD KEY `nodeId` (`node_id`);
+ ADD PRIMARY KEY (`role_id`,`node_id`,`siteid`), ADD KEY `groupId` (`role_id`), ADD KEY `nodeId` (`node_id`);
 
 --
 -- Indexes for table `xy_attachment`
@@ -1151,6 +1261,12 @@ ALTER TABLE `xy_attachment`
 --
 ALTER TABLE `xy_category`
  ADD PRIMARY KEY (`id`), ADD KEY `parentid` (`parentid`), ADD KEY `listorder` (`listorder`);
+
+--
+-- Indexes for table `xy_feedback`
+--
+ALTER TABLE `xy_feedback`
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `xy_linkage`
@@ -1169,6 +1285,12 @@ ALTER TABLE `xy_log`
 --
 ALTER TABLE `xy_model`
  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `xy_model_common`
+--
+ALTER TABLE `xy_model_common`
+ ADD PRIMARY KEY (`id`), ADD KEY `listorder` (`listorder`);
 
 --
 -- Indexes for table `xy_model_field`
@@ -1198,7 +1320,7 @@ ALTER TABLE `xy_news_data`
 -- Indexes for table `xy_node`
 --
 ALTER TABLE `xy_node`
- ADD PRIMARY KEY (`id`), ADD KEY `pid` (`pid`), ADD KEY `status` (`status`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `xy_position`
@@ -1225,16 +1347,16 @@ ALTER TABLE `xy_role_user`
  ADD KEY `group_id` (`role_id`), ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `xy_session`
+--
+ALTER TABLE `xy_session`
+ ADD UNIQUE KEY `session_id` (`session_id`);
+
+--
 -- Indexes for table `xy_site`
 --
 ALTER TABLE `xy_site`
  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `xy_test`
---
-ALTER TABLE `xy_test`
- ADD PRIMARY KEY (`id`), ADD KEY `listorder` (`listorder`);
 
 --
 -- Indexes for table `xy_user`
@@ -1250,12 +1372,17 @@ ALTER TABLE `xy_user`
 -- AUTO_INCREMENT for table `xy_attachment`
 --
 ALTER TABLE `xy_attachment`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1417594374;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1417594363;
 --
 -- AUTO_INCREMENT for table `xy_category`
 --
 ALTER TABLE `xy_category`
-MODIFY `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `xy_feedback`
+--
+ALTER TABLE `xy_feedback`
+MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xy_linkage`
 --
@@ -1265,17 +1392,22 @@ MODIFY `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3783;
 -- AUTO_INCREMENT for table `xy_log`
 --
 ALTER TABLE `xy_log`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4565;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33003;
 --
 -- AUTO_INCREMENT for table `xy_model`
 --
 ALTER TABLE `xy_model`
-MODIFY `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=41;
+MODIFY `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+--
+-- AUTO_INCREMENT for table `xy_model_common`
+--
+ALTER TABLE `xy_model_common`
+MODIFY `id` mediumint(8) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `xy_model_field`
 --
 ALTER TABLE `xy_model_field`
-MODIFY `fieldid` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=132;
+MODIFY `fieldid` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=113;
 --
 -- AUTO_INCREMENT for table `xy_model_type`
 --
@@ -1285,37 +1417,42 @@ MODIFY `id` smallint(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT for table `xy_news`
 --
 ALTER TABLE `xy_news`
-MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=818;
+MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `xy_news_data`
+--
+ALTER TABLE `xy_news_data`
+MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xy_node`
 --
 ALTER TABLE `xy_node`
-MODIFY `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=313;
+MODIFY `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=315;
 --
 -- AUTO_INCREMENT for table `xy_position`
 --
 ALTER TABLE `xy_position`
-MODIFY `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+MODIFY `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `xy_position_data`
+--
+ALTER TABLE `xy_position_data`
+MODIFY `id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=950;
 --
 -- AUTO_INCREMENT for table `xy_role`
 --
 ALTER TABLE `xy_role`
-MODIFY `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `xy_site`
 --
 ALTER TABLE `xy_site`
 MODIFY `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `xy_test`
---
-ALTER TABLE `xy_test`
-MODIFY `id` mediumint(8) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
---
 -- AUTO_INCREMENT for table `xy_user`
 --
 ALTER TABLE `xy_user`
-MODIFY `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=46;
+MODIFY `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
