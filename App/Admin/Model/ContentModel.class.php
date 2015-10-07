@@ -69,7 +69,7 @@ class ContentModel extends Model {
             if ($is_relation) {
                 return false;
             }
-            showmessage(L('subsidiary_table_datalost'),'blank');
+            showmessage('该信息数据不完整，请删除后，重新添加','blank');
         }
         $data = array_merge($r,$r2);
         return $data;

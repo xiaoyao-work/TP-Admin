@@ -1,12 +1,12 @@
 <?php
 class content_form {
-	var $modelid;
-	var $fields;
-	var $id;
-	var $formValidator;
-	var $siteid;
+	public $modelid;
+	public $fields;
+	public $id;
+	public $formValidator;
+	public $siteid;
 
-	function __construct($modelid,$catid=0,$categorys = array()) {
+	public function __construct($modelid,$catid=0,$categorys = array()) {
 		$this->modelid = $modelid;
 		$this->catid = $catid;
 		$this->categorys = $categorys;
@@ -14,7 +14,7 @@ class content_form {
 		$this->siteid = get_siteid();
 	}
 
-	function get_fields($modelid) {
+	public function get_fields($modelid) {
 		$field_array = array();
 		$fields = D("ModelField")->where(array('siteid' => get_siteid(), 'modelid' => $modelid, 'disabled'=>0))->order("listorder asc, fieldid asc")->limit(100)->select();
 		foreach($fields as $_value) {
@@ -25,7 +25,7 @@ class content_form {
 		return $field_array;
 	}
 
-	function get($data = array()) {
+	public function get($data = array()) {
 		$this->data = $data;
 		if(isset($data['id'])) $this->id = $data['id'];
 		$info = array();
@@ -47,9 +47,6 @@ class content_form {
 				$value = isset($data[$field]) ? htmlspecialchars($data[$field], ENT_QUOTES) : '';
 			}
 
-			if($func=='pages' && isset($data['maxcharperpage'])) {
-				$value = $data['paginationtype'].'|'.$data['maxcharperpage'];
-			}
 			if(!method_exists($this, $func)) continue;
 			$form = $this->$func($field, $value, $v);
 			if($form !== false) {
@@ -70,7 +67,7 @@ class content_form {
 		return $info;
 	}
 
-	function text($field, $value, $fieldinfo) {
+	public function text($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$setting = string2array($setting);
 		$size = $setting['size'];
@@ -86,7 +83,7 @@ class content_form {
 		return '<input type="text" name="info['.$field.']" id="'.$field.'" size="'.$size.'" value="'.$value.'" class="input-text" '.$formattribute.' '.$css.'>';
 	}
 
-	function textarea($field, $value, $fieldinfo) {
+	public function textarea($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$setting = string2array($setting);
 		extract($setting);
@@ -102,7 +99,7 @@ class content_form {
 		return $str;
 	}
 
-	function editor($field, $value, $fieldinfo) {
+	public function editor($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		extract(string2array($setting));
 		$disabled_page = isset($disabled_page) ? $disabled_page : 0;
@@ -114,14 +111,14 @@ class content_form {
 		return "<div id='{$field}_tip'></div>".'<textarea name="info['.$field.']" id="'.$field.'" boxid="'.$field.'">'.stripslashes($value).'</textarea>'.\Org\Util\Form::editor($field,$toolbar,'content',$this->catid,'',$allowupload,1,'',$height,$disabled_page);
 	}
 
-	function catid($field, $value, $fieldinfo) {
+	public function catid($field, $value, $fieldinfo) {
 		if(!$value) $value = $this->catid;
 		$publish_str = '';
 		if(defined('IN_ADMIN')) $publish_str = " <a href='javascript:;' onclick=\"omnipotent('selectid','".U('Content/add_othors')."','同时发布到其他栏目',1);return false;\" style='color:#B5BFBB'>[同时发布到其他栏目]</a><ul class='list-dot-othors' id='add_othors_text'></ul>";
 		return '<input type="hidden" name="info['.$field.']" value="'.$value.'">'.$this->categorys[$value]['catname'].$publish_str;
 	}
 
-	function title($field, $value, $fieldinfo) {
+	public function title($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$style_arr = explode(';',$this->data['style']);
 		$style_color = $style_arr[0];
@@ -134,13 +131,13 @@ class content_form {
 		if($errortips) $this->formValidator .= '$("#'.$field.'").formValidator({onshow:"",onfocus:"'.$errortips.'"}).inputValidator({min:'.$minlength.',max:'.$maxlength.',onerror:"'.$errortips_max.'"});';
 		$str = '<input type="text" style="width:400px;'.($style_color ? 'color:'.$style_color.';' : '').($style_font_weight ? 'font-weight:'.$style_font_weight.';' : '').'" name="info['.$field.']" id="'.$field.'" value="'.$value.'" style="'.$style.'" class="measure-input " onkeyup="strlen_verify(this, \'title_len\', '.$maxlength.');"/><input type="hidden" name="style_color" id="style_color" value="'.$style_color.'">
 		<input type="hidden" name="style_font_weight" id="style_font_weight" value="'.$style_font_weight.'">';
-		if(defined('IN_ADMIN')) $str .= '<input type="button" class="button" id="check_title_alt" value="检测重复" onclick="$.get(\'' . __CONTROLLER__ . '/public_check_title?modelid='.$this->modelid.'&sid=\'+Math.random()*5, {data:$(\'#title\').val()}, function(data){if(data==\'1\') {$(\'#check_title_alt\').val(\'标题重复\');$(\'#check_title_alt\').css(\'background-color\',\'#FFCC66\');} else if(data==\'0\') {$(\'#check_title_alt\').val(\'标题不重复\');$(\'#check_title_alt\').css(\'background-color\',\'#F8FFE1\')}})" style="width:73px;"/>
+		if(defined('IN_ADMIN')) $str .= '<input type="button" class="button" id="check_title_alt" value="检测重复" onclick="$.get(\'' . __CONTROLLER__ . '/public_check_title?modelid='.$this->modelid.'&sid=\'+Math.random()*5, {data:$(\'#title\').val()}, public function(data){if(data==\'1\') {$(\'#check_title_alt\').val(\'标题重复\');$(\'#check_title_alt\').css(\'background-color\',\'#FFCC66\');} else if(data==\'0\') {$(\'#check_title_alt\').val(\'标题不重复\');$(\'#check_title_alt\').css(\'background-color\',\'#F8FFE1\')}})" style="width:73px;"/>
 		<span id="'.$field.'_colorpanel" style="position:absolute;" class="colorpanel"></span>';
 		$str .= '还可输入<B><span id="title_len">'.$maxlength.'</span></B> 个字符';
 		return $str;
 	}
 
-	function box($field, $value, $fieldinfo) {
+	public function box($field, $value, $fieldinfo) {
 		$setting = string2array($fieldinfo['setting']);
 		if($value=='') $value = $this->fields[$field]['defaultvalue'];
 		$options = explode("\n",$this->fields[$field]['options']);
@@ -175,7 +172,7 @@ class content_form {
 		return $string;
 	}
 
-	function image($field, $value, $fieldinfo) {
+	public function image($field, $value, $fieldinfo) {
 		$setting = string2array($fieldinfo['setting']);
 		extract($setting);
 		$html = '';
@@ -192,7 +189,7 @@ class content_form {
 		}
 	}
 
-	function images($field, $value, $fieldinfo) {
+	public function images($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$list_str = '';
 		if($value) {
@@ -216,7 +213,7 @@ class content_form {
 		return $string;
 	}
 
-	function number($field, $value, $fieldinfo) {
+	public function number($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$setting = string2array($setting);
 		$size = $setting['size'];
@@ -224,7 +221,7 @@ class content_form {
 		return "<input type='text' name='info[$field]' id='$field' value='$value' class='input-text' size='$size' {$formattribute} {$css}>";
 	}
 
-	function datetime($field, $value, $fieldinfo) {
+	public function datetime($field, $value, $fieldinfo) {
 		extract(string2array($fieldinfo['setting']));
 		$isdatetime = 0;
 		$timesystem = 0;
@@ -242,16 +239,18 @@ class content_form {
 				$timesystem = 1;
 			}
 		} elseif($fieldtype=='datetime') {
+			if(!$value) $value = date($format);
 			$isdatetime = 1;
 			$timesystem = 1;
 		} elseif($fieldtype=='datetime_a') {
+			if(!$value) $value = date($format);
 			$isdatetime = 1;
 			$timesystem = 0;
 		}
 		return \Org\Util\Form::date("info[$field]",$value,$isdatetime,1,'true',$timesystem);
 	}
 
-	function posid($field, $value, $fieldinfo) {
+	public function posid($field, $value, $fieldinfo) {
 		$setting = string2array($fieldinfo['setting']);
 		$position = D('Position')->select();
 		if(empty($position)) return '';
@@ -274,17 +273,17 @@ class content_form {
 		return "<input type='hidden' name='info[$field][]' value='-1'>".\Org\Util\Form::checkbox($array,$posids,"name='info[$field][]'",'',$setting['width']);
 	}
 
-	function keyword($field, $value, $fieldinfo) {
+	public function keyword($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		if(!$value) $value = $defaultvalue;
 		return "<input type='text' name='info[$field]' id='$field' value='$value' style='width:280px' {$formattribute} {$css} class='input-text'>";
 	}
 
-	function author($field, $value, $fieldinfo) {
+	public function author($field, $value, $fieldinfo) {
 		return '<input type="text" name="info['.$field.']" value="'.$value.'" size="30">';
 	}
 
-	function copyfrom($field, $value, $fieldinfo) {
+	public function copyfrom($field, $value, $fieldinfo) {
 		$value_data = '';
 		if($value && strpos($value,'|')!==false) {
 			$arr = explode('|',$value);
@@ -294,7 +293,7 @@ class content_form {
 		return "<input type='text' name='info[$field]' value='$value' style='width: 400px;' class='input-text'>";
 	}
 
-	function islink($field, $value, $fieldinfo) {
+	public function islink($field, $value, $fieldinfo) {
 		if($value) {
 			$url = $this->data['url'];
 			$checked = 'checked';
@@ -308,14 +307,14 @@ class content_form {
 		return '<input type="hidden" name="info[islink]" value="0"><input type="text" name="linkurl" id="linkurl" value="'.$url.'" size="'.$size.'" maxlength="255" '.$disabled.' class="input-text"> <input name="info[islink]" type="checkbox" id="islink" value="1" onclick="ruselinkurl();" '.$checked.'> <font color="red">转向链接</font>';
 	}
 
-	function template($field, $value, $fieldinfo) {
+	public function template($field, $value, $fieldinfo) {
 		$sitelist = get_site_info();
 		$default_style = $sitelist[$this->siteid]['default_style'];
 		$template = \Org\Util\Form::select_template($default_style,'content',$value,'name="info['.$field.']" id="'.$field.'"','show');
 		return $template;
 	}
 
-	/*function pages($field, $value, $fieldinfo) {
+	/*public function pages($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		if($value) {
 			$v = explode('|', $value);
@@ -340,7 +339,7 @@ class content_form {
 		}
 	}*/
 
-	function typeid($field, $value, $fieldinfo) {
+	public function typeid($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$setting = string2array($setting);
 		if(!$value) $value = $setting['defaultvalue'];
@@ -361,7 +360,7 @@ class content_form {
 		return \Org\Util\Form::select($data,$value,'name="info['.$field.']" id="'.$field.'" '.$formattribute.' '.$css, '≡请选择≡');
 	}
 
-	function readpoint($field, $value, $fieldinfo) {
+	public function readpoint($field, $value, $fieldinfo) {
 		$paytype = $this->data['paytype'];
 		if($paytype) {
 			$checked1 = '';
@@ -373,13 +372,13 @@ class content_form {
 		return '<input type="text" name="info['.$field.']" value="'.$value.'" size="5"><input type="radio" name="info[paytype]" value="0" '.$checked1.'> 点 <input type="radio" name="info[paytype]" value="1" '.$checked2.'>元';
 	}
 
-	function linkage($field, $value, $fieldinfo) {
+	public function linkage($field, $value, $fieldinfo) {
 		$setting = string2array($fieldinfo['setting']);
 		$linkageid = $setting['linkageid'];
 		return menu_linkage($linkageid,$field,$value);
 	}
 
-	function downfiles($field, $value, $fieldinfo) {
+	public function downfiles($field, $value, $fieldinfo) {
 		extract(string2array($fieldinfo['setting']));
 		$list_str = '';
 		if($value) {
@@ -402,7 +401,7 @@ class content_form {
 		return $string;
 	}
 
-	/*function map($field, $value, $fieldinfo) {
+	/*public function map($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$setting = string2array($setting);
 		$size = $setting['size'];
@@ -412,7 +411,7 @@ class content_form {
 		return '<input type="button" name="'.$field.'_mark" id="'.$field.'_mark" value="'.$tips.'" class="button" onclick="omnipotent(\'selectid\',\''.APP_PATH.'api.php?op=map&field='.$field.'&modelid='.$modelid.'\',\''.L('mapmark','','map').'\',1,700,420)"><input type="hidden" name="info['.$field.']" value="'.$value.'" id="'.$field.'" >';
 	}*/
 
-	function omnipotent($field, $value, $fieldinfo) {
+	public function omnipotent($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		if (is_array($value)) {
 			foreach ($value as $key => $val) {

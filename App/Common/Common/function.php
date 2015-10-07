@@ -688,7 +688,7 @@ function array_key_translate($array, $_key = 'id') {
 }
 
 /**
-*  将数组转换成 主键 => 值 的键值对(一位数组)，适应select
+*  将数组转换成 主键 => 值 的键值对(一维数组)，适应select
 *  @param array $array  需要转换的数组
 *  @param string $_key  主键名称
 *  @param string $_value  字段名称

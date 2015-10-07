@@ -70,8 +70,8 @@
         <tr>
           <th><strong>作为主表字段</strong></th>
           <td>
-            <input type="hidden" name="issystem" id="issystem" value="<?php echo $model_field['issystem'] ? 1 : 0;?>">
-            <input type="radio" name="info[issystem]" id="field_basic_table1" value="1" <?php if($model_field['issystem']) echo 'checked';?> disabled> 是 <input type="radio" id="field_basic_table0" name="info[issystem]" value="0" <?php if(!$model_field['issystem']) echo 'checked';?> disabled> 否</td>
+            <input type="hidden" name="info[issystem]" id="issystem" value="<?php echo $model_field['issystem'] ? 1 : 0;?>">
+            <input type="radio" name="issystem" id="field_basic_table1" value="1" <?php if($model_field['issystem']) echo 'checked';?> disabled> 是 <input type="radio" id="field_basic_table0" name="issystem" value="0" <?php if(!$model_field['issystem']) echo 'checked';?> disabled> 否</td>
           </tr>
           <tr>
             <th width="25%"><font color="red">*</font> <strong>字段名</strong><br />
@@ -141,21 +141,12 @@
           <td><input type="radio" name="info[issearch]" value="1" id="field_allow_search1" <?php if($model_field['issearch']) echo 'checked';?> <?php if(!$field_allow_search) echo 'disabled'; ?>> 是 <input type="radio" name="info[issearch]" value="0" id="field_allow_search0" <?php if(!$model_field['issearch']) echo 'checked';?> <?php if(!$field_allow_search) echo 'disabled'; ?>> 否</td>
         </tr>
         <tr>
+          <th><strong>显示在列表页</strong></th>
+          <td><input type="radio" name="info[islist]" value="1" <?php if($model_field['islist']) echo 'checked';?>> 是 <input type="radio" name="info[islist]" value="0" <?php if(!$model_field['islist']) echo 'checked';?>> 否</td>
+        </tr>
+        <tr>
           <th><strong>在前台投稿中显示</strong></th>
           <td><input type="radio" name="info[isadd]" value="1"  <?php if($model_field['isadd']) echo 'checked';?>/> 是 <input type="radio" name="info[isadd]" value="0" <?php if(!$model_field['isadd']) echo 'checked';?>/> 否</td>
-        </tr>
-        <tr>
-          <th><strong>作为全站搜索信息</strong></th>
-          <td><input type="radio" name="info[isfulltext]" value="1" id="field_allow_fulltext1" <?php if($model_field['isfulltext']) echo 'checked';?> <?php if(!$field_allow_fulltext) echo 'disabled'; ?>/> 是 <input type="radio" name="info[isfulltext]" value="0" id="field_allow_fulltext0" <?php if(!$model_field['isfulltext']) echo 'checked';?> <?php if(!$field_allow_fulltext) echo 'disabled'; ?>/> 否</td>
-        </tr>
-        <tr>
-          <th><strong>作为万能字段的附属字段</strong><br>必须与万能字段结合起来使用，否则内容添加的时候不会正常显示</th>
-          <td><input type="radio" name="info[isomnipotent]" value="1" <?php if($model_field['isomnipotent']) echo 'checked';?> <?php
-          if(in_array($field,$forbid_fields)) echo 'disabled'; ?>/> 是 <input type="radio" name="info[isomnipotent]" value="0" <?php if(!$model_field['isomnipotent']) echo 'checked';?> /> 否</td>
-        </tr>
-        <tr>
-          <th><strong>在推荐位标签中调用</strong></th>
-          <td><input type="radio" name="info[isposition]" value="1" <?php if($model_field['isposition']) echo 'checked';?> /> 是 <input type="radio" name="info[isposition]" value="0" <?php if(!$model_field['isposition']) echo 'checked';?>/> 否</td>
         </tr>
       </table>
       <div class="bk15"></div>
