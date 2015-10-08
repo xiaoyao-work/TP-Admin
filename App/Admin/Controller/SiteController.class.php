@@ -19,13 +19,18 @@ class SiteController extends CommonController {
     parent::__construct();
     $this->db = D('Site');
   }
-
+  /**
+   * 站点列表
+   */
   public function index() {
     $sites = $this->db->select();
     $this->assign('sites',$sites);
     $this->display();
   }
 
+  /**
+   * 添加站点
+   */
   public function add() {
     if (IS_POST) {
       $this->checkToken();
@@ -75,6 +80,9 @@ class SiteController extends CommonController {
     }
   }
 
+  /**
+   * 编辑站点
+   */
   public function edit() {
     $siteid = isset($_GET['siteid']) && intval($_GET['siteid']) ? intval($_GET['siteid']) : $this->error('参数异常');
     if ($site = $this->db->where(array('id'=>$siteid))->find()) {
@@ -102,6 +110,9 @@ class SiteController extends CommonController {
     }
   }
 
+  /**
+   * 删除站点
+   */
   public function delete() {
     $siteid = isset($_GET['siteid']) && intval($_GET['siteid']) ? intval($_GET['siteid']) : $this->error('参数异常');
     if ($site = $this->db->where(array('id'=>$siteid))->delete() !== false) {
@@ -112,6 +123,9 @@ class SiteController extends CommonController {
     }
   }
 
+  /**
+   * 站点名称重复检测
+   */
   public function public_name() {
     $name = isset($_GET['name']) && trim($_GET['name']) ? trim($_GET['name']) : exit('0');
     $siteid = isset($_GET['siteid']) && intval($_GET['siteid']) ? intval($_GET['siteid']) : '';
@@ -123,6 +137,9 @@ class SiteController extends CommonController {
     }
   }
 
+  /**
+   * 站点目录重名检测
+   */
   public function public_dirname() {
     $dirname = isset($_GET['dirname']) && trim($_GET['dirname']) ? trim($_GET['dirname']) : exit('0');
     $siteid = isset($_GET['siteid']) && intval($_GET['siteid']) ? intval($_GET['siteid']) : '';

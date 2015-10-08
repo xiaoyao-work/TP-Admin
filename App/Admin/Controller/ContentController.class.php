@@ -124,36 +124,6 @@ class ContentController extends CommonController {
       $this->assign('forminfos', $forminfos);
       $this->assign('category', $category);
       $this->display();
-
-      /*
-      $catid = intval($_GET['catid']);
-      $category = $this->category_db->where("siteid = %d and id = %d", $this->siteid, $catid)->find();
-
-      // 推荐位载入
-      import("ORG.Util.Form");
-      $categorys = $this->category_db->where('siteid = %d',$this->siteid)->field('id, arrchildid')->select();
-      $this->categorys = array();
-      if (!empty($categorys)) {
-        foreach ($categorys as $key => $r) {
-          $this->categorys[$r['id']] = $r;
-        }
-      }
-      $position = D('Position')->select();
-      if(empty($position)) return '';
-      $array = array();
-      foreach($position as $_key=>$_value) {
-        if($_value['modelid'] && ($_value['modelid'] !=  $category['modelid']) || ($_value['catid'] && strpos(','.$this->categorys[$_value['catid']]['arrchildid'].',',','.$catid.',')===false)) {
-          continue;
-        }
-        $array[$_value['id']] = $_value['name'];
-      }
-      $posidstr = \Org\Util\Form::checkbox($array,'',"name='info[posids][]'",'',125);
-      // END 推荐位载入
-
-      $this->assign('posidstr', $posidstr);
-      $this->assign('category', $category);
-      $this->assign('catid', $catid);
-      $this->display();*/
     }
   }
 
@@ -199,43 +169,6 @@ class ContentController extends CommonController {
       $this->assign('forminfos', $forminfos);
       $this->assign('content_id', $content['id']);
       $this->assign('modelid', $modelid);
-      /*
-      $catid = intval($_GET['catid']);
-      $category = $this->category_db->where("siteid = %d and id = %d", $this->siteid, $catid)->find();
-      $this->db->set_model($category['modelid']);
-      $content = $this->db->get_content(intval($_GET['contentid']),$category['id']);
-
-      // 推荐位载入
-      import("ORG.Util.Form");
-      $categorys = $this->category_db->where('siteid = %d',$this->siteid)->field('id, arrchildid')->select();
-      $this->categorys = array();
-      if (!empty($categorys)) {
-        foreach ($categorys as $key => $r) {
-          $this->categorys[$r['id']] = $r;
-        }
-      }
-      $position = D('Position')->select();
-      if(empty($position)) return '';
-      $array = array();
-      foreach($position as $_key=>$_value) {
-        if($_value['modelid'] && ($_value['modelid'] !=  $category['modelid']) || ($_value['catid'] && strpos(','.$this->categorys[$_value['catid']]['arrchildid'].',',','.$catid.',')===false))  {
-          continue;
-        }
-        $array[$_value['id']] = $_value['name'];
-      }
-      $position_data = D('PositionData')->where('id = %d and modelid = %d', $content['id'], $category['modelid'])->field('posid')->group('posid')->select();
-      $position_data_ids = array();
-      foreach ($position_data as $key => $pos) {
-        $position_data_ids[] = $pos['posid'];
-      }
-      $posids = implode(',', $position_data_ids);
-      $posidstr = \Org\Util\Form::checkbox($array,$posids,"name='info[posids][]'",'',125);
-      // END 推荐位载入
-
-      $this->assign('posidstr',$posidstr);
-      $this->assign('content', $content);
-      $this->assign('category', $category);
-      $this->assign('catid', intval($_GET['catid']));*/
       $this->display();
     }
   }
@@ -286,6 +219,9 @@ class ContentController extends CommonController {
     }
   }
 
+  /**
+   * 侧边栏
+   */
   public function public_categorys() {
     $categorys = $this->category_db->where('siteid = %d',$this->siteid)->order('listorder desc, id asc')->field('id, catname, type, parentid')->select();
     $this->categorys = array();
@@ -314,11 +250,13 @@ class ContentController extends CommonController {
     $this->display();
   }
 
+  /**
+   * 发布到其他栏目
+   */
   public function add_othors() {
     $this->assign('siteid',$this->siteid);
     $this->display();
   }
-
 
   /**
    * 同时发布到其他栏目 异步加载栏目
@@ -350,6 +288,9 @@ class ContentController extends CommonController {
     echo $categorys;
   }
 
+  /**
+   * 显示相关文章
+   */
   public function show_relation() {
     $modelid = intval($_GET['modelid']);
     $categorys = $this->category_db->where('siteid = %d',$this->siteid)->select();
@@ -394,6 +335,9 @@ class ContentController extends CommonController {
     }
   }
 
+  /**
+   * 相关文章选择
+   */
   public function public_relationlist() {
     $catid = intval($_GET['catid']);
     $modelid = intval($_GET['modelid']);
@@ -441,6 +385,9 @@ class ContentController extends CommonController {
     $this->display();
   }
 
+  /**
+   * 标题重复检测
+   */
   public function public_check_title() {
     if($_GET['data']=='' || (!$_GET['modelid'])) return '';
     $modelid = intval($_GET['modelid']);

@@ -82,7 +82,7 @@ class RoleController extends CommonController {
         }
         $sql = substr($sql, 0, strlen($sql) -1 ) . ';';
         $mod->where(array( 'role_id' => $role_id, 'siteid' => $site ))->delete();
-        $rs = $mod->query($sql);
+        $rs = $mod->execute($sql);
         if ( $rs === false ) {
           $this->error("操作失败");
         } else {
