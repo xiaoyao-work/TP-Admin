@@ -1,0 +1,189 @@
+body {
+	background: #FFF;
+	font-family: Georgia, Times New Roman, Times, serif;
+	text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+	font-size: 60px;
+	font-weight: normal;
+	margin: 0;
+    font-family: 'Chelsea Market', Georgia, serif;
+    color: #000;
+	line-height: 1;
+}
+
+h2 {
+	font-size: 70px;
+	font-weight: normal;
+	margin: 0;
+	color: #FFB000;
+    font-family: 'Chelsea Market', Georgia, serif;
+	text-transform: lowercase;
+}
+
+h3 {
+	font-size: 40px;
+	font-weight: normal;
+	margin: 0;
+    margin-top: 40px;
+	text-transform: lowercase;
+}
+
+.scrollblock p {
+	margin: 40px auto;
+	color: #000;
+    line-height: 200%;
+}
+
+a, a:visited {
+	color: #000;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul {
+	list-style: none;
+}
+
+.download {
+	padding: 10px;
+}
+
+code {
+    background-color: #000;
+	font-style: normal;
+    border-radius: 10px;
+    color: white;
+    padding: 5px 15px;
+    font-family: menlo, monospace;
+}
+
+/*----------------------------------------  BLOCKS */
+
+.scrollblock {
+	position: relative;
+	margin: 0;
+	width: 100%;
+    color: white;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    font-size: 30px;
+}
+
+
+.block-title { background-color: #6f5499; color: #FFF; padding-bottom: 50px; margin-top: 51px;}
+.block-title h2, .block-title h1, .block-title p { color: #FFF; }
+.block-title .meta { font-size: 16px; color: #9783b9; }
+.block-title .meta a { font-size: 16px; color: #ccc; }
+
+.block-white { background-color: #FFF; color: #000; padding-bottom: 50px; }
+.block-white h2 { color: #666; }
+.block-white .meta { font-size: 16px; color: #999; }
+.block-white .meta a { font-size: 16px; color: #333; }
+.block-grey { background-color: #F2F2F2; color: #000; padding-bottom: 50px; }
+.block-grey h2 { color: #000; }
+
+.setup code { background-color: #999;}
+.panel-body code {
+    background-color: inherit;
+}
+
+ul.disc { list-style: disc; margin: 0; padding: 0; }
+ul.disc li a { font-size: 24px; color: #cc4037; }
+
+.announcement {
+    margin-bottom: 40px;
+}
+
+.announcement img {
+    border-radius: 4px;
+}
+
+.pre {
+    text-align: left;
+    margin: 10px auto;
+}
+
+.btn-outline-inverse {
+    color: #fff;
+    background-color: transparent;
+    border-color: #cdbfe3;
+}
+
+.btn-outline-inverse:hover {
+    color: #563d7c;
+    text-shadow: none;
+    background-color: #fff;
+    border-color: #fff;
+}
+
+.bs-docs-masthead .btn {
+    width: 100%;
+    padding: 15px 30px;
+    font-size: 20px;
+}
+@media (min-width: 480px)
+.bs-docs-masthead .btn {
+    width: auto;
+}
+
+.affix {
+    top: 100px;
+    right: 30px;
+}
+
+.contact-message {
+    width: 700px;
+    margin: 0 auto;
+    background-color: #FFF;
+    border-radius: 5px;
+}
+.contact-message .form {
+    width: 300px;
+}
+.contact-message .message {
+    width: 400px;
+    padding: 0 10px;
+}
+.contact-message .message p {
+    margin: 5px;
+    font-size: 16px;
+    line-height: 100%;
+}
+.contact-message .message p.title {
+    margin: 40px 0 0 0;
+    font-size: 100%;
+    color: #a61607;
+    font-weight: bold;
+}
+
+.footer-content a, .contact-message .message a {
+    color: #da6426;
+    font-size: 20px;
+}
+
+.footer-content {
+    font-size: 12px;
+    padding: 50px;
+}
+
+.footer-content h3 {
+    font-size: 24px;
+    margin: 0 0 16px;
+}
+
+#copyrights {
+    color: #555;
+    font-family: Arial,sans-serif;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 0 0 30px;
+    text-align: center;
+}

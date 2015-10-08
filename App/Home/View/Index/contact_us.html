@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>联系我们</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap/css/bootstrap.css" type="text/css">
+    <style type="text/css">
+        .bodyContent {
+            line-height: 150%;
+            font-family: Helvetica;
+            font-size: 14px;
+            color: #333333;
+            padding: 20px;
+        }
+        .onError {
+            color: #a94442;
+        }
+        .onShow {
+            color: #31708f;
+        }
+        .onFoucs {
+            color: #777;
+        }
+        .onCorrect {
+            color: #3c763d;
+        }
+        .name {
+            background: url('__PUBLIC__/images/home/name.png') no-repeat 10px 0px;
+        }
+        .mail {
+            background: url('__PUBLIC__/images/home/email.png') no-repeat 10px 0px;
+        }
+        .message {
+            background: url('__PUBLIC__/images/home/message.png') no-repeat 10px 0px;
+        }
+        .form-control {
+            padding-left: 48px;
+        }
+        .input-text {
+            line-height: 37px;
+            height: 37px;
+        }
+    </style>
+</head>
+<body>
+    <div id="templateBody" class="bodyContent rounded6">
+        <form action="" method="POST" id="myform">
+            <div class="form-group">
+                <label for="name">称呼</label>
+                <input type="text" class="form-control name input-text" name="info[name]" id="name" placeholder="称呼" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control mail input-text" name="info[email]" id="email" placeholder="Email" autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="content">内容</label>
+                <textarea class="form-control message" id="message" placeholder="请输入内容" autocomplete="off"></textarea>
+            </div>
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </form>
+    </div>
+    <script src="__PUBLIC__/js/admin/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="__PUBLIC__/js/admin/formvalidator.js" charset="UTF-8"></script>
+    <script language="javascript" type="text/javascript" src="__PUBLIC__/js/admin/formvalidatorregex.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+        $(function(){
+            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){ $(obj).focus(); }});
+            $("#name").formValidator({onshow:"请输入称呼",onfocus:"请输入称呼"}).inputValidator({min:1,onerror:"称呼不能为空"});
+            $("#message").formValidator({onshow:"请输入内容",onfocus:"请输入内容"}).inputValidator({min:1,onerror:"内容不能为空"});
+            $("#email").formValidator({onshow:"请输入Email",onfocus:"请输入Email"}).inputValidator({min:1,onerror:"Email不能为空"}).regexValidator({datatype: 'enum', regexp: 'email', onerror:"Email格式不正确"});
+        });
+    </script>
+</body>
+</html>

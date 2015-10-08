@@ -56,7 +56,6 @@ class CommonController extends Controller {
 			if (!M()->autoCheckToken($_POST)) {
 				$this->error('[hash]数据验证失败');
 			}
-			unset($_POST[C("TOKEN_NAME")]);
 		}
 	}
 
