@@ -217,7 +217,7 @@ function menu_linkage($linkageid = 0, $id = 'linkid', $defaultvalue = 0) {
   	$html = "";
   	if(!defined('LINKAGE_INIT_1')) {
   		define('LINKAGE_INIT_1', 1);
-  		$html .= '<script type="text/javascript" src="'.JS_PATH.'/linkage/linkagesel.js"></script>';
+  		$html .= '<script type="text/javascript" src="'.C('TMPL_PARSE_STRING.JS_PATH').'/linkage/linkagesel.js"></script>';
   	}
   	$html .= $defaultvalue ? '<input type="hidden" name="info[\'' . $id .'\']" value="'.$defaultvalue.'" id="'. $id . '-' . $linkageid .'">' : '<input type="hidden" name="info[\'' . $id .'\']" value="" id="'. $id . '-' . $linkageid .'">';
   	$html .='<select class="tp-admin-select-'.$id.'" id="'.$id.'" width="100"></select>';

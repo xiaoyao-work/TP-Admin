@@ -248,16 +248,11 @@ $seo = get_site_seo_info();
     $("#bigid").val(menuid);
     $("#paneladd").html('<a class="panel-add" href="javascript:add_panel();"><em>添加</em></a>');
     $("#leftMain").load("__MODULE__/Index/left/mid/"+menuid, {limit: 25}, function(responseText, textStatus, XHR){
-      /*var response_obj = $.parseJSON(responseText);
-      if (response_obj.status == 0) {
-        window.top.location.reload();
-      };*/
       windowW();
     });
     // $("#rightMain").attr('src', targetUrl);
     $('.top_menu').removeClass("on");
     $('#_M'+menuid).addClass("on");
-
     //当点击顶部菜单后，隐藏中间的框架
     $('#display_center_id').css('display','none');
 
@@ -275,7 +270,7 @@ $seo = get_site_seo_info();
     $("#rightMain").attr('src', targetUrl+'&menuid='+menuid);
     $('.sub_menu').removeClass("on fb blue");
     $('#_MP'+menuid).addClass("on fb blue");
-    $("#current_pos").data('clicknum', 1);
+    $("#current_pos").data('clicknum', 1).text($("#top_menu .on a").text() + " > " + $('#_MP'+menuid).text());
     //当点击顶部菜单后，隐藏中间的框架
     // $('#display_center_id').css('display','none');
     // show_help(targetUrl);
