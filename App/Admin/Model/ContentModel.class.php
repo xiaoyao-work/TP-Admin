@@ -269,7 +269,7 @@ class ContentModel extends Model {
     }
 
     public function set_field() {
-        $fields = $this->query("DESC ".$this->trueTableName);
+        $fields = $this->query("DESC `".$this->trueTableName . "`");
         $this->my_fields = array();
         foreach ($fields as $key => $value) {
             $this->my_fields[$key] = $value['field'];

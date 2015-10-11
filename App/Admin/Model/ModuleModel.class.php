@@ -166,7 +166,7 @@ class ModuleModel extends Model {
     }
 
     public function setField() {
-        $fields = $this->query("DESC ".$this->trueTableName);
+        $fields = $this->query("DESC `".$this->trueTableName. "`");
         $this->my_fields = array();
         foreach ($fields as $key => $value) {
             $this->my_fields[$key] = $value['field'];

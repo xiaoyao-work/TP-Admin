@@ -79,6 +79,6 @@ class ModelModel extends Model {
     */
     public function drop_table($tablename) {
         $tablename = C('DB_PREFIX').$tablename;
-        return $this->execute("DROP TABLE $tablename;", true);
+        return $this->execute("DROP TABLE `$tablename`;", true);
     }
 }
