@@ -21,7 +21,7 @@ class IndexController extends Controller {
     public function v2_0_bate() {
         $tables = M()->query("show tables;");
         foreach ($tables as $key => $value) {
-            M()->execute("ALTER TABLE `" . $value['tables_in_tp-admin'] . "` ENGINE = INNODB");
+            M()->execute("ALTER TABLE `" . $value['tables_in_'.C('DB_NAME')] . "` ENGINE = INNODB");
         }
     }
 }
