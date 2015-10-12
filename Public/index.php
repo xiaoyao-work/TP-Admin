@@ -26,16 +26,16 @@ $protocol  = empty($_SERVER['HTTPS']) ? 'http' : 'https';
 $port      = $_SERVER['SERVER_PORT'];
 $disp_port = ($protocol == 'http' && $port == 80 || $protocol == 'https' && $port == 443) ? '' : ":$port";
 $domain    = $_SERVER['SERVER_NAME'];
-
-$doc_root  = str_replace($_SERVER['SCRIPT_NAME'], '', $_SERVER['SCRIPT_FILENAME']);
-$base_url  = str_replace($doc_root, '', str_replace('\\', '/', __DIR__));
+$script_name_info = pathinfo($_SERVER['SCRIPT_NAME']);
+$script_filename_info = pathinfo($_SERVER['SCRIPT_FILENAME']);
+$doc_root  = str_replace($script_name_info['dirname'], '', $script_filename_info['dirname']);
+$base_url  = $script_name_info['dirname'];
 $full_url  = "{$protocol}://{$domain}{$disp_port}{$base_url}";
 define("ROOT_PATH", __DIR__ . DIRECTORY_SEPARATOR);
 define("DOC_PATH", $doc_root . DIRECTORY_SEPARATOR);
 define("BASE_URL", $base_url . '/');
 define("UPLOAD_URL", $full_url . '/Uploads/');
 define("UPLOAD_PATH", ROOT_PATH . 'Uploads' . DIRECTORY_SEPARATOR);
-
 // 引入ThinkPHP入口文件
 require '../ThinkPHP/ThinkPHP.php';
 
