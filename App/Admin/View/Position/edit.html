@@ -33,10 +33,9 @@ defined('IN_ADMIN') or exit('No permission resources.');
           <th width="100"><font class="red">*</font> 所属类型  </th>
           <td>
             <select name="info[typeid]" onchange="type_change(this);" id="typeid">
-              <option value="0" <?php echo (0 == $position['typeid']) ? 'selected' : ''; ?>>默认分类(资讯推荐位)</option>
               <?php foreach ($types as $key => $value) {
-                $selected = ($value['id'] == $position['typeid']) ? 'selected' : '';
-                echo "<option value='".$value['id']."' " .$selected. ">".$value['name']."</option>";
+                $selected = ($key == $position['typeid']) ? 'selected' : '';
+                echo "<option value='".$key."' " .$selected. ">".$value."</option>";
               }?>
             </select>
           </td>

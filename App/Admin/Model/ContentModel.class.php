@@ -97,6 +97,7 @@ class ContentModel extends Model {
         $systeminfo['sysadd'] = defined('IN_ADMIN') ? 1 : 0;
 
         // $systeminfo = array_map('strip_tags', $systeminfo);
+        $this->startTrans();
         if (($contentid = $this->add($systeminfo)) !== false) {
             // 更新URL地址
             if($data['islink']==1) {
@@ -115,14 +116,22 @@ class ContentModel extends Model {
             $this->set_field();
             $content_data = $this->parse_field($inputinfo['model']);
             $content_data['id'] = $contentid;
-            $this->add($content_data);
+            if ($this->add($content_data) == false) {
+                $this->rollback();
+                return false;
+            }
 
             // 发布到推荐位
             if ($systeminfo['posids']) {
                 foreach ($data['posids'] as $key => $posid) {
                     if ($posid > 0) {
-                        $position_data = array('id' => $contentid, 'catid' => $systeminfo['catid'], 'posid' => $posid, 'modelid' => $modelid, 'module' => 'content', 'thumb' => $systeminfo['thumb'], 'siteid' => $systeminfo['siteid'], 'listorder' => $contentid, 'data' => array2string(array('title' => $systeminfo['title'], 'url' => $url, 'description' => $systeminfo['description'], 'inputtime' => $systeminfo['inputtime']), true));
-                        D("PositionData")->add($position_data);
+                        $position_data[] = array('id' => $contentid, 'catid' => $systeminfo['catid'], 'posid' => $posid, 'modelid' => $modelid, 'module' => 'content', 'thumb' => $systeminfo['thumb'], 'siteid' => $systeminfo['siteid'], 'listorder' => $contentid, 'data' => array2string(array('title' => $systeminfo['title'], 'url' => $url, 'description' => $systeminfo['description'], 'inputtime' => $systeminfo['inputtime']), true));
+                    }
+                }
+                if (!empty($position_data)) {
+                    if (D("PositionData")->addAll($position_data) === false) {
+                        $this->rollback();
+                        return false;
                     }
                 }
             }
@@ -138,9 +147,16 @@ class ContentModel extends Model {
                         //相同模型的栏目插入新的数据
                         $systeminfo['catid'] = $cid;
                         $newid = $content_data['id'] = $this->add($systeminfo);
+                        if ($newid == false) {
+                            $this->rollback();
+                            return false;
+                        }
                         // echo $this->getLastSql();
                         $this->trueTableName = $this->trueTableName.'_data';
-                        $this->add($content_data);
+                        if ($this->add($content_data) == false) {
+                            $this->rollback();
+                            return false;
+                        };
                         if($data['islink']==1) {
                             $url = $_POST['linkurl'];
                             $url = str_replace(array('select ',')','\\','#',"'"),' ',$url);
@@ -156,12 +172,22 @@ class ContentModel extends Model {
                         $systeminfo['sysadd'] = 1;
                         $systeminfo['islink'] = 1;
                         $newid = $this->add($systeminfo);
+                        if ($newid == false) {
+                            $this->rollback();
+                            return false;
+                        }
                         $this->trueTableName = $this->trueTableName.'_data';
-                        $this->add(array('id'=>$newid));
+                        if ($this->add(array('id'=>$newid)) == fasle) {
+                            $this->rollback();
+                            return false;
+                        };
                     }
                 }
             }
             //END 发布到其他栏目
+            $this->commit();
+        } else {
+            $this->rollback();
         }
         return $contentid;
     }
@@ -195,36 +221,58 @@ class ContentModel extends Model {
             // $url = U('Content/show','catid='.$systeminfo['catid'].'&id='.$contentid);
             $systeminfo['url'] = $url;
         }
-
+        // 开启事务
+        $this->startTrans();
         if ($result = $this->where("id = %d", $contentid)->save($systeminfo) !== false) {
             // 附表
             $this->trueTableName = $this->trueTableName."_data";
             $this->set_field();
             $content_data = $this->parse_field($inputinfo['model']);
-            $result = ($this->where("id = %d", $contentid)->save($content_data) !== false);
+            if ($this->where("id = %d", $contentid)->save($content_data) === false) {
+                $this->rollback();
+                return false;
+            }
             // 发布到推荐位
             $position_model = D('PositionData');
-            $position_model->where( array("id" => $contentid , "modelid" => $modelid) )->delete();
+            if ($position_model->where( array("id" => $contentid , "modelid" => $modelid) )->delete() === false) {
+                $this->rollback();
+                return false;
+            };
             if ($systeminfo['posids']) {
                 foreach ($data['posids'] as $key => $posid) {
                     if ($posid > 0) {
-                        $position_data = array('id' => $contentid, 'catid' => $systeminfo['catid'], 'posid' => $posid, 'modelid' => $modelid, 'module' => 'content', 'thumb' => $systeminfo['thumb'], 'siteid' => $systeminfo['siteid'], 'listorder' => $contentid, 'data' => var_export(array('title' => $systeminfo['title'], 'url' => $url, 'description' => $systeminfo['description'], 'inputtime' => $systeminfo['inputtime']), true));
-                        $position_model->add($position_data);
+                        $position_data[] = array('id' => $contentid, 'catid' => $systeminfo['catid'], 'posid' => $posid, 'modelid' => $modelid, 'module' => 'content', 'thumb' => $systeminfo['thumb'], 'siteid' => $systeminfo['siteid'], 'listorder' => $contentid, 'data' => var_export(array('title' => $systeminfo['title'], 'url' => $url, 'description' => $systeminfo['description'], 'inputtime' => $systeminfo['inputtime']), true));
+                    }
+                }
+                if (!empty($position_data)) {
+                    if (D("PositionData")->addAll($position_data) === false) {
+                        $this->rollback();
+                        return false;
                     }
                 }
             }
             // END 发布到推荐位
+            $this->commit();
+        } else {
+            $this->rollback();
         }
         return $result;
     }
 
     public function delete_content($ids) {
+        $this->startTrans();
         if (is_array($ids)) {
             $result = (($this->where(array('id' => array('in', $ids)))->delete()) === false ? fasle : true);
             if ($result) {
                 $this->trueTableName = $this->trueTableName.'_data';
                 $this->where(array('id' => array('in', $ids)))->delete();
-                D("PositionData")->where( array("id" => array('in', $ids), "modelid" => $this->modelid) )->delete();
+                if (D("PositionData")->where( array("id" => array('in', $ids), "modelid" => $this->modelid) )->delete() === false) {
+                    $this->rollback();
+                    return false;
+                }
+                $this->commit();
+            } else {
+                $this->rollback();
             }
             return $result;
         } else {
@@ -232,7 +280,13 @@ class ContentModel extends Model {
             if ($result) {
                 $this->trueTableName = $this->trueTableName.'_data';
                 $this->where(array('id' => $ids))->delete();
-                D("PositionData")->where( array("id" => $ids, "modelid" => $this->modelid) )->delete();
+                if (D("PositionData")->where( array("id" => $ids, "modelid" => $this->modelid) )->delete() === false) {
+                    $this->rollback();
+                    return false;
+                }
+                $this->commit();
+            } else {
+                $this->rollback();
             }
             return $result;
         }
