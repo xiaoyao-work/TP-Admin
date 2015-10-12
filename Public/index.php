@@ -28,8 +28,13 @@ $disp_port = ($protocol == 'http' && $port == 80 || $protocol == 'https' && $por
 $domain    = $_SERVER['SERVER_NAME'];
 $script_name_info = pathinfo($_SERVER['SCRIPT_NAME']);
 $script_filename_info = pathinfo($_SERVER['SCRIPT_FILENAME']);
-$doc_root  = str_replace($script_name_info['dirname'], '', $script_filename_info['dirname']);
-$base_url  = $script_name_info['dirname'];
+if ($script_name_info['dirname'] == '/') {
+    $doc_root  = $script_filename_info['dirname'];
+    $base_url  = '';
+} else {
+    $doc_root  = str_replace($script_name_info['dirname'], '', $script_filename_info['dirname']);
+    $base_url  = $script_name_info['dirname'];
+}
 $full_url  = "{$protocol}://{$domain}{$disp_port}{$base_url}";
 define("ROOT_PATH", __DIR__ . DIRECTORY_SEPARATOR);
 define("DOC_PATH", $doc_root . DIRECTORY_SEPARATOR);
