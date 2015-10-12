@@ -1,19 +1,56 @@
 # TP-Admin #
-TP-Admin 是一个开源的，以ThinkPHP3.2.*为底层架构的一个通用后台。
+系统以Thinkphp为底层框架，融合PHPCMS思想进行开发建立的一个大型的系统后台；以模块化开发方式做为功能开发形式；框架易于功能扩展，代码维护，优秀的二次开发能力，可满足所有网站的应用需求。
 
 # 主要功能介绍 #
-已经集成功能有：主分站、内容模型、CMS发布系统(包括 动态字段、多层级栏目、内容推荐等在内的功能充裕的内容发布功能)、基于RBAC的多站点权限控制、广告、后台菜单动态配置、联动菜单、操作日志等功能。后续会陆续开源其他扩展。( 如：微信嵌入，前台主题，房地产模块 )
+## 全新框架
+采用全球认可的最为先进的开放理念——OOP（面向对象），进行全新框架设计。框架结构更为清晰，代码更易于维护。模块化做为功能的开发形式，让扩展性得到保证。采用国内最流行的MVC框架Thinkphp作为底层开发框架，让二次开发变得更为简单。同时引入composer、命名空间支持和模块化的完善，为大型应用和模块化开发提供了更多的便利。
+
+## 功能模块化
+目前已提供PHPCMS所具有的内容模型，在此基础上扩展出通用模型结合菜单管理，让后台变得更加完善灵活，你可以随意定制你想要的任何内容，只需要简单的后台操作，就能定制出你想要的内容。 已有模块：栏目，菜单，联动菜单，系统日志，附件上传，多站点RBAC权限管理等
+
+## 站群系统
+TP-Admin率先把只有大型门户才可使用的站群系统引入到以Thinkphp为底层的开源系统中。各个站点权限互相独立、操作互不影响。
+
+## 强大的模型机制
+TP-Admin 拥有超强的自定义模型和字段功能；把系统灵活度发挥到了极致，可以不用编程就实现各种信息发布和检索。系统不仅内置了PHPCMS的核心内容模型，还扩展了通用模型，较内容模型更为灵活方便，结合特质的菜单机制可以随心所有的扩展出你想要的后台界面，任意的内容模型。
 
 # 演示站点 #
 [在线演示站点](http://tp-admin.hhailuo.com/)
 用户名: tp-admin 密码: tp-admin
 
 # 安装 #
-* 下载最新版本的TP-Admin-V2.0源码。
-* 创建数据库，导入Docs/tp-admin.sql。
-* 修改数据库配置参数 APP/Common/Conf/database.php。
-* 配置Apache:DocumentRoot(Nginx: root) 到 /Public/
+* 下载最新版本TP-Admin
+* 创建数据库并导入Docs/tp-admin.sql。
+* 修改数据库配置参数APP/Common/Conf/database.php(线上配置)，或者添加本地配置文件APP/Common/Conf/local.php(本地参数)。local将覆盖database的配置
+* 配置Apache:DocumentRoot(Nginx: root) 到 /Public/ 系统入口文件/Public/index.php
+* 开启重写
+
+  [ Apache ]
+
+   * httpd.conf配置文件中加载了mod_rewrite.so模块;
+   * AllowOverride None 将None改为 All;
+   * 把下面的内容保存为.htaccess文件放到应用入口文件的同级目录下;
+
+    `<IfModule mod_rewrite.c>
+        RewriteEngine on
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule ^(.*)$ index.php/ [QSA,PT,L]
+    </IfModule>`
+
+   [ Nginx ]
+   
+   在Nginx低版本中，是不支持PATHINFO的，但是可以通过在Nginx.conf中配置转发规则实现：
+    
+    `location / { // …..省略部分代码
+        if (!-e $request_filename) {
+            rewrite  ^(.*)$  /index.php?s=  last;
+            break;
+         }
+    }`
+   
 * 安装成功，登陆后台。 默认用户名密码为 admin / admin。
+
 
 # 问题反馈 #
 Have a bug or an issue with this system? Open a  [ here on ](https://github.com/476552238li/TP-Admin-V2.0/issues)  GitHub。

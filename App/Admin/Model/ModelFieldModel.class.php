@@ -15,10 +15,10 @@ use Think\Model;
 */
 class ModelFieldModel extends Model {
     public function get_fields($tablename) {
-        $variable = $this->query("SHOW COLUMNS FROM %s", $tablename);
+        $variable = $this->query("SHOW COLUMNS FROM `%s`", $tablename);
         $fields = array();
         foreach ($variable as $key => $r) {
-            $fields[$r['Field']] = $r['Type'];
+            $fields[$r['field']] = $r['type'];
         }
         return $fields;
     }

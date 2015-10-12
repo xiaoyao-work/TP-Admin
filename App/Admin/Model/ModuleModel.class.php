@@ -82,18 +82,27 @@ class ModuleModel extends Model {
                 $systeminfo['updatetime'] = date($setting['format']);
             }
         }
-
+        // 开启事务
+        $this->startTrans();
         if (($contentid = $this->add($systeminfo)) !== false) {
             // 发布到推荐位
             if ($systeminfo['posids']) {
                 foreach ($data['posids'] as $key => $posid) {
                     if ($posid > 0) {
-                        $position_data = array('id' => $contentid, 'catid' => $systeminfo['catid'], 'posid' => $posid, 'modelid' => $modelid, 'module' => 'content', 'thumb' => $systeminfo['thumb'], 'siteid' => $systeminfo['siteid'], 'listorder' => $contentid, 'data' => array2string(array('title' => $systeminfo['title'], 'url' => $url, 'description' => $systeminfo['description'], 'inputtime' => $systeminfo['inputtime']), true));
-                        D("PositionData")->add($position_data);
+                        $position_data[] = array('id' => $contentid, 'catid' => $systeminfo['catid'], 'posid' => $posid, 'modelid' => $modelid, 'module' => 'content', 'thumb' => $systeminfo['thumb'], 'siteid' => $systeminfo['siteid'], 'listorder' => $contentid, 'data' => array2string(array('title' => $systeminfo['title'], 'url' => $url, 'description' => $systeminfo['description'], 'inputtime' => $systeminfo['inputtime']), true));
+                    }
+                }
+                if (!empty($position_data)) {
+                    if (D("PositionData")->addAll($position_data) === false) {
+                        $this->rollback();
+                        return false;
                     }
                 }
             }
             // END 发布到推荐位
+            $this->commit();
+        } else {
+            $this->rollback();
         }
         return $contentid;
     }
@@ -125,31 +134,54 @@ class ModuleModel extends Model {
         if ($result = $this->where("id = %d", $contentid)->save($systeminfo) !== false) {
             // 发布到推荐位
             $position_model = D('PositionData');
-            $position_model->where( array("id" => $contentid , "modelid" => $modelid) )->delete();
+            if ($position_model->where( array("id" => $contentid , "modelid" => $modelid) )->delete() === false) {
+                $this->rollback();
+                return false;
+            }
             if ($systeminfo['posids']) {
                 foreach ($data['posids'] as $key => $posid) {
                     if ($posid > 0) {
-                        $position_data = array('id' => $contentid, 'catid' => $systeminfo['catid'], 'posid' => $posid, 'modelid' => $modelid, 'module' => 'content', 'thumb' => $systeminfo['thumb'], 'siteid' => $systeminfo['siteid'], 'listorder' => $contentid, 'data' => var_export(array('title' => $systeminfo['title'], 'url' => $url, 'description' => $systeminfo['description'], 'inputtime' => $systeminfo['inputtime']), true));
+                        $position_data[] = array('id' => $contentid, 'catid' => $systeminfo['catid'], 'posid' => $posid, 'modelid' => $modelid, 'module' => 'content', 'thumb' => $systeminfo['thumb'], 'siteid' => $systeminfo['siteid'], 'listorder' => $contentid, 'data' => var_export(array('title' => $systeminfo['title'], 'url' => $url, 'description' => $systeminfo['description'], 'inputtime' => $systeminfo['inputtime']), true));
                         $position_model->add($position_data);
+                    }
+                }
+                if (!empty($position_data)) {
+                    if (D("PositionData")->addAll($position_data) === false) {
+                        $this->rollback();
+                        return false;
                     }
                 }
             }
             // END 发布到推荐位
+            $this->commit();
+        } else {
+            $this->rollback();
         }
         return $result;
     }
 
     public function deleteContent($ids) {
+        $this->startTrans();
         if (is_array($ids)) {
             $result = (($this->where(array('id' => array('in', $ids)))->delete()) === false ? fasle : true);
             if ($result) {
-                D("PositionData")->where( array("id" => array('in', $ids), "modelid" => $this->modelid) )->delete();
+                if (D("PositionData")->where( array("id" => array('in', $ids), "modelid" => $this->modelid) )->delete() === false) {
+                    $this->rollback();
+                    return false;
+                }
             }
+            $this->commit();
             return $result;
         } else {
             $result = ($this->where(array('id' => $ids))->delete()) === false ? fasle : true;
             if ($result) {
-                D("PositionData")->where( array("id" => $ids, "modelid" => $this->modelid) )->delete();
+                if (D("PositionData")->where( array("id" => $ids, "modelid" => $this->modelid) )->delete() === false) {
+                    $this->rollback();
+                    return false;
+                }
+                $this->commit();
+            } else {
+                $this->rollback();
             }
             return $result;
         }
@@ -166,7 +198,7 @@ class ModuleModel extends Model {
     }
 
     public function setField() {
-        $fields = $this->query("DESC ".$this->trueTableName);
+        $fields = $this->query("DESC `".$this->trueTableName. "`");
         $this->my_fields = array();
         foreach ($fields as $key => $value) {
             $this->my_fields[$key] = $value['field'];

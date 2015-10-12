@@ -45,8 +45,8 @@ function close_window() {
 
 function ruselinkurl() {
   if($('#islink').attr('checked')=='checked') {
-    $('#linkurl').attr('disabled',false); 
-    var oEditor = CKEDITOR.instances.content;
+    $('#linkurl').attr('disabled',false);
+    var oEditor = CKEDITOR.instances.editor;
     oEditor.insertHtml('　');
     return false;
   } else {
@@ -67,7 +67,7 @@ function remove_relation(sid,id) {
     var r_arr = relation_ids.split('|');
 
     if (relation_cats_obj.length > 0) {
-      var r_c_arr = relation_cats.split('|');  
+      var r_c_arr = relation_cats.split('|');
     };
 
     var newrelation_ids = '';
@@ -124,7 +124,7 @@ function show_relation(url,modelid,id) {
     });
 
     $('#relation_text').html(newrelation_ids);
-  }); 
+  });
 }
 
 //移除ID

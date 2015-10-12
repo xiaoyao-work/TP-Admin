@@ -39,7 +39,7 @@ var LinkageSel = function(opts) {
             data        : null,
             head        : 'Please select..',        // {str|''|false} 自动添加第一个选择项,非字符串或false表示不使用
             level       : 20,           // 限定层级防止死循环
-            loaderImg   : 'images/ui-anim_basic_16x16.gif',
+            loaderImg   : '',
             loader_duration: 100,       // loaderImg show/hide()动画持续时间
             root        : [],           // 根所在位置,决定获取数据入口.不适用于ajax模式
             minWidth    : 120,

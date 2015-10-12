@@ -29,7 +29,7 @@ class Model {
     // 主键名称
     protected $pk               =   'id';
     // 主键是否自动增长
-    protected $autoinc          =   false;    
+    protected $autoinc          =   false;
     // 数据表前缀
     protected $tablePrefix      =   null;
     // 模型名称
@@ -260,10 +260,10 @@ class Model {
                 unset($this->options['field']);
                 if(is_string($fields)) {
                     $fields =   explode(',',$fields);
-                }    
+                }
             }else{
                 $fields =   $this->fields;
-            }        
+            }
             foreach ($data as $key=>$val){
                 if(!in_array($key,$fields,true)){
                     if(!empty($this->options['strict'])){
@@ -276,7 +276,7 @@ class Model {
                 }
             }
         }
-       
+
         // 安全过滤
         if(!empty($this->options['filter'])) {
             $data = array_map($this->options['filter'],$data);
@@ -489,8 +489,8 @@ class Model {
         if (is_array($options) && (count($options) > 0) && is_array($pk)) {
             $count = 0;
             foreach (array_keys($options) as $key) {
-                if (is_int($key)) $count++; 
-            } 
+                if (is_int($key)) $count++;
+            }
             if ($count == count($pk)) {
                 $i = 0;
                 foreach ($pk as $field) {
@@ -507,14 +507,14 @@ class Model {
         if(empty($options['where'])){
             // 如果条件为空 不进行删除操作 除非设置 1=1
             return false;
-        }        
+        }
         if(is_array($options['where']) && isset($options['where'][$pk])){
             $pkValue            =  $options['where'][$pk];
         }
 
         if(false === $this->_before_delete($options)) {
             return false;
-        }        
+        }
         $result  =    $this->db->delete($options);
         if(false !== $result && is_numeric($result)) {
             $data = array();
@@ -525,7 +525,7 @@ class Model {
         return $result;
     }
     // 删除数据前的回调方法
-    protected function _before_delete($options) {}    
+    protected function _before_delete($options) {}
     // 删除成功后的回调方法
     protected function _after_delete($data,$options) {}
 
@@ -550,8 +550,8 @@ class Model {
             // 根据复合主键查询
             $count = 0;
             foreach (array_keys($options) as $key) {
-                if (is_int($key)) $count++; 
-            } 
+                if (is_int($key)) $count++;
+            }
             if ($count == count($pk)) {
                 $i = 0;
                 foreach ($pk as $field) {
@@ -575,7 +575,7 @@ class Model {
             if(false !== $data){
                 return $data;
             }
-        }        
+        }
         $resultSet  = $this->db->select($options);
         if(false === $resultSet) {
             return false;
@@ -656,7 +656,7 @@ class Model {
                 }elseif(!is_numeric($key) && '_' != substr($key,0,1) && false === strpos($key,'.') && false === strpos($key,'(') && false === strpos($key,'|') && false === strpos($key,'&')){
                     if(!empty($this->options['strict'])){
                         E(L('_ERROR_QUERY_EXPRESS_').':['.$key.'=>'.$val.']');
-                    } 
+                    }
                     unset($options['where'][$key]);
                 }
             }
@@ -729,8 +729,8 @@ class Model {
             // 根据复合主键查询
             $count = 0;
             foreach (array_keys($options) as $key) {
-                if (is_int($key)) $count++; 
-            } 
+                if (is_int($key)) $count++;
+            }
             if ($count == count($pk)) {
                 $i = 0;
                 foreach ($pk as $field) {
@@ -932,7 +932,7 @@ class Model {
             if(false !== $data){
                 return $data;
             }
-        }        
+        }
         $field                  =   trim($field);
         if(strpos($field,',') && false !== $sepa) { // 多字段
             if(!isset($options['limit'])){
@@ -942,7 +942,7 @@ class Model {
             if(!empty($resultSet)) {
 		        if(is_string($resultSet)){
 		            return $resultSet;
-		        }            	
+		        }
                 $_field         =   explode(',', $field);
                 $field          =   array_keys($resultSet[0]);
                 $key1           =   array_shift($field);
@@ -971,12 +971,12 @@ class Model {
             if(!empty($result)) {
 		        if(is_string($result)){
 		            return $result;
-		        }            	
+		        }
                 if(true !== $sepa && 1==$options['limit']) {
                     $data   =   reset($result[0]);
                     if(isset($cache)){
                         S($key,$data,$cache);
-                    }            
+                    }
                     return $data;
                 }
                 foreach ($result as $val){
@@ -984,7 +984,7 @@ class Model {
                 }
                 if(isset($cache)){
                     S($key,$array,$cache);
-                }                
+                }
                 return $array;
             }
         }
@@ -1210,17 +1210,17 @@ class Model {
                     // 判断验证条件
                     switch($val[3]) {
                         case self::MUST_VALIDATE:   // 必须验证 不管表单是否有设置该字段
-                            if(false === $this->_validationField($data,$val)) 
+                            if(false === $this->_validationField($data,$val))
                                 return false;
                             break;
                         case self::VALUE_VALIDATE:    // 值不为空的时候才验证
                             if('' != trim($data[$val[0]]))
-                                if(false === $this->_validationField($data,$val)) 
+                                if(false === $this->_validationField($data,$val))
                                     return false;
                             break;
                         default:    // 默认表单存在该字段就验证
                             if(isset($data[$val[0]]))
-                                if(false === $this->_validationField($data,$val)) 
+                                if(false === $this->_validationField($data,$val))
                                     return false;
                     }
                 }
@@ -1320,7 +1320,7 @@ class Model {
                 $range   = is_array($rule)? $rule : explode(',',$rule);
                 return $type == 'in' ? in_array($value ,$range) : !in_array($value ,$range);
             case 'between': // 验证是否在某个范围
-            case 'notbetween': // 验证是否不在某个范围            
+            case 'notbetween': // 验证是否不在某个范围
                 if (is_array($rule)){
                     $min    =    $rule[0];
                     $max    =    $rule[1];
@@ -1329,7 +1329,7 @@ class Model {
                 }
                 return $type == 'between' ? $value>=$min && $value<=$max : $value<$min || $value>$max;
             case 'equal': // 验证是否等于某个值
-            case 'notequal': // 验证是否等于某个值            
+            case 'notequal': // 验证是否等于某个值
                 return $type == 'equal' ? $value == $rule : $value != $rule;
             case 'length': // 验证长度
                 $length  =  mb_strlen($value,'utf-8'); // 当前数据长度
@@ -1780,7 +1780,7 @@ class Model {
         }elseif(is_array($scope)){ // 直接传入命名范围定义
             $options        =   $scope;
         }
-        
+
         if(is_array($options) && !empty($options)){
             $this->options  =   array_merge($this->options,array_change_key_case($options));
         }
@@ -1809,13 +1809,13 @@ class Model {
             $map    =   array();
             $map['_string']   =   $where;
             $where  =   $map;
-        }        
+        }
         if(isset($this->options['where'])){
             $this->options['where'] =   array_merge($this->options['where'],$where);
         }else{
             $this->options['where'] =   $where;
         }
-        
+
         return $this;
     }
 
@@ -1889,7 +1889,7 @@ class Model {
                 $this->options['bind'][$key] =  $params;
             }else{
                 $this->options['bind'][$key] =  $value;
-            }        
+            }
         }
         return $this;
     }
