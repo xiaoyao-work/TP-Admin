@@ -42,11 +42,15 @@ class ModelModel extends Model {
         if(is_array($sqls)) {
             foreach($sqls as $sql) {
                 if(trim($sql) != '') {
-                    $this->execute($sql);
+                    if ($this->execute($sql) === false) {
+                        return false;
+                    };
                 }
             }
         } else {
-            $this->execute($sqls);
+            if ($this->execute($sqls) === false) {
+                return false;
+            };
         }
         return true;
     }
@@ -79,6 +83,6 @@ class ModelModel extends Model {
     */
     public function drop_table($tablename) {
         $tablename = C('DB_PREFIX').$tablename;
-        return $this->execute("DROP TABLE `$tablename`;", true);
+        return $this->execute("DROP TABLE `$tablename`;");
     }
 }
