@@ -26,15 +26,16 @@ $protocol  = empty($_SERVER['HTTPS']) ? 'http' : 'https';
 $port      = $_SERVER['SERVER_PORT'];
 $disp_port = ($protocol == 'http' && $port == 80 || $protocol == 'https' && $port == 443) ? '' : ":$port";
 $domain    = $_SERVER['SERVER_NAME'];
+
+// 网站相对路径
 $script_name_info = pathinfo($_SERVER['SCRIPT_NAME']);
+$base_url = ($script_name_info['dirname'] == DIRECTORY_SEPARATOR ? '' : $script_name_info['dirname']);
+
+// Apache Or Nginx 配置根目录
 $script_filename_info = pathinfo($_SERVER['SCRIPT_FILENAME']);
-if ($script_name_info['dirname'] == '/') {
-    $doc_root  = $script_filename_info['dirname'];
-    $base_url  = '';
-} else {
-    $doc_root  = str_replace($script_name_info['dirname'], '', $script_filename_info['dirname']);
-    $base_url  = $script_name_info['dirname'];
-}
+$doc_root  = str_replace($base_url, '', $script_filename_info['dirname']);
+
+// 网站完整首页URL
 $full_url  = "{$protocol}://{$domain}{$disp_port}{$base_url}";
 define("ROOT_PATH", __DIR__ . DIRECTORY_SEPARATOR);
 define("DOC_PATH", $doc_root . DIRECTORY_SEPARATOR);
