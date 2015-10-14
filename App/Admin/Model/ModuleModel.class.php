@@ -11,7 +11,7 @@ namespace Admin\Model;
 use Think\Model;
 use Think\Page as Page;
 
-define('MODEL_PATH', APP_PATH.'Admin'.DIRECTORY_SEPARATOR.'Common'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR);
+define('FIELDS_PATH', APP_PATH.'Admin'.DIRECTORY_SEPARATOR.'Common'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR);
 class ModuleModel extends Model {
     protected $autoCheckFields = false;
     protected $modelid, $my_fields;
@@ -64,7 +64,7 @@ class ModuleModel extends Model {
             $data['relation'] = array2string($data['relation']);
         }
         // 获取所有字段
-        require MODEL_PATH.'content_input.class.php';
+        require FIELDS_PATH.'content_input.class.php';
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data);
         $inputinfo = $inputinfo['system'];
@@ -115,7 +115,7 @@ class ModuleModel extends Model {
         if (isset($data['relation'])) {
             $data['relation'] = array2string($data['relation']);
         }
-        require MODEL_PATH.'content_input.class.php';
+        require FIELDS_PATH.'content_input.class.php';
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data);
         $inputinfo = $inputinfo['system'];

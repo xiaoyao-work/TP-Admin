@@ -15,7 +15,15 @@ use Admin\Controller\CommonController;
 */
 class TaxonomyController extends CommonController {
     public function index() {
+        $fields = array('name' => '名称', 'description' => '描述');
+        $taxonomies = D('Taxonomy')->getList();
+        $this->assign('fields', $fields);
+        $this->assign('contents', $taxonomies['data']);
+        $this->assign('pages', $taxonomies['page']);
+        $this->display("Public:list_layout");
+    }
 
-        $this->display();
+    public function add() {
+        $this->assign();
     }
 }

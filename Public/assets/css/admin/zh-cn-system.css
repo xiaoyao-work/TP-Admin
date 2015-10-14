@@ -265,3 +265,11 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 .tab-use ul{ position:absolute; display:none; top:5px; left:0; width:80px}
 .tab-use ul li{}
 .tab-use ul a{ width:auto;padding:3px 8px}
+.copyright {
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+}
+.copyright a {
+    font-weight: bold;
+}

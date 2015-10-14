@@ -8,11 +8,10 @@
 // +----------------------------------------------------------------------
 
 namespace Admin\Model;
-use Think\Model;
 use Think\Page as Page;
 
-define('MODEL_PATH', APP_PATH.'Admin'.DIRECTORY_SEPARATOR.'Common'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR);
-class ContentModel extends Model {
+define('FIELDS_PATH', APP_PATH.'Admin'.DIRECTORY_SEPARATOR.'Common'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR);
+class ContentModel extends CommonModel {
     protected $autoCheckFields = false;
     protected $category, $modelid, $my_fields;
 
@@ -24,17 +23,8 @@ class ContentModel extends Model {
     }
 
     public function content_list($where=array(), $order = "id desc", $limit=20, $page_params = array()) {
-        $news = $this->where(array_merge(array('siteid' => get_siteid()),$where))->order($order)->page((isset($_GET['p']) ? $_GET['p'] : 0).', '.$limit)->select();
-
-        $count = $this->where(array_merge(array('siteid' => get_siteid()),$where))->count();
-        $Page = new Page($count,$limit);
-        if ($page_params) {
-            foreach ($page_params as $key => $param) {
-                $Page->setConfig($key, $param);
-            }
-        }
-        $show = $Page->show();
-        return array("data" => $news, "page" => $show);
+        $data = $this->getList($where, $order, $limit, $page_params);
+        return $data;
     }
 
     public function mobile_content_list($where=array(), $order = "id desc", $limit=10, $page_params = array()) {
@@ -82,7 +72,7 @@ class ContentModel extends Model {
         $data = $_POST['info'];
 
         $data['relation'] = array2string($data['relation']);
-        require MODEL_PATH.'content_input.class.php';
+        require FIELDS_PATH.'content_input.class.php';
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data);
         $systeminfo = $this->parse_field($inputinfo['system']);
@@ -198,7 +188,7 @@ class ContentModel extends Model {
         $contentid = intval($_POST['contentid']);
         $data = $_POST['info'];
         $data['relation'] = array2string($data['relation']);
-        require MODEL_PATH.'content_input.class.php';
+        require FIELDS_PATH.'content_input.class.php';
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data);
         $systeminfo = $this->parse_field($inputinfo['system']);

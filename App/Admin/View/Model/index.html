@@ -1,6 +1,3 @@
-<?php
-defined('IN_ADMIN') or exit('No permission resources.');
-?>
 <extend name="Public:list_layout" />
 <block name="title"><title>字段管理</title></block>
 <block name="subnav">
@@ -40,7 +37,4 @@ defined('IN_ADMIN') or exit('No permission resources.');
     </div>
     <div id="pages"><?php echo $pages; ?></div>
   </form>
-  <script type="text/javascript">
-  window.top.$('#display_center_id').css('display','none');
-  </script>
 </block>

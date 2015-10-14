@@ -40,12 +40,12 @@
                   minuteStep: 1,
                   onSelect   : function() {this.hide();}
                 });
-                </script>       
+                </script>
                 <select name="posids">
                   <option value="">全部</option>
                   <option value="1" <?php if($_GET['posids']==1) echo "selected"; ?>>推荐</option>
                   <option value="0" <?php if($_GET['posids']==="0") echo "selected"; ?>>不推荐</option>
-                </select>       
+                </select>
                 <select name="searchtype">
                   <option value="0" <?php if($_GET['searchtype']==0) echo "selected"; ?>>标题</option>
                   <option value="1" <?php if($_GET['searchtype']==1) echo "selected"; ?>>简介</option>
@@ -73,7 +73,6 @@
             <th width="37">排序</th>
             <th width="40">ID</th>
             <th>标题</th>
-            <!-- <th width="40">点击量</th> -->
             <th width="70">发布人</th>
             <th width="118">更新时间</th>
             <th width="102">管理操作</th>
@@ -86,10 +85,6 @@
             <td align="center"><input name="listorders[<?php echo $content['id']; ?>]" type="text" size="3" value="<?php echo $content['listorder']; ?>" class="input-text-c input-text"></td>
             <td align="center"><?php echo $content['id']; ?></td>
             <td><a href="<?php echo $content['url']; ?>" target="_blank"><span style=""><?php echo $content['title']; ?></span></a><?php if($content['thumb']) { ?><img src="__PUBLIC__/images/admin/icon/small_img.gif" title="缩略图"><?php } if($content['posids']) { ?><img src="__PUBLIC__/images/admin/icon/small_elite.gif" title="推荐"><?php } ?></td>
-            <!-- <td align="center" title="今日点击：6
-            昨日点击：
-            本周点击：6
-            本月点击：6">6</td> -->
             <td align="center"><?php echo $content['username']; ?></td>
             <td align="center"><?php echo date("Y-m-d H:i:s",$content['updatetime']); ?></td>
             <td align="center">
@@ -101,9 +96,7 @@
       </table>
       <div class="btn"><label for="check_box">全选/取消</label>
         <input name="submit" type="submit" class="button" value="排序">&nbsp;
-        <input name="deletesubmit" type="submit" class="button" value="删除" onclick="document.myform.action='<?php echo U('Content/delete'). "?catid=" .$catid; ?>';return confirm('确认要删除 『 选中 』 吗？')">&nbsp;&nbsp;
-        <!-- <input type="button" class="button" value="推送" onclick="push()">&nbsp;
-        <input name="submit" type="submit" class="button" value="停用" onclick="document.myform.action='__CONTROLLER__/public_approval&amp;passed=1'">&nbsp; -->
+        <input name="deletesubmit" type="submit" class="button" value="删除" onclick="document.myform.action='<?php echo U('Content/delete'). "?catid=" .$catid; ?>';return confirm('确认要删除 『 选中 』 吗？')">
       </div>
       <div id="pages">
         <?php echo $pages; ?>
@@ -122,3 +115,4 @@
   setInterval("refersh_window()", 3000);
   </script>
 </block>
+<block name="footer"></block>
