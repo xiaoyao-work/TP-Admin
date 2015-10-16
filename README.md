@@ -19,38 +19,7 @@ TP-Admin 拥有超强的自定义模型和字段功能；把系统灵活度发�
 用户名: tp-admin 密码: tp-admin
 
 # 安装 #
-* 下载最新版本TP-Admin
-* 创建数据库并导入Docs/tp-admin.sql。
-* 修改数据库配置参数APP/Common/Conf/database.php(线上配置)，或者添加本地配置文件APP/Common/Conf/local.php(本地参数)。local将覆盖database的配置
-* 配置Apache:DocumentRoot(Nginx: root) 到 /Public/ 系统入口文件/Public/index.php
-* 开启重写
-
-  [ Apache ]
-
-   * httpd.conf配置文件中加载了mod_rewrite.so模块;
-   * AllowOverride None 将None改为 All;
-   * 把下面的内容保存为.htaccess文件放到应用入口文件的同级目录下;
-
-    `<IfModule mod_rewrite.c>
-        RewriteEngine on
-        RewriteCond %{REQUEST_FILENAME} !-d
-        RewriteCond %{REQUEST_FILENAME} !-f
-        RewriteRule ^(.*)$ index.php/ [QSA,PT,L]
-    </IfModule>`
-
-   [ Nginx ]
-   
-   在Nginx低版本中，是不支持PATHINFO的，但是可以通过在Nginx.conf中配置转发规则实现：
-    
-    `location / { // …..省略部分代码
-        if (!-e $request_filename) {
-            rewrite  ^(.*)$  /index.php?s=  last;
-            break;
-         }
-    }`
-   
-* 安装成功，登陆后台。 默认用户名密码为 admin / admin。
-
+点击查看[安装指南](http://tp-admin.hhailuo.com/#setup)
 
 # 问题反馈 #
 Have a bug or an issue with this system? Open a  [ here on ](https://github.com/476552238li/TP-Admin-V2.0/issues)  GitHub。

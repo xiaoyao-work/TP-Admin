@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>TP-Admin 使用简易指南</title>
+    <link rel="stylesheet" href="./Public/assets/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="./Public/assets/css/home/style.css" type="text/css">
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand hidden-sm" href="#">TP-Admin</a>
+            </div>
+            <div class="navbar-collapse collapse" role="navigation">
+                <ul class="nav navbar-nav">
+                    <li class="hidden-sm hidden-md"><a href="#header">系统简介</a></li>
+                    <li><a href="#summary">功能概述</a></li>
+                    <li><a href="#setup">安装</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right hidden-sm">
+                    <li><a href="http://www.hhailuo.com/about-us/">关于作者</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<div class="scrollblock block-title" id="header">
+    <div class="container">
+        <h1>TP-Admin - 简易指南</h1>
+        <p>助你开始使用 TP-Admin 的简易指南，木有高深内容，;)。</p>
+        <a href="./Public/Admin/Index/index" target="_blank" class="btn btn-outline-inverse btn-lg">登录后台</a>
+        <a href="http://www.hhailuo.com/tp-admin-wiki" class="btn btn-outline-inverse btn-lg">WIKI</a>
+        <a href="http://www.hhailuo.com/about-us" target="_blank" class="btn btn-outline-inverse btn-lg">作者介绍</a>
+        <p>
+            系统以Thinkphp为底层框架，融合PHPCMS思想进行开发建立的一个大型的系统后台；以模块化开发方式做为功能开发形式；框架易于功能扩展，代码维护，优秀的二次开发能力，可满足所有网站的应用需求。
+        </p>
+        <p class="meta">
+            <span>作者：<a href="http://www.hhailuo.com/about-us">逍遥·李志亮</a>;&nbsp;&nbsp;</span>
+            <span>如有纰漏，请到 <a href="https://github.com/476552238li/TP-Admin-V2.0/issues">tp-admin issues</a> 填报;&nbsp;&nbsp;</span>
+            <code>QQ交流群：TP-Admin 群   号：495760597</code>
+        </p>
+        <img src="./Public/assets/images/home/arrow-alpha.png" alt="" />
+    </div>
+</div>
+<div class="scrollblock block-grey" id="summary">
+    <div class="container">
+        <h2>功能概述</h2>
+        <br/>
+        <code>全新框架</code>
+        <p>采用全球认可的最为先进的开放理念——OOP（面向对象），进行全新框架设计。框架结构更为清晰，代码更易于维护。模块化做为功能的开发形式，让扩展性得到保证。采用国内最流行的MVC框架Thinkphp作为底层开发框架，让二次开发变得更为简单。同时引入composer、命名空间支持和模块化的完善，为大型应用和模块化开发提供了更多的便利。</p>
+        <code>功能模块化</code>
+        <p>
+            目前已提供PHPCMS所具有的内容模型，在此基础上扩展出通用模型结合菜单管理，让后台变得更加完善灵活，你可以随意定制你想要的任何内容，只需要简单的后台操作，就能定制出你想要的内容。
+            已有模块：栏目，菜单，联动菜单，系统日志，附件上传，多站点RBAC权限管理等
+        </p>
+        <code>站群系统</code>
+        <p>TP-Admin率先把只有大型门户才可使用的站群系统引入到以Thinkphp为底层的开源系统中。各个站点权限互相独立、操作互不影响。</p>
+        <code>强大的模型机制</code>
+        <p>TP-Admin 拥有超强的自定义模型和字段功能；把系统灵活度发挥到了极致，可以不用编程就实现各种信息发布和检索。系统不仅内置了PHPCMS的核心内容模型，还扩展了通用模型，较内容模型更为灵活方便，结合特质的菜单机制可以随心所有的扩展出你想要的后台界面，任意的内容模型。</p>
+    </div>
+</div>
+<div class="scrollblock block-white setup" id="setup">
+    <div class="container">
+        <h2>安装</h2>
+        <div class="text-left">
+            <ul class="disc">
+                <li>点击下载最新版本<a href="https://github.com/476552238li/TP-Admin-V2.0">TP-Admin</a></li>
+                <li>创建数据库并导入<code>Docs/tp-admin.sql。</code></li>
+                <li>修改数据库配置参数<code>APP/Common/Conf/database.php</code>(线上配置)，或者添加本地配置文件<code>APP/Common/Conf/local.php</code>(本地参数)。local将覆盖database的配置</li>
+                <li style="color: red;">Apache必须开启重写模块</li>
+                <li>
+                    服务器配置
+                    <ul>
+                        <li>你可以直接通过http://localhost/TP-Admin-V2.0/Public/ 来访问。系统入口文件在<code>/Public/index.php</code></li>
+                        <li>
+                            <strong>但是建议通过配置虚拟主机用域名访问</strong>
+                            <div>虚拟主机配置<span style="color: red;"></span></div>
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">[ Apache ]</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                        <div class="panel-body">
+<pre>
+<code>
+&lt;VirtualHost *:80&gt;
+    ServerAdmin lizhiliang@lelai.com
+    DocumentRoot "C:/wamp/www/TP-Admin/Public"
+    ServerName tp-admin.hhailuo.com
+    ErrorLog "logs/tp-admin.hhailuo.com-error.log"
+    CustomLog "logs/tp-admin.hhailuo.com-access.log" combined
+    &lt;Directory "C:/wamp/www/TP-Admin/Public"&gt;
+        Options Indexes FollowSymLinks Includes ExecCGI
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</code>
+</pre>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">[ Nginx ]</a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+<pre><code>
+server {
+    listen 80;
+    server_name tp-admin.hhailuo.com;
+    index index.html index.php;
+    root /var/www/TP-Admin-V2.0/Public/;
+
+    location / {
+        rewrite  ^(.*)$  /index.php?s=$1  last;
+    }
+
+    #location ~ .*\.(php|php5)?$
+    location /index.php {
+        include fastcgi_params;
+        # fastcgi_pass 127.0.0.1:9000;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        # fastcgi_pass unix:/var/run/php-fastcgi/php-fastcgi.socket;
+        fastcgi_index index.php;
+    }
+    location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$ {
+        expires 30d;
+    }
+    location ~ .*\.(js|css)?$ {
+        expires 1h;
+    }
+    error_log /var/log/nginx/hhailuo/error.log;
+    access_log  /var/log/nginx/hhailuo/access.log;
+}
+</code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li>安装成功，登陆后台。 默认用户名密码为 admin / admin。</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="scrollblock block-grey contact" id="contact">
+    <div class="container">
+        <h2>Contact</h2>
+        <div class="contact-message clearfix">
+            <div class="pull-left form">
+                <iframe  src="http://tp-admin.hhailuo.com/Index/contact_us" width="100%" marginheight="0" marginwidth="0" frameborder="0" scrolling="no" height="400px" id="iframepage" name="iframepage"></iframe>
+            </div>
+            <div class="pull-left message">
+                <p class="title">Estimates, questions, information?</p>
+                <p>Don't hesitate to contact me.</p>
+                <h3>hhailuo.com</h3>
+                <address><a href="mailto:476552238@qq.com">476552238@qq.com</a></address>
+                <p>
+                    <span>Phone:</span>181 8215 6697<br>
+                </p>
+                <p><span><a href="https://github.com/476552238li">Github</a></span><br></p>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="container">
+    <div class="row">
+        <div class="col-xs-12 footer-content">
+            <section class="copyright">All content copyright <a href="http://www.hhailuo.com">红海螺</a> © 2015 • All rights reserved.</section>
+            <section class="beian"><a href="http://www.miibeian.gov.cn/" target="_blank">湘ICP备14002982号</a></section>
+        </div>
+    </div>
+</footer>
+<div id="site-navbar" style="position: absolute; top: 51px; right: 0px; border: 0; z-index: 200;padding:0;margin:0;"><a href="https://github.com/476552238li/TP-Admin-V2.0" title="fork me on github" style="background:none;"><img src="./Public/assets/images/home/git-fork.png" style="padding:0;margin:0;border:0; -webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;"></a></div>
+</body>
+</html>
