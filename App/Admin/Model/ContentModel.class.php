@@ -22,8 +22,8 @@ class ContentModel extends CommonModel {
         $this->set_field();
     }
 
-    public function content_list($where=array(), $order = "id desc", $limit=20, $page_params = array()) {
-        $data = $this->getList($where, $order, $limit, $page_params);
+    public function content_list($where=array(), $order = "id desc", $limit=20, $field=true, $page_params=array()) {
+        $data = $this->getList($where, $order, $limit, $field, $page_params);
         return $data;
     }
 
@@ -76,7 +76,7 @@ class ContentModel extends CommonModel {
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data);
         $systeminfo = $this->parse_field($inputinfo['system']);
-        $systeminfo = array_merge($systeminfo,array('username' => $_SESSION['user_info']['account'], 'siteid' => get_siteid(),'updatetime' => time()));
+        $systeminfo = array_merge($systeminfo,array('username' => $_SESSION['user_info']['account'], 'siteid' => get_siteid()));
         if($data['inputtime'] && !is_numeric($data['inputtime'])) {
             $systeminfo['inputtime'] = strtotime($data['inputtime']);
         } elseif(!$data['inputtime']) {
@@ -193,7 +193,6 @@ class ContentModel extends CommonModel {
         $inputinfo = $content_input->get($data);
         $systeminfo = $this->parse_field($inputinfo['system']);
         $systeminfo['siteid'] = get_siteid();
-        $systeminfo = array_merge($systeminfo,array('updatetime' => time()));
         if($data['inputtime'] && !is_numeric($data['inputtime'])) {
             $systeminfo['inputtime'] = strtotime($data['inputtime']);
         } elseif(!$data['inputtime']) {
@@ -313,10 +312,7 @@ class ContentModel extends CommonModel {
     }
 
     public function set_field() {
-        $fields = $this->query("DESC `".$this->trueTableName . "`");
-        $this->my_fields = array();
-        foreach ($fields as $key => $value) {
-            $this->my_fields[$key] = $value['field'];
-        }
+        $this->flush();
+        $this->my_fields = $this->getDbFields();
     }
 }

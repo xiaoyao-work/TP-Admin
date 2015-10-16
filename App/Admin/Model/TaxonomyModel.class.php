@@ -10,5 +10,4 @@
 namespace Admin\Model;
 
 class TaxonomyModel extends CommonModel {
-
 }

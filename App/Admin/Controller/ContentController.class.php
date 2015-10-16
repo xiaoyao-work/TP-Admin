@@ -13,7 +13,6 @@ use Admin\Controller\CommonController;
 /**
  * 新闻内容操作类
 */
-define('MODEL_PATH', APP_PATH.'Admin'.DIRECTORY_SEPARATOR.'Common'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR);
 class ContentController extends CommonController {
   /**
   * 生成树型结构所需修饰符号，可以换成图片

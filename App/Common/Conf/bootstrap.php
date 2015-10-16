@@ -1,4 +1,7 @@
 <?php
+// 模型字段路径
+define('MODEL_PATH', APP_PATH.'Admin'.DIRECTORY_SEPARATOR.'Common'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR);
+
 // 加载站点文件
 if(file_exists(CONF_PATH . "sitelist.php")){
     $sitelist = include CONF_PATH . "sitelist.php";

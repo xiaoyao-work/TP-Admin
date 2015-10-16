@@ -13,7 +13,6 @@ use Admin\Controller\CommonController;
 /**
 *  系统模型控制
 */
-define('MODEL_PATH', APP_PATH.'Admin'.DIRECTORY_SEPARATOR.'Common'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR);
 class ModelController extends CommonController {
     protected $db, $fieldDb, $modelTypes;
 
