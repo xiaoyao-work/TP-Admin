@@ -243,7 +243,8 @@ class content_form {
 	}
 
 	public function posid($field, $value, $fieldinfo) {
-		$position = D('Position')->select();
+		$setting = string2array($fieldinfo['setting']);
+		$position = D('Position')->where(array('siteid' => $this->siteid))->field(array('id', 'name', 'catid', 'modelid'))->select();
 		if(empty($position)) return '';
 		$array = array();
 		foreach($position as $_key=>$_value) {
@@ -252,7 +253,7 @@ class content_form {
 		}
 		$posids = array();
 		if(ACTION_NAME=='edit') {
-			$position_data = D('PositionData')->where('id = %d and modelid = %d', $this->id, $this->modelid)->field('posid')->group('posid')->select();
+			$position_data = D('PositionData')->where(array('id' => $this->id, 'modelid' => $this->modelid, 'siteid' => $this->siteid))->field('posid')->group('posid')->select();
 			$position_data_ids = array();
 			foreach ($position_data as $key => $pos) {
 				$position_data_ids[] = $pos['posid'];
