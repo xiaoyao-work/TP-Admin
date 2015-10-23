@@ -39,7 +39,7 @@ class TaxonomyController extends CommonController {
         $this->assign('list_fields', $list_fields);
         $this->assign('contents', $taxonomies['data']);
         $this->assign('pages', $taxonomies['page']);
-        $this->display("Public:list_layout");
+        $this->display();
     }
 
     public function add() {

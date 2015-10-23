@@ -1,14 +1,11 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
+// | TP-Admin [ 多功能后台管理系统 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006-2014 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2013-2015 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// | Author: XiaoYao <476552238li@gmail.com>
 // +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
-
 // 应用入口文件
 
 // 检测PHP环境
@@ -42,7 +39,5 @@ define("DOC_PATH", $doc_root . DIRECTORY_SEPARATOR);
 define("BASE_URL", $base_url . '/');
 define("UPLOAD_URL", $full_url . '/Uploads/');
 define("UPLOAD_PATH", ROOT_PATH . 'Uploads' . DIRECTORY_SEPARATOR);
-// 引入ThinkPHP入口文件
+// 引入框架入口文件
 require '../ThinkPHP/ThinkPHP.php';
-
-// 亲^_^ 后面不需要任何代码了 就是如此简单
