@@ -1,15 +1,11 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
+// | TP-Admin [ 多功能后台管理系统 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006-2014 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2013-2015 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// | Author: XiaoYao <476552238li@gmail.com>
 // +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
-// +----------------------------------------------------------------------
-
-// 应用入口文件
 
 // 检测PHP环境
 if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
@@ -21,7 +17,5 @@ define('BUILD_DIR_SECURE', false);
 define('APP_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR);
 define('RUNTIME_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Runtime' . DIRECTORY_SEPARATOR);
 
-// 引入ThinkPHP入口文件
+// 引入框架入口文件
 require dirname(__DIR__) . '/ThinkPHP/ThinkPHP.php';
-
-// 亲^_^ 后面不需要任何代码了 就是如此简单
