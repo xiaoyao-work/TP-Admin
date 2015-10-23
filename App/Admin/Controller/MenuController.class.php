@@ -29,7 +29,7 @@ class MenuController extends CommonController {
   public function add() {
     if (IS_POST) {
       $this->checkToken();
-      if (D("Menu")->addNode() > 0) {
+      if (D("Menu")->add($_POST['info']) > 0) {
         $this->success('操作成功！', "index");
       } else {
         $this->error('操作失败！');
@@ -44,7 +44,7 @@ class MenuController extends CommonController {
     $nid = $_GET['nid'];
     if (IS_POST) {
       $this->checkToken();
-      if (D("Menu")->editNode($nid) !== false) {
+      if (D("Menu")->where(array('id' => $_POST['nid']))->save($_POST['info']) !== false) {
         $this->success('操作成功！', __MODULE__ . '/Menu/index');
       } else {
         $this->error('操作失败！', __MODULE__ . '/Menu/index');
