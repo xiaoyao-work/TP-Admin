@@ -8,11 +8,10 @@
 // +----------------------------------------------------------------------
 
 namespace Admin\Model;
-use Think\Model;
 use Think\Page as Page;
 
-define('MODEL_PATH', APP_PATH.'Admin'.DIRECTORY_SEPARATOR.'Common'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR);
-class ModuleModel extends Model {
+define('FIELDS_PATH', APP_PATH.'Admin'.DIRECTORY_SEPARATOR.'Common'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR);
+class ModuleModel extends CommonModel {
     protected $autoCheckFields = false;
     protected $modelid, $my_fields;
 
@@ -28,26 +27,19 @@ class ModuleModel extends Model {
         $list_fields = array('id', 'listorder');
         $list_fields = array_merge($list_fields, array_translate($module_fields, 'fieldid', 'field'));
         array_push($list_fields, 'inputtime', 'updatetime');
-        $content = $this->field($list_fields)->where(array_merge(array('siteid' => get_siteid()),$where))->order($order)->page((isset($_GET['p']) ? $_GET['p'] : 0).', '.$limit)->select();
-
-        $count = $this->where(array_merge(array('siteid' => get_siteid()),$where))->count();
-        $Page = new Page($count,$limit);
-        if ($page_params) {
-            foreach ($page_params as $key => $param) {
-                $Page->setConfig($key, $param);
-            }
-        }
-        $show = $Page->show();
-        return array("data" => $content, "page" => $show);
+        return $this->getList($where, $order, $limit, $list_fields, $page_params);
     }
 
-    public function getListFields() {
-        $module_fields = D('ModelField')->where(array('modelid' => $this->modelid, 'siteid' => get_siteid()))->order('listorder asc')->select();
-        foreach ($module_fields as $key => $value) {
-            if ($value['islist'] != 1) {
-                unset($module_fields[$key]);
-            }
+    /**
+     * 获取列表页所需字段
+     * @param mix $field 需要获取的ModelField表的字段
+     * @param int $modelid 模型ID
+    */
+    public function getListFields($field=true, $modelid=null) {
+        if (is_null($modelid)) {
+            $modelid = $this->modelid;
         }
+        $module_fields = D('ModelField')->field($field)->where(array('modelid' => $modelid, 'islist' => 1 ,'siteid' => get_siteid()))->order('listorder asc')->select();
         return $module_fields;
     }
 
@@ -64,24 +56,22 @@ class ModuleModel extends Model {
             $data['relation'] = array2string($data['relation']);
         }
         // 获取所有字段
-        require MODEL_PATH.'content_input.class.php';
+        require FIELDS_PATH.'content_input.class.php';
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data);
         $inputinfo = $inputinfo['system'];
         // 匹配数据库字段，防止SQL语句出错
         $systeminfo = $this->parseField($inputinfo);
-
         $systeminfo = array_merge($systeminfo,array('username' => $_SESSION['user_info']['account'], 'siteid' => get_siteid()));
-
-        // 设置更新时间
-        if(isset($content_input->fields['updatetime'])) {
+        // 设置更新时间 统一到CommonModel中通过CallBack函数设置
+        /*if(isset($content_input->fields['updatetime'])) {
             $setting = string2array($content_input->fields['updatetime']['setting']);
             if ($setting['fieldtype'] == "int") {
                 $systeminfo['updatetime'] = time();
             } else {
                 $systeminfo['updatetime'] = date($setting['format']);
             }
-        }
+        }*/
         // 开启事务
         $this->startTrans();
         if (($contentid = $this->add($systeminfo)) !== false) {
@@ -115,21 +105,21 @@ class ModuleModel extends Model {
         if (isset($data['relation'])) {
             $data['relation'] = array2string($data['relation']);
         }
-        require MODEL_PATH.'content_input.class.php';
+        require FIELDS_PATH.'content_input.class.php';
         $content_input = new \content_input($this->modelid);
         $inputinfo = $content_input->get($data);
         $inputinfo = $inputinfo['system'];
         $systeminfo = $this->parseField($inputinfo);
         $systeminfo['siteid'] = get_siteid();
-        // 设置更新时间
-        if(isset($content_input->fields['updatetime'])) {
+        // 设置更新时间 统一到CommonModel中通过CallBack函数设置
+        /*if(isset($content_input->fields['updatetime'])) {
             $setting = string2array($content_input->fields['updatetime']['setting']);
             if ($setting['fieldtype'] == "int") {
                 $systeminfo['updatetime'] = time();
             } else {
                 $systeminfo['updatetime'] = date($setting['format']);
             }
-        }
+        }*/
 
         if ($result = $this->where("id = %d", $contentid)->save($systeminfo) !== false) {
             // 发布到推荐位
@@ -198,10 +188,7 @@ class ModuleModel extends Model {
     }
 
     public function setField() {
-        $fields = $this->query("DESC `".$this->trueTableName. "`");
-        $this->my_fields = array();
-        foreach ($fields as $key => $value) {
-            $this->my_fields[$key] = $value['field'];
-        }
+        $this->flush();
+        $this->my_fields = $this->getDbFields();
     }
 }

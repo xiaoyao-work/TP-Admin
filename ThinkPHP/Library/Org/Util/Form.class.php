@@ -273,8 +273,6 @@ return $str;
   /**
    * 模板选择
    *
-
-
    * @param $style  风格
    * @param $module 模块
    * @param $id 默认选中值
@@ -310,46 +308,4 @@ return $str;
     ksort($templates);
     return self::select($templates, $id, $str,'请选择');
   }
-
-  /**
-   * 验证码
-
-
-   * @param string $id            生成的验证码ID
-   * @param integer $code_len     生成多少位验证码
-   * @param integer $font_size    验证码字体大小
-   * @param integer $width        验证图片的宽
-   * @param integer $height       验证码图片的高
-   * @param string $font          使用什么字体，设置字体的URL
-   * @param string $font_color    字体使用什么颜色
-   * @param string $background    背景使用什么颜色
-   */
-  public static function checkcode($id = 'checkcode',$code_len = 4, $font_size = 20, $width = 130, $height = 50, $font = '', $font_color = '', $background = '') {
-    return "<img id='$id' onclick='this.src=this.src+\"&\"+Math.random()' src='".SITE_PROTOCOL.SITE_URL.WEB_PATH."api.php?op=checkcode&code_len=$code_len&font_size=$font_size&width=$width&height=$height&font_color=".urlencode($font_color)."&background=".urlencode($background)."'>";
-  }
-
-  /**
-   * url  规则调用
-   *
-
-
-   * @param $module 模块
-   * @param $file 文件名
-   * @param $ishtml 是否为静态规则
-   * @param $id 选中值
-   * @param $str 表单属性
-   * @param $default_option 默认选项
-   */
-  public static function urlrule($module, $file, $ishtml, $id, $str = '', $default_option = '') {
-    if(!$module) $module = 'content';
-    $urlrules = getcache('urlrules_detail','commons');
-    $array = array();
-    foreach($urlrules as $roleid=>$rules) {
-      if($rules['module'] == $module && $rules['file']==$file && $rules['ishtml']==$ishtml) $array[$roleid] = $rules['example'];
-    }
-
-    return self::select($array, $id,$str,$default_option);
-  }
 }
-
-?>

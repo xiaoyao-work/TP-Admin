@@ -98,3 +98,9 @@ function SwapTab(name,cls_show,cls_hide,cnt,cur){
 function remove_div(id) {
 	$('#'+id).remove();
 }
+$(function(){
+	if (!$('body').hasClass('objbody')) {
+		var copyright_html = $('<div class="copyright cr"></div>').html('Copyright @ 2012 - 2015 <a href="http://www.hhailuo.com" target="_blank">红海螺</a> All Rights Reserved. 官网: <a href="http://tp-admin.hhailuo.com" target="_blank">TP-Admin</a>');
+		$('body').append(copyright_html);
+	};
+});

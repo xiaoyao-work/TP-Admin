@@ -13,7 +13,6 @@ use Admin\Controller\CommonController;
 /**
 *  系统模型控制
 */
-define('MODEL_PATH', APP_PATH.'Admin'.DIRECTORY_SEPARATOR.'Common'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR);
 class ModelController extends CommonController {
     protected $db, $fieldDb, $modelTypes;
 
@@ -60,10 +59,8 @@ class ModelController extends CommonController {
                 $model_sql = str_replace('$modelid',$modelid,$model_sql);
                 $model_sql = str_replace('$siteid',$this->siteid,$model_sql);
                 if ($this->db->sql_execute($model_sql) === false) {
-                    $this->db->rollback();
                     $this->error("添加失败! ");
                 }
-                $this->db->commit();
                 $this->success("添加成功!", $_POST['forward']);
             } else {
                 // $this->error("更新失败! 最后执行SQL:".$this->db->getLastSql());

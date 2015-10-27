@@ -158,6 +158,7 @@ class PositionController extends CommonController {
                     $sql['catid']= $_v[1];
                     $sql['modelid']= $_v[2];
                     $sql['posid'] = intval($_POST['posid']);
+                    $sql['siteid'] = $this->siteid;
                     $this->dataModel->where($sql)->delete();
                     $this->content_pos($sql['id'],$_v[1],$sql['modelid']);
                 }
@@ -168,6 +169,7 @@ class PositionController extends CommonController {
             $_v = explode('-', $item);
             $sql = array('id' => $_v[0], 'catid' => $_v[1], 'modelid' => $_v[2]);
             $sql['posid'] = intval($_GET['posid']);
+            $sql['siteid'] = $this->siteid;
             $this->dataModel->where($sql)->delete();
             $this->content_pos($sql['id'],$_v[1],$sql['modelid']);
             $this->success('操作成功！');
@@ -188,7 +190,7 @@ class PositionController extends CommonController {
     */
     public function public_model_load() {
         $typeid = intval($_GET['typeid']);
-        $models = D('Model')->where('typeid = %d', $typeid)->select();
+        $models = D('Model')->where(array('typeid' => $typeid, 'siteid' => $this->siteid))->select();
         $modelstr = \Org\Util\Form::select(array_translate($models),'','name="info[modelid]" onchange="category_load(this);"','所有模型');
         echo $modelstr;
     }

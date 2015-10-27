@@ -38,23 +38,20 @@
 </script>
 <body>
     <div id="login_bg" class="login_box">
-     <div class="login_iptbox">
-         <form action="__MODULE__/Public/checklogin" method="post" name="myform">
-            <input name="dosubmit" value="" type="submit" class="login_tj_btn" />
-            <label>用户名：</label><input name="account" type="text" class="ipt" value="admin" />
-            <label>密码：</label><input name="password" type="password" class="ipt" value="admin" />
-            <label>验证码：</label><input name="verify" type="text" class="ipt ipt_reg" onfocus="document.getElementById('yzm').style.display='block'" />
-            <div id="yzm" class="yzm">
-                <img style='cursor:pointer' title='点击刷新验证码' src='__CONTROLLER__/verify' id='verifyImg' onClick='freshVerify()'/>
-                <br />
-                <a href="#" style="text-decoration:underline" id='verifyImg' onClick='freshVerify()'>看不清？换一张</a>
-            </div>
-        </form>
+        <div class="login_iptbox">
+            <form action="__MODULE__/Public/checklogin" method="post" name="myform">
+                <input name="dosubmit" value="" type="submit" class="login_tj_btn" />
+                <label>用户名：</label><input name="account" type="text" class="ipt" value="admin" />
+                <label>密码：</label><input name="password" type="password" class="ipt" value="admin" />
+                <label>验证码：</label><input name="verify" type="text" class="ipt ipt_reg" onfocus="document.getElementById('yzm').style.display='block'" />
+                <div id="yzm" class="yzm">
+                    <img style='cursor:pointer' title='点击刷新验证码' src='__CONTROLLER__/verify' id='verifyImg' onClick='freshVerify()'/>
+                    <br />
+                    <a href="#" style="text-decoration:underline" id='verifyImg' onClick='freshVerify()'>看不清？换一张</a>
+                </div>
+            </form>
+        </div>
+        <div class="cr"><?php echo C('COPYRIGHT'); ?></div>
     </div>
-    <div class="cr">
-        CopyRight 2013-至今  <a href="http://www.hhailuo.com" target="_blank">红海螺技术团队</a>
-        <a href="http://www.hhailuo.com" target="_blank">&nbsp;http://www.hhailuo.com</a>
-    </div>
-</div>
 </body>
 </html>

@@ -1,6 +1,3 @@
-<?php
-defined('IN_ADMIN') or exit('No permission resources.');
-?>
 <extend name="Public:list_layout" />
 <block name="title"><title>模型管理</title></block>
 <block name="subnav">
@@ -18,7 +15,7 @@ defined('IN_ADMIN') or exit('No permission resources.');
            <th width="90">字段名</th>
            <th width="100">别名</th>
            <th width="100">类型</th>
-           <th width="50">系统</th> 
+           <th width="50">系统</th>
            <th width="50">必填</th>
            <th width="50">搜索</th>
            <th width="50">排序</th>
@@ -38,10 +35,10 @@ defined('IN_ADMIN') or exit('No permission resources.');
           <td width="50" align='center'><?php echo $r['issearch'] ? '<font color="red">√</font>' : '<font color="blue">×</font>';?></td>
           <td width="50" align='center'><?php echo $r['isorder'] ? '<font color="red">√</font>' : '<font color="blue">×</font>';?></td>
           <!-- <td width="50" align='center'><?php echo $r['isadd'] ? '<font color="red">√</font>' : '<font color="blue">×</font>';?></td> -->
-          <td align='center'> <a href="__CONTROLLER__/edit?modelid=<?php echo $r['modelid']?>&fieldid=<?php echo $r['fieldid']?>">修改</a> | 
+          <td align='center'> <a href="__CONTROLLER__/edit?modelid=<?php echo $r['modelid']?>&fieldid=<?php echo $r['fieldid']?>">修改</a> |
             <?php if(!in_array($r['field'],$forbid_fields)) { ?>
             <a href="__CONTROLLER__/disabled?disabled=<?php echo $r['disabled'];?>&modelid=<?php echo $r['modelid']?>&fieldid=<?php echo $r['fieldid']?>;"><?php echo $r['disabled'] ? '启用' : '禁用'; ?></a>
-            <?php } else { ?><font color="#BEBEBE"> 禁用 </font><?php } ?>|<?php if(!in_array($r['field'],$forbid_delete)) {?> 
+            <?php } else { ?><font color="#BEBEBE"> 禁用 </font><?php } ?>|<?php if(!in_array($r['field'],$forbid_delete)) {?>
             <a href="javascript:confirmurl('__CONTROLLER__/delete?modelid=<?php echo $r['modelid']?>&fieldid=<?php echo $r['fieldid']?>','确认要删除 『 <?php echo $r['name']; ?> 』 吗？')">删除</a><?php } else {?><font color="#BEBEBE"> 删除</font><?php }?> </td>
           </tr>
           <?php } ?>

@@ -13,7 +13,6 @@ use Admin\Controller\CommonController;
 /**
 * 公共模型控制器
 */
-define('MODEL_PATH', APP_PATH.'Admin'.DIRECTORY_SEPARATOR.'Common'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR);
 class ModuleController extends CommonController {
 
     protected $db;
@@ -57,8 +56,13 @@ class ModuleController extends CommonController {
                 }
             }
         }
-        $data = $this->db->contentList($search, "listorder desc, id desc");
-        $list_fields = $this->db->getListFields();
+
+        $list_fields = $this->db->getListFields(array('name', 'field'));
+        $contentFields = array('id', 'updatetime');
+        foreach ($list_fields as $key => $field) {
+            $contentFields[] = $field['field'];
+        }
+        $data = $this->db->contentList($search, "listorder desc, id desc", 10, $contentFields);
         $this->assign('module', $module);
         $this->assign('contents',$data['data']);
         $this->assign('list_fields',$list_fields);

@@ -163,5 +163,6 @@ return  array(
     'CHECK_APP_DIR'         =>  true,       // 是否检查应用目录是否创建
     'FILE_UPLOAD_TYPE'      =>  'Local',    // 文件上传方式
     'DATA_CRYPT_TYPE'       =>  'Think',    // 数据加密方式
+    'COPYRIGHT'             => 'Copyright @ 2012 - 2015 <a href="http://www.hhailuo.com" target="_blank">红海螺</a> All Rights Reserved. <a href="http://tp-admin.hhailuo.com" target="_blank">官网</a>',
 
 );

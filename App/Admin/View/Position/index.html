@@ -1,6 +1,3 @@
-<?php
-defined('IN_ADMIN') or exit('No permission resources.');
-?>
 <extend name="Public:list_layout" />
 <block name="title"><title>推荐位管理</title></block>
 <block name="subnav">
@@ -62,12 +59,4 @@ defined('IN_ADMIN') or exit('No permission resources.');
     </div>
     <div id="pages"><?php echo $pages; ?></div>
   </form>
-  <script type="text/javascript">
-  /*if(window.top.$("#current_pos").data('clicknum')==1 || window.top.$("#current_pos").data('clicknum')==null) {
-    parent.document.getElementById('display_center_id').style.display='';
-    parent.document.getElementById('center_frame').src = '__CONTROLLER__/public_types';
-    window.top.$("#current_pos").data('clicknum',0);
-  }*/
-  window.top.$('#display_center_id').css('display','none');
-  </script>
 </block>

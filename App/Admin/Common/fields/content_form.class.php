@@ -69,15 +69,13 @@ class content_form {
 
 	public function text($field, $value, $fieldinfo) {
 		extract($fieldinfo);
-		$setting = string2array($setting);
-		$size = $setting['size'];
 		if(!$value) $value = $defaultvalue;
 		$type = $ispassword ? 'password' : 'text';
-		$errortips = $this->fields[$field]['errortips'];
-		$minlength = $this->fields[$field]['minlength'];
-		if($errortips || $minlength) $this->formValidator .= '$("#'.$field.'").formValidator({onshow:"",onfocus:"'.$errortips.'"}).inputValidator({min:1,onerror:"'.$errortips.'"})';
-		if (!empty($this->fields[$field]['pattern'])) {
-			$this->formValidator .= '.functionValidator({fun: function(value, _this) { return '.$this->fields[$field]['pattern'].'.test(value); }, onerror:\''. $errortips .'\'})';
+		$this->formValidator .= '$("#'.$field.'")';
+		if($errortips || $minlength) $this->formValidator .= '.formValidator({onfocus:"'.$errortips.'"}).inputValidator({min:'.$minlength. ($maxlength ? ', max:'.$maxlength : '') .', onerror:"'.$errortips.'"})';
+
+		if (!empty($pattern)) {
+			$this->formValidator .= '.functionValidator({fun: function(value, _this) { return '.$pattern.'.test(value); }, onerror:\''. $errortips .'\'})';
 		}
 		$this->formValidator .= ';';
 		return '<input type="text" name="info['.$field.']" id="'.$field.'" size="'.$size.'" value="'.$value.'" class="input-text" '.$formattribute.' '.$css.'>';
@@ -85,13 +83,10 @@ class content_form {
 
 	public function textarea($field, $value, $fieldinfo) {
 		extract($fieldinfo);
-		$setting = string2array($setting);
-		extract($setting);
 		if(!$value) $value = $defaultvalue;
 		$allow_empty = 'empty:true,';
 		if($minlength || $pattern) $allow_empty = '';
 		if($errortips) $this->formValidator .= '$("#'.$field.'").formValidator({'.$allow_empty.'onshow:"'.$errortips.'",onfocus:"'.$errortips.'"}).inputValidator({min:1,onerror:"'.$errortips.'"});';
-		$value = empty($value) ? $setting[defaultvalue] : $value;
 		$str = "<textarea name='info[{$field}]' id='$field' style='width:{$width}%;height:{$height}px;' $formattribute $css";
 		if($maxlength) $str .= " onkeyup=\"strlen_verify(this, '{$field}_len', {$maxlength})\"";
 		$str .= ">{$value}</textarea>";
@@ -101,7 +96,6 @@ class content_form {
 
 	public function editor($field, $value, $fieldinfo) {
 		extract($fieldinfo);
-		extract(string2array($setting));
 		$disabled_page = isset($disabled_page) ? $disabled_page : 0;
 		if(!$height) $height = 300;
 		$allowupload = defined('IN_ADMIN') ? 1 : 0 ;
@@ -126,7 +120,6 @@ class content_form {
 
 		$style = 'color:'.$this->data['style'];
 		if(!$value) $value = $defaultvalue;
-		$errortips = $this->fields[$field]['errortips'];
 		$errortips_max = '标题不能为空';
 		if($errortips) $this->formValidator .= '$("#'.$field.'").formValidator({onshow:"",onfocus:"'.$errortips.'"}).inputValidator({min:'.$minlength.',max:'.$maxlength.',onerror:"'.$errortips_max.'"});';
 		$str = '<input type="text" style="width:400px;'.($style_color ? 'color:'.$style_color.';' : '').($style_font_weight ? 'font-weight:'.$style_font_weight.';' : '').'" name="info['.$field.']" id="'.$field.'" value="'.$value.'" style="'.$style.'" class="measure-input " onkeyup="strlen_verify(this, \'title_len\', '.$maxlength.');"/><input type="hidden" name="style_color" id="style_color" value="'.$style_color.'">
@@ -138,9 +131,8 @@ class content_form {
 	}
 
 	public function box($field, $value, $fieldinfo) {
-		$setting = string2array($fieldinfo['setting']);
-		if($value=='') $value = $this->fields[$field]['defaultvalue'];
-		$options = explode("\n",$this->fields[$field]['options']);
+		if($value=='') $value = $fieldinfo['defaultvalue'];
+		$options = explode("\n",$fieldinfo['options']);
 		foreach($options as $_k) {
 			$v = explode("|",$_k);
 			$k = trim($v[1]);
@@ -152,13 +144,13 @@ class content_form {
 			if($_k != '') $value[] = $_k;
 		}
 		$value = implode(',',$value);
-		switch($this->fields[$field]['boxtype']) {
+		switch($fieldinfo['boxtype']) {
 			case 'radio':
-			$string = \Org\Util\Form::radio($option,$value,"name='info[$field]' $fieldinfo[formattribute]",$setting['width'],$field);
+			$string = \Org\Util\Form::radio($option,$value,"name='info[$field]' $fieldinfo[formattribute]",$fieldinfo['width'],$field);
 			break;
 
 			case 'checkbox':
-			$string = \Org\Util\Form::checkbox($option,$value,"name='info[$field][]' $fieldinfo[formattribute]",1,$setting['width'],$field);
+			$string = \Org\Util\Form::checkbox($option,$value,"name='info[$field][]' $fieldinfo[formattribute]",1,$fieldinfo['width'],$field);
 			break;
 
 			case 'select':
@@ -252,7 +244,7 @@ class content_form {
 
 	public function posid($field, $value, $fieldinfo) {
 		$setting = string2array($fieldinfo['setting']);
-		$position = D('Position')->select();
+		$position = D('Position')->where(array('siteid' => $this->siteid))->field(array('id', 'name', 'catid', 'modelid'))->select();
 		if(empty($position)) return '';
 		$array = array();
 		foreach($position as $_key=>$_value) {
@@ -261,16 +253,16 @@ class content_form {
 		}
 		$posids = array();
 		if(ACTION_NAME=='edit') {
-			$position_data = D('PositionData')->where('id = %d and modelid = %d', $this->id, $this->modelid)->field('posid')->group('posid')->select();
+			$position_data = D('PositionData')->where(array('id' => $this->id, 'modelid' => $this->modelid, 'siteid' => $this->siteid))->field('posid')->group('posid')->select();
 			$position_data_ids = array();
 			foreach ($position_data as $key => $pos) {
 				$position_data_ids[] = $pos['posid'];
 			}
 			$posids = implode(',', $position_data_ids);
 		} else {
-			$posids = $setting['defaultvalue'];
+			$posids = $fieldinfo['defaultvalue'];
 		}
-		return "<input type='hidden' name='info[$field][]' value='-1'>".\Org\Util\Form::checkbox($array,$posids,"name='info[$field][]'",'',$setting['width']);
+		return "<input type='hidden' name='info[$field][]' value='-1'>".\Org\Util\Form::checkbox($array,$posids,"name='info[$field][]'",'',$fieldinfo['width']);
 	}
 
 	public function keyword($field, $value, $fieldinfo) {
@@ -344,7 +336,6 @@ class content_form {
 		$setting = string2array($setting);
 		if(!$value) $value = $setting['defaultvalue'];
 		if($errortips) {
-			$errortips = $this->fields[$field]['errortips'];
 			$this->formValidator .= '$("#'.$field.'").formValidator({onshow:"",onfocus:"'.$errortips.'"}).inputValidator({min:1,onerror:"'.$errortips.'"});';
 		}
 		$usable_type = $this->categorys[$this->catid]['usable_type'];
@@ -405,8 +396,8 @@ class content_form {
 		extract($fieldinfo);
 		$setting = string2array($setting);
 		$size = $setting['size'];
-		$errortips = $this->fields[$field]['errortips'];
-		$modelid = $this->fields[$field]['modelid'];
+		$errortips = $fieldinfo['errortips'];
+		$modelid = $fieldinfo['modelid'];
 		$tips = $value ? L('editmark','','map') : L('addmark','','map');
 		return '<input type="button" name="'.$field.'_mark" id="'.$field.'_mark" value="'.$tips.'" class="button" onclick="omnipotent(\'selectid\',\''.APP_PATH.'api.php?op=map&field='.$field.'&modelid='.$modelid.'\',\''.L('mapmark','','map').'\',1,700,420)"><input type="hidden" name="info['.$field.']" value="'.$value.'" id="'.$field.'" >';
 	}*/
@@ -434,9 +425,8 @@ class content_form {
 		}
 		$id  = $this->id ? $this->id : 0;
 		$formtext = str_replace('{ID}',$id,$formtext);
-		$errortips = $this->fields[$field]['errortips'];
+		$errortips = $fieldinfo['errortips'];
 		if($errortips) $this->formValidator .= '$("#'.$field.'").formValidator({onshow:"",onfocus:"'.$errortips.'"}).inputValidator({min:'.$minlength.',max:'.$maxlength.',onerror:"'.$errortips.'"});';
-		if($errortips) $this->formValidator .= '$("#'.$field.'").formValidator({onshow:"'.$errortips.'",onfocus:"'.$errortips.'"}).inputValidator({min:1,onerror:"'.$errortips.'"});';
 		return $formtext;
 	}
 }?>

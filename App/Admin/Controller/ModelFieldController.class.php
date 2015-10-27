@@ -13,7 +13,6 @@ use Admin\Controller\CommonController;
 /**
 *  模型字段管理类
 */
-define('MODEL_PATH', APP_PATH.'Admin'.DIRECTORY_SEPARATOR.'Common'.DIRECTORY_SEPARATOR.'fields'.DIRECTORY_SEPARATOR);
 class ModelFieldController extends CommonController {
     protected $db, $model_db;
     function __construct() {
