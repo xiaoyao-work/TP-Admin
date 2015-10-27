@@ -29,16 +29,13 @@
     <form name="myform" id="myform" action="__MODULE__/Menu/add" method="post">
       <table cellpadding=0 cellspacing=0 class="table_form" width="100%">
         <tr>
-          <td width="10%" align="right">请求方式:</td>
+          <td width="10%" align="right">是否需要判断请求方式:</td>
           <td width="90%">
             <label style="float:left;width:75px">
-              <input type="radio" class="input_radio " name="info[request_method]" checked value="0"> ALL
+              <input type="radio" class="input_radio " name="info[request_method]" checked value="0"> 否
             </label>
             <label style="float:left;width:75px">
-              <input type="radio" class="input_radio " name="info[request_method]"  value="1" > GET
-            </label>
-            <label style="float:left;width:75px">
-              <input type="radio" class="input_radio " name="info[request_method]"  value="2" > POST
+              <input type="radio" class="input_radio " name="info[request_method]"  value="1" > 是
             </label>
           </td>
         </tr>
