@@ -75,10 +75,11 @@ class RoleController extends CommonController {
       $site = $_POST['site'];
       if (!empty($_POST['menuid'])) {
         $_POST['menuid'][] = 1;
-        $sql = "INSERT INTO ". C("DB_PREFIX") ."access (`role_id`,`node_id`,`siteid`) VALUES ";
+        $sql = "INSERT INTO ". C("DB_PREFIX") ."access (`role_id`,`node_id`,`siteid`,`request_method`) VALUES ";
         foreach ($_POST['menuid'] as $key => $value) {
           $value = intval($value);
-          $sql .= "( {$role_id}, {$value}, {$site} ),";
+          $request_method = isset($_POST['menu'][$value]) ? $_POST['menu'][$value] : 0;
+          $sql .= "( {$role_id}, {$value}, {$site}, {$request_method} ),";
         }
         $sql = substr($sql, 0, strlen($sql) -1 ) . ';';
         $mod->where(array( 'role_id' => $role_id, 'siteid' => $site ))->delete();
@@ -103,10 +104,10 @@ class RoleController extends CommonController {
         $current_site = current($sites);
       }
 
-      $access_list = D("Access")->where( array( 'role_id' => $role_id, 'siteid' => $current_site['id'] ) )->field("node_id")->select();
+      $access_list = D("Access")->where( array( 'role_id' => $role_id, 'siteid' => $current_site['id'] ) )->select();
 
       foreach ($access_list as $key => $value) {
-        $authorized[$value['node_id']] = true;
+        $authorized[$value['node_id']] = $value;
       }
       $this->assign('current_site',$current_site);
       $this->assign('sites', $sites);

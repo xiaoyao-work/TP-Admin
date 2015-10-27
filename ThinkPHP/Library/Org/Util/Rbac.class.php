@@ -156,6 +156,7 @@ class Rbac {
 
     //权限认证的过滤器方法
     static public function AccessDecision($appName=MODULE_NAME) {
+        $request_methods = array('GET' => 1, 'POST' => 2);
         //检查是否需要认证
         if(self::checkAccess()) {
             //存在认证识别号，则进行进一步的访问决策
@@ -174,7 +175,7 @@ class Rbac {
                     $accessList = $_SESSION['_ACCESS_LIST'];
                 }
                 //判断是否为组件化模式，如果是，验证其全模块名
-                if(!isset($accessList[strtoupper($appName)][strtoupper(CONTROLLER_NAME)][strtoupper(ACTION_NAME)])) {
+                if(!isset($accessList[strtoupper($appName)][strtoupper(CONTROLLER_NAME)][strtoupper(ACTION_NAME)]) || !in_array($accessList[strtoupper($appName)][strtoupper(CONTROLLER_NAME)][strtoupper(ACTION_NAME)]['request_method'], array(0, $request_methods[REQUEST_METHOD]))) {
                     $_SESSION[$accessGuid]  =   false;
                     return false;
                 } else {
@@ -203,7 +204,7 @@ class Rbac {
         $db     =   Db::getInstance(C('RBAC_DB_DSN'));
 
         $table = array('role'=>C('RBAC_ROLE_TABLE'),'user'=>C('RBAC_USER_TABLE'),'access'=>C('RBAC_ACCESS_TABLE'),'node'=>C('RBAC_NODE_TABLE'));
-        $sql    =   "select node.id,node.module,node.action from ".
+        $sql    =   "select node.id,node.module,node.action,access.request_method from ".
         $table['role']." as role,".
         $table['user']." as user,".
         $table['access']." as access ,".
@@ -212,7 +213,7 @@ class Rbac {
         $node_list =   $db->query($sql);
         $access =  array();
         foreach ($node_list as $key => $value) {
-            $access[strtoupper(MODULE_NAME)][strtoupper($value['module'])][strtoupper($value['action'])] = $value['id'];
+            $access[strtoupper(MODULE_NAME)][strtoupper($value['module'])][strtoupper($value['action'])] = $value;
         }
         return $access;
     }

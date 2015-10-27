@@ -1,122 +1,129 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>角色授权</title>
-  <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/jquery.treetable.css" />
-  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/jquery.treetable.theme.default.css" />
-  <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
-  <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
-  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
-  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
-  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
-  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
-  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
-  <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
-  <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
-  <style type="text/css">
-    #example-advanced tr.caption,#example-advanced tr.caption:hover {
-      background: none;
-    }
-  </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>角色授权</title>
+    <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/jquery.treetable.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/jquery.treetable.theme.default.css" />
+    <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
+    <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
+    <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
+    <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
+    <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
+    <style type="text/css">
+        #example-advanced tr.caption,#example-advanced tr.caption:hover {
+            background: none;
+        }
+    </style>
 </head>
 <body>
-  <div class="subnav">
-    <div class="content-menu ib-a blue line-x">
-      <a class="add fb" href="__MODULE__/Role/add"><em>添加角色</em></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="__MODULE__/Role/index"><em>角色管理</em></a><span>|</span><a class="on" href="javascript:void(0);"><em>权限分配</em></a>
+    <div class="subnav">
+        <div class="content-menu ib-a blue line-x">
+            <a class="add fb" href="__MODULE__/Role/add"><em>添加角色</em></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="__MODULE__/Role/index"><em>角色管理</em></a><span>|</span><a class="on" href="javascript:void(0);"><em>权限分配</em></a>
+        </div>
     </div>
-  </div>
-  <style type="text/css">
-    html{_overflow-y:scroll}
-  </style>
-  <div class="pad-lr-10 table-list">
-    <form name="myform" id="myform" action="__MODULE__/Role/limits" method="post">
-      <input name="role_id" type="hidden" value="<?php echo $role_id; ?>" />
-      <table width="100%" cellspacing="0">
-        <tr>
-          <th width="100">选择站点</th>
-          <td>
-            <?php foreach ($sites as $key => $site) { ?>
-            <label><input type="radio" name="site" value="<?php echo $site['id']; ?>" <?php echo ($site['id'] == $current_site['id']) ? 'checked' : ''; ?> class="site"/><?php echo $site['name']; ?></label>
-            <?php } ?>
-          </td>
-        </tr>
-      </table>
-      <table id="example-advanced">
-        <thead>
-          <tr class="caption">
-            <th><a href="javascript:void(0)" onclick="select_all();">全选</a>/<a href="javascript:void(0)" onclick="jQuery('#example-advanced').treetable('expandAll'); return false;" class="expandAll">展开</a>/<a href="javascript:void(0)" onclick="jQuery('#example-advanced').treetable('collapseAll'); return false;" class="collapseAll">收缩</a></th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($menus as $key => $menu) { ?>
-          <tr data-tt-id='<?php echo $menu['id']; ?>' <?php if($menu['pid']) echo "data-tt-parent-id='".$menu['pid']."'"; ?>>
-            <td>
-              <span class='<?php echo ($menu['_child'] ? "folder" : "file" ); ?>'><?php echo cat_empty_deal($menu, $menu[$key+1]['pid'], 'pid', '&nbsp;&nbsp;&nbsp;'); ?><input type="checkbox" name="menuid[]" value="<?php echo $menu['id'] ?>" <?php if(isset($authorized[$menu['id']])) echo "checked"; ?> /><?php echo $menu['title']; ?></span>
-            </td>
-          </tr>
-          <?php } ?>
-        </tbody>
-      </table>
-      <div class="btn">
-        <input name="dosubmit" type="submit" class="button" value="提交">&nbsp;&nbsp;<input type="reset"  value="取消" class="button">
-      </div>
-      <div id="pages"><?php echo $pages?></div>
-    </form>
-  </div>
-  <script src="__PUBLIC__/js/admin/jquery.treetable.js"></script>
-  <script type="text/javascript">
-    function select_all() {
-      $('#example-advanced input[type="checkbox"]').attr("checked", true);
-      $("#example-advanced .expandAll").click();
-    }
-
-    function change_checkbox_parent(pid) {
-      var dom_tr = $("#example-advanced tr[data-tt-id='" + pid +"']");
-      if (dom_tr.length > 0) {
-        $(dom_tr).each(function(index, dom){
-          var input_dom = $(dom).children("td").children("span").children("input");
-          $(input_dom).attr("checked", "checked");
-          change_checkbox_parent($(dom).attr('data-tt-parent-id'));
-        })
-      }
-    }
-
-    function change_checkbox_child(id,status) {
-      var dom_tr = $("#example-advanced tr[data-tt-parent-id='" + id +"']");
-      if (dom_tr.length > 0) {
-        $(dom_tr).each(function(index, dom){
-          var input_dom = $(dom).children("td").children("span").children("input");
-          $(input_dom).attr("checked", status);
-          change_checkbox_child($(dom).attr("data-tt-id"), status);
-        })
-      }
-    }
-    $("#example-advanced").treetable({ expandable: true });
-    $("#example-advanced tbody td").on("change", "input[type='checkbox']", function() {
-      if ($(this).attr("checked")) {
-        var parent_id = $(this).parents("tr").attr("data-tt-parent-id");
-        if (parent_id) {
-          change_checkbox_parent(parent_id);
+    <style type="text/css">
+        html{_overflow-y:scroll}
+    </style>
+    <div class="pad-lr-10 table-list">
+        <form name="myform" id="myform" action="__MODULE__/Role/limits" method="post">
+            <input name="role_id" type="hidden" value="<?php echo $role_id; ?>" />
+            <table width="100%" cellspacing="0">
+                <tr>
+                    <th width="100">选择站点</th>
+                    <td>
+                        <?php foreach ($sites as $key => $site) { ?>
+                        <label><input type="radio" name="site" value="<?php echo $site['id']; ?>" <?php echo ($site['id'] == $current_site['id']) ? 'checked' : ''; ?> class="site"/><?php echo $site['name']; ?></label>
+                        <?php } ?>
+                    </td>
+                </tr>
+            </table>
+            <table id="example-advanced">
+                <thead>
+                    <tr class="caption">
+                        <th><a href="javascript:void(0)" onclick="select_all();">全选</a>/<a href="javascript:void(0)" onclick="jQuery('#example-advanced').treetable('expandAll'); return false;" class="expandAll">展开</a>/<a href="javascript:void(0)" onclick="jQuery('#example-advanced').treetable('collapseAll'); return false;" class="collapseAll">收缩</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($menus as $key => $menu) { ?>
+                    <tr data-tt-id='<?php echo $menu['id']; ?>' <?php if($menu['pid']) echo "data-tt-parent-id='".$menu['pid']."'"; ?>>
+                        <td>
+                            <span class='<?php echo ($menu['_child'] ? "folder" : "file" ); ?>'>
+                                <?php echo cat_empty_deal($menu, $menu[$key+1]['pid'], 'pid', '&nbsp;&nbsp;&nbsp;'); ?><input type="checkbox" name="menuid[]" value="<?php echo $menu['id'] ?>" <?php if(isset($authorized[$menu['id']])) echo "checked"; ?> /><?php echo $menu['title']; ?>
+                                <?php if($menu['request_method']) { ?>
+                                <label><input type="radio" name="menu[<?php echo $menu['id']; ?>]" value="0" <?php if( $authorized[$menu['id']]['request_method'] == 0 ) echo "checked"; ?> />ALL</label>
+                                <label><input type="radio" name="menu[<?php echo $menu['id']; ?>]" value="1" <?php if( $authorized[$menu['id']]['request_method'] == '1' ) echo "checked"; ?> />GET</label>
+                                <label><input type="radio" name="menu[<?php echo $menu['id']; ?>]" value="2" <?php if( $authorized[$menu['id']]['request_method'] == '2' ) echo "checked"; ?> />POST</label>
+                                <?php } ?>
+                            </span>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+            <div class="btn">
+                <input name="dosubmit" type="submit" class="button" value="提交">&nbsp;&nbsp;<input type="reset"  value="取消" class="button">
+            </div>
+            <div id="pages"><?php echo $pages?></div>
+        </form>
+    </div>
+    <script src="__PUBLIC__/js/admin/jquery.treetable.js"></script>
+    <script type="text/javascript">
+        function select_all() {
+            $('#example-advanced input[type="checkbox"]').attr("checked", true);
+            $("#example-advanced .expandAll").click();
         }
-        var id = $(this).parents("tr").attr("data-tt-id");
-        if (id) {
-          change_checkbox_child(id,true);
-        };
-      } else {
-        var id = $(this).parents("tr").attr("data-tt-id");
-        if (id) {
-          change_checkbox_child(id,false);
+
+        function change_checkbox_parent(pid) {
+            var dom_tr = $("#example-advanced tr[data-tt-id='" + pid +"']");
+            if (dom_tr.length > 0) {
+                $(dom_tr).each(function(index, dom){
+                    var input_dom = $(dom).children("td").children("span").children("input");
+                    $(input_dom).attr("checked", "checked");
+                    change_checkbox_parent($(dom).attr('data-tt-parent-id'));
+                })
+            }
         }
-      }
-    });
-    $(function(){
-      $('.site').click(function(){
-        window.location.href = "__SELF__" + "/siteid/" + $(this).val();
-      })
-    })
-  </script>
+
+        function change_checkbox_child(id,status) {
+            var dom_tr = $("#example-advanced tr[data-tt-parent-id='" + id +"']");
+            if (dom_tr.length > 0) {
+                $(dom_tr).each(function(index, dom){
+                    var input_dom = $(dom).children("td").children("span").children("input");
+                    $(input_dom).attr("checked", status);
+                    change_checkbox_child($(dom).attr("data-tt-id"), status);
+                })
+            }
+        }
+        $("#example-advanced").treetable({ expandable: true });
+        $("#example-advanced tbody td").on("change", "input[type='checkbox']", function() {
+            if ($(this).attr("checked")) {
+                var parent_id = $(this).parents("tr").attr("data-tt-parent-id");
+                if (parent_id) {
+                    change_checkbox_parent(parent_id);
+                }
+                var id = $(this).parents("tr").attr("data-tt-id");
+                if (id) {
+                    change_checkbox_child(id,true);
+                };
+            } else {
+                var id = $(this).parents("tr").attr("data-tt-id");
+                if (id) {
+                    change_checkbox_child(id,false);
+                }
+            }
+        });
+        $(function(){
+            $('.site').click(function(){
+                window.location.href = "__SELF__" + "/siteid/" + $(this).val();
+            })
+        })
+    </script>
 </body>
 </html>
