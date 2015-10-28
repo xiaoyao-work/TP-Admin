@@ -133,18 +133,27 @@ class ContentModel extends CommonModel {
                 foreach ($_POST['othor_catid'] as $cid=>$_v) {
                     $this->set_catid($cid);
                     $mid = $this->category[$cid]['modelid'];
+                    echo $mid;
                     if($modelid==$mid) {
                         //相同模型的栏目插入新的数据
                         $systeminfo['catid'] = $cid;
+                        $this->set_field();
+                        $content_data = $this->parse_field($systeminfo);
                         $newid = $content_data['id'] = $this->add($systeminfo);
                         if ($newid == false) {
                             $this->rollback();
+                            echo '11' . $this->getLastSql();
+                            exit();
                             return false;
                         }
                         // echo $this->getLastSql();
                         $this->trueTableName = $this->trueTableName.'_data';
+                        $this->set_field();
+                        $content_data = $this->parse_field($inputinfo['model']);
                         if ($this->add($content_data) == false) {
                             $this->rollback();
+                            echo '22' . $this->getLastSql();
+                            exit();
                             return false;
                         };
                         if($data['islink']==1) {
@@ -154,6 +163,7 @@ class ContentModel extends CommonModel {
                             $url = U( C("DEFAULT_GROUP") . '/Content/show','catid='.$systeminfo['catid'].'&id='.$newid);
                         }
                         $this->trueTableName = $tablename;
+                        $this->set_field();
                         $this->where(array('id'=>$newid))->save(array('url'=>$url));
                     } else {
                         //不同模型插入转向链接地址
@@ -161,6 +171,8 @@ class ContentModel extends CommonModel {
                         $systeminfo['url'] = $linkurl;
                         $systeminfo['sysadd'] = 1;
                         $systeminfo['islink'] = 1;
+                        $this->set_field();
+                        $content_data = $this->parse_field($systeminfo);
                         $newid = $this->add($systeminfo);
                         if ($newid == false) {
                             $this->rollback();

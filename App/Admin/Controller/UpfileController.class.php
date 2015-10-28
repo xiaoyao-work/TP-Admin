@@ -36,23 +36,24 @@ class UpfileController extends Controller {
                     $data['status'] = 'error';
                     $data['error_info'] = $upload->getError();
                 } else {
+                    $attach_info = isset($info['0']) ? $info['0'] : $info['upload'];
                     // 将附件插入附件表
                     $attach_info = array(
-                        'name' => $info[0]["name"],
-                        'path' => UPLOAD_PATH . $info[0]["savepath"] . $info[0]["savename"],
-                        'url' => UPLOAD_URL . $info[0]["savepath"] . $info[0]["savename"],
-                        'size' => $info[0]['size'],
-                        'ext'  => $info[0]['ext'],
+                        'name' => empty($attach_info["name"]) ? $attach_info["savename"] : $attach_info["name"],
+                        'path' => UPLOAD_PATH . $attach_info["savepath"] . $attach_info["savename"],
+                        'url' => UPLOAD_URL . $attach_info["savepath"] . $attach_info["savename"],
+                        'size' => $attach_info['size'],
+                        'ext'  => $attach_info['ext'],
                         'upload_time' => time(),
                         'upload_ip' => get_client_ip(),
                         );
 
-                    if (in_array( $info[0]['ext'], array('jpg','gif','png','jpeg'))) {
+                    if (in_array( $attach_info['ext'], array('jpg','gif','png','jpeg'))) {
                         // $mine_type = (version_compare(PHP_VERSION, '5.3.0') >= 0) ? finfo_file(finfo_open(FILEINFO_MIME_TYPE), $attach_info['path']) : mime_content_type($attach_info['path']);
                         $mine_type = mime_content_type($attach_info['path']);
-                        $compression_filename = D("Attachment")->gd_compression_image(UPLOAD_PATH . $info[0]["savepath"], $mine_type, $info[0]["savename"]);
-                        $attach_info['compression_image'] = UPLOAD_PATH . $info[0]["savepath"] . $compression_filename;
-                        $attach_info['compression_url'] = UPLOAD_URL . $info[0]["savepath"] . $compression_filename;
+                        $compression_filename = D("Attachment")->gd_compression_image(UPLOAD_PATH . $attach_info["savepath"], $mine_type, $attach_info["savename"]);
+                        $attach_info['compression_image'] = UPLOAD_PATH . $attach_info["savepath"] . $compression_filename;
+                        $attach_info['compression_url'] = UPLOAD_URL . $attach_info["savepath"] . $compression_filename;
                         $image_source = D("Attachment")->gd_create_image($mine_type, $attach_info['path']);
 
                         if ( $image_source ) {
@@ -68,8 +69,8 @@ class UpfileController extends Controller {
                     if($attachment_id = D("Attachment")->add($attach_info)) {
                         $data['attachment_id'] = $attachment_id;
                         $data['stutas'] = 'success';
-                        $info[0]['path'] = $attach_info['url'];
-                        $data['attachment_info'] = $info[0];
+                        $attach_info['path'] = $attach_info['url'];
+                        $data['attachment_info'] = $attach_info;
                     } else {
                         $data['status'] = 'error';
                         $data['error_info'] = $upload->getError();
