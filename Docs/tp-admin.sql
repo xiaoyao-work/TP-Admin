@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `xy_access` (
   `role_id` smallint(6) unsigned NOT NULL,
   `node_id` smallint(6) unsigned NOT NULL,
+  `request_method` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' comment '请求方式；0: All, 1: Get 2: Post',
   `siteid` tinyint(4) NOT NULL DEFAULT '1' COMMENT '站点ID'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -944,6 +945,7 @@ CREATE TABLE IF NOT EXISTS `xy_node` (
   `remark` varchar(255) DEFAULT NULL,
   `sort` smallint(6) unsigned DEFAULT NULL,
   `pid` smallint(6) unsigned NOT NULL,
+  `request_method` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' comment '是否验证请求方式；0: 否,1:是',
   `params` varchar(255) NOT NULL
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=315 ;
 
