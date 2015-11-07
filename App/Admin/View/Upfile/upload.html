@@ -27,45 +27,15 @@
             <li id="tab_attach_1" class="on" onclick="tab_switch('attach','on','',4,1);">上传附件</li>
             <li id="tab_attach_2" onclick="tab_switch('attach','on','',4,2);">网络文件</li>
             <li id="tab_attach_3" onclick="tab_switch('attach','on','',4,3);set_iframe('album_list','<?php echo U('Attachment/album_list');?>');">图库</li>
-            <li id="tab_attach_4" onclick="tab_switch('attach','on','',4,4);">目录浏览</li>
+            <!-- <li id="tab_attach_4" onclick="tab_switch('attach','on','',4,4);">目录浏览</li> -->
         </ul>
         <div class="content" id="div_attach_1">
             <div class="img_upload">
-                <!--[if IE]>
                 <script src="__PUBLIC__/js/admin/uploadify/jquery.uploadify.js"></script>
                 <form>
                 <input id="file_upload" name="file_upload" type="file" multiple="true">
                 <a href="javascript:$('#file_upload').uploadify('upload','*');" class="btupload">开始上传</a>
                 </form>
-                <![endif]-->
-                <![if !(IE)]>
-                <style type="text/css">
-                    .upload-toolbar {
-                        position: absolute;
-                        width: 75px;
-                        height: 28px;
-                        background: url("__PUBLIC__/images/admin/swfBnt.png") no-repeat left -28px;
-                    }
-                    #fileupload {
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 100%;
-                        cursor: pointer;
-                        opacity: 0;
-                        filter: "alpha(opacity=0)";
-                        -ms-filter: "alpha(opacity=0)";
-                    }
-                </style>
-                <div class="upload-toolbar">
-                    <input id="fileupload" type="file" name="files[]" data-url="__MODULE__/Upfile/upload" multiple>
-                    <!-- <a href="#" class="btupload">开始上传</a> -->
-                </div>
-                <script src="__PUBLIC__/js/jquery-ui/jquery-ui.min.js"></script>
-                <script src="__PUBLIC__/js/jquery-file-upload/jquery.iframe-transport.js"></script>
-                <script src="__PUBLIC__/js/jquery-file-upload/jquery.fileupload.js"></script>
-                <![endif]>
                 <div id="nameTip" class="onShow">
                     最多上传 <font color="red"> <?php echo $args['file_upload_limit']; ?></font> 个附件, 单文件最大 <font color="red"><?php echo $file_size_limit; ?></font>
                 </div>
@@ -79,12 +49,7 @@
             <div class="bk10"></div>
             <fieldset class="blue pad-10" id="swfupload">
                 <legend>列表</legend>
-                <!--[if IE]>
                     <div id="progress"></div>
-                <![endif]-->
-                <![if !(IE)]>
-                    <div id="progress"><div class='bar' style='width: 0;'></div></div>
-                <![endif]>
                 <ul id="attachment_list"></ul>
             </fieldset>
         </div>
@@ -110,52 +75,30 @@
         var uploadLimit = <?php echo ($args['allowupload'] ? $args['allowupload'] : '20');?>;
         var type = "<?php echo isset($_GET['type']) ? $_GET['type'] : 'image'; ?>";
         $(function() {
-            if ($.browser.msie) {
-                $('#file_upload').uploadify({
-                    'auto'            : false,
-                    'formData'        : {"thumb_width": "<?php echo $args['thumb_width']; ?>","thumb_height":"<?php echo $args['thumb_height']; ?>","watermark_enable":"<?php echo $args['watermark_enable']; ?>","filetype_post":"<?php echo $args['file_types_post']; ?>"},
-                    'swf'             : '__PUBLIC__/js/admin/uploadify/uploadify.swf?' + Math.random(),
-                    'uploader'        : '__MODULE__/Upfile/upload',
-                    'buttonImage'     : '',
-                    'buttonClass'     : 'addnew',
-                    'buttonText'      : '',
-                    'height'          : '28',
-                    'width'           : '75',
-                    'fileSizeLimit'   : fileSizeLimit + "MB",
-                    'fileTypeDesc'    : fileTypeDesc,
-                    'fileTypeExts'    : fileTypeExts,
-                    'removeTimeout'   : 0,
-                    'queueSizeLimit'  : queueSizeLimit,
-                    'uploadLimit'     : uploadLimit,
-                    'onUploadError'   : function(file, errorCode, errorMsg, errorString) {
-                        alert(file.name + ' 上传失败，错误原因: ' + errorString);
-                    },
-                    'onUploadSuccess' : function(file, data, response) {
-                        var result = $.parseJSON(data);
-                        set_thumb(result);
-                    }
-                });
-            } else {
-                var jqXHR = $('#fileupload').fileupload({
-                    limitMultiFileUploads: uploadLimit,
-                    autoUpload: false,
-                    dataType: 'json',
-                    formData: {"thumb_width": "<?php echo $args['thumb_width']; ?>","thumb_height":"<?php echo $args['thumb_height']; ?>","watermark_enable":"<?php echo $args['watermark_enable']; ?>","filetype_post":"<?php echo $args['file_types_post']; ?>"},
-                    add: function (e, data) {
-                        var jqXHR = data.submit().success(function (result, textStatus, jqXHR) {
-                            set_thumb(result);
-                        })
-                        .error(function (jqXHR, textStatus, errorThrown) {})
-                        .complete(function (result, textStatus, jqXHR) {
-                            $('#progress').children('.bar').eq(0).remove();
-                        });
-                    },
-                    progressall: function (e, data) {
-                        var progress = parseInt(data.loaded / data.total * 100, 10);
-                        $('#progress .bar').css( 'width', progress + '%' );
-                    }
-                }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
-            }
+            $('#file_upload').uploadify({
+                'auto'            : false,
+                'formData'        : {"thumb_width": "<?php echo $args['thumb_width']; ?>","thumb_height":"<?php echo $args['thumb_height']; ?>","watermark_enable":"<?php echo $args['watermark_enable']; ?>","filetype_post":"<?php echo $args['file_types_post']; ?>"},
+                'swf'             : '__PUBLIC__/js/admin/uploadify/uploadify.swf?' + Math.random(),
+                'uploader'        : '__MODULE__/Upfile/upload',
+                'buttonImage'     : '',
+                'buttonClass'     : 'addnew',
+                'buttonText'      : '',
+                'height'          : '28',
+                'width'           : '75',
+                'fileSizeLimit'   : fileSizeLimit + "MB",
+                'fileTypeDesc'    : fileTypeDesc,
+                'fileTypeExts'    : fileTypeExts,
+                'removeTimeout'   : 0,
+                'queueSizeLimit'  : queueSizeLimit,
+                'uploadLimit'     : uploadLimit,
+                'onUploadError'   : function(file, errorCode, errorMsg, errorString) {
+                    alert(file.name + ' 上传失败，错误原因: ' + errorString);
+                },
+                'onUploadSuccess' : function(file, data, response) {
+                    var result = $.parseJSON(data);
+                    set_thumb(result);
+                }
+            });
         });
 
         function set_thumb(result) {

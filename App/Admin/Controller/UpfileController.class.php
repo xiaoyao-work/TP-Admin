@@ -13,13 +13,7 @@ use Think\Controller;
 * 附件控制器
 */
 class UpfileController extends Controller {
-
-    function index() {
-        $this->display();
-    }
-
     public function upload() {
-        header('Content-Type:text/html;charset=utf-8');
         if (IS_POST) {
             $data = array();
             $upload = new \Think\Upload();
@@ -36,7 +30,7 @@ class UpfileController extends Controller {
                     $data['status'] = 'error';
                     $data['error_info'] = $upload->getError();
                 } else {
-                    $attach_info = isset($info['0']) ? $info['0'] : $info['upload'];
+                    $attach_info = current($info);
                     // 将附件插入附件表
                     $attach_info = array(
                         'name' => empty($attach_info["name"]) ? $attach_info["savename"] : $attach_info["name"],
