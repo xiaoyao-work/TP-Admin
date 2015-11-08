@@ -1,0 +1,260 @@
+<?php
+defined('IN_ADMIN') or exit('No permission resources.');
+?>
+<extend name="Public:form_layout" />
+<block name="title"><title>添加求职</title></block>
+<block name="subheader">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/esf.css">
+  <script type="text/javascript" src="__PUBLIC__/js/JSCal/jscal2.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/JSCal/lang/cn.js"></script>
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/jscal2.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/border-radius.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/win2k/win2k.css">
+</block>
+<block name="subnav">
+  <a class="on" href="__URL__/index"><em>求职管理</em></a>
+</block>
+<block name="main">
+  <div class="common-form">
+    <form name="myform" id="myform" action="" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="id" value="<?php echo $apply['id']; ?>">
+      <table width="100%" cellspacing="0" class="table_form">
+        <tbody>
+          <tr>
+            <th width="80"> <font color="red">*</font>职位名称</th>
+            <td>
+              <input type="text" name="info[title]" id="title" value="<?php echo $apply['title']; ?>" class="input-text" style="width:400px;">
+            </td>
+          </tr>
+
+          <tr>
+            <th width="80"><font color="red">*</font>职位类别</th>
+            <td>
+              <select autocomplete="off" class="input_7" id="job_type" name="info[job_type]" >
+                <option value="0">请选择</option>
+                <?php echo $job_types_option; ?>
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <th width="80"><font color="red">*</font>期待薪资</th>
+            <td>
+              <?php echo Form::select($moneys, $apply['money'], 'name=info[money] id="money"', '请选择'); ?>
+            </td>
+          </tr>
+
+          <tr>
+            <th width="80"><font color="red">*</font>姓名</th>
+            <td><input type="text" name="info[name]" id="name" value="<?php echo $apply['name']; ?>" class="input-text"></td>
+          </tr>
+
+          <tr>
+            <th width="80"><font color="red">*</font>性别</th>
+            <td>
+              <?php echo Form::select(array( '男', '女', ), $apply['sex'], 'name=info[sex] id="sex"', '请选择'); ?>
+            </td>
+          </tr>
+
+          <tr>
+            <th width="80"><font color="red">*</font>出生日期</th>
+            <td>
+              <input type="text" name="info[birthday]" id="birthday" value="<?php echo $apply['birthday']; ?>" size="10" class="date input-text">&nbsp;<script type="text/javascript">
+              Calendar.setup({
+                weekNumbers: false,
+                inputField : "birthday",
+                trigger    : "birthday",
+                dateFormat: "%Y-%m-%d",
+                showTime: false,
+                minuteStep: 1,
+                onSelect   : function() {this.hide();}
+              });
+            </script>
+          </td>
+        </tr>
+
+        <tr>
+          <th width="80"><font color="red">*</font>最高学历</th>
+          <td>
+            <?php echo Form::select($educations, $apply['education'], 'name=info[education] id="education"', '请选择'); ?>
+          </td>
+        </tr>
+
+        <tr>
+          <th width="80"><font color="red">*</font>籍贯</th>
+          <td>
+            <input id="birth_place" name="info[birth_place]" type="text" value="<?php echo $apply['birth_place']; ?>">
+          </td>
+        </tr>
+
+        <tr>
+          <th width="80"><font color="red">*</font>现居住地</th>
+          <td>
+            <select name="info[living_place][province]"></select>
+            <select name="info[living_place][city]"></select>
+            <select name="info[living_place][area]" id="living_place"></select>
+          </td>
+        </tr>
+
+        <tr>
+          <th width="80"><font color="red">*</font>想在哪工作</th>
+          <td>
+            <select name="info[work_place][province]"></select>
+            <select name="info[work_place][city]"></select>
+            <select name="info[work_place][area]" id="work_place"></select>
+          </td>
+        </tr>
+
+        <tr>
+          <th width="80"><font color="red">*</font>邮箱</th>
+          <td><input type="text" name="info[email]" id="email" value="<?php echo $apply['email']; ?>" class="input-text" style="width:300px;"></td>
+        </tr>
+
+        <tr>
+          <th width="80"><font color="red">*</font>手机号码</th>
+          <td><input type="text" name="info[phone_number]" id="phone_number" value="<?php echo $apply['phone_number']; ?>" class="input-text"></td>
+        </tr>
+
+          <tr>
+            <th width="80">标签</th>
+            <td>
+              <div class="contedit fl">
+                <ul class="brightspot" id="brightspot">
+                  <?php foreach ($apply['tags'] as $key => $tag) { ?>
+                  <li class='actived'><?php echo $tag; ?><a href='javascript:void(0);' class='cbdel'></a><input type='hidden' name='info[tags][]' value='<?php echo $tag; ?>'/></li>
+                  <?php } ?>
+                </ul>
+                <div class="clear"></div>
+                <div id="OthBrig">
+                  <input type="text" id="tags" class="textstyle" maxlength="20" placeholder="请输入不超过8个字" autocomplete="off" >
+                  <input type="button" class="addbrig" id="add_tags" value="添加特色" style="display: inline-block;">
+                  <span id="txtOthBrig1_Tip"></span>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+        <tr>
+          <th width="80">特长/其他</th>
+          <td>
+            <textarea name="info[content]" id="content" cols="100" rows="5"><?php echo $apply['content']; ?></textarea>
+          </td>
+        </tr>
+
+        <tr>
+          <th width="80"><font color="red">*</font>自我介绍</th>
+          <td>
+            <textarea name="info[self_introduce]" id="self_introduce" cols="100" rows="5"><?php echo $apply['self_introduce']; ?></textarea>
+          </td>
+        </tr>
+
+        <tr>
+          <th>照片/作品</th>
+          <td>
+            <div class="photos">
+              <div class="warning"></div>
+              <div class="create_access first" id="create_access"><i class="icon42_common add_gray"></i></div>
+              <?php foreach ($apply['images'] as $key => $room_image) { ?>
+              <div class="photo">
+                <img src="<?php echo $room_image['url']; ?>" data-url="<?php echo $room_image['url']; ?>" />
+                <input type="hidden" name="info[images][<?php echo $room_image['id'] ?>][id]" value="<?php echo $room_image['id'] ?>" />
+                <input type="hidden" name="info[images][<?php echo $room_image['id'] ?>][url]" value="<?php echo $room_image['url'] ?>" />
+                <input name="info[images][<?php echo $room_image['id'] ?>][title]" value="<?php echo $room_image['title'] ?>" />
+                <a class="remove_photo" href="#"></a>
+              </div>
+              <?php } ?>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th width="80">是否推荐</th>
+          <td>
+            <?php echo Form::radio(array('0' => '否', '1' => '是'), $apply['is_recommend'], 'name=info[is_recommend]', '90', 'recommend' ); ?>
+          </td>
+        </tr>
+        <tr>
+          <th width="80">状态</th>
+          <td>
+            <?php echo Form::radio(array('0' => '待审', '1' => '发布', '2' => '被退回'),$apply['status'], 'name=info[status]', '90', 'status' ); ?>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    <div class="bk15"></div>
+    <input name="dosubmit" type="submit" class="button" value="提交">
+  </form>
+</div>
+</block>
+<block name="footer">
+  <script type="text/javascript" src="__PUBLIC__/js/admin/attachupload.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/esf/functions.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/esf/pcasunzip.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jobs/global.js"></script>
+  <script type="text/javascript">
+    //省市县城市联动
+    new PCAS("info[work_place][province]","info[work_place][city]","info[work_place][area]","<?php echo  isset($apply['work_place']['0']) ? $apply['work_place']['0'] : '湖南省'; ?>","<?php echo isset($apply['work_place']['1']) ? $apply['work_place']['1'] : '常德市'; ?>","<?php echo isset($apply['work_place']['2']) ? $apply['work_place']['2'] : '武陵区'; ?>");
+    new PCAS("info[living_place][province]","info[living_place][city]","info[living_place][area]","<?php echo isset($apply['living_place']['0']) ? $apply['living_place']['0'] : '湖南省'; ?>","<?php echo isset($apply['living_place']['1']) ? $apply['living_place']['1'] : '常德市'; ?>","<?php echo isset($apply['living_place']['2']) ? $apply['living_place']['2'] : '武陵区'; ?>");
+    //省市县城市联动结束
+
+    var GlobalParams = { 'upload_url' : '<?php echo U("Upfile/upload"); ?>', 'image_num' : <?php echo count($apply['room_images']); ?> };
+
+    var tag = <?php echo count($apply['tags']); ?>;
+    $(function(){
+      /* 表单验证 */
+      $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj) {
+        art.dialog.through({content:msg,lock:true,width:'220',height:'70'}, function() {
+          this.close();
+          $(obj).focus();
+        });
+        $( window ).resize();
+      }});
+
+      /* 表单验证 */
+    $.formValidator.initConfig({ formid:"residence", autotip:true, onerror:function(msg,obj) { $(obj).focus(); } });
+    $("#name").formValidator({onshow:"请填写姓名",onfocus:"请填写姓名"}).inputValidator({min:1,onerror:"姓名必填"}).defaultPassed();
+    $("#phone_number").formValidator({onshow:"请填写手机号码",onfocus:"请填写手机号码",oncorrect:"输入正确"}).regexValidator({datatype:"enum",regexp:"mobile",onerror:"手机号码格式不正确"}).defaultPassed();
+
+    $("#email").formValidator({onshow:"请填写邮箱地址",onfocus:"请填写邮箱地址",oncorrect:"输入正确"}).regexValidator({datatype:"enum",regexp:"email",onerror:"邮箱格式不正确"}).defaultPassed();
+    $("#sex").formValidator({onshow:"请选择性别",onfocus:"请选择性别",oncorrect:"输入正确"}).functionValidator({ fun:function( val, elem ) {
+      if ( /^[1-9]\d*|0$/.test(val) ) {
+        return true;
+      } else {
+        return "性别是必选项";
+      }
+    }}).defaultPassed();
+
+    $("#job_type").formValidator({onshow:"请选择职位类别",onfocus:"请选择职位类别",oncorrect:"输入正确"}).functionValidator({ fun:function( val, elem ) {
+      if ( /^[1-9]\d*|0$/.test(val) ) {
+        return true;
+      } else {
+        return "职位类别必选";
+      }
+    }}).defaultPassed();
+    // regexValidator({datatype:"enum",regexp:"num1",onerror:"职位类别必选"});
+
+    $("#money").formValidator({onshow:"请选择期待薪资",onfocus:"请选择期待薪资",oncorrect:"输入正确"}).functionValidator({ fun:function( val, elem ) {
+      if ( /^[1-9]\d*|0$/.test(val) ) {
+        return true;
+      } else {
+        return "期待薪资必选";
+      }
+    }}).defaultPassed();
+    // regexValidator({datatype:"enum",regexp:"date",onerror:"期待薪资必选"});
+
+    $("#birthday").formValidator({onshow:"请填写出生日期",onfocus:"请填写出生日期",oncorrect:"输入正确"}).regexValidator({datatype:"enum",regexp:"date",onerror:"日期格式不正确"}).defaultPassed();
+    // inputValidator({min:1,onerror:"出生日期不能为空"});
+    // regexValidator({datatype:"enum",regexp:"date",onerror:"日期格式不正确"});
+
+    $("#birth_place").formValidator({onshow:"请填写籍贯",onfocus:"请填写籍贯",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"籍贯不能为空"});
+
+    $("#title").formValidator({onshow:"亲，2-12个字",onfocus:"亲，2-12个字",oncorrect:"输入正确"}).inputValidator({min:2,onerror:"职位名称必须在2-12个字之间"}).inputValidator({max:24,onerror:"职位名称必须在2-12个字之间"});
+    $("#education").formValidator({onshow:"请选择最高学历",onfocus:"请选择最高学历",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"学历不能为空"}).defaultPassed();
+    $( "#work_place" ).formValidator({onshow:"请选择地址",onfocus:"请选择地址",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"地址格式不正确"}).defaultPassed();
+    $( "#living_place" ).formValidator({onshow:"请选择地址",onfocus:"请选择地址",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"地址格式不正确"}).defaultPassed();
+    // $("input[name='inof[content]']").formValidator({onshow:"",onfocus:""}).inputValidator({min:10,onerror:"自我介绍至少10个字符"});
+    /* 表单验证结束 */
+
+    });
+</script>
+</block>

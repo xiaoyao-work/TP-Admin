@@ -1,0 +1,46 @@
+<?php
+defined('IN_ADMIN') or exit('No permission resources.');
+?>
+<extend name="Public:form_layout" />
+<block name="title"><title>修改薪资类型</title></block>
+<block name="subnav">
+  <a class="add fb" href="__URL__/add"><em>添加薪资类型</em></a>　    <a href="__URL__/index"><em>薪资类型</em></a>
+</block>
+<block name="main">
+  <div class="common-form">
+    <form name="myform" action="__URL__/edit" method="post" id="myform">
+      <input type="hidden" name="id" value="<?php echo $job['id']; ?>">
+      <table width="100%" class="table_form contentWrap">
+        <tr>
+          <th width="100"><font class="red">*</font>名称</th>
+          <td>
+            <input type="text" name="info[name]" value="<?php echo $job['name']; ?>" class="input-text" id="name">
+          </td>
+        </tr>
+        <tr>
+        <th width="100"><font class="red">*</font>薪资大于</th>
+          <td>
+            <input type="text" name="info[salary][]" value="<?php echo $job['salary'][0] ?>" class="input-text" id="salary1">
+          </td>
+        </tr>
+        <tr>
+          <th width="100"><font class="red">*</font>薪资小于</th>
+          <td>
+            <input type="text" name="info[salary][]" value="<?php echo $job['salary'][1] ?>" class="input-text" id="salary2">
+        </tr>
+        <tr>
+          <th width="100">排序</th>
+          <td><input type="text" name="info[sort]" class="input-text" size="5" value="<?php echo $job['sort']; ?>"></input></td>
+        </tr>
+      </table>
+      <div class="bk15"></div>
+      <input name="dosubmit" type="submit" class="button" value="提交">
+    </form>
+  </div>
+  <script type="text/javascript">
+    var jobs = '<?php echo json_encode($jobs); ?>';
+    $(function() {
+      $.formValidator.initConfig({autotip:true,formid:"myform",onerror:function(msg){}});
+      $("#name").formValidator({onshow:"请输入名字",onfocus:"名称不能为空"}).inputValidator({min:1,max:50,onerror:"名称不能为空"}).defaultPassed();
+  </script>
+</block>
