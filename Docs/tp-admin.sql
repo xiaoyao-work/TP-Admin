@@ -183,9 +183,9 @@ INSERT INTO `xy_access` (`role_id`, `node_id`, `siteid`) VALUES
 
 CREATE TABLE IF NOT EXISTS `xy_attachment` (
 `id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL DEFAULT 0 COMMENT '所属栏目',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '自定义标题',
-  `description` varchar(255) NOT NULL COMMENT '自定义描述',
+  `category_id` int(11) DEFAULT 0 COMMENT '所属栏目',
+  `title` varchar(255) DEFAULT '' COMMENT '自定义标题',
+  `description` varchar(255)  DEFAULT '' COMMENT '自定义描述',
   `path` varchar(255) NOT NULL COMMENT '附件路径',
   `name` varchar(255) NOT NULL COMMENT '附件本身名字',
   `size` int(10) NOT NULL COMMENT '附件大小',
@@ -193,12 +193,12 @@ CREATE TABLE IF NOT EXISTS `xy_attachment` (
   `user_id` int(11) NOT NULL COMMENT '上传用户',
   `upload_ip` char(15) NOT NULL COMMENT '上传IP',
   `upload_time` int(10) NOT NULL COMMENT '上传时间',
-  `compression_image` varchar(255) NOT NULL,
-  `sort` smallint(6) NOT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  `width` smallint(6) DEFAULT NULL,
-  `height` smallint(6) DEFAULT NULL,
-  `compression_url` varchar(255) DEFAULT NULL,
+  `compression_image` varchar(255) DEFAULT '',
+  `sort` smallint(6) DEFAULT 0,
+  `url` varchar(255) DEFAULT '',
+  `width` smallint(6) DEFAULT '',
+  `height` smallint(6) DEFAULT '',
+  `compression_url` varchar(255) DEFAULT '',
   `siteid` tinyint(4) NOT NULL DEFAULT '1' COMMENT '站点ID'
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1417594363 ;
 
