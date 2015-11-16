@@ -183,8 +183,8 @@ INSERT INTO `xy_access` (`role_id`, `node_id`, `siteid`) VALUES
 
 CREATE TABLE IF NOT EXISTS `xy_attachment` (
 `id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL COMMENT '所属栏目',
-  `title` varchar(255) NOT NULL COMMENT '自定义标题',
+  `category_id` int(11) NOT NULL DEFAULT 0 COMMENT '所属栏目',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '自定义标题',
   `description` varchar(255) NOT NULL COMMENT '自定义描述',
   `path` varchar(255) NOT NULL COMMENT '附件路径',
   `name` varchar(255) NOT NULL COMMENT '附件本身名字',
