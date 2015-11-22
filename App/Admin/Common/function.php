@@ -235,7 +235,6 @@ function menu_linkage($linkageid = 0, $id = 'linkid', $defaultvalue = 0) {
 	  		linkageSel_'.$linkageid.'.onChange(function(){
 	  			var input = $("#'. $id . '-' . $linkageid .'")
 	  			ids = this.getSelectedDataArr("id");
-	  			console.log(ids);
 	  			input.val(ids.pop());
 	  		});
 	});

@@ -13,7 +13,7 @@ namespace Think\Db\Driver;
 use Think\Db\Driver;
 
 /**
- * mysql数据库驱动 
+ * mysql数据库驱动
  */
 class Mysql extends Driver{
 
@@ -52,7 +52,7 @@ class Mysql extends Driver{
         }else{
         	$sql   = 'SHOW COLUMNS FROM `'.$tableName.'`';
         }
-        
+
         $result = $this->query($sql);
         $info   =   array();
         if($result) {
@@ -121,7 +121,7 @@ class Mysql extends Driver{
                 if(is_array($val) && 'exp' == $val[0]){
                     $value[]   =  $val[1];
                 }elseif(is_null($val)){
-                    $value[]   =   'NULL';
+                    $value[]   =   '';
                 }elseif(is_scalar($val)){
                     if(0===strpos($val,':') && in_array($val,array_keys($this->bind))){
                         $value[]   =   $this->parseValue($val);
@@ -144,13 +144,13 @@ class Mysql extends Driver{
     /**
      * ON DUPLICATE KEY UPDATE 分析
      * @access protected
-     * @param mixed $duplicate 
+     * @param mixed $duplicate
      * @return string
      */
     protected function parseDuplicate($duplicate){
         // 布尔值或空则返回空字符串
         if(is_bool($duplicate) || empty($duplicate)) return '';
-        
+
         if(is_string($duplicate)){
         	// field1,field2 转数组
         	$duplicate = explode(',', $duplicate);
@@ -182,8 +182,8 @@ class Mysql extends Driver{
         if(empty($updates)) return '';
         return " ON DUPLICATE KEY UPDATE ".join(', ', $updates);
     }
-    
-	
+
+
 
     /**
      * 执行存储过程查询 返回多个数据集
