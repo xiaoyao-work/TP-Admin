@@ -92,6 +92,7 @@
                 'queueSizeLimit'  : queueSizeLimit,
                 'uploadLimit'     : uploadLimit,
                 'onUploadError'   : function(file, errorCode, errorMsg, errorString) {
+                    $('#file_upload').uploadify('settings', 'uploadLimit', $('#file_upload').uploadify('settings', 'uploadLimit') + 1);
                     alert(file.name + ' 上传失败，错误原因: ' + errorString);
                 },
                 'onUploadSuccess' : function(file, data, response) {
@@ -104,6 +105,7 @@
         function set_thumb(result) {
             var attachment_length = $('#attachment_list li').length;
             if (result.status == 'error') {
+                $('#file_upload').uploadify('settings', 'uploadLimit', $('#file_upload').uploadify('settings', 'uploadLimit') + 1);
                 alert(result.error_info);
             } else {
                 if ( type == 'video' || type == 'swf' ) {
