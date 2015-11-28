@@ -42,17 +42,17 @@ abstract class Driver {
         'database'          =>  '',          // 数据库名
         'username'          =>  '',      // 用户名
         'password'          =>  '',          // 密码
-        'hostport'          =>  '',        // 端口     
-        'dsn'               =>  '', //          
-        'params'            =>  array(), // 数据库连接参数        
-        'charset'           =>  'utf8',      // 数据库编码默认采用utf8  
+        'hostport'          =>  '',        // 端口
+        'dsn'               =>  '', //
+        'params'            =>  array(), // 数据库连接参数
+        'charset'           =>  'utf8',      // 数据库编码默认采用utf8
         'prefix'            =>  '',    // 数据库表前缀
         'debug'             =>  false, // 数据库调试模式
         'deploy'            =>  0, // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
         'rw_separate'       =>  false,       // 数据库读写是否分离 主从式有效
         'master_num'        =>  1, // 读写分离后 主服务器数量
         'slave_no'          =>  '', // 指定从服务器序号
-        'db_like_fields'    =>  '', 
+        'db_like_fields'    =>  '',
     );
     // 数据库表达式
     protected $exp = array('eq'=>'=','neq'=>'<>','gt'=>'>','egt'=>'>=','lt'=>'<','elt'=>'<=','notlike'=>'NOT LIKE','like'=>'LIKE','in'=>'IN','notin'=>'NOT IN','not in'=>'NOT IN','between'=>'BETWEEN','not between'=>'NOT BETWEEN','notbetween'=>'NOT BETWEEN');
@@ -96,7 +96,7 @@ abstract class Driver {
                 if(empty($config['dsn'])) {
                     $config['dsn']  =   $this->parseDsn($config);
                 }
-                if(version_compare(PHP_VERSION,'5.3.6','<=')){ 
+                if(version_compare(PHP_VERSION,'5.3.6','<=')){
                     // 禁用模拟预处理语句
                     $this->options[PDO::ATTR_EMULATE_PREPARES]  =   false;
                 }
@@ -407,7 +407,7 @@ abstract class Driver {
     protected function parseKey(&$key) {
         return $key;
     }
-    
+
     /**
      * value分析
      * @access protected
@@ -559,7 +559,7 @@ abstract class Driver {
                             foreach ($val[1] as $item){
                                 $like[] = $key.' '.$this->exp[$exp].' '.$this->parseValue($item);
                             }
-                            $whereStr .= '('.implode(' '.$likeLogic.' ',$like).')';                          
+                            $whereStr .= '('.implode(' '.$likeLogic.' ',$like).')';
                         }
                     }else{
                         $whereStr .= $key.' '.$this->exp[$exp].' '.$this->parseValue($val[1]);
@@ -586,7 +586,7 @@ abstract class Driver {
                 }
             }else {
                 $count = count($val);
-                $rule  = isset($val[$count-1]) ? (is_array($val[$count-1]) ? strtoupper($val[$count-1][0]) : strtoupper($val[$count-1]) ) : '' ; 
+                $rule  = isset($val[$count-1]) ? (is_array($val[$count-1]) ? strtoupper($val[$count-1][0]) : strtoupper($val[$count-1]) ) : '' ;
                 if(in_array($rule,array('AND','OR','XOR'))) {
                     $count  = $count -1;
                 }else{
@@ -780,7 +780,7 @@ abstract class Driver {
     /**
      * ON DUPLICATE KEY UPDATE 分析
      * @access protected
-     * @param mixed $duplicate 
+     * @param mixed $duplicate
      * @return string
      */
     protected function parseDuplicate($duplicate){
@@ -805,7 +805,7 @@ abstract class Driver {
                 $values[]   =  $val[1];
             }elseif(is_null($val)){
                 $fields[]   =   $this->parseKey($key);
-                $values[]   =   'NULL';
+                $values[]   =   '';
             }elseif(is_scalar($val)) { // 过滤非标量数据
                 $fields[]   =   $this->parseKey($key);
                 if(0===strpos($val,':') && in_array($val,array_keys($this->bind))){
@@ -845,7 +845,7 @@ abstract class Driver {
                 if(is_array($val) && 'exp' == $val[0]){
                     $value[]   =    $val[1];
                 }elseif(is_null($val)){
-                    $value[]   =   'NULL';
+                    $value[]   =   '';
                 }elseif(is_scalar($val)){
                     if(0===strpos($val,':') && in_array($val,array_keys($this->bind))){
                         $value[]   =   $this->parseValue($val);
@@ -994,7 +994,7 @@ abstract class Driver {
     }
 
     /**
-     * 获取最近一次查询的sql语句 
+     * 获取最近一次查询的sql语句
      * @param string $model  模型名
      * @access public
      * @return string
@@ -1110,7 +1110,7 @@ abstract class Driver {
             // 读写操作不区分服务器
             $r = floor(mt_rand(0,count($_config['hostname'])-1));   // 每次随机连接的数据库
         }
-        
+
         if($m != $r ){
             $db_master  =   array(
                 'username'  =>  isset($_config['username'][$m])?$_config['username'][$m]:$_config['username'][0],

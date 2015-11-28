@@ -18,26 +18,22 @@ define('BUILD_DIR_SECURE', false);
 define('APP_PATH', dirname(__DIR__) . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR);
 define('RUNTIME_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Runtime' . DIRECTORY_SEPARATOR);
 
+// Server params
+$scriptName = $_SERVER['SCRIPT_NAME']; // <-- "/foo/index.php"
+$requestUri = $_SERVER['REQUEST_URI']; // <-- "/foo/bar?test=abc" or "/foo/index.php/bar?test=abc"
+// Physical path
+if (strpos($requestUri, $scriptName) !== false) {
+    $physicalPath = $scriptName; // <-- Without rewriting
+} else {
+    $physicalPath = str_replace('\\', '', dirname($scriptName)); // <-- With rewriting
+}
+$script_name = rtrim($physicalPath, '/'); // <-- Remove trailing slashes
+
 // 获取并定义路径常量信息
-$protocol  = empty($_SERVER['HTTPS']) ? 'http' : 'https';
-$port      = $_SERVER['SERVER_PORT'];
-$disp_port = ($protocol == 'http' && $port == 80 || $protocol == 'https' && $port == 443) ? '' : ":$port";
-$domain    = $_SERVER['SERVER_NAME'];
-
-// 网站相对路径
-$script_name_info = pathinfo($_SERVER['SCRIPT_NAME']);
-$base_url = ($script_name_info['dirname'] == DIRECTORY_SEPARATOR ? '' : $script_name_info['dirname']);
-
-// Apache Or Nginx 配置根目录
-$script_filename_info = pathinfo($_SERVER['SCRIPT_FILENAME']);
-$doc_root  = str_replace($base_url, '', $script_filename_info['dirname']);
-
-// 网站完整首页URL
-$full_url  = "{$protocol}://{$domain}{$disp_port}{$base_url}";
 define("ROOT_PATH", __DIR__ . DIRECTORY_SEPARATOR);
-define("DOC_PATH", $doc_root . DIRECTORY_SEPARATOR);
-define("BASE_URL", $base_url . '/');
-define("UPLOAD_URL", $full_url . '/Uploads/');
 define("UPLOAD_PATH", ROOT_PATH . 'Uploads' . DIRECTORY_SEPARATOR);
+define("BASE_URL", $script_name . '/');
+define("UPLOAD_URL", $script_name . '/Uploads/');
+
 // 引入框架入口文件
 require '../ThinkPHP/ThinkPHP.php';
