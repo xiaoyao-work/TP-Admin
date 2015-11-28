@@ -1287,11 +1287,8 @@ CREATE TABLE IF NOT EXISTS `xy_user` (
 --
 
 INSERT INTO `xy_user` (`id`, `account`, `password`, `realname`, `email`, `last_login_time`, `last_login_ip`, `status`, `role_id`) VALUES
-(1, 'xiaoyao', '2067cc5f3541bc1ba330c8af61748ff8', '', '', 1447927292, NULL, 1, 1),
-(45, 'tp-admin', 'b990e224fe46ed9cf0a8cd8c49d59629', '', '', 1448376855, NULL, 1, 2),
-(47, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '', 1448375430, NULL, 1, 2),
-(48, 'test', 'e10adc3949ba59abbe56e057f20f883e', '', '', 0, NULL, 1, 2),
-(49, 'wc', 'e807f1fcf82d132f9bb018ca6738a19f', '', '', 0, NULL, 1, 19);
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '', 1447927292, NULL, 1, 1),
+(45, 'tp-admin', 'b990e224fe46ed9cf0a8cd8c49d59629', '', '', 1448376855, NULL, 1, 2);
 
 --
 -- Indexes for dumped tables
