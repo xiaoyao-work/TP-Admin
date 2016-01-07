@@ -6,8 +6,12 @@
 // +----------------------------------------------------------------------
 // | Author: XiaoYao <476552238li@gmail.com>
 // +----------------------------------------------------------------------
+namespace Model;
+use Think\Page as Page;
 
-namespace Admin\Model;
-
-class TaxonomyModel extends CommonModel {
+/**
+ * 日志操作模型
+*/
+class LinkageModel extends BaseModel {
+    protected $tableName = 'linkage';
 }
