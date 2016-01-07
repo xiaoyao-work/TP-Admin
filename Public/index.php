@@ -21,13 +21,15 @@ define('RUNTIME_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Runtime' . DIR
 // Server params
 $scriptName = $_SERVER['SCRIPT_NAME']; // <-- "/foo/index.php"
 $requestUri = $_SERVER['REQUEST_URI']; // <-- "/foo/bar?test=abc" or "/foo/index.php/bar?test=abc"
-// Physical path
+// 物理路径
 if (strpos($requestUri, $scriptName) !== false) {
-    $physicalPath = $scriptName; // <-- Without rewriting
+    // 没有重写
+    $physicalPath = $scriptName;
 } else {
-    $physicalPath = str_replace('\\', '', dirname($scriptName)); // <-- With rewriting
+    // 有重写
+    $physicalPath = str_replace('\\', '', dirname($scriptName));
 }
-$script_name = rtrim($physicalPath, '/'); // <-- Remove trailing slashes
+$script_name = rtrim($physicalPath, '/');
 
 // 获取并定义路径常量信息
 define("ROOT_PATH", __DIR__ . DIRECTORY_SEPARATOR);
@@ -36,4 +38,4 @@ define("BASE_URL", $script_name . '/');
 define("UPLOAD_URL", $script_name . '/Uploads/');
 
 // 引入框架入口文件
-require '../ThinkPHP/ThinkPHP.php';
+require '../Framework/ThinkPHP.php';

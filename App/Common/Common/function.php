@@ -1,5 +1,154 @@
 <?php
 /**
+ * @author 李志亮 <lizhiliang@kankan.com>
+ */
+function asset($path) {
+	return ASSETS_DOMAIN . $path . "?ms=" . C('version');
+}
+
+/**
+ * @author 李志亮 <lizhiliang@kankan.com>
+ */
+function url($path='/', $params=array()) {
+	if ($path === '/') {
+		return BASE_URL . '/';
+	}
+	if (empty($params)) {
+		return BASE_URL . '/' . $path . '.html';
+	}
+	return BASE_URL . '/' . $path . '/' . implode('/', $params) . '.html';
+}
+
+
+/**
+ * @author 李志亮 <lizhiliang@kankan.com>
+ */
+if (!function_exists('http_response_code')) {
+    function http_response_code($code = NULL) {
+        if ($code !== NULL) {
+            switch ($code) {
+                case 100: $text = 'Continue'; break;
+                case 101: $text = 'Switching Protocols'; break;
+                case 200: $text = 'OK'; break;
+                case 201: $text = 'Created'; break;
+                case 202: $text = 'Accepted'; break;
+                case 203: $text = 'Non-Authoritative Information'; break;
+                case 204: $text = 'No Content'; break;
+                case 205: $text = 'Reset Content'; break;
+                case 206: $text = 'Partial Content'; break;
+                case 300: $text = 'Multiple Choices'; break;
+                case 301: $text = 'Moved Permanently'; break;
+                case 302: $text = 'Moved Temporarily'; break;
+                case 303: $text = 'See Other'; break;
+                case 304: $text = 'Not Modified'; break;
+                case 305: $text = 'Use Proxy'; break;
+                case 400: $text = 'Bad Request'; break;
+                case 401: $text = 'Unauthorized'; break;
+                case 402: $text = 'Payment Required'; break;
+                case 403: $text = 'Forbidden'; break;
+                case 404: $text = 'Not Found'; break;
+                case 405: $text = 'Method Not Allowed'; break;
+                case 406: $text = 'Not Acceptable'; break;
+                case 407: $text = 'Proxy Authentication Required'; break;
+                case 408: $text = 'Request Time-out'; break;
+                case 409: $text = 'Conflict'; break;
+                case 410: $text = 'Gone'; break;
+                case 411: $text = 'Length Required'; break;
+                case 412: $text = 'Precondition Failed'; break;
+                case 413: $text = 'Request Entity Too Large'; break;
+                case 414: $text = 'Request-URI Too Large'; break;
+                case 415: $text = 'Unsupported Media Type'; break;
+                case 500: $text = 'Internal Server Error'; break;
+                case 501: $text = 'Not Implemented'; break;
+                case 502: $text = 'Bad Gateway'; break;
+                case 503: $text = 'Service Unavailable'; break;
+                case 504: $text = 'Gateway Time-out'; break;
+                case 505: $text = 'HTTP Version not supported'; break;
+                default:
+                    exit('Unknown http status code "' . htmlentities($code) . '"');
+                break;
+            }
+            $protocol = (isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0');
+            header($protocol . ' ' . $code . ' ' . $text);
+            $GLOBALS['http_response_code'] = $code;
+        } else {
+            $code = (isset($GLOBALS['http_response_code']) ? $GLOBALS['http_response_code'] : 200);
+        }
+        return $code;
+    }
+}
+
+/**
+ * @author 李志亮 <lizhiliang@kankan.com>
+ */
+function abort($code=404) {
+	http_response_code($code);
+	if (IS_AJAX) {
+        header('Content-Type:application/json; charset=utf-8');
+        exit(json_encode(array('code' => $code, 'message' => 'system error!')));
+	} else {
+		static $view;
+		if (empty($view)) {
+			$view = new \Think\View();
+			$content = $view->display(MODULE_NAME.'@errors:404');
+			exit();
+		}
+	}
+}
+
+/**
+ * 创建logic
+ * @param string $name logic名称
+ * @return Think\Model
+ * @author 李志亮 <lizhiliang@kankan.com>
+ */
+function logic($name) {
+	$name = ucfirst($name);
+    static $_logic  =   array();
+    if(isset($_logic[$name]))
+        return $_logic[$name];
+    $class      =   '\\Logic\\' . $name . 'Logic';
+    $logic      =   class_exists($class)? new $class : new \Logic\BaseLogic;
+    $_logic[$name]  =  $logic;
+    return $logic;
+}
+
+/**
+ * 创建service
+ * @param string $name service名称
+ * @return Service\BaseService
+ * @author 李志亮 <lizhiliang@kankan.com>
+ */
+function service($name) {
+    $name = ucfirst($name);
+    static $_service  =   array();
+    if(isset($_service[$name]))
+        return $_service[$name];
+    $class      =   '\\Service\\' . $name . 'Service';
+	$service      =   class_exists($class)? new $class : new \Service\BaseService;
+    $_service[$name]  =  $service;
+    return $service;
+}
+
+
+/**
+ * 创建service
+ * @param string $name service名称
+ * @return Service\BaseService
+ * @author 李志亮 <lizhiliang@kankan.com>
+ */
+function model($name) {
+    $name = ucfirst(parse_name($name, 1));
+    static $_model  =   array();
+    if(isset($_model[$name]))
+        return $_model[$name];
+    $class      =   '\\Model\\' . $name . 'Model';
+    $model      =   class_exists($class)? new $class : new \Think\Model($name);
+    $_model[$name]  =  $model;
+    return $model;
+}
+
+/**
 * 获取站点配置信息
 * @param  $siteid 站点id
 */
@@ -10,7 +159,7 @@ function get_site_setting($siteid) {
 	return string2array($siteinfo['setting']);
 }
 
-function get_site_info($siteid = "") {
+function get_site_info($siteid="") {
 	$sitelist = include(CONF_PATH.'sitelist.php');
 	if (empty($siteid)) {
 		return $sitelist;
@@ -34,12 +183,11 @@ function get_site_seo_info($siteid = "") {
 */
 function get_siteid() {
 	if (defined('IN_ADMIN')) {
-		$siteid = $_SESSION['siteid'];
+		$siteid = session('siteid');
 		$siteid = empty($siteid) ? 1 : $siteid;
 	} else {
-		$siteid = SITEID;
+		$siteid = defined('SITEID') ? SITEID : 1;
 	}
-	if (empty($siteid)) $siteid = 1;
 	return $siteid;
 }
 
@@ -78,6 +226,7 @@ function check_in($id, $ids = '', $s = ',') {
 function fileext($filename) {
 	return strtolower(trim(substr(strrchr($filename, '.'), 1, 10)));
 }
+
 /**
 * 转换字节数为其他单位
 *
@@ -97,6 +246,7 @@ function sizecount($filesize) {
 	}
 	return $filesize;
 }
+
 /**
 * 生成随机字符串
 * @param int       $length  要生成的随机字符串长度
@@ -347,6 +497,7 @@ function remove_xss($string) {
 	}
 	return $string;
 }
+
 /**
 * 过滤ASCII码从0-28的控制字符
 * @return String
@@ -458,40 +609,6 @@ function str_cut($string, $length, $dot = '...') {
 }
 
 /**
-* 对用户的密码进行加密
-* @param $password
-* @param $encrypt //传入加密串，在修改密码时做认证
-* @return array/password
-*/
-function password($password, $encrypt='') {
-	$pwd = array();
-	$pwd['encrypt'] =  $encrypt ? $encrypt : create_randomstr();
-	$pwd['password'] = md5(md5(trim($password)).$pwd['encrypt']);
-	return $encrypt ? $pwd['password'] : $pwd;
-}
-
-/**
-* 生成随机字符串
-* @param string $lenth 长度
-* @return string 字符串
-*/
-function create_randomstr($lenth = 6) {
-	return random($lenth, '123456789abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ');
-}
-
-/**
-* 检查密码长度是否符合规定
-*
-* @param STRING $password
-* @return  TRUE or FALSE
-*/
-function is_password($password) {
-	$strlen = strlen($password);
-	if($strlen >= 6 && $strlen <= 20) return true;
-	return false;
-}
-
-/**
 * 检测输入中是否含有错误字符
 *
 * @param char $string 要检查的字符串名称
@@ -505,22 +622,6 @@ function is_badword($string) {
 		}
 	}
 	return FALSE;
-}
-
-/**
-* 检查用户名是否符合规定
-*
-* @param STRING $username 要检查的用户名
-* @return  TRUE or FALSE
-*/
-function is_username($username) {
-	$strlen = strlen($username);
-	if(is_badword($username) || !preg_match("/^[a-zA-Z0-9_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]+$/", $username)){
-		return false;
-	} elseif ( 20 < $strlen || $strlen < 2 ) {
-		return false;
-	}
-	return true;
 }
 
 /**
@@ -564,24 +665,6 @@ function file_down($filepath, $filename = '') {
 	header('Content-length: '.$filesize);
 	readfile($filepath);
 	exit;
-}
-
-/**
-* Function dataformat
-* 时间转换
-* @param $n INT时间
-*/
-function dataformat($n) {
-	$hours = floor($n/3600);
-	$minite = floor($n%3600/60);
-	$secend = floor($n%3600%60);
-	$minite = $minite < 10 ? "0".$minite : $minite;
-	$secend = $secend < 10 ? "0".$secend : $secend;
-	if($n >= 3600){
-		return $hours.":".$minite.":".$secend;
-	}else{
-		return $minite.":".$secend;
-	}
 }
 
 /**
@@ -703,22 +786,6 @@ function array_translate($array, $_key = 'id', $_value= 'name') {
 		return $temp;
 	}
 	return $array;
-}
-
-/**
-* 产生随机字符串
-*
-* @param    int        $length  输出长度
-* @param    string     $chars   可选的 ，默认为 0123456789
-* @return   string     字符串
-*/
-function random($length, $chars = '0123456789') {
-	$hash = '';
-	$max = strlen($chars) - 1;
-	for($i = 0; $i < $length; $i++) {
-		$hash .= $chars[mt_rand(0, $max)];
-	}
-	return $hash;
 }
 
 // +----------------------------------------------------------------------

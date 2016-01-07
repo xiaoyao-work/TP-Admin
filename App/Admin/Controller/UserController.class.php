@@ -15,7 +15,7 @@ class UserController extends CommonController {
 
     function __construct() {
         parent::__construct();
-        $this->db = D("User");
+        $this->db = model('User');
     }
 
     public function index() {
@@ -23,10 +23,12 @@ class UserController extends CommonController {
         $this->assign("users", $users);
         $this->display();
     }
+
     public function add() {
         if(IS_POST) {
             $this->checkToken();
-            if($this->db->addUser()) {
+            $data = I('post.info');
+            if(logic('user')->addUser($data)) {
                 $this->success('操作成功！',__MODULE__.'/User/index');
             } else {
                 $this->error('操作失败！',__MODULE__.'/User/index');
@@ -42,8 +44,8 @@ class UserController extends CommonController {
         if(IS_POST) {
             $this->checkToken();
             $datas = $_POST['info'];
-            if ( !empty($_POST['pwd']) ) {
-                $datas['password'] = md5(trim($_POST['pwd']));
+            if ( !empty($datas['pwd']) ) {
+                $datas['password'] = md5(trim($datas['pwd']));
             }
             if($this->db->where(array('id' => $_POST['id']))->save($datas)) {
                 $this->success('操作成功！',__MODULE__.'/User/index');
@@ -51,11 +53,15 @@ class UserController extends CommonController {
                 $this->error('操作失败！',__MODULE__.'/User/index');
             }
         } else {
-            $nid = $_GET['nid'];
-            if(empty($nid)) {
+            $id = I('get.id');
+            if(empty($id)) {
                 $this->error('异常操作！',__MODULE__.'/User/index');
             }
-            if (!( $user = $this->db->table( C("DB_PREFIX").'user as user, '.C("DB_PREFIX").'role_user as role_user')->where("user.id = {$nid} and user.id = role_user.user_id")->field("user.*, role_user.role_id")->find()) ) {
+            $user = $this->db->table('__USER__ as user, __ROLE_USER__ as role_user')
+                ->where(sprintf("user.id = %d and user.id = role_user.user_id", $id))
+                ->field("user.*, role_user.role_id")
+                ->find();
+            if (empty($user)) {
                 $this->error('管理员不存在',__MODULE__.'/User/index');
             }
             $roles = $this->db->roleList();
@@ -64,15 +70,77 @@ class UserController extends CommonController {
             $this->display();
         }
     }
+
     public function del() {
-        $nid = intval($_GET['nid']);
-        if(empty($nid)) {
+        $id = I('get.id');
+        if(empty($id)) {
             $this->error('异常操作！',__MODULE__.'/User/index');
         }
-        if($this->db->where("id = {$nid}")->delete() !== fasle) {
+        if(logic('user')->delete($id) !== fasle) {
             $this->success('操作成功！',__MODULE__.'/User/index');
         } else {
             $this->error('操作失败！',__MODULE__.'/User/index');
+        }
+    }
+
+    public function changePassword() {
+        if (IS_POST) {
+            $old_pwd = I('post.old_pwd');
+            $new_pwd = I('post.new_pwd');
+            $re_pwd = I('post.re_pwd');
+            if($new_pwd != $re_pwd || strlen($new_pwd) < 5 || strlen($new_pwd) > 20) {
+                $this->error('新密码格式错误！');
+            }
+            $id = session('user_info.id');
+            $user = $this->db->find($id);
+            if(md5($old_pwd) != $user['password']) {
+                $this->error('原始密码错误！');
+            }
+            if ($this->db->where(array('id' => $id))->save(array('password' => md5($new_pwd))) !== false) {
+                $this->success('操作成功！');
+            } else {
+                $this->error('操作失败！');
+            }
+        } else {
+            $this->assign('account', session('user_info'));
+            $this->display();
+        }
+    }
+
+    /**
+    * 异步检测用户名
+    */
+    function public_checkname_ajx() {
+        $username = isset($_GET['username']) && trim($_GET['username']) ? trim($_GET['username']) : exit(0);
+        if ($this->db->where(array('account'=>$username))->field('id')->find()) {
+            exit('0');
+        }
+        exit('1');
+    }
+
+    /**
+    * 异步检测密码
+    */
+    function public_password_ajx() {
+        $userid = session('user_info.id');
+        $user = D('User')->find($userid);
+        if ( md5($_GET['old_password']) == $user['password'] ) {
+            exit('1');
+        }
+        exit('0');
+    }
+
+    /**
+    * 异步检测emial合法性
+    */
+    function public_email_ajx() {
+        $email = I('get.email');
+        $userid = session('userid');
+        $check = $this->db->where(array('email'=>$email))->field('id')->find();
+        if ($check && $check['id'] != $userid){
+            exit('0');
+        }else{
+            exit('1');
         }
     }
 }

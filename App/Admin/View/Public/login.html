@@ -6,19 +6,19 @@
     <title>管理员登录</title>
     <style type="text/css">
         div{overflow:hidden; *display:inline-block;}div{*display:block;}
-        .login_box{background: url(IMG_PATH/admin/login_bg.png) no-repeat; width:602px; height:416px; overflow:hidden; position:absolute; left:50%; top:50%; margin-left:-301px; margin-top:-208px;}
+        .login_box{background: url({:asset('images/admin/login_bg.png')}) no-repeat; width:602px; height:416px; overflow:hidden; position:absolute; left:50%; top:50%; margin-left:-301px; margin-top:-208px;}
         .login_iptbox{
             bottom:90px;_bottom:72px;color:#FFFFFF;font-size:12px;height:30px;left:50%;
             margin-left:-280px;position:absolute;width:560px; overflow:visible;
         }
-        .login_iptbox .ipt{height:24px; width:110px; margin-right:22px; color:#fff; background:url(IMG_PATH/admin/ipt_bg.jpg) repeat-x; *line-height:24px; border:none; color:#000; overflow:hidden;
+        .login_iptbox .ipt{height:24px; width:110px; margin-right:22px; color:#fff; background:url({:asset('images/admin/ipt_bg.jpg')}) repeat-x; *line-height:24px; border:none; color:#000; overflow:hidden;
         }
         .login_iptbox label{ *position:relative; *top:-6px;}
         .login_iptbox .ipt_reg{
-            margin-left:12px;width:46px; margin-right:16px; background:url(IMG_PATH/admin/ipt_bg.jpg) repeat-x; *overflow:hidden;text-align:left;padding:2px 0 2px 5px;font-size:16px;font-weight:bold;
+            margin-left:12px;width:46px; margin-right:16px; background:url({:asset('images/admin/ipt_bg.jpg')}) repeat-x; *overflow:hidden;text-align:left;padding:2px 0 2px 5px;font-size:16px;font-weight:bold;
         }
-        .login_tj_btn{ background:url(IMG_PATH/admin/login_dl_btn.jpg) no-repeat 0px 0px; width:52px; height:24px; margin-left:16px; border:none; cursor:pointer; padding:0px; float:right;}
-        .yzm{position:absolute; background:url(IMG_PATH/admin/login_ts140x89.gif) no-repeat; width:140px; height:89px;right:56px;top:-96px; text-align:center; font-size:12px; display:none;}
+        .login_tj_btn{ background:url({:asset('images/admin/login_dl_btn.jpg')}) no-repeat 0px 0px; width:52px; height:24px; margin-left:16px; border:none; cursor:pointer; padding:0px; float:right;}
+        .yzm{position:absolute; background:url({:asset('images/admin/login_ts140x89.gif')}) no-repeat; width:140px; height:89px;right:56px;top:-96px; text-align:center; font-size:12px; display:none;}
         .yzm a:link,.yzm a:visited{color:#036;text-decoration:none;}
         .yzm a:hover{color:#C30;}
         .yzm img{cursor:pointer; margin:4px auto 7px; width:130px; height:50px; border:1px solid #fff;}
@@ -27,15 +27,13 @@
         }
         .cr a{color:#ccc;text-decoration:none;}
     </style>
-    <script language="JavaScript">
+    <script language="javascript">
         if(top!=self) top.location=self.location;
+        function freshVerify() {
+            document.getElementById('verifyImg').src='__CONTROLLER__/verify/' + Math.random();
+        }
     </script>
 </head>
-<script type='text/javascript'>
-    function freshVerify() {
-        document.getElementById('verifyImg').src='__CONTROLLER__/verify/' + Math.random();
-    }
-</script>
 <body>
     <div id="login_bg" class="login_box">
         <div class="login_iptbox">

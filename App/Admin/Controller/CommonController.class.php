@@ -16,6 +16,7 @@ use Org\Util\Rbac as RBAC;
 */
 class CommonController extends Controller {
 	protected $siteid;
+
 	function _initialize() {
 		$this->siteid = get_siteid();
 		// 用户权限检查
@@ -34,7 +35,7 @@ class CommonController extends Controller {
 					// 定义权限错误页面
 					$this->assign('jumpUrl', __MODULE__ . C('RBAC_ERROR_PAGE'));
 					$this->error('您没有权限操作该项');
-					D('Log')->addLog(2);
+					model('Log')->addLog(2);
 					// redirect(C('RBAC_ERROR_PAGE'));
 				} else {
 					if (C('GUEST_AUTH_ON')) {
@@ -47,7 +48,7 @@ class CommonController extends Controller {
 		}
 		// 记录操作日志
 		if ( !in_array(ACTION_NAME, array( 'public_session_life' )) ) {
-			D('Log')->addLog(1);
+			model('Log')->addLog(1);
 		}
 	}
 

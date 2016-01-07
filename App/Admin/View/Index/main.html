@@ -1,0 +1,86 @@
+<html>
+<head>
+    <title>控制面板</title>
+    <link href="{:asset('css/admin/reset.css')}" rel="stylesheet" type="text/css">
+    <link href="{:asset('css/admin/zh-cn-system.css')}" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        h1 { height:30px;line-height:30px;font-size:12px;padding-left:15px;background:#EEE;border-bottom:1px solid #ddd;border-right:1px solid #ddd;overflow:hidden;zoom:1;margin-bottom:10px;}
+        h1 b {color:#3865B8;}
+        h1 span {color:#ccc;font-size:10px;margin-left:10px;}
+        .content {
+            padding: 10px;
+        }
+        .row50 {
+            width: 50%;
+            float:left;
+        }
+        .list {
+            width: auto;
+            height:221px;
+        }
+        .list ul{
+            border:1px #ddd solid;
+            overflow:hidden;
+            border-bottom:none;
+        }
+        .list ul li {
+            border-bottom:1px #ddd solid; height:26px;
+            overflow:hidden;
+            zoom:1;
+            line-height:26px;
+            color:#777;
+            padding-left:5px;
+            list-style:none
+        }
+        .list ul li span{ display:block; float:left; color:#777;width:100px;}
+        .list ul li span, .list ul li{ font-size:12px;}
+        .mr15 {
+            margin-right: 15px;
+        }
+    </style>
+    <script>
+        if(self==top){
+            window.top.location.href = '{:U("Login/index")}';
+        }
+    </script>
+</head>
+<body>
+    <div class="content clear">
+        <div class="row50">
+            <div class="list mr15">
+                <h1><b>个人信息</b><span>Profile&nbsp; Info</span></h1>
+                <ul>
+                    <li><span>用户帐号:</span><?php echo $user_info['account']; ?></li>
+                    <li><span>用户角色:</span><?php echo $user_info['name']; ?></li>
+                    <li><span>上次登陆IP:</span><?php echo $user_info['last_login_ip']; ?></li>
+                    <li><span>上次登陆地址:</span><?php echo $area; ?></li>
+                    <li><span>上次登陆时间:</span><?php echo date('Y-m-d H:i:s', $user_info['last_login_time']); ?></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row50">
+            <div class="list">
+                <h1><b>系统信息</b><span>System&nbsp; Info</span></h1>
+                <ul>
+                    <li><span>操作系统:</span><?php echo $system_info['0']; ?></li>
+                    <li><span>运行方式:</span><?php echo $system_info['1']; ?></li>
+                    <li><span>PHP版本:</span><?php echo $system_info['3']; ?></li>
+                    <li><span>MYSQL版本:</span><?php echo $system_info['2']; ?></li>
+                    <li><span>上传限制:</span><?php echo $system_info['4']; ?></li>
+                    <li><span>GD库版本:</span><?php echo $system_info['5']; ?></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row50">
+            <div class="list mr15">
+                <h1><b>作者信息</b><span>Compamay&nbsp; Info</span></h1>
+                <ul>
+                    <li><span>官方网站:</span><a target="_blank" href="http://tp-admin.hhailuo.com/">TP-Admin</a></li>
+                    <li><span>创作人:</span><a href="http://www.hhailuo.com/">逍遥·李志亮</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="copyright ">Copyright @ 2012 - 2015 <a href="http://www.hhailuo.com" target="_blank">红海螺</a> All Rights Reserved. 官网: <a href="http://tp-admin.hhailuo.com" target="_blank">TP-Admin</a></div>
+</body>
+</html>

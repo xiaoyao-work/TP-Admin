@@ -1,79 +1,57 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
-  <title>常德市房地产信息网 - 后台管理中心</title>
-  <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
-  <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
-  <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
-  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
-  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
-  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
-  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
-  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
-  <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
-  <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
-</head>
-<body width="100%">
-  <div class="subnav">
-    <div class="content-menu ib-a blue line-x">
-      <a class="add fb" href="__MODULE__/Menu/add"><em>添加菜单</em></a>　
-      <a class="on" href="__MODULE__/Menu/index"><em>菜单管理</em></a>
-    </div>
-  </div>
-  <style type="text/css">
-    html{_overflow-y:scroll}
-  </style>
-  <div class="pad-lr-10">
+<extend name="Layout:list" />
+<block name="title"><title>菜单管理</title></block>
+<block name="subnav">
+    <a class="add fb" href="__MODULE__/Menu/add"><em>添加菜单</em></a>　
+    <a class="on" href="__MODULE__/Menu/index"><em>菜单管理</em></a>
+</block>
+<block name="main">
     <form name="myform" action="__CONTROLLER__/listorder" method="post" id="myform" >
-      <div class="table-list">
-        <table width="100%" cellspacing="0">
-          <thead>
-            <tr>
-              <th width="50">排序</th>
-              <th width="92">ID</th>
-              <th>菜单名称</th>
-              <th width="147">状态</th>
-              <th width="143">操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($menus as $key => $menu) { ?>
-            <tr>
-              <td align="center"><input type="text" style="width: 36px; text-align: center; height: 18px;" name="sort[<?php echo $menu['id']; ?>]" value="<?php echo $menu['sort']; ?>" /></td>
-              <td  width="92" align='center'><?php echo $menu['id']; ?></td>
-              <td><?php echo cat_empty_deal($menu, $menu[$key+1]['pid'], 'pid').$menu['title']; ?></td>
-              <td align="center"><?php if($menu[status]==1){echo "启用";}else{echo "禁用";} ?></td>
-              <td align="center"><a href="__MODULE__/Menu/add/menu_id/<?php echo $menu['id']; ?>">添加子菜单</a> | <a href="__MODULE__/Menu/edit/nid/<?php echo $menu['id']; ?>">修改</a> | <a class="delete" href="__MODULE__/Menu/del/nid/<?php echo $menu['id']; ?>">删除</a></td>
-            </tr>
-            <?php } ?>
-          </tbody>
-        </table>
-      </div>
-      <div class="btn">
-        <input type="submit" class="button" name="dosubmit" value="排序"/>
-      </div>
+        <div class="table-list">
+            <table width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th width="50">排序</th>
+                        <th width="92">ID</th>
+                        <th>菜单名称</th>
+                        <th width="147">状态</th>
+                        <th width="143">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($menus as $key => $menu) { ?>
+                    <tr>
+                        <td align="center"><input type="text" style="width: 36px; text-align: center; height: 18px;" name="sort[<?php echo $menu['id']; ?>]" value="<?php echo $menu['sort']; ?>" /></td>
+                        <td  width="92" align='center'><?php echo $menu['id']; ?></td>
+                        <td><?php echo cat_empty_deal($menu, $menu[$key+1]['pid'], 'pid').$menu['title']; ?></td>
+                        <td align="center"><?php if($menu[status]==1){echo "启用";}else{echo "禁用";} ?></td>
+                        <td align="center"><a href="__MODULE__/Menu/add/menu_id/<?php echo $menu['id']; ?>">添加子菜单</a> | <a href="__MODULE__/Menu/edit/nid/<?php echo $menu['id']; ?>">修改</a> | <a class="delete" href="__MODULE__/Menu/del/nid/<?php echo $menu['id']; ?>">删除</a></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="btn">
+            <input type="submit" class="button" name="dosubmit" value="排序"/>
+        </div>
     </form>
-  </div>
-  <script type="text/javascript">
-    $(function(){
-      $(".delete").click(function( e ){
-        _this = $(this);
-        e.preventDefault();
-        window.top.art.dialog({
-          content:'确认删除该菜单和其子菜单？',
-          lock:true,
-          width:'200',
-          height:'50',
-          cancel: true,
-          ok: function () {
-            document.location.href = _this.attr('href');
-          }
-        });
-      })
-    })
-  </script>
-</body>
-</html>
+</block>
+<block name="footer">
+    <script type="text/javascript">
+        $(function(){
+            $(".delete").click(function( e ){
+                _this = $(this);
+                e.preventDefault();
+                window.top.art.dialog({
+                    content:'确认删除该菜单和其子菜单？',
+                    lock:true,
+                    width:'200',
+                    height:'50',
+                    cancel: true,
+                    ok: function () {
+                        document.location.href = _this.attr('href');
+                    }
+                });
+            })
+        })
+    </script>
+</block>
