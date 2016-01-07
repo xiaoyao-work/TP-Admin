@@ -7,5 +7,8 @@ return array(
 	'SESSION_EXPIRE'    => 3600,
 	'URL_MODEL'         => 2,   //URL模式
 	'MODULE_ALLOW_LIST'     => array('Admin'),
-	'DEFAULT_MODULE'        =>  'Admin'
+	'DEFAULT_MODULE'        =>  'Admin',
+    'IMAGE_UPLOAD_LIMIT' => 5 * 1024 * 1024,
+    'IMAGE_CROP_WIDTH' => 275.00,
+    'ALLOW_EXTS' => 'jpg,jpeg,png,gif',
 );
