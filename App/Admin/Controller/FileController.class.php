@@ -32,8 +32,7 @@ class FileController extends CommonController {
                     $result['message'] = $upload->getError();
                 } else {
                     $attach_info = current($info);
-                    // 同步到CDN源
-
+                    $attach_info['thumbs'] = AttachmentLogic::createThumb($attach_info);
                     // 将附件插入附件表
                     $attach_info = array(
                         'actor_id' => $this->user['id'],
@@ -41,15 +40,15 @@ class FileController extends CommonController {
                         'url' => $attach_info["savepath"] . $attach_info["savename"],
                         'path' => $attach_info["savepath"] . $attach_info["savename"],
                         'name' => $attach_info["savename"],
-                        // 'size' => $attach_info['size'],
+                        'size' => $attach_info['size'],
                         'ext'  => $attach_info['ext'],
+                        'thumbs' => json_decode($attachment_info['thumbs']),
                         'ip' => get_client_ip(),
                         'uploaded_at' => date('Y-m-d H:i:s'),
                         );
 
                     if($attachment_id = model("Attachment")->add($attach_info)) {
                         $attach_info['id'] = $attachment_id;
-                        $attach_info['thumbs'] = AttachmentLogic::createThumb($attach_info);
                         $result['data'] = $attach_info;
                     } else {
                         $result['code'] = 10014;

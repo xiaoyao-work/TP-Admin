@@ -704,6 +704,15 @@ function thumb($imgurl, $width=100, $height=100, $smallpic = 'nopic.gif') {
 	return \Org\Util\Image::thumb($imagepath, $newimgpath, '', $width, $height) ? C('SITE_URL').$newimgurl : $imgurl;
 }
 
+function get_attachment_image($attachment, $size) {
+    if (is_numeric($attachment)) {
+        # code...
+    }
+    if (is_array($size)) {
+    }
+}
+
+
 function check_image_thumb($image) {
 	return extension_loaded('gd') && preg_match("/\.(jpg|jpeg|gif|png)/i", $image, $m) && file_exists($image) && function_exists('imagecreatefrom'.($m[1] == 'jpg' ? 'jpeg' : $m[1]));
 }

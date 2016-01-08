@@ -31,12 +31,10 @@
             <div class="img_upload">
                 <script src="{:asset('js/admin/uploadify/jquery.uploadify.js')}"></script>
                 <form>
-                <input id="file_upload" name="file_upload" type="file" multiple="true">
-                <a href="javascript:$('#file_upload').uploadify('upload','*');" class="btupload">开始上传</a>
+                    <input id="file_upload" name="file_upload" type="file" multiple="true">
+                    <!-- <a href="javascript:$('#file_upload').uploadify('upload','*');" class="btupload">开始上传</a> -->
                 </form>
-                <div id="nameTip" class="onShow">
-                    最多上传 <font color="red"> <?php echo $args['file_upload_limit']; ?></font> 个附件, 单文件最大 <font color="red"><?php echo $file_size_limit; ?></font>
-                </div>
+                <div id="nameTip" class="onShow">最多上传 <font color="red"> <?php echo $args['file_upload_limit']; ?></font> 个附件, 单文件最大 <font color="red"><?php echo $file_size_limit; ?></font></div>
                 <div class="bk3"></div>
             </div>
             <div class="bk3"></div>
@@ -47,7 +45,7 @@
             <div class="bk10"></div>
             <fieldset class="blue pad-10" id="swfupload">
                 <legend>列表</legend>
-                    <div id="progress"></div>
+                <div id="progress"></div>
                 <ul id="attachment_list"></ul>
             </fieldset>
         </div>
@@ -66,7 +64,7 @@
     <div id="att-ids" class="hidden"></div>
     <div id="att-name" class="hidden"></div>
     <script type="text/javascript">
-        var fileSizeLimit = "<?php echo (isset($file_size_limit) ? $fileSizeLimit : '2MB'); ?>";
+        var fileSizeLimit = "<?php echo (isset($file_size_limit) ? $file_size_limit : '2 MB'); ?>";
         var fileTypeDesc = "<?php echo (isset($_GET['fileTypeDesc']) ? $_GET['fileTypeDesc'] : '图片');?>";
         var fileTypeExts = "<?php echo ($args['file_types'] ? $args['file_types'] : '*.gif; *.jpg; *.png');?>";
         var queueSizeLimit = <?php echo ($args['file_upload_limit'] ? $args['file_upload_limit'] : '20');?>;
@@ -74,16 +72,16 @@
         var type = "<?php echo isset($_GET['type']) ? $_GET['type'] : 'image'; ?>";
         $(function() {
             $('#file_upload').uploadify({
-                'auto'            : false,
+                'auto'            : true,
                 'formData'        : {"thumb_width": "<?php echo $args['thumb_width']; ?>","thumb_height":"<?php echo $args['thumb_height']; ?>","watermark_enable":"<?php echo $args['watermark_enable']; ?>","filetype_post":"<?php echo $args['file_types_post']; ?>"},
                 'swf'             : '{:asset('js/admin/uploadify/uploadify.swf')}&token=' + Math.random(),
-                'uploader'        : '<?php U("File/upload"); ?>',
+                'uploader'        : '<?php echo U("File/upload"); ?>',
                 'buttonImage'     : '',
                 'buttonClass'     : 'addnew',
                 'buttonText'      : '',
                 'height'          : '28',
                 'width'           : '75',
-                'fileSizeLimit'   : fileSizeLimit + "MB",
+                'fileSizeLimit'   : fileSizeLimit,
                 'fileTypeDesc'    : fileTypeDesc,
                 'fileTypeExts'    : fileTypeExts,
                 'removeTimeout'   : 0,
@@ -98,97 +96,97 @@
                     set_thumb(result);
                 }
             });
-        });
+});
 
-        function set_thumb(result) {
-            var attachment_length = $('#attachment_list li').length;
-            if (result.code != 0) {
-                $('#file_upload').uploadify('settings', 'uploadLimit', $('#file_upload').uploadify('settings', 'uploadLimit') + 1);
-                alert(result.message);
-            } else {
-                if ( type == 'video' || type == 'swf' ) {
-                    var src = "{:asset('images/admin/flv.png')}";
-                }  else {
-                    var src = IMAGE_DOMAIN + result.data.path;
-                }
-                var html = '<li><div id="attachment_' + result.data.id +'" class="img-wrap">';
-                html += '<a href="javascript:void(0);" onclick="javascript:att_cancel(this,' + result.data.id + ',\'upload\'' + ')" ' + ((attachment_length < uploadLimit) ?  'class="on"' : '') + '>';
-                html += '<div class="icon"></div>';
-                html += '<img src="' + src + '" width="80" imgid="' + result.data.id + '" path="' + IMAGE_DOMAIN + result.data.path + '" title="' + result.data.name + '">';
-                html += '</a></div></li>';
-                $('#attachment_list').append(html);
-                if (attachment_length < uploadLimit) {
-                    att_insert(result.data.name, result.data.id);
-                }
-            }
-
+function set_thumb(result) {
+    var attachment_length = $('#attachment_list li').length;
+    if (result.code != 0) {
+        $('#file_upload').uploadify('settings', 'uploadLimit', $('#file_upload').uploadify('settings', 'uploadLimit') + 1);
+        alert(result.message);
+    } else {
+        if ( type == 'video' || type == 'swf' ) {
+            var src = "{:asset('images/admin/flv.png')}";
+        }  else {
+            var src = IMAGE_DOMAIN + result.data.path;
         }
-
-        function att_insert(file_name,id) {
-            var uploadfile = $("#attachment_"+id+" img").attr('path');
-            $('#att-status').append('|'+uploadfile);
-            $('#att-name').append('|'+file_name);
-            $('#att-ids').append('|'+id);
+        var html = '<li><div id="attachment_' + result.data.id +'" class="img-wrap">';
+        html += '<a href="javascript:void(0);" onclick="javascript:att_cancel(this,' + result.data.id + ',\'upload\'' + ')" ' + ((attachment_length < uploadLimit) ?  'class="on"' : '') + '>';
+        html += '<div class="icon"></div>';
+        html += '<img src="' + src + '" width="80" imgid="' + result.data.id + '" path="' + IMAGE_DOMAIN + result.data.path + '" title="' + result.data.name + '">';
+        html += '</a></div></li>';
+        $('#attachment_list').append(html);
+        if (attachment_length < uploadLimit) {
+            att_insert(result.data.name, result.data.id);
         }
+    }
 
-        function att_cancel(obj, id, source) {
-            var src = $(obj).children("img").attr("path");
-            var filename = $(obj).children("img").attr("title");
-            if($(obj).hasClass('on')){
-                $(obj).removeClass("on");
-                var imgstr = $("#att-status").html();
-                var length = $("a[class='on']").children("img").length;
-                var ids = strs = filenames = '';
-                for(var i=0;i<length;i++) {
-                    strs += '|'+$("a[class='on']").children("img").eq(i).attr('path');
-                    filenames += '|'+$("a[class='on']").children("img").eq(i).attr('title');
-                    ids += '|' + id;
-                }
-                $('#att-status').html(strs);
-                $('#att-name').html(filenames);
-                $('#att-ids').html(ids);
-                if(source=='upload') $('#att-status-del').append('|'+id);
-            } else {
-                var num = $('#att-status').html().split('|').length;
-                if(num > uploadLimit) {
-                    alert('不能选择超过' + uploadLimit + '个附件');
-                    return false;
-                }
-                $(obj).addClass("on");
-                $('#att-status').append('|'+src);
-                $('#att-name').append('|'+filename);
-                $('#att-ids').append('|'+id);
-                var imgstr_del = $("#att-status-del").html();
-                var imgstr_del_obj = $("a[class!='on']").children("img")
-                var length_del = imgstr_del_obj.length;
-                var strs_del='';
-                for(var i=0;i<length_del;i++){
-                    strs_del += '|'+imgstr_del_obj.eq(i).attr('imgid');
-                }
-                if(source=='upload') $('#att-status-del').html(strs_del);
-            }
-        }
+}
 
-        function tab_switch(name,cls_show,cls_hide,cnt,cur) {
-            for(i=1;i<=cnt;i++) {
-                if(i==cur) {
-                    $('#div_'+name+'_'+i).show();
-                    $('#tab_'+name+'_'+i).attr('class',cls_show);
-                } else {
-                    $('#div_'+name+'_'+i).hide();
-                    $('#tab_'+name+'_'+i).attr('class',cls_hide);
-                }
-            }
-        }
+function att_insert(file_name,id) {
+    var uploadfile = $("#attachment_"+id+" img").attr('path');
+    $('#att-status').append('|'+uploadfile);
+    $('#att-name').append('|'+file_name);
+    $('#att-ids').append('|'+id);
+}
 
-        function addonlinefile(obj) {
-            var strs = $(obj).val() ? '|'+ $(obj).val() :'';
-            $('#att-status').html(strs);
+function att_cancel(obj, id, source) {
+    var src = $(obj).children("img").attr("path");
+    var filename = $(obj).children("img").attr("title");
+    if($(obj).hasClass('on')){
+        $(obj).removeClass("on");
+        var imgstr = $("#att-status").html();
+        var length = $("a[class='on']").children("img").length;
+        var ids = strs = filenames = '';
+        for(var i=0;i<length;i++) {
+            strs += '|'+$("a[class='on']").children("img").eq(i).attr('path');
+            filenames += '|'+$("a[class='on']").children("img").eq(i).attr('title');
+            ids += '|' + id;
         }
+        $('#att-status').html(strs);
+        $('#att-name').html(filenames);
+        $('#att-ids').html(ids);
+        if(source=='upload') $('#att-status-del').append('|'+id);
+    } else {
+        var num = $('#att-status').html().split('|').length;
+        if(num > uploadLimit) {
+            alert('不能选择超过' + uploadLimit + '个附件');
+            return false;
+        }
+        $(obj).addClass("on");
+        $('#att-status').append('|'+src);
+        $('#att-name').append('|'+filename);
+        $('#att-ids').append('|'+id);
+        var imgstr_del = $("#att-status-del").html();
+        var imgstr_del_obj = $("a[class!='on']").children("img")
+        var length_del = imgstr_del_obj.length;
+        var strs_del='';
+        for(var i=0;i<length_del;i++){
+            strs_del += '|'+imgstr_del_obj.eq(i).attr('imgid');
+        }
+        if(source=='upload') $('#att-status-del').html(strs_del);
+    }
+}
 
-        function set_iframe(id,src) {
-            $("#"+id).attr("src",src+"?args="+queueSizeLimit+","+ fileSizeLimit +"," + uploadLimit);
+function tab_switch(name,cls_show,cls_hide,cnt,cur) {
+    for(i=1;i<=cnt;i++) {
+        if(i==cur) {
+            $('#div_'+name+'_'+i).show();
+            $('#tab_'+name+'_'+i).attr('class',cls_show);
+        } else {
+            $('#div_'+name+'_'+i).hide();
+            $('#tab_'+name+'_'+i).attr('class',cls_hide);
         }
-    </script>
+    }
+}
+
+function addonlinefile(obj) {
+    var strs = $(obj).val() ? '|'+ $(obj).val() :'';
+    $('#att-status').html(strs);
+}
+
+function set_iframe(id,src) {
+    $("#"+id).attr("src",src+"?args="+queueSizeLimit+","+ fileSizeLimit +"," + uploadLimit);
+}
+</script>
 </body>
 </html>

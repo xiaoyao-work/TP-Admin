@@ -1,6 +1,7 @@
 <?php
 namespace Logic;
 use Logic\BaseLogic;
+use Lib\Log;
 use Model\AttachmentModel;
 
 /**
@@ -9,8 +10,8 @@ use Model\AttachmentModel;
  */
 class AttachmentLogic extends BaseLogic {
     static private $thumbs = array(
-        array('w' => 100, 'h' => 100),
-        array('w' => 50, 'h' => 50),
+        array('w' => 100, 'h' => 90),
+        array('w' => 80, 'h' => 44),
         );
 
     /**
@@ -20,14 +21,15 @@ class AttachmentLogic extends BaseLogic {
      * @author 李志亮 <lizhiliang@kankan.com>
      */
     static public function createThumb($attach_info) {
+        $attach_info['path'] = preg_replace('/\\/|\\\\/', DIRECTORY_SEPARATOR, $attach_info['path']);
         try {
             $thumbs = array();
             $image = new \Think\Image(1, UPLOAD_PATH . $attach_info['path']);
             foreach (static::$thumbs as $key => $thumb) {
-                $thumb_url = str_replace('.' . $attach_info['ext'], $thumb['w'].'*'.$thumb['h'] . '.' . $attach_info['ext'], $attach_info['url']);
-                $thumb_path = UPLOAD_PATH . str_replace('.' . $attach_info['ext'], $thumb['w'].'*'.$thumb['h'] . '.' . $attach_info['ext'], $attach_info['path']);
+                $thumb_url = str_replace('.' . $attach_info['ext'], $thumb['w'].'x'.$thumb['h'] . '.' . $attach_info['ext'], $attach_info['url']);
+                $thumb_path = UPLOAD_PATH . str_replace('.' . $attach_info['ext'], $thumb['w'].'x'.$thumb['h'] . '.' . $attach_info['ext'], $attach_info['path']);
                 $image->thumb($thumb['w'], $thumb['h'], \Think\Image::IMAGE_THUMB_FILLED)->save($thumb_path);
-                $thumbs[$thumb['w'] . '*' . $thumb['h']] = $thumb_url;
+                $thumbs[$thumb['w'] . 'x' . $thumb['h']] = $thumb_url;
             }
             return $thumbs;
         } catch (Exception $e) {
@@ -103,4 +105,5 @@ class AttachmentLogic extends BaseLogic {
             return false;
         }
     }
+
 }

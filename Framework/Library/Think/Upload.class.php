@@ -85,7 +85,7 @@ class Upload {
             if($name == 'driverConfig'){
                 //改变驱动配置后重置上传驱动
                 //注意：必须选改变驱动然后再改变驱动配置
-                $this->setDriver(); 
+                $this->setDriver();
             }
         }
     }
@@ -143,7 +143,7 @@ class Upload {
             $finfo   =  finfo_open ( FILEINFO_MIME_TYPE );
         }
         // 对上传文件数组信息处理
-        $files   =  $this->dealFiles($files);    
+        $files   =  $this->dealFiles($files);
         foreach ($files as $key => $file) {
             $file['name']  = strip_tags($file['name']);
             if(!isset($file['key']))   $file['key']    =   $key;
@@ -167,13 +167,15 @@ class Upload {
             }
 
             /* 调用回调函数检测文件是否存在 */
-            $data = call_user_func($this->callback, $file);
-            if( $this->callback && $data ){
-                if ( file_exists('.'.$data['path'])  ) {
-                    $info[$key] = $data;
-                    continue;
-                }elseif($this->removeTrash){
-                    call_user_func($this->removeTrash,$data);//删除垃圾据
+            if( $this->callback ) {
+                $data = call_user_func($this->callback, $file);
+                if( $data ){
+                    if ( file_exists('.'.$data['path'])  ) {
+                        $info[$key] = $data;
+                        continue;
+                    }elseif($this->removeTrash){
+                        call_user_func($this->removeTrash,$data);//删除垃圾据
+                    }
                 }
             }
 
@@ -248,7 +250,7 @@ class Upload {
     /**
      * 设置上传驱动
      * @param string $driver 驱动名称
-     * @param array $config 驱动配置     
+     * @param array $config 驱动配置
      */
     private function setDriver($driver = null, $config = null){
         $driver = $driver ? : ($this->driver       ? : C('FILE_UPLOAD_TYPE'));

@@ -84,7 +84,7 @@ class Image{
      * 保存图片
      * @param  string  $imgname   图片保存名称
      * @param  string  $type      图片类型
-     * @param  integer $quality   图像质量      
+     * @param  integer $quality   图像质量
      * @param  boolean $interlace 是否对JPEG类型图片设置隔行扫描
      * @return Object             当前图片处理库对象
      */
@@ -183,7 +183,7 @@ class Image{
      * @param  integer $angle  文字倾斜角度
      * @return Object          当前图片处理库对象
      */
-    public function text($text, $font, $size, $color = '#00000000', 
+    public function text($text, $font, $size, $color = '#00000000',
         $locate = self::IMAGE_WATER_SOUTHEAST, $offset = 0, $angle = 0){
         $this->img->text($text, $font, $size, $color, $locate, $offset, $angle);
         return $this;

@@ -1,0 +1,49 @@
+<extend name="Layout:list" />
+<block name="title"><title><?php echo $big_menu[1]; ?></title></block>
+<block name="subnav">
+    <a class="add fb" href="<?php echo $big_menu[0]; ?>">添加</a>&nbsp;&nbsp;&nbsp;<a class="on" href="__CONTROLLER__/index"><em>附件管理</em></a>
+</block>
+<block name="main">
+    <form name="myform" action="__CONTROLLER__/listorder" method="post">
+        <div class="table-list">
+            <table width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th width="16"><input type="checkbox" value="" id="check_box" onclick="selectall('ids[]');"></th>
+                        <th width="10%">ID</th>
+                        <th>文件</th>
+                        <th width="10%">作者</th>
+                        <th width="10%">日期</th>
+                        <th width="15%">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php  foreach ($attachments as $key => $value) { ?>
+                    <tr>
+                        <td align="center"><input class="inputcheckbox" name="ids[]" value="<?php echo $value['id']; ?>" type="checkbox"></td>
+                        <td width="10%" align="center"><?php echo $value['id']; ?></td>
+                        <td class="column-icon media-icon image-icon">
+                            <img width="80" height="44" src="<?php thumb($value, 80, 44) ?>" class="attachment-80x60" alt="PHP-Awake-For-Code-Programmer-Wallpaper-HD">
+                        </td>
+                        <td class="title column-title">
+                            <strong>
+                                <a href="http://www.hhailuo.com/wp-admin/post.php?post=18187&amp;action=edit" title="编辑“PHP-Awake-For-Code-Programmer-Wallpaper-HD”">PHP-Awake-For-Code-Programmer-Wallpaper-HD</a>
+                            </strong>
+                                    <p></p>
+                        </td>
+                        <td width="10%" align="left"><?php echo $value['name'] ?></td>
+                        <td width="20%" align="center"><?php echo $value['description']; ?></td>
+                        <td align="center">
+                            <a href="__MODULE__/Attachment/edit?id=<?php echo $value['id']; ?>">修改</a> | <a href="__MODULE__/Attachment/delete?id=<?php echo $value['id']; ?>" onclick="return confirm('确认删除『 <?php echo $value['name']; ?> 』 吗？')">删除</a>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="btn">
+            <label for="check_box">全选/取消</label>
+            <input name="deletesubmit" type="submit" class="button" value="删除" onclick="document.myform.action='<?php echo U('Attachment/delete'). "?catid=" .$catid; ?>';return confirm('确认要删除 『 选中 』 吗？')">
+        </div>
+    </form>
+</block>
