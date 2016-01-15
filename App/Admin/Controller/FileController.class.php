@@ -32,23 +32,22 @@ class FileController extends CommonController {
                     $result['message'] = $upload->getError();
                 } else {
                     $attach_info = current($info);
-                    $attach_info['thumbs'] = AttachmentLogic::createThumb($attach_info);
-                    // 将附件插入附件表
                     $attach_info = array(
-                        'actor_id' => $this->user['id'],
-                        'type' => 1,
-                        'url' => $attach_info["savepath"] . $attach_info["savename"],
-                        'path' => $attach_info["savepath"] . $attach_info["savename"],
-                        'name' => $attach_info["savename"],
-                        'size' => $attach_info['size'],
-                        'ext'  => $attach_info['ext'],
-                        'thumbs' => json_decode($attachment_info['thumbs']),
-                        'ip' => get_client_ip(),
+                        'title' => $attach_info['name'],
+                        'url'   => $attach_info["savepath"] . $attach_info["savename"],
+                        'path'  => $attach_info["savepath"] . $attach_info["savename"],
+                        'name'  => $attach_info["savename"],
+                        'size'  => $attach_info['size'],
+                        'ext'   => $attach_info['ext'],
+                        'ip'    => get_client_ip(),
                         'uploaded_at' => date('Y-m-d H:i:s'),
                         );
-
+                    $thumbs = AttachmentLogic::createThumb($attach_info);
+                    $attach_info['thumbs'] = json_encode($thumbs);
+                    // 将附件插入附件表
                     if($attachment_id = model("Attachment")->add($attach_info)) {
                         $attach_info['id'] = $attachment_id;
+                        $attach_info['thumbs'] = json_decode($attach_info['thumbs']);
                         $result['data'] = $attach_info;
                     } else {
                         $result['code'] = 10014;
@@ -62,10 +61,7 @@ class FileController extends CommonController {
             $this->ajaxReturn($result);
         } else {
             $args = $_GET['args'];
-            $args = getswfinit($args);
-            $site_setting = get_site_setting();
-            $file_size_limit = sizecount($site_setting['upload_maxsize']*1024);
-            $this->assign('file_size_limit',$file_size_limit);
+            $args = getUploadParams($args);
             $this->assign('args',$args);
             $this->display();
            // abort(404);
@@ -91,78 +87,10 @@ class FileController extends CommonController {
             if ($result === false) {
                 $this->ajaxReturn(array('code' => $attachment_logic->getErrorCode(), 'message' => $attachment_logic->getErrorMessage()));
             }
-            $attachment_origin = $result['origin'];
+
             $attachment = $result['crop'];
-            $thumb = $result['thumb'];
+            $attachment['thumb'] = $result['thumb']['url'];
 
-            // 等待重构 to-do
-            if ($type == 'avatar') {
-                model('attachment')->startTrans();
-                if (model('attachment')->where(array('id' => $attachment['id']))->save($attachment) === false) {
-                    model('attachment')->rollback();
-                    // 删除裁剪后的缩略图
-                    unlink(UPLOAD_PATH . $thumb['path']);
-                    // 删除裁剪后的图
-                    unlink(UPLOAD_PATH . $attachment['path']);
-                    // 删除原图
-                    unlink(UPLOAD_PATH . $attachment_origin['path']);
-                    $this->ajaxReturn(array('code' => 10011, 'message' => '附件路径更新失败'));
-                }
-
-                if (logic('actor')->updateAvatar($this->user['id'], $thumb['url']) === false) {
-                    // 删除裁剪后的缩略图
-                    unlink(UPLOAD_PATH . $thumb['path']);
-                    // 删除裁剪后的图
-                    unlink(UPLOAD_PATH . $attachment['path']);
-                    // 删除原图
-                    unlink(UPLOAD_PATH . $attachment_origin['path']);
-                    model('attachment')->rollback();
-                    $this->ajaxReturn(array('code' => 10014, 'message' => '艺人头像更新失败'));
-                };
-                model('attachment')->commit();
-                $attachment['photo_id'] = $photo_id;
-                $attachment['thumb'] = $thumb['url'];
-            } else {
-                unset($attachment['id']);
-                model('attachment')->startTrans();
-                $attachment['id'] = model('attachment')->add($attachment);
-                if ($attachment['id'] === false) {
-                    // 删除裁剪后的缩略图
-                    unlink(UPLOAD_PATH . $thumb['path']);
-                    // 删除裁剪后的图
-                    unlink(UPLOAD_PATH . $attachment['path']);
-                    // 删除原图
-                    unlink(UPLOAD_PATH . $attachment_origin['path']);
-                    model('attachment')->rollback();
-                    $this->ajaxReturn(array('code' => 10013, 'message' => '保存裁剪后的图片失败'));
-                }
-                $photo_id = D('photo')->add(array('actor_id' => $this->user['id'], 'url' => $attachment['url'], 'thumb' => $thumb['url'], 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s") ));
-                if ($photo_id === false) {
-                    // 删除裁剪后的缩略图
-                    unlink(UPLOAD_PATH . $thumb['path']);
-                    // 删除裁剪后的图
-                    unlink(UPLOAD_PATH . $attachment['path']);
-                    // 删除原图
-                    unlink(UPLOAD_PATH . $attachment_origin['path']);
-                    model('attachment')->rollback();
-                    $this->ajaxReturn(array('code' => 60009, 'message' => '才艺发布失败'));
-                }
-
-                // 更新艺人写真数目
-                if (D('actor')->where(array('id' => $this->user['id']))->save(array('photos' => array('exp', '`photos` + 1'))) === false) {
-                    // 删除裁剪后的缩略图
-                    unlink(UPLOAD_PATH . $thumb['path']);
-                    // 删除裁剪后的图
-                    unlink(UPLOAD_PATH . $attachment['path']);
-                    // 删除原图
-                    unlink(UPLOAD_PATH . $attachment_origin['path']);
-                    model('attachment')->rollback();
-                    $this->ajaxReturn(array('code' => 60009, 'message' => '写真数目更新失败'));
-                };
-                model('attachment')->commit();
-                $attachment['photo_id'] = $photo_id;
-                $attachment['thumb'] = $thumb['url'];
-            }
             $this->ajaxReturn(array('code' => 0, 'message' => '', 'data' => $attachment));
         } else {
            abort(404);

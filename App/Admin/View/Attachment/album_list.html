@@ -63,9 +63,9 @@
                 <a href="javascript:;" onclick="javascript:album_cancel(this,'<?php echo $attach['id']; ?>')">
                     <div class="icon"></div>
                     <?php if( in_array($attach['ext'], array( 'jpg','gif','png','jpeg' ) )  ) { ?>
-                    <img src="<?php echo $attach['url']; ?>" width="80" path="<?php echo $attach['url']; ?>" title="<?php echo $attach['name']; ?>">
+                    <img src="<?php echo IMAGE_DOMAIN . $attach['url']; ?>" width="80" path="<?php echo IMAGE_DOMAIN . $attach['url']; ?>" title="<?php echo $attach['title']; ?>">
                     <?php } else { ?>
-                    <img src="IMG_PATH/admin/flv.png" width="80" path="<?php echo $attach['url']; ?>" title="<?php echo $attach['name']; ?>">
+                    <img src="IMG_PATH/admin/flv.png" width="80" path="<?php echo  IMAGE_DOMAIN . $attach['url']; ?>" title="<?php echo $attach['title']; ?>">
                     <?php } ?>
                 </a>
             </div>

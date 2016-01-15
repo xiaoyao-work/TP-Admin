@@ -34,7 +34,7 @@
                     <input id="file_upload" name="file_upload" type="file" multiple="true">
                     <!-- <a href="javascript:$('#file_upload').uploadify('upload','*');" class="btupload">开始上传</a> -->
                 </form>
-                <div id="nameTip" class="onShow">最多上传 <font color="red"> <?php echo $args['file_upload_limit']; ?></font> 个附件, 单文件最大 <font color="red"><?php echo $file_size_limit; ?></font></div>
+                <div id="nameTip" class="onShow">最多上传 <font color="red"> <?php echo $args['file_upload_limit']; ?></font> 个附件, 单文件最大 <font color="red"><?php echo $args['allowupload']; ?></font></div>
                 <div class="bk3"></div>
             </div>
             <div class="bk3"></div>
@@ -64,11 +64,11 @@
     <div id="att-ids" class="hidden"></div>
     <div id="att-name" class="hidden"></div>
     <script type="text/javascript">
-        var fileSizeLimit = "<?php echo (isset($file_size_limit) ? $file_size_limit : '2 MB'); ?>";
+        var fileSizeLimit = "<?php echo (isset($args['allowupload']) ? $args['allowupload'] : '2 MB'); ?>";
         var fileTypeDesc = "<?php echo (isset($_GET['fileTypeDesc']) ? $_GET['fileTypeDesc'] : '图片');?>";
         var fileTypeExts = "<?php echo ($args['file_types'] ? $args['file_types'] : '*.gif; *.jpg; *.png');?>";
         var queueSizeLimit = <?php echo ($args['file_upload_limit'] ? $args['file_upload_limit'] : '20');?>;
-        var uploadLimit = <?php echo ($args['allowupload'] ? $args['allowupload'] : '20');?>;
+        var uploadLimit = <?php echo ($args['file_upload_limit'] ? $args['file_upload_limit'] : '20');?>;
         var type = "<?php echo isset($_GET['type']) ? $_GET['type'] : 'image'; ?>";
         $(function() {
             $('#file_upload').uploadify({
@@ -104,19 +104,19 @@ function set_thumb(result) {
         $('#file_upload').uploadify('settings', 'uploadLimit', $('#file_upload').uploadify('settings', 'uploadLimit') + 1);
         alert(result.message);
     } else {
-        if ( type == 'video' || type == 'swf' ) {
+        if (type != 'image') {
             var src = "{:asset('images/admin/flv.png')}";
         }  else {
-            var src = IMAGE_DOMAIN + result.data.path;
+            var src = IMAGE_DOMAIN + result.data.url;
         }
         var html = '<li><div id="attachment_' + result.data.id +'" class="img-wrap">';
         html += '<a href="javascript:void(0);" onclick="javascript:att_cancel(this,' + result.data.id + ',\'upload\'' + ')" ' + ((attachment_length < uploadLimit) ?  'class="on"' : '') + '>';
         html += '<div class="icon"></div>';
-        html += '<img src="' + src + '" width="80" imgid="' + result.data.id + '" path="' + IMAGE_DOMAIN + result.data.path + '" title="' + result.data.name + '">';
+        html += '<img src="' + src + '" width="80" imgid="' + result.data.id + '" path="' + IMAGE_DOMAIN + result.data.url + '" title="' + result.data.title + '">';
         html += '</a></div></li>';
         $('#attachment_list').append(html);
         if (attachment_length < uploadLimit) {
-            att_insert(result.data.name, result.data.id);
+            att_insert(result.data.title, result.data.id);
         }
     }
 

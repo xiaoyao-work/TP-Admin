@@ -21,7 +21,7 @@ class AttachmentLogic extends BaseLogic {
      * @author 李志亮 <lizhiliang@kankan.com>
      */
     static public function createThumb($attach_info) {
-        $attach_info['path'] = preg_replace('/\\/|\\\\/', DIRECTORY_SEPARATOR, $attach_info['path']);
+        $attach_info['path'] = preg_replace('/\\/|\\\\/', DIRECTORY_SEPARATOR, $attach_info["path"]);
         try {
             $thumbs = array();
             $image = new \Think\Image(1, UPLOAD_PATH . $attach_info['path']);

@@ -153,7 +153,7 @@ function model($name) {
 * @param  $siteid 站点id
 */
 function get_site_setting($siteid) {
-// $siteinfo = getcache('sitelist', 'commons');
+    // $siteinfo = getcache('sitelist', 'commons');
 	$siteid = $siteid ? $siteid : 1;
 	$siteinfo = get_site_info($siteid);
 	return string2array($siteinfo['setting']);

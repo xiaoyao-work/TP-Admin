@@ -170,25 +170,28 @@ function file_icon($file,$type = 'png') {
 * 读取upload配置类型
 * @param array $args 上传配置信息
 */
-function getswfinit($args) {
+function getUploadParams($args) {
 	$siteid = get_siteid();
 	$site_setting = get_site_setting($siteid);
 	$site_allowext = $site_setting['upload_allowext'];
 	$args = explode(',',$args);
+	$allowupload = empty($args[2]) ? $site_setting['upload_maxsize'] : $args[2];
+	$watermark_enable = empty($args[5]) ? $site_setting['watermark_enable'] : $args['5'];
+
 	$arr['file_upload_limit'] = intval($args[0]) ? intval($args[0]) : '8';
-	$args['1'] = ($args[1]!='') ? $args[1] : $site_allowext;
+	$args['1'] = empty($args[1]) ? $site_allowext : $args[1];
 	$arr_allowext = explode('|', $args[1]);
+	$allowexts = array();
 	foreach($arr_allowext as $k=>$v) {
-		$v = '*.'.$v;
-		$array[$k] = $v;
+		$allowexts[] = '*.'.$v;
 	}
-	$upload_allowext = implode(';', $array);
+	$upload_allowext = implode(';', $allowexts);
 	$arr['file_types'] = $upload_allowext;
 	$arr['file_types_post'] = $args[1];
-	$arr['allowupload'] = intval($args[2]);
+	$arr['allowupload'] = sizecount($allowupload * 1024);
 	$arr['thumb_width'] = intval($args[3]);
 	$arr['thumb_height'] = intval($args[4]);
-	$arr['watermark_enable'] = ($args[5]=='') ? 1 : intval($args[5]);
+	$arr['watermark_enable'] = $watermark_enable;
 	return $arr;
 }
 
