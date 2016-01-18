@@ -52,18 +52,12 @@ class content_input {
 			if($pattern && $length && !preg_match($pattern, $value) && !$isimport) {
 				showmessage($errortips);
 			}
-			// 唯一性判断，和附加函数验证
-			/*$MODEL = getcache('model', 'commons');
-			$this->db->table_name = $this->fields[$field]['issystem'] ? $this->db_pre.$MODEL[$this->modelid]['tablename'] : $this->db_pre.$MODEL[$this->modelid]['tablename'].'_data';
-			if($this->fields[$field]['isunique'] && $this->db->get_one(array($field=>$value),$field) && ROUTE_A != 'edit') showmessage($name.L('the_value_must_not_repeat'));*/
+
+			// 附加函数验证
 			$func = $this->fields[$field]['formtype'];
 			if(method_exists($this, $func)) $value = $this->$func($field, $value);
-			// var_dump($this->fields);
-			if($this->fields[$field]['issystem']) {
-				$info['system'][$field] = $value;
-			} else {
-				$info['model'][$field] = $value;
-			}
+			$info['system'][$field] = $value;
+
 		}
 		//颜色选择为隐藏域 在这里进行取值
 		$info['system']['style'] = $_POST['style_color'] ? strip_tags($_POST['style_color']) : '';

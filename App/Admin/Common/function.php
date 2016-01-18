@@ -214,15 +214,14 @@ function my_explode($split, $string) {
 * @param $defaultvalue 默认值
 */
 function menu_linkage($linkageid = 0, $id = 'linkid', $defaultvalue = 0) {
-  	load('extend');
   	$linkages = D('Linkage')->where(array('keyid' => $linkageid))->order('listorder asc')->field('id, name, parentid')->select();
   	$tree = list_to_tree($linkages, 'id', 'parentid');
   	$html = "";
   	if(!defined('LINKAGE_INIT_1')) {
   		define('LINKAGE_INIT_1', 1);
-  		$html .= '<script type="text/javascript" src="'.C('TMPL_PARSE_STRING.JS_PATH').'/linkage/linkagesel.js"></script>';
+  		$html .= '<script type="text/javascript" src="'. asset('js/linkage/linkagesel.js') .'"></script>';
   	}
-  	$html .= $defaultvalue ? '<input type="hidden" name="info[\'' . $id .'\']" value="'.$defaultvalue.'" id="'. $id . '-' . $linkageid .'">' : '<input type="hidden" name="info[\'' . $id .'\']" value="" id="'. $id . '-' . $linkageid .'">';
+  	$html .= $defaultvalue ? '<input type="hidden" name="info[' . $id .']" value="'.$defaultvalue.'" id="'. $id . '-' . $linkageid .'">' : '<input type="hidden" name="info[' . $id .']" value="" id="'. $id . '-' . $linkageid .'">';
   	$html .='<select class="tp-admin-select-'.$id.'" id="'.$id.'" width="100"></select>';
   	$html .= '<script type="text/javascript">
   	$(function(){
@@ -231,14 +230,14 @@ function menu_linkage($linkageid = 0, $id = 'linkid', $defaultvalue = 0) {
 	  			selStyle: "margin-left: 3px;",
 	  			select:  "#' . $id . '",
 	  			dataReader: {id: "id", name: "name", cell: "_child"},
-	  			defVal: ' . ($defaultvalue ? $defaultvalue : 0) . ',
+	  			defVal: [' . str_replace('-', ',', $defaultvalue) . '],
 	  			head: false
 	  		};
 	  		var linkageSel_'.$linkageid.' = new LinkageSel(opts);
 	  		linkageSel_'.$linkageid.'.onChange(function(){
 	  			var input = $("#'. $id . '-' . $linkageid .'")
 	  			ids = this.getSelectedDataArr("id");
-	  			input.val(ids.pop());
+	  			input.val(ids.join("-"));
 	  		});
 	});
 	</script>';

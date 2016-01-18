@@ -171,15 +171,15 @@ class content_form {
 		extract($setting);
 		$html = '';
 		if (defined('IN_ADMIN')) {
-			$html = "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"$('#".$field."_preview').attr('src','".C('TMPL_PARSE_STRING.IMG_PATH')."/admin/icon/upload-pic.png');$('#".$field."').val(' ');return false;\" value=\"取消图片\">";
+			$html = "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"$('#".$field."_preview').attr('src','".asset('images/admin/icon/upload-pic.png')."');$('#".$field."').val(' ');return false;\" value=\"取消图片\">";
 		}
 		if($show_type && defined('IN_ADMIN')) {
-			$preview_img = $value ? $value : C('TMPL_PARSE_STRING.IMG_PATH').'/admin/icon/upload-pic.png';
+			$preview_img = $value ? $value : asset('images/admin/icon/upload-pic.png');
 			return $str."<div class='upload-pic img-wrap'><input type='hidden' name='info[$field]' id='$field' value='$value'>
-			<a href='javascript:void(0);' onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$isselectimage,$images_width,$images_height,$watermark','image','".U("Upfile/upload")."');return false;\">
-			<img src='$preview_img' id='{$field}_preview' width='135' height='113' style='cursor:hand' /></a>" . "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$isselectimage,$images_width,$images_height,$watermark','image','".U("Upfile/upload")."');return false;\" value=\"上传图片\">" .$html."</div>";
+			<a href='javascript:void(0);' onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$upload_maxsize,$images_width,$images_height,$watermark','image','".U("File/upload")."');return false;\">
+			<img src='$preview_img' id='{$field}_preview' width='135' height='113' style='cursor:hand' /></a>" . "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$upload_maxsize,$images_width,$images_height,$watermark','image','".U("File/upload")."');return false;\" value=\"上传图片\">" .$html."</div>";
 		} else {
-			return $str."<input type='text' name='info[$field]' id='$field' value='$value' size='$size' class='input-text' />  <input type='button' class='button' onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$isselectimage,$images_width,$images_height,$watermark','image','".U("Upfile/upload")."');return false;\"/ value='上传图片'>".$html;
+			return $str."<input type='text' name='info[$field]' id='$field' value='$value' size='$size' class='input-text' />  <input type='button' class='button' onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$upload_maxsize,$images_width,$images_height,$watermark','image','".U("File/upload")."');return false;\"/ value='上传图片'>".$html;
 		}
 	}
 
@@ -203,7 +203,7 @@ class content_form {
 		$string .= '<div id="'.$field.'" class="picList"></div>
 		</fieldset>
 		<div class="bk10"></div>';
-		$string .= $str."<div class='picBut cu'><a herf='javascript:void(0);' onclick=\"javascript:attachupload('{$field}_images', '附件上传','{$field}',attaches,'{$upload_number},{$upload_allowext},{$isselectimage}','images','".U('Upfile/upload')."')\"/> 选择图片 </a></div>";
+		$string .= $str."<div class='picBut cu'><a herf='javascript:void(0);' onclick=\"javascript:attachupload('{$field}_images', '附件上传','{$field}',attaches,'{$upload_number},{$upload_allowext},{$isselectimage}','images','".U('File/upload')."')\"/> 选择图片 </a></div>";
 		return $string;
 	}
 
@@ -368,7 +368,7 @@ class content_form {
 	public function linkage($field, $value, $fieldinfo) {
 		$setting = string2array($fieldinfo['setting']);
 		$linkageid = $setting['linkageid'];
-		return menu_linkage($linkageid,$field,$value);
+		return menu_linkage($linkageid, $field, $value);
 	}
 
 	public function downfiles($field, $value, $fieldinfo) {

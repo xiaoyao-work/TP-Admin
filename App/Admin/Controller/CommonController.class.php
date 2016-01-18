@@ -17,8 +17,35 @@ use Org\Util\Rbac as RBAC;
 class CommonController extends Controller {
 	protected $siteid;
 
-	function _initialize() {
+
+    function __construct() {
+        parent::__construct();
+
 		$this->siteid = get_siteid();
+        $this->auth();
+    }
+
+    protected function beforeFilter($method, $params=array()) {
+        if (empty($params)) {
+            call_user_func(array($this, $method));
+        } else {
+            if (isset($params['only'])) {
+                if (in_array(ACTION_NAME, $params['only'])) {
+                    call_user_func(array($this, $method));
+                }
+            } elseif (isset($params['except'])) {
+                if (!in_array(ACTION_NAME, $params['except'])) {
+                    call_user_func(array($this, $method));
+                }
+            }
+        }
+    }
+
+    /**
+     * 用户权限设置检测
+     */
+    protected function auth() {
+
 		// 用户权限检查
 		if (C('USER_AUTH_ON') && !in_array(CONTROLLER_NAME, explode(',', C('NOT_AUTH_MODULE')))) {
 			if (!RBAC::AccessDecision()) {
@@ -50,7 +77,9 @@ class CommonController extends Controller {
 		if ( !in_array(ACTION_NAME, array( 'public_session_life' )) ) {
 			model('Log')->addLog(1);
 		}
-	}
+
+    }
+
 
 	protected function checkToken() {
 		if (IS_POST) {

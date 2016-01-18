@@ -1,7 +1,7 @@
 <?php
 
 
-$field_type				= 'number'; //字段数据库类型
+$field_type				= 'varchar'; //字段数据库类型
 $field_basic_table		= 1; //是否允许作为主表字段
 $field_allow_index		= 1; //是否允许建立索引
 $field_minlength		= 0; //字符长度默认最小值
