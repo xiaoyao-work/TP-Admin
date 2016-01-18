@@ -14,7 +14,7 @@ use Lib\Log;
  */
 class ModelLogic extends BaseLogic {
 
-    public function execModelCreateSql($tablename, $modelid) {
+    public function execModelCreateSql($tablename, $modelid, $siteid) {
         if (empty($tablename)) {
             return false;
         }
@@ -25,8 +25,8 @@ class ModelLogic extends BaseLogic {
         $model_sql = str_replace('$table_data', $tablepre.$tablename.'_data', $model_sql);
         $model_sql = str_replace('$table_model_field', $tablepre.'model_field', $model_sql);
         $model_sql = str_replace('$modelid', $modelid, $model_sql);
-        $model_sql = str_replace('$siteid',$this->siteid, $model_sql);
-        return model('Model')->execModelCreateSql($model_sql) === false;
+        $model_sql = str_replace('$siteid', $siteid, $model_sql);
+        return model('Model')->execModelCreateSql($model_sql);
     }
 
     public function dropModel($tablename, $modelid) {

@@ -43,12 +43,14 @@ class ModelModel extends BaseModel {
             foreach($sqls as $sql) {
                 if(trim($sql) != '') {
                     if ($this->execute($sql) === false) {
+                        \Lib\Log::error('sql 执行失败: ' . $sql);
                         return false;
                     };
                 }
             }
         } else {
             if ($this->execute($sqls) === false) {
+                \Lib\Log::error('sqls 执行失败: ' . $sqls);
                 return false;
             };
         }

@@ -25,7 +25,6 @@ class ModelController extends CommonController {
 
     public function index() {
         $models =  $this->db->where("siteid = %d", $this->siteid)->select();
-        // $types = $this->type_db->where("siteid = %d", $this->siteid)->select();
         $this->assign("types",$this->modelTypes);
         $this->assign("models",$models);
         $this->display();
@@ -39,7 +38,7 @@ class ModelController extends CommonController {
 
             $this->db->startTrans();
             if ($modelid = $this->db->add($data)) {
-                if (logic('Model')->execModelCreateSql($data['tablename'], $modelid)) {
+                if (logic('Model')->execModelCreateSql($data['tablename'], $modelid, $data['siteid'])) {
                     $this->db->commit();
                     $this->success('添加成功！');
                 } else {
