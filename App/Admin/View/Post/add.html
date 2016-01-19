@@ -7,54 +7,136 @@
 <block name="main">
     <form name="myform" id="myform" action="" method="post" enctype="multipart/form-data">
         <input type="hidden" name="moduleid" value="<?php echo $module['id']; ?>">
-        <div class="post-body clearfix" style="margin-right: 300px;">
-        <div class="common-form post-body-content" style="width: 100%; min-width: 463px; float: left;">
-            <table width="100%" cellspacing="0" class="table_form">
-                <tbody>
-                    <?php
-                    if(is_array($forminfos)) {
-                        foreach($forminfos as $field=>$info) {
-                            if($info['isomnipotent']) continue;
-                            if($info['formtype']=='omnipotent') {
-                                foreach($forminfos as $_fm=>$_fm_value) {
-                                    if($_fm_value['isomnipotent']) {
-                                        $info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+        <div class="post-body clear" style="margin-right: 300px;">
+            <div class="common-form post-body-content" style="width: 100%; min-width: 463px; float: left;">
+                <table width="100%" cellspacing="0" class="table_form">
+                    <tbody>
+                        <?php
+                        if(is_array($forminfos)) {
+                            foreach($forminfos as $field=>$info) {
+                                if($info['isomnipotent']) continue;
+                                if($info['formtype']=='omnipotent') {
+                                    foreach($forminfos as $_fm=>$_fm_value) {
+                                        if($_fm_value['isomnipotent']) {
+                                            $info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+                                        }
                                     }
                                 }
+                                ?>
+                                <tr>
+                                    <th width="80"><?php if($info['star']){ ?> <font color="red">*</font><?php } ?> <?php echo $info['name']?>
+                                    </th>
+                                    <td><?php echo $info['form']?>  <?php echo $info['tips']?></td>
+                                </tr>
+                                <?php
                             }
-                            ?>
-                            <tr>
-                                <th width="80"><?php if($info['star']){ ?> <font color="red">*</font><?php } ?> <?php echo $info['name']?>
-                                </th>
-                                <td><?php echo $info['form']?>  <?php echo $info['tips']?></td>
-                            </tr>
-                            <?php
                         }
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-        <style type="text/css">
-            .postbox {
-                position: relative;
-                min-width: 255px;
-                border: 1px solid #e5e5e5;
-                -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.04);
-                box-shadow: 0 1px 1px rgba(0,0,0,.04);
-                background: #fff;
-            }
-        </style>
-        <div class="post-body-sidebar" style="margin-right: -300px; width: 280px; float: right;">
-            <div class="postbox">
-                <?php if($_SESSION['user_info']['role_id']==1) { ?>
-                    <label for="post_status">状态：</label>
-                    <label><input type="radio" name="info[status]" value="99" checked/> 发布 </label>
-                    <label><input type="radio" name="info[status]" value="1" > 审核 </label>
-                <?php } ?>
-                <input name="dosubmit" type="submit" class="button" value="提交">
+                        ?>
+                    </tbody>
+                </table>
             </div>
-        </div>
+            <style type="text/css">
+                .postbox {
+                    position: relative;
+                    min-width: 255px;
+                    border: 1px solid #e5e5e5;
+                    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.04);
+                    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+                    background: #fff;
+                    margin-bottom: 20px;
+                }
+
+                .postbox h3.title {
+                    font-size: 14px;
+                    padding: 8px 12px;
+                    margin: 0;
+                    line-height: 1.4;
+                    border-bottom: 1px solid #ddd;
+                }
+
+                .right-button .button {
+                    text-decoration: none;
+                    height: 30px;
+                    line-height: 28px;
+                    padding: 0 12px 2px;
+                    text-align: center;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+
+                .button-primary {
+                    background: #2ea2cc;
+                    color: #fff;
+                    border-color: #0074a2;
+                }
+
+                .button-secondary {
+                    color: #555;
+                    border-color: #ccc;
+                    background: #f7f7f7;
+                }
+
+                .major-operate {
+                    padding: 5px 10px;
+                    border-top: 1px solid #ddd;
+                    background: #f5f5f5;
+                }
+
+                .right-button {
+                    text-align: right;
+                    float: right;
+                    line-height: 23px;
+                }
+                .major-content {
+                    padding: 10px;
+                }
+                .left-link {
+                    line-height: 28px;
+                    vertical-align: middle;
+                    text-align: left;
+                    float: left;
+                }
+            </style>
+            <div class="post-body-sidebar" style="margin-right: -300px; width: 280px; float: right;">
+                <div class="postbox">
+                    <h3 class="title">
+                        <span>发布</span>
+                    </h3>
+                    <div class="inside">
+                        <div class="major-content">
+                            <?php if($_SESSION['user_info']['role_id']==1) { ?>
+                            <label for="post_status">状态：</label>
+                            <label><input type="radio" name="info[status]" value="99" checked/> 发布 </label>
+                            <label><input type="radio" name="info[status]" value="1" > 审核 </label>
+                            <?php } ?>
+                        </div>
+                        <div class="major-operate clear">
+                            <div class="left-link">
+                                <a href="">添加</a>
+                            </div>
+                            <div class="right-button">
+                                <input name="dosubmit" type="submit" class="button-primary button" value="提交">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="postbox">
+                    <h3 class="title">
+                        <span>栏目</span>
+                    </h3>
+                    <div class="inside">
+                        <div class="major-content">
+
+                        </div>
+                        <div class="major-operate clear">
+                            <div class="right-button">
+                                <input name="dosubmit" type="button" class="button-secondary button" value="添加">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="bk15"></div>
     </form>
