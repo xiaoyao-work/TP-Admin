@@ -1,0 +1,45 @@
+<extend name="Layout:form" />
+<block name="title"><title>分类管理</title></block>
+<block name='subnav'>
+    <a class="add fb" href="javascript:void(0);"><em>添加分类</em></a>&nbsp;&nbsp;&nbsp;
+    <a class="on" href="__CONTROLLER__/index"><em>分类管理</em></a>
+</block>
+<block name="main">
+    <form name="myform" id="myform" action="__CONTROLLER__/register" method="post">
+        <table cellpadding=0 cellspacing=0 class="table_form" width="100%">
+            <tr>
+                <td width="150" align="right">分类名称(分类唯一标识)</td>
+                <td><input type="text" class="input-text" name="info[name]" id="name"/></td>
+            </tr>
+            <tr>
+                <td width="150" align="right">分类Label</td>
+                <td><input type="text" class="input-text" name="info[label]" id="label"/></textarea></td>
+            </tr>
+            <tr>
+                <td width="150" align="right">菜单显示名称</td>
+                <td><input type="text" class="input-text" name="info[menu_name]" id="menu_name"/></td>
+            </tr>
+            <tr>
+                <td width="150" align="right">模型</td>
+                <td>
+                    <select name="info[post_type]">
+                    <?php foreach ($post_types as $key => $value) { ?>
+                        <option value="<?php echo $value['tablename'] ?>"><?php echo $value['name']; ?></option>
+                    <?php } ?>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <div class="btn">
+            <input type="submit" name="dosubmit" id="dosubmit" value="提交" class='button'>&nbsp;<input type="reset" value="重置" class='button'>
+        </div>
+    </form>
+</block>
+<block name="footer">
+    <script type="text/javascript">
+        $(function() {
+            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true,width:'200',height:'50'}, function(){this.close();$(obj).focus();})}});
+            $("#name").formValidator({onshow:"请输入分类名称",onfocus:"请输入分类名称",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入分类名称"});
+        });
+    </script>
+</block>

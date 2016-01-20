@@ -17,7 +17,6 @@ use Org\Util\Rbac as RBAC;
 class CommonController extends Controller {
 	protected $siteid;
 
-
     function __construct() {
         parent::__construct();
 

@@ -14,18 +14,16 @@ use Admin\Controller\CommonController;
 *  系统模型控制
 */
 class ModelController extends CommonController {
-    protected $db, $fieldDb, $modelTypes;
+    protected $db, $fieldDb;
 
     function __construct() {
         parent::__construct();
         $this->db = model("Model");
         $this->fieldDb = model("ModelField");
-        $this->modelTypes = $this->db->getModelTypes();
     }
 
     public function index() {
         $models =  $this->db->where("siteid = %d", $this->siteid)->select();
-        $this->assign("types",$this->modelTypes);
         $this->assign("models",$models);
         $this->display();
     }
