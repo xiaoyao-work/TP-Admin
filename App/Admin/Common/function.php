@@ -71,7 +71,7 @@ function tree_to_array($tree, &$cat = array(), $level = 1) {
 	}
 }
 
-function cat_empty_deal($cat, $next_parentid, $pid='parentid', $empty = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;") {
+function cat_empty_deal($cat, $next_parentid, $pid='parentid', $empty = "　") {
 	$str = "";
 	if ($cat[$pid]) {
 		for ($i=2; $i < $cat['level']; $i++) {

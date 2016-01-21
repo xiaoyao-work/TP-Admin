@@ -27,11 +27,37 @@ class CategoryLogic extends BaseLogic {
         }
 
         $taxs = model('Category')->getTerms($post_type, $taxonomy_name, $this->siteid);
-
         $cats = list_to_tree($taxs,'id','parentid');
         $list = array();
         tree_to_array($cats,$list);
+        return $list;
     }
+
+    public function dropTerm($term) {
+        $term_model = model('Category');
+        $term_model->startTrans();
+
+        if ($term['parentid']) {
+
+        } else {
+            if ($term['child']) {
+                $
+
+
+            } else {
+                $result = $term_model->where(array(
+                    'siteid' => $this->siteid,
+                    'id' => $siteid
+                    ))
+                ->delete();
+                if ($result !== false) {
+                    $term_model->commit();
+                    $this->success('删除成功！');
+                }
+            }
+        }
+    }
+
 
 }
 

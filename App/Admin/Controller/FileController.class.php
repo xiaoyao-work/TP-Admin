@@ -34,6 +34,7 @@ class FileController extends CommonController {
                     $attach_info = current($info);
                     $attach_info = array(
                         'title' => $attach_info['name'],
+                        'siteid' => $this->siteid,
                         'url'   => $attach_info["savepath"] . $attach_info["savename"],
                         'path'  => $attach_info["savepath"] . $attach_info["savename"],
                         'name'  => $attach_info["savename"],

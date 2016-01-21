@@ -25,8 +25,8 @@ class CategoryController extends CommonController {
         $post_type = I('get.post_type');
         // 获取分类
         $terms = logic('Category')->getTerms($post_type, $taxonomy_name);
-        $this->assign('cats', $terms);
-
+        $this->assign('terms', $terms);
+        $this->assign('query_string', http_build_query(array('post_type' => $post_type, 'taxonomy_name' => $taxonomy_name)));
         $this->display();
     }
 
@@ -38,6 +38,8 @@ class CategoryController extends CommonController {
             $data['taxonomy'] = I('post.taxonomy_name');
             $data['siteid'] = $this->siteid;
             $data['child'] = 0;
+
+            $query_string = http_build_query(array('post_type' => $data['post_type'], 'taxonomy_name' => $data['taxonomy']));
             if ($data['parentid']) {
                 $parentcat = $this->db->where("siteid = %d and id = %d", $this->siteid, $data['parentid'])->find();
                 if (!$parentcat) {
@@ -59,7 +61,7 @@ class CategoryController extends CommonController {
                         $this->error('操作失败！');
                     };
                     $this->db->commit();
-                    $this->success('操作成功！',__MODULE__.'/Category/index');
+                    $this->success('操作成功！', __MODULE__.'/Category/index?' . $query_string);
                 } else {
                     $this->db->rollback();
                     $this->error('操作失败！');
@@ -70,14 +72,14 @@ class CategoryController extends CommonController {
                 $this->db->startTrans();
                 if ($catid = $this->db->add($data)) {
                     if ($this->db->where("siteid = %d and id = %d",$this->siteid,$catid)->save(array('arrchildid' => $catid)) !== false) {
-                        $this->commit();
-                        $this->success('操作成功！',__MODULE__.'/Category/index');
+                        $this->db->commit();
+                        $this->success('操作成功！',__MODULE__.'/Category/index?' . $query_string);
                     } else {
-                        $this->rollback();
+                        $this->db->rollback();
                         $this->error('操作失败！');
                     }
                 } else {
-                    $this->rollback();
+                    $this->db->rollback();
                     $this->error('操作失败！');
                 }
             }
@@ -89,9 +91,10 @@ class CategoryController extends CommonController {
             if ($terms === false) {
                 $this->error(logic('Category')->getErrorMessage());
             }
-            $this->assign('cats', $terms);
+            $this->assign('terms', $terms);
             $this->assign('post_type',$post_type);
             $this->assign('taxonomy_name',$taxonomy_name);
+            $this->assign('query_string', http_build_query(array('post_type' => $post_type, 'taxonomy_name' => $taxonomy_name)));
             $this->display();
         }
     }
@@ -99,40 +102,36 @@ class CategoryController extends CommonController {
     public function edit() {
         if (IS_POST) {
             $this->checkToken();
-            $cat = $this->db->where("siteid = %d and id = %d",$this->siteid,$_POST['id'])->find();
+            $term = $this->db->where("siteid = %d and id = %d",$this->siteid, $_POST['id'])->find();
+            $query_string = http_build_query(array('post_type' => $term['post_type'], 'taxonomy_name' => $term['taxonomy']));
             $data = $_POST['info'];
-            $data['letter'] = join('',gbk_to_pinyin($data['catname']));
-            $model = $this->model_db->find(intval($data['modelid']));
-            $data['module'] = $model['name'];
-            $data['setting'] = var_export($_POST['setting'],true);
+
             // 是否修改父栏目
-            if ($data['parentid'] == $cat['parentid']) {
-                // echo "没有修改父栏目";
-                if ($this->db->where("siteid = %d and id = %d",$this->siteid,$_POST['id'])->save($data) !== false) {
-                    // echo $this->db->getLastSql();
-                    $this->success('操作成功！',__MODULE__.'/Category/index');
+            if ($data['parentid'] == $term['parentid']) {
+                if ($this->db->where("siteid = %d and id = %d",$this->siteid, $_POST['id'])->save($data) !== false) {
+                    $this->success('操作成功！',__MODULE__.'/Category/index?' . $query_string);
                 } else {
                     $this->error('操作失败!');
                 }
             } else {
                 if ($data['parentid']) {
                     // 更新 'parentid' and 'arrparentid'
-                    $parentcat = $this->db->where("siteid = %d and id = %d",$this->siteid,$data['parentid'])->find();
+                    $parentcat = $this->db->where("siteid = %d and id = %d",$this->siteid, $data['parentid'])->find();
                     if (!$parentcat) {
                         $this->error('父栏目不存在');
-                        exit(0);
                     }
+
                     $data['arrparentid'] = $parentcat['arrparentid'] . "," .$parentcat['id'];
-                    $data['parentdir'] = $parentcat['parentdir'] . $parentcat['catdir'] . "/";
                     $data['level'] = $parentcat['level'] + 1;
+
                     $this->db->startTrans();
-                    if ($this->db->where("siteid = %d and id = %d",$this->siteid,$_POST['id'])->save($data) !== false) {
+                    if ($this->db->where("siteid = %d and id = %d",$this->siteid, $_POST['id'])->save($data) !== false) {
                         /* 更新原父栏目 */
-                        $origin_parentcat = $this->db->where("siteid = %d and id = %d",$this->siteid,$cat['parentid'])->find();
+                        $origin_parentcat = $this->db->where("siteid = %d and id = %d",$this->siteid,$term['parentid'])->find();
                         if ($origin_parentcat) {
                             $arrchildid = explode(',', $origin_parentcat['arrchildid']);
                             foreach ($arrchildid as $key => $value) {
-                                if ($value == $cat['id']) {
+                                if ($value == $term['id']) {
                                     unset($arrchildid[$key]);
                                     break;
                                 }
@@ -142,17 +141,18 @@ class CategoryController extends CommonController {
                             if ($arrchildid == $origin_parentcat['id']) {
                                 $origin_parent_data['child'] = 0;
                             }
-                            if ($this->db->where("siteid = %d and id = %d",$this->siteid,$origin_parentcat['id'])->save($origin_parent_data) === false) {
+                            // 更新原父栏目
+                            if ($this->db->where("siteid = %d and id = %d",$this->siteid, $origin_parentcat['id'])->save($origin_parent_data) === false) {
                                 $this->db->rollback();
                                 $this->error("更新原父栏目失败!");
-                            };
+                            }
                         }
+
                         /* 更新现父栏目 */
-                        $data_parent = array('child' => 1, 'arrchildid' => $parentcat['arrchildid'] . "," . $cat['id']);
-                        if ($this->db->where("siteid = %d and id = %d",$this->siteid,$data['parentid'])->save($data_parent) !== false) {
-                            // echo '更新现父栏目成功';
+                        $data_parent = array('child' => 1, 'arrchildid' => $parentcat['arrchildid'] . "," . $term['id']);
+                        if ($this->db->where("siteid = %d and id = %d",$this->siteid, $data['parentid'])->save($data_parent) !== false) {
                             $this->db->commit();
-                            $this->success('操作成功！',__MODULE__.'/Category/index');
+                            $this->success('操作成功！',__MODULE__.'/Category/index?'. $query_string);
                         } else {
                             $this->db->rollback();
                             $this->error("更新现父栏目失败!");
@@ -165,11 +165,11 @@ class CategoryController extends CommonController {
                     $data['level'] = 1;
                     $data['arrparentid'] = "0";
                     $this->db->startTrans();
-                    if ($this->db->where("siteid = %d and id = %d",$this->siteid,$_POST['id'])->save($data) !== false) {
-                        $origin_parentcat = $this->db->where("siteid = %d and id = %d",$this->siteid,$cat['parentid'])->find();
+                    if ($this->db->where("siteid = %d and id = %d", $this->siteid, $_POST['id'])->save($data) !== false) {
+                        $origin_parentcat = $this->db->where("siteid = %d and id = %d",$this->siteid,$term['parentid'])->find();
                         $arrchildid = explode(',', $origin_parentcat['arrchildid']);
                         foreach ($arrchildid as $key => $value) {
-                            if ($value == $cat['id']) {
+                            if ($value == $term['id']) {
                                 unset($arrchildid[$key]);
                                 break;
                             }
@@ -179,9 +179,10 @@ class CategoryController extends CommonController {
                         if ($arrchildid == $origin_parentcat['id']) {
                             $origin_parent_data['child'] = 0;
                         }
-                        if ($this->db->where("siteid = %d and id = %d",$this->siteid,$origin_parentcat['id'])->save($origin_parent_data) !== false) {
+
+                        if ($this->db->where("siteid = %d and id = %d", $this->siteid, $origin_parentcat['id'])->save($origin_parent_data) !== false) {
                             $this->db->commit();
-                            $this->success('操作成功！',__MODULE__.'/Category/index');
+                            $this->success('操作成功！',__MODULE__.'/Category/index?'. $query_string);
                         } else {
                             $this->db->rollback();
                             $this->error("更新原父栏目失败!");
@@ -193,16 +194,25 @@ class CategoryController extends CommonController {
                 }
             }
         } else {
-            $cats = list_to_tree($this->db->cat_list(),'id','parentid');
-            $list = array();
-            tree_to_array($cats,$list);
-            $cat = $this->db->where("siteid = %d and id = %d",$this->siteid,$_GET['id'])->find();
-            $model_list = $this->model_db->where(array('siteid'=>$this->siteid, 'typeid' => 0))->select();
-            $cat['setting'] = string2array($cat['setting']);
-            $this->assign('cat',$cat);
-            $this->assign('cat_id',$cat_id);
-            $this->assign('cats',$list);
-            $this->assign("model_list", $model_list);
+            $term_id = I('get.id');
+            if (empty($term_id)) {
+                $this->error('参数缺失！');
+            }
+
+            $term = $this->db->where("siteid = %d and id = %d", $this->siteid, $term_id)->find();
+            if (empty($term)) {
+                $this->error('栏目不存在！');
+            }
+
+            // 获取分类
+            $terms = logic('Category')->getTerms($term['post_type'], $term['taxonomy']);
+            if ($terms === false) {
+                $this->error(logic('Category')->getErrorMessage());
+            }
+
+            $this->assign('term',$term);
+            $this->assign('terms', $terms);
+            $this->assign('query_string', http_build_query(array('post_type' => $term['post_type'], 'taxonomy_name' => $term['taxonomy'])));
             $this->display();
         }
     }

@@ -18,7 +18,7 @@ class CategoryModel extends Model {
             'post_type' => $post_type,
             'taxonomy_name' => $taxonomy_name,
             ))
-            ->order('arrparentid asc, listorder desc, id asc')
+            ->order('listorder desc, id asc')
             ->select();
         return $taxs;
     }
