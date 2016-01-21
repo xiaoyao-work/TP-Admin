@@ -32,32 +32,5 @@ class CategoryLogic extends BaseLogic {
         tree_to_array($cats,$list);
         return $list;
     }
-
-    public function dropTerm($term) {
-        $term_model = model('Category');
-        $term_model->startTrans();
-
-        if ($term['parentid']) {
-
-        } else {
-            if ($term['child']) {
-                $
-
-
-            } else {
-                $result = $term_model->where(array(
-                    'siteid' => $this->siteid,
-                    'id' => $siteid
-                    ))
-                ->delete();
-                if ($result !== false) {
-                    $term_model->commit();
-                    $this->success('删除成功！');
-                }
-            }
-        }
-    }
-
-
 }
 
