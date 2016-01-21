@@ -32,5 +32,36 @@ class CategoryLogic extends BaseLogic {
         tree_to_array($cats,$list);
         return $list;
     }
+
+
+    public function getPostTerms($post_type) {
+        $taxonomies = logic('taxonomy')->getPostTaxonomy($post_type);
+        if (empty($taxonomies)) {
+            return array();
+        }
+        $taxonomy_names = array();
+        foreach ($taxonomies as $key => $value) {
+            $taxonomy_names[] = $value['name'];
+        }
+        if (empty($taxonomy_names)) {
+            return array();
+        }
+
+        $terms = model('category')->getTerms($post_type, array('in', $taxonomy_names), $this->siteid);
+        $cats = list_to_tree($terms,'id','parentid');
+        $list = array();
+        tree_to_array($cats,$list);
+        unset($cats);
+        unset($terms);
+        $temp = array();
+        foreach ($list as $key => $value) {
+            $temp[$value['taxonomy']][] = $value;
+        }
+        foreach ($taxonomies as $key => $value) {
+            $taxonomies[$key]['terms'] = isset($temp[$value['name']]) ? $temp[$value['name']] : array();
+        }
+        return $taxonomies;
+    }
+
 }
 

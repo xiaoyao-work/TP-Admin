@@ -35,6 +35,12 @@ class TaxonomyLogic extends BaseLogic {
         return isset($taxonomies[$post_type][$taxonomy_name]) ? $taxonomies[$post_type][$taxonomy_name] : false;
     }
 
+    public function getPostTaxonomy($post_type) {
+        $taxonomies = $this->getTaxonomies();
+        return isset($taxonomies[$post_type]) ? $taxonomies[$post_type] : array();
+    }
+
+
     public function registerTaxonomy($taxonomy) {
         if (empty($taxonomy['post_type']) || empty($taxonomy) || !is_array($taxonomy) || empty($taxonomy['name'])) {
             $this->errorCode = 10001;

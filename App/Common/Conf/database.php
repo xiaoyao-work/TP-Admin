@@ -7,7 +7,7 @@ return array(
   'DB_USER'         => 'root', // 用户名
   'DB_PWD'          => 'root', // 密码
   'DB_HOST'         => '127.0.0.1',
-  'DB_NAME'         =>'tp-admin',
+  'DB_NAME'         =>'tp3',
   // DSN 配置 采用DSN配置，必须也同时普通配置。
   // 'DB_DSN'          => 'mysql:host=127.0.0.1;port=3306;dbname=tp-admin;charset=utf8;',
 );

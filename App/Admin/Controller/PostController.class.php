@@ -25,7 +25,7 @@ class PostController extends CommonController {
         if (!isset($_GET['moduleid'])) {
             $this->error('模型参数缺失！');
         }
-        $module = D('Model')->find($_GET['moduleid']);
+        $module = model('Model')->find($_GET['moduleid']);
         if (empty($module)) {
             $this->error('模型不存在！');
         }
@@ -74,9 +74,6 @@ class PostController extends CommonController {
         if (IS_POST) {
             $hash[C('TOKEN_NAME')] = $_POST[C('TOKEN_NAME')];
             $this->db->setModel($_POST['moduleid']);
-            /*if (!$this->db->autoCheckToken($hash)) {
-                $this->error('令牌验证失败, 请刷新页面');
-            }*/
             if ($id = $this->db->addContent()) {
                 $this->success('添加成功!', U('Post/index', array('moduleid' => $_POST['moduleid'])));
             } else {
@@ -86,10 +83,12 @@ class PostController extends CommonController {
             if (!isset($_GET['moduleid'])) {
                 $this->error('模型参数缺失！');
             }
-            $module = D('Model')->find($_GET['moduleid']);
+            $module = model('Model')->find($_GET['moduleid']);
             if (empty($module)) {
                 $this->error('模型不存在！');
             }
+
+            $taxonomies = logic('category')->getPostTerms($module['tablename']);
             require MODEL_PATH.'content_form.class.php';
             $content_form = new \content_form($module['id']);
             $forminfos = $content_form->get();
@@ -108,7 +107,7 @@ class PostController extends CommonController {
             if (!isset($_POST['moduleid']) || !isset($_POST['id'])) {
                 $this->error('模型参数缺失！');
             }
-            $module = D('Model')->find($_POST['moduleid']);
+            $module = model('Model')->find($_POST['moduleid']);
             if (empty($module)) {
                 $this->error('模型不存在！');
             }
@@ -125,7 +124,7 @@ class PostController extends CommonController {
             if (!isset($_GET['moduleid']) || !isset($_GET['id'])) {
                 $this->error('模型参数缺失！');
             }
-            $module = D('Model')->find($_GET['moduleid']);
+            $module = model('Model')->find($_GET['moduleid']);
             if (empty($module)) {
                 $this->error('模型不存在！');
             }
@@ -135,6 +134,9 @@ class PostController extends CommonController {
             if (empty($content)) {
                 $this->error('内容不存在！');
             }
+
+
+
             require MODEL_PATH.'content_form.class.php';
             $content_form = new \content_form($module['id']);
             $forminfos = $content_form->get($content);
@@ -151,7 +153,7 @@ class PostController extends CommonController {
         if (!isset($_GET['moduleid'])) {
             $this->error('模型参数缺失！');
         }
-        $module = D('Model')->find($_GET['moduleid']);
+        $module = model('Model')->find($_GET['moduleid']);
         if (empty($module)) {
             $this->error('模型不存在！');
         }
@@ -169,7 +171,7 @@ class PostController extends CommonController {
         if (!isset($_REQUEST['moduleid'])) {
             $this->error('模型参数缺失！');
         }
-        $module = D('Model')->find($_REQUEST['moduleid']);
+        $module = model('Model')->find($_REQUEST['moduleid']);
         if (empty($module)) {
             $this->error('模型不存在！');
         }

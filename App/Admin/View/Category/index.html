@@ -10,7 +10,6 @@
             <table width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <!-- <th width="16"><input type="checkbox" value="" id="check_box" onclick="selectall('ids[]');"></th> -->
                         <th width="38">排序</th>
                         <th width="30">ID</th>
                         <th>栏目名称</th>
@@ -21,7 +20,6 @@
                 <tbody>
                     <?php  foreach ($terms as $key => $value) { ?>
                     <tr>
-                        <!-- <td align="center"><input class="inputcheckbox " name="ids[]" value="<?php echo $content['id']; ?>" type="checkbox"></td> -->
                         <td align="center">
                             <input name="listorder[<?php echo $value['id']; ?>]" type="text" size="3" value="<?php echo $value['listorder']; ?>" class="input-text-c input-text">
                         </td>
@@ -38,7 +36,6 @@
         </div>
         <div class="btn">
             <input type="submit" class="button" name="排序" name="dosubmit" /> &nbsp;
-            <!-- <input name="deletesubmit" type="submit" class="button" value="删除" onclick="document.myform.action='__CONTROLLER__/delete';return confirm('确认要删除 『 选中 』 吗？')">&nbsp;&nbsp; -->
         </div>
     </form>
 </block>
