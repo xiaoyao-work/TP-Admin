@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | TP-Admin [ 多功能后台管理系统 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2013-2015 http://www.hhailuo.com All rights reserved.
+// | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Author: XiaoYao <476552238li@gmail.com>
 // +----------------------------------------------------------------------
@@ -40,7 +40,6 @@ class TaxonomyLogic extends BaseLogic {
         return isset($taxonomies[$post_type]) ? $taxonomies[$post_type] : array();
     }
 
-
     public function registerTaxonomy($taxonomy) {
         if (empty($taxonomy['post_type']) || empty($taxonomy) || !is_array($taxonomy) || empty($taxonomy['name'])) {
             $this->errorCode = 10001;
@@ -55,9 +54,25 @@ class TaxonomyLogic extends BaseLogic {
             $this->errorMessage = '分类已存在！';
             return false;
         }
+        // 分类自动生成菜单
+        /*$taxonomy_menu = array(
+            'request_method' => 0,
+            'pid' => 0,
+            'title' => $taxonomy['menu_name'],
+            'module' => 'Category',
+            'action' => 'index',
+            'params' => http_build_query(array('post_type' => $taxonomy['post_type'], 'taxonomy_name' => $taxonomy['name'])),
+            'sort' => 0,
+            'status' => 1,
+            'description' => '分类自动生成菜单'
+            );
+
+        model('menu')->add($taxonomy_menu);*/
+
         $taxonomies[$taxonomy['post_type']][$taxonomy['name']] = $taxonomy;
 
         $this->setTaxonomies($taxonomies);
+
         return true;
     }
 
@@ -89,6 +104,12 @@ class TaxonomyLogic extends BaseLogic {
         return true;
     }
 
+    /**
+     * 删除所有Items 及 Item Posts
+     * @param  [type] $post_type     [description]
+     * @param  [type] $taxonomy_name [description]
+     * @return [type]                [description]
+     */
     public function removeTaxItems($post_type, $taxonomy_name) {
         return true;
     }

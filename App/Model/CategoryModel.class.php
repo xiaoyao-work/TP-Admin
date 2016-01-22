@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | TP-Admin [ 多功能后台管理系统 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2013-2015 http://www.hhailuo.com All rights reserved.
+// | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Author: XiaoYao <476552238li@gmail.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ class CategoryModel extends Model {
         $taxs = $this->where(array(
             'siteid' => $siteid,
             'post_type' => $post_type,
-            'taxonomy_name' => $taxonomy_name,
+            'taxonomy' => $taxonomy_name,
             ))
             ->order('listorder desc, id asc')
             ->select();
@@ -32,7 +32,7 @@ class CategoryModel extends Model {
             }
             $select .= sprintf($format, "value='" . $value['id'] . "' " . ($cat_id == $value['id'] ? 'selected' : ''), $empty.'├─'.$value['catname']);
             if ($value['_child']) {
-                $select .= CategoryModel::wxj_category($value['_child'],$cat_id);
+                $select .= self::wxj_category($value['_child'],$cat_id);
             }
         }
         return $select;

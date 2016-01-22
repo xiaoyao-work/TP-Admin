@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | TP-Admin [ 多功能后台管理系统 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2013-2015 http://www.hhailuo.com All rights reserved.
+// | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Author: XiaoYao <476552238li@gmail.com>
 // +----------------------------------------------------------------------
@@ -30,11 +30,27 @@ class CategoryLogic extends BaseLogic {
         $cats = list_to_tree($taxs,'id','parentid');
         $list = array();
         tree_to_array($cats,$list);
-        return $list;
+        return array_values($list);
     }
 
+    public function getPostTermsGroupByTaxonomy($post_type) {
+        $terms = $this->getPostTermsOriginData($post_type);
+        if (empty($terms)) {
+            return array();
+        }
+        $termsGroupByTaxonomy = array();
+        foreach ($terms as $key => $value) {
+            $termsGroupByTaxonomy[$value['taxonomy']][] = $value;
+        }
+        return $termsGroupByTaxonomy;
+    }
 
-    public function getPostTerms($post_type) {
+    /**
+     * 获取原生Terms数据
+     * @param  string $post_type 模型表名
+     * @return array
+     */
+    public function getPostTermsOriginData($post_type) {
         $taxonomies = logic('taxonomy')->getPostTaxonomy($post_type);
         if (empty($taxonomies)) {
             return array();
@@ -48,6 +64,19 @@ class CategoryLogic extends BaseLogic {
         }
 
         $terms = model('category')->getTerms($post_type, array('in', $taxonomy_names), $this->siteid);
+        return $terms;
+    }
+
+    /**
+     * 获取经过Tree处理的Terms
+     * @param  string $post_type 模型表名
+     * @return array
+     */
+    public function getPostTerms($post_type) {
+        $terms = $this->getPostTermsOriginData($post_type);
+        if (empty($terms)) {
+            return array();
+        }
         $cats = list_to_tree($terms,'id','parentid');
         $list = array();
         tree_to_array($cats,$list);

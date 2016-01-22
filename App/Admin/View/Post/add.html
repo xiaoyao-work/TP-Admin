@@ -49,18 +49,32 @@
                             <?php } ?>
                         </div>
                         <div class="major-operate clear">
-                            <div class="left-link">
-                                <a href="">添加</a>
-                            </div>
+                            <div class="left-link"></div>
                             <div class="right-button">
                                 <input name="dosubmit" type="submit" class="button-primary bt-button" value="提交">
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
+
+                <?php foreach ($taxonomies as $taxonomy) { ?>
+                <div class="postbox">
+                    <h3 class="title">
+                        <span><?php echo $taxonomy['label'] ?></span>
+                    </h3>
+                    <div class="inside">
+                        <div class="major-content">
+                            <?php echo \Org\Util\Form::taxonomy($termsGroupByTaxonomy[$taxonomy['name']], $taxonomy['name']); ?>
+                        </div>
+                        <div class="major-operate clear">
+                            <div class="left-link">
+                                <a href="javascript:void(0);window.top.art.dialog({id:'notice',content:'开发中……',lock:true,width:'200',height:'50'});">添加<?php echo $taxonomy['label'] ?></a>
+                            </div>
+                            <div class="right-button"></div>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
             </div>
         </div>
         <div class="bk15"></div>

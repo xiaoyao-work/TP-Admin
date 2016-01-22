@@ -336,3 +336,7 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
     text-align: left;
     float: left;
 }
+
+ul.children {
+    margin-left: 18px;
+}

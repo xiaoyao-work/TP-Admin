@@ -8,8 +8,8 @@
         <input name="nid" type="hidden" value="<?php echo $nid; ?>" />
         <table cellpadding=0 cellspacing=0 class="table_form" width="100%">
             <tr>
-                <td width="10%" align="right">是否需要判断请求方式:</td>
-                <td width="90%">
+                <td width="200" align="right">是否需要判断请求方式:</td>
+                <td>
                     <label style="float:left;width:75px">
                         <input type="radio" class="input_radio " name="info[request_method]" <?php echo $node['request_method'] == 0 ? 'checked' : '' ?> value="0"> 否
                     </label>
@@ -19,8 +19,8 @@
                 </td>
             </tr>
             <tr>
-                <td width="10%" align="right">上级菜单:</td>
-                <td width="90%">
+                <td width="200" align="right">上级菜单:</td>
+                <td>
                     <select id="pid" name="info[pid]">
                         <?php if(isset($_GET['menu_id'])) { ?>
                         <option value="0" <?php if ($_GET['menu_id'] == 0){echo "selected";} ?>>顶级菜单</option>
@@ -35,38 +35,38 @@
                 </td>
             </tr>
             <tr>
-                <td width="10%" align="right">菜单名:</td>
-                <td width="90%">
+                <td width="200" align="right">菜单名:</td>
+                <td>
                     <input type="text" class="input-text" name="info[title]" id="title" value="<?php echo $node['title']; ?>" size="40"/>
                 </td>
             </tr>
             <tr>
-                <td width="10%" align="right">模块名:</td>
-                <td width="90%">
+                <td width="200" align="right">模块名:</td>
+                <td>
                     <input type="text" class="input-text " name="info[module]" id="module" value="<?php echo $node['module']; ?>" size="40"/>
                 </td>
             </tr>
             <tr>
-                <td width="10%" align="right">方法名:</td>
-                <td width="90%">
+                <td width="200" align="right">方法名:</td>
+                <td>
                     <input type="text" class="input-text " name="info[action]" id="action" value="<?php echo $node['action']; ?>" size="40"/>
                 </td>
             </tr>
             <tr>
-                <td width="10%" align="right">URL附加参数:</td>
-                <td width="90%">
+                <td width="200" align="right">URL附加参数:</td>
+                <td>
                     <input type="text" class="input-text" name="info[params]" value="<?php echo $node['params']; ?>" size="40"/>
                 </td>
             </tr>
             <tr>
-                <td width="10%" align="right">排序</td>
-                <td width="90%">
+                <td width="200" align="right">排序</td>
+                <td>
                     <input type="text" class="input-text" name="info[sort]" id="sort" value="<?php echo $node['sort']; ?>" size="40"/>
                 </td>
             </tr>
             <tr>
-                <td width="10%" align="right">状态:</td>
-                <td width="90%">
+                <td width="200" align="right">状态:</td>
+                <td>
                     <label style="float:left;width:75px">
                         <input type="radio" class="input_radio " name="info[status]" id="status_1" <?php echo ($node['status'] ? 'checked' : '' ); ?> value="1"> 启用
                     </label>
@@ -76,8 +76,8 @@
                 </td>
             </tr>
             <tr>
-                <td width="10%" align="right">描述:</td>
-                <td width="90%"><textarea name="info[remark]" rows="3" cols="60"  id="remark"/><?php echo $node['remark']; ?></textarea>
+                <td width="200" align="right">描述:</td>
+                <td><textarea name="info[remark]" rows="3" cols="60"  id="remark"/><?php echo $node['remark']; ?></textarea>
                 </td>
             </tr>
         </table>

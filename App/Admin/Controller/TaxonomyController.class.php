@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | TP-Admin [ 多功能后台管理系统 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2013-2015 http://www.hhailuo.com All rights reserved.
+// | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Author: XiaoYao <476552238li@gmail.com>
 // +----------------------------------------------------------------------
@@ -31,7 +31,6 @@ class TaxonomyController extends CommonController {
             $this->assign('post_types', $post_types);
             $this->display();
         }
-
     }
 
     public function delete() {

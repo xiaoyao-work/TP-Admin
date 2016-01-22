@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | TP-Admin [ 多功能后台管理系统 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2013-2015 http://www.hhailuo.com All rights reserved.
+// | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Author: XiaoYao <476552238li@gmail.com>
 // +----------------------------------------------------------------------
@@ -59,7 +59,7 @@ class Form {
                 $str .="flashupload:true,alowuploadexts:'".$alowuploadexts."',allowbrowser:'".$allowbrowser."',allowuploadnum:'".$allowuploadnum."',\r\n";
             }
             if($allowupload) {
-                $str .= "filebrowserUploadUrl : '" . __MODULE__  . "/Upfile/upload',\r\n";
+                $str .= "filebrowserUploadUrl : '" . __MODULE__  . "/File/upload',\r\n";
                 $str .= "filebrowserBrowseUrl: '" . __MODULE__  . "/Attachment/album_list',\r\n";
             }
             if($color) {
@@ -70,8 +70,8 @@ class Form {
             $str .= $toolbar;
             $str .= "]\r\n";
             $str .= "});\r\n";
-    $str .= '</script>';
-    return $str;
+        $str .= '</script>';
+        return $str;
     }
 
     /**
@@ -98,9 +98,6 @@ class Form {
     }
 
     /**
-    *
-
-
     * @param string $name 表单名称
     * @param int $id 表单id
     * @param string $value 表单默认值
@@ -208,6 +205,26 @@ class Form {
         $string .= '</select>';
         return $string;
     }
+
+    /**
+    * 类目选择
+    * @param string $file 栏目缓存文件名
+    * @param intval/array $catid 选中的ID，多选是可以是数组
+    * @param string $str 属性
+    * @param string $default_option 默认选项
+    */
+    public static function taxonomy($terms = '', $taxonomy = 'category', $catid = 0, $default_option=array()) {
+        if (is_numeric($catid)) {
+            $catid = array($catid);
+        }
+        $tree = new Tree();
+        $tree->init($terms);
+        $string = '<ul id="'.$taxonomy.'checklist" class="'.$taxonomy.'checklist">';
+        $string .= $tree->get_taxonomy_tree(0, $catid);
+        $string .= '</select>';
+        return $string;
+    }
+
 
     /**
     * 下拉选择框

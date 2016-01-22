@@ -5,6 +5,7 @@ pre {white-space: pre-wrap; /* css-3 */white-space: -moz-pre-wrap; /* Mozilla, s
 h1,h2,h3,h4,h5,h6{font-size:100%;}input.dialog{height:0; height:0; font-size:0; line-height:0; border:none}
 h1{font-size:34px;}h2{font-size:26px;}h3{font-size:18px; }h4{font-size:16px;}h5{font-size:14px;}h6{font-size:12px;}
 input,label,img,th{vertical-align:middle;}.font-fixh{font-family: Georgia,Arial; color: #f00; font-size: 16px; font-weight: 700;}address,cite,dfn,em,var{font-style:normal;}
+label{cursor: pointer;}
 code,kbd,pre,samp{font-family:courier new,courier,monospace;}
 input.button ,input.btn{padding:0.25em;width: auto;_width:0;overflow:visible !ie;}
 ul,ol,li{list-style:none;}

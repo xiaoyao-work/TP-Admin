@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | TP-Admin [ 多功能后台管理系统 ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2013-2015 http://www.hhailuo.com All rights reserved.
+// | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Author: XiaoYao <476552238li@gmail.com>
 // +----------------------------------------------------------------------
@@ -72,11 +72,37 @@ class PostController extends CommonController {
 
     public function add() {
         if (IS_POST) {
-            $hash[C('TOKEN_NAME')] = $_POST[C('TOKEN_NAME')];
-            $this->db->setModel($_POST['moduleid']);
-            if ($id = $this->db->addContent()) {
+            $data = I('post.info');
+            $module = $this->db->setModel($_POST['moduleid']);
+            $this->db->startTrans();
+            if ($post_id = $this->db->addContent($data)) {
+                // 分类处理
+                $taxonomies = logic('taxonomy')->getPostTaxonomy($module['tablename']);
+                if (!empty($taxonomies)) {
+                    $terms = array();
+                    foreach ($taxonomies as $taxonomy) {
+                        $key = $module['tablename'] . '_' . $taxonomy['name'];
+                        $terms = array_merge($terms, I('post.' . $key, array()));
+                    }
+                    if (!empty($terms)) {
+                        $category_post_datas = array();
+                        foreach ($terms as $key => $value) {
+                            $category_post_datas[] = array('term_id' => $value, 'post_id' => $post_id);
+                        }
+                        if (model('category_posts')->addAll($category_post_datas) !== false) {
+                            $this->db->commit();
+                            $this->success('添加成功!', U('Post/index', array('moduleid' => $_POST['moduleid'])));
+                        } else {
+                            $this->db->rollback();
+                            $this->error('添加失败！');
+                        }
+                    }
+                }
+                // 分类处理结束
+                $this->db->commit();
                 $this->success('添加成功!', U('Post/index', array('moduleid' => $_POST['moduleid'])));
             } else {
+                $this->db->roolback();
                 $this->error('添加失败！');
             }
         } else {
@@ -87,13 +113,15 @@ class PostController extends CommonController {
             if (empty($module)) {
                 $this->error('模型不存在！');
             }
-
-            $taxonomies = logic('category')->getPostTerms($module['tablename']);
+            $taxonomies = logic('taxonomy')->getPostTaxonomy($module['tablename']);
+            $termsGroupByTaxonomy = logic('category')->getPostTermsGroupByTaxonomy($module['tablename']);
             require MODEL_PATH.'content_form.class.php';
             $content_form = new \content_form($module['id']);
             $forminfos = $content_form->get();
             // 合并基本和高级属性
             $forminfos = array_merge($forminfos['base'], $forminfos['senior']);
+            $this->assign('taxonomies', $taxonomies);
+            $this->assign('termsGroupByTaxonomy', $termsGroupByTaxonomy);
             $this->assign('formValidator', $content_form->formValidator);
             $this->assign('forminfos', $forminfos);
             $this->assign('module', $module);
@@ -115,7 +143,39 @@ class PostController extends CommonController {
             if (!$this->db->autoCheckToken($hash)) {
                 $this->error('令牌验证失败, 请刷新页面');
             }
-            if ($this->db->editContent()) {
+            $data = I('post.info');
+            $post_id = I('post.id');
+            $this->db->startTrans();
+            if ($this->db->editContent($post_id, $data)) {
+                // 分类处理
+                if (model('category_posts')->where(array('post_id' => $post_id))->delete() === false) {
+                    $this->db->rollback();
+                    $this->error('更新失败！');
+                };
+                $taxonomies = logic('taxonomy')->getPostTaxonomy($module['tablename']);
+                if (!empty($taxonomies)) {
+                    $terms = array();
+                    foreach ($taxonomies as $taxonomy) {
+                        $key = $module['tablename'] . '_' . $taxonomy['name'];
+                        $terms = array_merge($terms, I('post.' . $key, array()));
+                    }
+                    if (!empty($terms)) {
+                        $category_post_datas = array();
+                        foreach ($terms as $key => $value) {
+                            $category_post_datas[] = array('term_id' => $value, 'post_id' => $post_id);
+                        }
+                        if (model('category_posts')->addAll($category_post_datas) !== false) {
+                            $this->db->commit();
+                            $this->success('更新成功!', U('Post/index', array('moduleid' => $_POST['moduleid'])));
+                        } else {
+                            $this->db->rollback();
+                            $this->error('更新失败！');
+                        }
+                    }
+                }
+                // 分类处理结束
+
+                $this->db->commit();
                 $this->success('更新成功!', U('Post/index', array('moduleid' => $module['id'])));
             } else {
                 $this->error('更新失败！');
@@ -130,21 +190,29 @@ class PostController extends CommonController {
             }
             // 设置模型，获取内容
             $this->db->setModel($module['id']);
-            $content = $this->db->getContent($_GET['id']);
-            if (empty($content)) {
+            $post = $this->db->getContent($_GET['id']);
+            if (empty($post)) {
                 $this->error('内容不存在！');
             }
-
-
-
+            $taxonomies = logic('taxonomy')->getPostTaxonomy($module['tablename']);
+            $termsGroupByTaxonomy = logic('category')->getPostTermsGroupByTaxonomy($module['tablename']);
+            $category_posts = model('category_posts')->where(array('post_id' => $post['id']))->select();
+            $post_terms = array();
+            foreach ($category_posts as $key => $value) {
+                $post_terms[] = $value['term_id'];
+            }
             require MODEL_PATH.'content_form.class.php';
             $content_form = new \content_form($module['id']);
-            $forminfos = $content_form->get($content);
+            $forminfos = $content_form->get($post);
             $forminfos = array_merge($forminfos['base'], $forminfos['senior']);
+
+            $this->assign('taxonomies', $taxonomies);
+            $this->assign('termsGroupByTaxonomy', $termsGroupByTaxonomy);
             $this->assign('formValidator', $content_form->formValidator);
             $this->assign('forminfos', $forminfos);
-            $this->assign('content', $content);
+            $this->assign('content', $post);
             $this->assign('module', $module);
+            $this->assign('post_terms', $post_terms);
             $this->display();
         }
     }

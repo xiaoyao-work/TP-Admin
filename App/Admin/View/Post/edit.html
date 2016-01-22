@@ -12,8 +12,7 @@
             <div class="common-form post-body-content" style="width: 100%; min-width: 463px; float: left;">
                 <table width="100%" cellspacing="0" class="table_form">
                     <tbody>
-                        <?php
-                        if(is_array($forminfos)) {
+                        <?php if(is_array($forminfos)) {
                             foreach($forminfos as $field=>$info) {
                                 if($info['isomnipotent']) continue;
                                 if($info['formtype']=='omnipotent') {
@@ -31,8 +30,7 @@
                                 </tr>
                                 <?php
                             }
-                        }
-                        ?>
+                        } ?>
                     </tbody>
                 </table>
             </div>
@@ -50,15 +48,32 @@
                             <?php } ?>
                         </div>
                         <div class="major-operate clear">
-                            <div class="left-link">
-                                <a href="">添加</a>
-                            </div>
+                            <div class="left-link"></div>
                             <div class="right-button">
                                 <input name="dosubmit" type="submit" class="button-primary bt-button" value="提交">
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <?php foreach ($taxonomies as $taxonomy) { ?>
+                <div class="postbox">
+                    <h3 class="title">
+                        <span><?php echo $taxonomy['label'] ?></span>
+                    </h3>
+                    <div class="inside">
+                        <div class="major-content">
+                            <?php echo \Org\Util\Form::taxonomy($termsGroupByTaxonomy[$taxonomy['name']], $taxonomy['name'], $post_terms); ?>
+                        </div>
+                        <div class="major-operate clear">
+                            <div class="left-link">
+                                <a href="javascript:void(0);window.top.art.dialog({id:'notice',content:'开发中……',lock:true,width:'200',height:'50'});">添加<?php echo $taxonomy['label'] ?></a>
+                            </div>
+                            <div class="right-button"></div>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
             </div>
         </div>
     </form>
