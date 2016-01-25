@@ -60,7 +60,7 @@
 <script src="{:asset('js/admin/jquery.treetable.js')}"></script>
     <script type="text/javascript">
         function select_all() {
-            $('#example-advanced input[type="checkbox"]').attr("checked", true);
+            $('#example-advanced input[type="checkbox"]').prop("checked", true);
             $("#example-advanced .expandAll").click();
         }
 
@@ -69,8 +69,8 @@
             if (dom_tr.length > 0) {
                 $(dom_tr).each(function(index, dom){
                     var input_dom = $(dom).children("td").children("span").children("input");
-                    $(input_dom).attr("checked", "checked");
-                    change_checkbox_parent($(dom).attr('data-tt-parent-id'));
+                    $(input_dom).prop("checked", "checked");
+                    change_checkbox_parent($(dom).data('tt-parent-id'));
                 })
             }
         }
@@ -80,24 +80,24 @@
             if (dom_tr.length > 0) {
                 $(dom_tr).each(function(index, dom){
                     var input_dom = $(dom).children("td").children("span").children("input");
-                    $(input_dom).attr("checked", status);
-                    change_checkbox_child($(dom).attr("data-tt-id"), status);
+                    $(input_dom).prop("checked", status);
+                    change_checkbox_child($(dom).data("tt-id"), status);
                 })
             }
         }
         $("#example-advanced").treetable({ expandable: true });
         $("#example-advanced tbody td").on("change", "input[type='checkbox']", function() {
-            if ($(this).attr("checked")) {
-                var parent_id = $(this).parents("tr").attr("data-tt-parent-id");
+            if ($(this).prop("checked")) {
+                var parent_id = $(this).closest("tr").data("tt-parent-id");
                 if (parent_id) {
                     change_checkbox_parent(parent_id);
                 }
-                var id = $(this).parents("tr").attr("data-tt-id");
+                var id = $(this).closest("tr").data("tt-id");
                 if (id) {
                     change_checkbox_child(id,true);
                 };
             } else {
-                var id = $(this).parents("tr").attr("data-tt-id");
+                var id = $(this).closest("tr").data("tt-id");
                 if (id) {
                     change_checkbox_child(id,false);
                 }

@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: XiaoYao <476552238li@gmail.com>
+// | Author: 逍遥·李志亮 <xiaoyao.working@gmail.com>
 // +----------------------------------------------------------------------
 
 namespace Admin\Controller;
@@ -16,10 +16,10 @@ use Admin\Controller\CommonController;
 class IndexController extends CommonController {
 
 	public function index() {
-		// 获取顶部可访问菜单
-		$top_menu = logic('Menu')->getAccessibleTopMenu();
 		// 获取可访问站点
 		$sites = logic('site')->getAccessibleSites();
+		// 获取顶部可访问菜单
+		$top_menu = logic('Menu')->getAccessibleTopMenu();
 		$seo = get_site_seo_info();
 		$role = model('Role')->find(session('user_info.role_id'));
 		$_SESSION['user_info']['name'] = $role['name'];

@@ -727,13 +727,16 @@ function get_location($ip) {
 /**
 * 提示信息页面跳转，跳转地址如果传入数组，页面会提示多个地址供用户选择，默认跳转地址为数组的第一个值，时间为5秒。
 * showmessage('登录成功', array('默认跳转地址'=>'http://www.hhailuo.com'));
-* @param string $msg 提示信息
+* @param string $message 提示信息
 * @param mixed(string/array) $url_forward 跳转地址
 * @param int $ms 跳转等待时间
 */
-function showmessage($msg, $url_forward = 'goback', $ms = 1250, $dialog = '', $returnjs = '') {
+function showmessage($message, $jumpUrl='', $waitSecond=3, $dialog='', $returnjs='') {
+    if (empty($jumpUrl)) {
+        $jumpUrl = U('Index/main');
+    }
 	if(defined('IN_ADMIN')) {
-		include(MODULE_PATH.'View'.DIRECTORY_SEPARATOR."Public".DIRECTORY_SEPARATOR."error.html");
+		include(MODULE_PATH.'View'.DIRECTORY_SEPARATOR."Public".DIRECTORY_SEPARATOR."showMessage.html");
 	} else {
 		include(MODULE_PATH.'View'.DIRECTORY_SEPARATOR."Public".DIRECTORY_SEPARATOR."error.html");
 	}

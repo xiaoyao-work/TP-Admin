@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: XiaoYao <476552238li@gmail.com>
+// | Author: 逍遥·李志亮 <xiaoyao.working@gmail.com>
 // +----------------------------------------------------------------------
 
 namespace Admin\Controller;
@@ -14,10 +14,11 @@ use Admin\Controller\CommonController;
  * 内容控制器
  */
 class PostController extends CommonController {
-
     protected $db;
+
     function __construct() {
         parent::__construct();
+        $this->beforeFilter('filterPostTypeAuth');
         $this->db = model("Post");
     }
 

@@ -3,7 +3,7 @@ namespace Lib;
 
 /**
 * 异步CURL处理类
-* @author 李志亮 <lizhiliang@kankan.com>
+* @author 逍遥·李志亮 <xiaoyao.working@gmail.com>
 */
 class AsyncCurl {
 

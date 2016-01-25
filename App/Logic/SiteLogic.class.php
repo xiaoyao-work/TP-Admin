@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: XiaoYao <476552238li@gmail.com>
+// | Author: 逍遥·李志亮 <xiaoyao.working@gmail.com>
 // +----------------------------------------------------------------------
 
 namespace Logic;
@@ -21,8 +21,9 @@ class SiteLogic extends BaseLogic {
         } else {
             $sites = $site_model->table('__ACCESS__ as access, __SITE__ as site' )
                 ->where(array(
-                    'access.siteid' => 'site.id',
+                    'access.siteid' => array('exp', ' = site.id'),
                     'access.role_id' => session('user_info.role_id'),
+                    'access.node_id' => array('not in', array(59, 58, 5, 312))
                     ))
                 ->group('access.siteid')
                 ->select();

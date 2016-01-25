@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: XiaoYao <476552238li@gmail.com>
+// | Author: 逍遥·李志亮 <xiaoyao.working@gmail.com>
 // +----------------------------------------------------------------------
 namespace Logic;
 use Lib\Log;
@@ -19,19 +19,13 @@ class MenuLogic extends BaseLogic {
      */
     public function getAccessibleTopMenu() {
         $menu_model = model('Menu');
+        $db_prefix = C('DB_PREFIX');
         if (session(C('ADMIN_AUTH_KEY'))) {
             $top_menu = $menu_model->where(array('pid' => 0, 'status' => 1))->order('sort desc, id asc')->select();
         } else {
             $role_id = session('user_info.role_id');
-            $top_menu = $model->table('__ACCESS__ as access, __NODE__ as node')
-            ->where(array(
-                'node.pid' => 0,
-                'node.id' => 'access.node_id',
-                'access.role_id' => $role_id,
-                'access.siteid' => get_siteid()
-                ))
-            ->order('node.sort desc, node.id asc')
-            ->select();
+            $sql = "SELECT * FROM %s AS access, %s AS node where node.pid = 0 AND node.id = access.node_id AND access.role_id = %d AND access.siteid = %d";
+            $top_menu = $menu_model->query(sprintf($sql, $db_prefix . 'access', $db_prefix . 'node', $role_id, get_siteid()));
         }
         return $top_menu;
     }
@@ -42,6 +36,11 @@ class MenuLogic extends BaseLogic {
      */
     public function getAccessibleLeftMenu($pid) {
         $menu_model = model('Menu');
+        $models = model('model')->where(array('siteid' => get_siteid()))->field('tablename')->select();
+        $post_type = array();
+        foreach ($models as $key => $value) {
+            $post_type[] = $value['tablename'];
+        }
         if (session(C('ADMIN_AUTH_KEY'))) {
             $menulist = $menu_model->where(array('pid' => $pid, 'status' => 1))->order('sort desc, id asc')->select();
         } else {
@@ -49,12 +48,19 @@ class MenuLogic extends BaseLogic {
             $menulist = $menu_model->table('__ACCESS__ as access, __NODE__ as node')
             ->where(array(
                 'node.pid' => $pid,
-                'node.id' => 'access.node_id',
+                'node.id' => array('exp', ' = access.node_id'),
                 'access.role_id' => $role_id,
                 'access.siteid' => get_siteid()
                 ))
             ->order('node.sort desc, node.id asc')
             ->select();
+        }
+        // 过滤不属于当前站点的POST TYPE 菜单
+        foreach ($menulist as $key => $value) {
+            if (empty($value['post_type']) || in_array($value['post_type'], $post_type)) {
+                continue ;
+            }
+            unset($menulist[$key]);
         }
         foreach ($menulist as $key => $value) {
             if (session(C('ADMIN_AUTH_KEY'))) {
@@ -63,7 +69,7 @@ class MenuLogic extends BaseLogic {
                 $childs = $menu_model->table('__ACCESS__ as access, __NODE__ as node')
                 ->where(array(
                     'node.pid' => $value['id'],
-                    'node.id' => 'access.node_id',
+                    'node.id' => array('exp', ' = access.node_id'),
                     'access.role_id' => $role_id,
                     'access.siteid' => get_siteid()
                     ))
@@ -89,4 +95,5 @@ class MenuLogic extends BaseLogic {
         }
         return $result;
     }
+
 }

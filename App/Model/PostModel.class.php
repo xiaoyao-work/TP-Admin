@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: XiaoYao <476552238li@gmail.com>
+// | Author: 逍遥·李志亮 <xiaoyao.working@gmail.com>
 // +----------------------------------------------------------------------
 
 namespace Model;
@@ -16,6 +16,9 @@ class PostModel extends BaseModel {
 
     public function setModel($modelid) {
         $this->model = model('Model')->where("siteid = %d and id = %d",get_siteid(),$modelid)->find();
+        if (empty($this->model)) {
+            showmessage('模型不存在！');
+        }
         $this->modelid = $modelid;
         $this->trueTableName = C("DB_PREFIX").strtolower($this->model['tablename']);
         $this->setField();

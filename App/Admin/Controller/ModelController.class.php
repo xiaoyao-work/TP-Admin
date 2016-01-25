@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: XiaoYao <476552238li@gmail.com>
+// | Author: 逍遥·李志亮 <xiaoyao.working@gmail.com>
 // +----------------------------------------------------------------------
 
 namespace Admin\Controller;
@@ -34,17 +34,9 @@ class ModelController extends CommonController {
             $data = $_POST['model'];
             $data['siteid'] = (isset($this->siteid) ? $this->siteid : 1);
 
-            $this->db->startTrans();
-            if ($modelid = $this->db->add($data)) {
-                if (logic('Model')->execModelCreateSql($data['tablename'], $modelid, $data['siteid'])) {
-                    $this->db->commit();
-                    $this->success('添加成功！');
-                } else {
-                    $this->db->rollback();
-                    $this->error("添加失败! ");
-                }
+            if (logic('model')->addModel($data)) {
+                $this->success('添加成功！');
             } else {
-                $this->db->rollback();
                 $this->error("添加失败! ");
             }
         } else {
@@ -77,20 +69,9 @@ class ModelController extends CommonController {
         if (empty($model)) {
             $this->error('模型不存在！');
         }
-        $this->db->startTrans();
-        if ($this->db->where(array('siteid' => $this->siteid,'id' => $modelid))->delete() !== false) {
-            if ($this->fieldDb->where(array('modelid'=>$modelid,'siteid'=>$this->siteid))->delete() === false) {
-                $this->db->rollback();
-                $this->error('删除失败');
-            }
-            if ($result = $this->db->drop_table($model['tablename']) === false) {
-                $this->db->rollback();
-                $this->error('删除失败');
-            }
-            $this->db->commit();
+        if (logic('Model')->deleteModel($model)) {
             $this->success('删除成功');
         } else {
-            $this->db->rollback();
             $this->error('删除失败');
         }
     }

@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: XiaoYao <476552238li@gmail.com>
+// | Author: 逍遥·李志亮 <xiaoyao.working@gmail.com>
 // +----------------------------------------------------------------------
 
 namespace Logic;
@@ -82,6 +82,10 @@ class LoginLogic extends BaseLogic {
             model("Log")->add($data);
             // 存储访问权限
             RBAC::saveAccessList();
+            // 设置默认站点
+            $sites = logic('site')->getAccessibleSites();
+            $current_site = current($sites);
+            set_siteid($current_site['id']);
             return true;
         }
     }

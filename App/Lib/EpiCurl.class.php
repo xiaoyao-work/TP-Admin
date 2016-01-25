@@ -4,7 +4,7 @@ use Exception;
 
 /**
  * 异步CURL类库
- * @author 李志亮 <lizhiliang@kankan.com>
+ * @author 逍遥·李志亮 <xiaoyao.working@gmail.com>
  */
 
 class EpiCurl {

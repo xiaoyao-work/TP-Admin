@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2016 http://www.hhailuo.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Author: XiaoYao <476552238li@gmail.com>
+// | Author: 逍遥·李志亮 <xiaoyao.working@gmail.com>
 // +----------------------------------------------------------------------
 
 namespace Admin\Controller;
@@ -81,7 +81,7 @@ class RoleController extends CommonController {
             $menuids = I('post.menuid');
             $menus = I('post.menu');
             if (!empty($menuids)) {
-                $menuids[] = 1;
+                $mod->startTrans();
                 $sql = "INSERT INTO ". C("DB_PREFIX") ."access (`role_id`,`node_id`,`siteid`,`request_method`) VALUES ";
                 foreach ($menuids as $key => $value) {
                     $value = intval($value);
@@ -89,13 +89,19 @@ class RoleController extends CommonController {
                     $sql .= "( {$role_id}, {$value}, {$site}, {$request_method} ),";
                 }
                 $sql = substr($sql, 0, strlen($sql) -1 ) . ';';
-                $mod->where(array( 'role_id' => $role_id, 'siteid' => $site ))->delete();
-                $rs = $mod->execute($sql);
-                if ( $rs === false ) {
-                    $this->error("操作失败");
+                if ($mod->where(array('role_id' => $role_id, 'siteid' => $site))->delete() !== false) {
+                    if ($mod->execute($sql) !== false) {
+                        $mod->commit();
+                        $this->success('操作成功！', 'index');
+                    } else {
+                        $mod->rollback();
+                        $this->error("操作失败");
+                    }
                 } else {
-                    $this->success('操作成功！', 'index');
+                    $mod->rollback();
+                    $this->error("操作失败");
                 }
+
             } else {
                 $mod->where(array( 'role_id' => $role_id, 'siteid' => $site ))->delete();
                 $this->success('操作成功！', 'index');

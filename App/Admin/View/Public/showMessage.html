@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html>
+<head>
+    <title>提示信息</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+        *{ padding:0; margin:0; font-size:12px}
+        a:link,a:visited{text-decoration:none;color:#0068a6}
+        a:hover,a:active{color:#ff6600;text-decoration: underline}
+        .showMsg{border: 1px solid #1e64c8; zoom:1; width:450px; height:172px;position:absolute;top:44%;left:50%;margin:-87px 0 0 -225px}
+        .showMsg h5{background-image: url("<?php echo asset('images/admin/msg_img/msg.png'); ?>");background-repeat: no-repeat; color:#fff; padding-left:35px; height:25px; line-height:26px;*line-height:28px; overflow:hidden; font-size:14px; text-align:left}
+        .showMsg .content{ padding:46px 12px 10px 45px; font-size:14px; height:64px; text-align:left}
+        .showMsg .bottom{ background:#e4ecf7; margin: 0 1px 1px 1px;line-height:26px; *line-height:30px; height:26px; text-align:center}
+        .showMsg .ok,.showMsg .guery{background: url("<?php echo asset('images/admin/msg_img/msg_bg.png'); ?>") no-repeat 0px -560px;}
+        .showMsg .guery{background-position: left -460px; display:inline-block;display:-moz-inline-stack;zoom:1;*display:inline;max-width:330px}
+    </style>
+    <script type="text/javaScript" src="<?php echo asset('js/jquery.min.js'); ?>"></script>
+    <script type="text/javascript">
+    function jump() {
+        var wait = document.getElementById('wait'), time = <?php echo($waitSecond); ?>, href = document.getElementById('href').href;
+        var interval = setInterval(function(){
+            var time = --wait.innerHTML;
+            --time;
+            if(time <= 0) {
+                clearInterval(interval);
+                window.location.href = href;
+            };
+        }, 1000);
+    }
+    </script>
+</head>
+<body>
+    <div class="showMsg" style="text-align:center">
+        <h5>提示信息</h5>
+        <div class="content guery">
+            <?php echo $message; ?>
+        </div>
+        <div class="bottom">
+            <?php if($jumpUrl=='goback' || $jumpUrl=='') { ?>
+            <a href="javascript:history.back();" >[点这里返回上一页]</a>
+            <?php } elseif($jumpUrl=="close") {?>
+            <input type="button" name="close" value="关闭 " onClick="window.close();">
+            <?php } elseif($jumpUrl=="blank") {?>
+            <?php } elseif($jumpUrl) { ?>
+            系统将在&nbsp;&nbsp;<b id="wait" style="color:blue"><?php echo($waitSecond); ?></b>&nbsp;&nbsp;秒后自动跳转，<a id="href" href="<?php echo($jumpUrl); ?>">如果没有跳转请点击这里</a>
+            <?php } ?>
+            <?php if($returnjs) { ?>
+            <script style="text/javascript"><?php echo $returnjs;?></script>
+            <?php } ?>
+            <?php if($dialog) { ?>
+            <script style="text/javascript">
+            setTimeout('window.top.right.location.reload();', <?php echo $waitSecond * 800; ?>);
+            </script>
+            <?php } else { ?>
+            <script type="text/javascript">jump();</script>
+            <?php } ?>
+        </div>
+    </div>
+</body>
+</html>
