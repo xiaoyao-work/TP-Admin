@@ -1,0 +1,167 @@
+<?php defined('THINK_PATH') or exit('No permission resources.'); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="addbg">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>添加内容</title>
+  <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/jscal2.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/win2k/win2k.css">
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
+  <script language="javascript" type="text/javascript" src="__PUBLIC__/js/admin/cookie.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/JSCal/jscal2.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/JSCal/lang/cn.js"></script>
+  <script src="__PUBLIC__/js/admin/jquery.artDialog.source.js?skin=default"></script>
+  <script src="__PUBLIC__/js/admin/plugins/iframeTools.source.js"></script>
+  <script language="javascript" type="text/javascript" src="__PUBLIC__/js/admin/content_add.js" charset="UTF-8"></script>
+  <script language="javascript" type="text/javascript" src="__PUBLIC__/js/admin/formvalidator.js" charset="UTF-8"></script>
+  <script language="javascript" type="text/javascript" src="__PUBLIC__/js/admin/formvalidatorregex.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/ckeditor/ckeditor.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/attachupload.js"></script>
+  <script type="text/javascript">var catid=<?php echo $catid; ?></script>
+</head>
+<body>
+  <form name="myform" id="myform" action="" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="info[typeid]" value="1" />
+    <input type="hidden" name="contentid" value="<?php echo $content_id; ?>" />
+    <input type="hidden" name="modelid" value="<?php echo $modelid; ?>">
+    <div class="addContent">
+      <div class="crumbs"><?php echo L('edit_content_position');?></div>
+      <div class="col-right">
+        <div class="col-1">
+          <div class="content pad-6">
+            <?php
+            if(is_array($forminfos['senior'])) {
+              foreach($forminfos['senior'] as $field=>$info) {
+                if($info['isomnipotent']) continue;
+                if($info['formtype']=='omnipotent') {
+                  foreach($forminfos['base'] as $_fm=>$_fm_value) {
+                    if($_fm_value['isomnipotent']) {
+                      $info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+                    }
+                  }
+                  foreach($forminfos['senior'] as $_fm=>$_fm_value) {
+                    if($_fm_value['isomnipotent']) {
+                      $info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+                    }
+                  }
+                }
+                ?>
+                <h6><?php if($info['star']){ ?> <font color="red">*</font><?php } ?> <?php echo $info['name']?></h6>
+                <?php echo $info['form']; ?><?php echo $info['tips']; ?>
+                <?php
+              }
+            }
+            ?>
+            <?php if($_SESSION['user_info']['role_id']==1) { ?>
+            <h6>状态</h6>
+            <span class="ib" style="width:90px"><label><input type="radio" name="info[status]" value="99" <?php if ($status == 99 ) { echo "checked"; } ?>/> 发布 </label></span>
+            <label><input type="radio" name="info[status]" value="1" <?php if ($status == 1 ) { echo "checked"; } ?>> 审核 </label>
+            <?php } ?>
+          </div>
+        </div>
+      </div>
+      <a title="展开与关闭" class="r-close" hidefocus="hidefocus" style="outline-style: none; outline-width: medium;" id="RopenClose" href="javascript:;"><span class="hidden">展开</span></a>
+      <div class="col-auto">
+        <div class="col-1">
+          <div class="content pad-6">
+            <table width="100%" cellspacing="0" class="table_form">
+              <tbody>
+                <?php
+                if(is_array($forminfos['base'])) {
+                  foreach($forminfos['base'] as $field=>$info) {
+                    if($info['isomnipotent']) continue;
+                    if($info['formtype']=='omnipotent') {
+                      foreach($forminfos['base'] as $_fm=>$_fm_value) {
+                        if($_fm_value['isomnipotent']) {
+                          $info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+                        }
+                      }
+                      foreach($forminfos['senior'] as $_fm=>$_fm_value) {
+                        if($_fm_value['isomnipotent']) {
+                          $info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+                        }
+                      }
+                    }
+                    ?>
+                    <tr>
+                      <th width="80"><?php if($info['star']){ ?> <font color="red">*</font><?php } ?> <?php echo $info['name']?>
+                      </th>
+                      <td><?php echo $info['form']?>  <?php echo $info['tips']?></td>
+                    </tr>
+                    <?php
+                  }
+                }
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fixed-bottom">
+      <div class="fixed-but text-c">
+        <div class="button"><input value="保存后关闭" type="submit" name="dosubmit" class="cu" style="width:130px;" onclick="refersh_window()"></div>
+        <div class="button"><input value="保存后继续添加" type="submit" name="dosubmit_continue" class="cu" style="width:145px;" onclick="refersh_window()"></div>
+        <div class="button"><input value="关闭" type="button" name="close" title="Alt+X" onclick="refersh_window();close_window();" class="cu" style="width:70px;"></div>
+      </div>
+    </div>
+  </form>
+</body>
+</html>
+<script type="text/javascript">
+<!--
+var openClose = $("#RopenClose"), rh = $(".addContent .col-auto").height(),colRight = $(".addContent .col-right"),valClose = getcookie('openClose');
+$(function(){
+  if(valClose==1){
+    colRight.hide();
+    openClose.addClass("r-open");
+    openClose.removeClass("r-close");
+  }else{
+    colRight.show();
+  }
+  openClose.height(rh);
+  $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({id:'check_content_id',content:msg,lock:true,width:'200',height:'50'},   function(){$(obj).focus();
+    boxid = $(obj).attr('id');
+    if($('#'+boxid).attr('boxid')!=undefined) {
+      check_content(boxid);
+    }
+  })}});
+  <?php echo $formValidator;?>
+
+  /*
+  * 加载禁用外边链接
+  */
+  $('#linkurl').attr('disabled',true);
+  $('#islink').attr('checked',false);
+});
+document.title='<?php echo L('priview_modelfield');?>';
+
+self.moveTo(0, 0);
+function refersh_window() {
+  setcookie('refersh_time', 1);
+}
+openClose.click(function (){
+  if(colRight.css("display")=="none"){
+    setcookie('openClose',0,1);
+    openClose.addClass("r-close");
+    openClose.removeClass("r-open");
+    colRight.show();
+  }else{
+    openClose.addClass("r-open");
+    openClose.removeClass("r-close");
+    colRight.hide();
+    setcookie('openClose',1,1);
+  }
+});
+//-->
+</script>

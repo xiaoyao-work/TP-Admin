@@ -1,0 +1,50 @@
+<extend name="Public:list_layout" />
+<block name="title"><title>模型管理</title></block>
+<block name="subnav">
+  <h2 class="title-1 line-x f14 fb blue lh28">模型管理--<?php echo $model['name']; ?>字段管理</h2>
+  <a class="add fb" href="__CONTROLLER__/add?modelid=<?php echo $model['id']; ?>"><em>添加字段</em></a>
+  　<a class="on" href="__CONTROLLER__/index?modelid=<?php echo $model['id']; ?>"><em>管理模型字段</em></a><span>|</span><a href="__CONTROLLER__/public_priview?modelid=<?php echo $model['id']; ?>" target="_blank"><em>预览模型</em></a>
+</block>
+<block name="main">
+  <form name="myform" id="myform" action="__CONTROLLER__/listorder" method="post">
+    <div class="table-list">
+      <table width="100%" cellspacing="0">
+        <thead>
+          <tr>
+           <th width="70">排序</th>
+           <th width="90">字段名</th>
+           <th width="100">别名</th>
+           <th width="100">类型</th>
+           <th width="50">系统</th>
+           <th width="50">必填</th>
+           <th width="50">搜索</th>
+           <th width="50">排序</th>
+           <!-- <th width="50">投稿</th> -->
+           <th>管理操作</th>
+         </tr>
+       </thead>
+       <tbody class="td-line">
+        <?php foreach ($fields as $key => $r) { ?>
+        <tr>
+          <td align='center' width='70'><input name='listorders[<?php echo $r['fieldid']?>]' type='text' size='3' value='<?php echo $r['listorder']?>' class='input-text-c'></td>
+          <td width='90'><?php echo $r['field']?></td>
+          <td width="100"><?php echo $r['name']?></td>
+          <td width="100" align='center'><?php echo $r['formtype']?></td>
+          <td width="50" align='center'><?php echo $r['issystem'] ? '<font color="red">√</font>' : '<font color="blue">×</font>'; ?></td>
+          <td width="50" align='center'><?php echo $r['minlength'] ? '<font color="red">√</font>' : '<font color="blue">×</font>';?></td>
+          <td width="50" align='center'><?php echo $r['issearch'] ? '<font color="red">√</font>' : '<font color="blue">×</font>';?></td>
+          <td width="50" align='center'><?php echo $r['isorder'] ? '<font color="red">√</font>' : '<font color="blue">×</font>';?></td>
+          <!-- <td width="50" align='center'><?php echo $r['isadd'] ? '<font color="red">√</font>' : '<font color="blue">×</font>';?></td> -->
+          <td align='center'> <a href="__CONTROLLER__/edit?modelid=<?php echo $r['modelid']?>&fieldid=<?php echo $r['fieldid']?>">修改</a> |
+            <?php if(!in_array($r['field'],$forbid_fields)) { ?>
+            <a href="__CONTROLLER__/disabled?disabled=<?php echo $r['disabled'];?>&modelid=<?php echo $r['modelid']?>&fieldid=<?php echo $r['fieldid']?>;"><?php echo $r['disabled'] ? '启用' : '禁用'; ?></a>
+            <?php } else { ?><font color="#BEBEBE"> 禁用 </font><?php } ?>|<?php if(!in_array($r['field'],$forbid_delete)) {?>
+            <a href="javascript:confirmurl('__CONTROLLER__/delete?modelid=<?php echo $r['modelid']?>&fieldid=<?php echo $r['fieldid']?>','确认要删除 『 <?php echo $r['name']; ?> 』 吗？')">删除</a><?php } else {?><font color="#BEBEBE"> 删除</font><?php }?> </td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+      <div class="btn"><input type="submit" class="button" name="dosubmit" value="排序" /></div>
+    </div>
+  </form>
+</block>

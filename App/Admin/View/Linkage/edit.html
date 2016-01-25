@@ -1,0 +1,35 @@
+<extend name="Public:form_layout" />
+<block name="title"><title>联动菜单修改</title></block>
+<block name="subheader">
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $.formValidator.initConfig({autotip:true,formid:"myform",onerror:function(msg){}});
+    $("#name").formValidator({onshow:"请输入菜单名称批量添加以换行分隔",onfocus:"菜单名称不能为空。"}).inputValidator({min:1,max:999,onerror:"菜单名称不能为空。"}).defaultPassed();
+  })
+  </script>
+</block>
+<block name="main">
+  <div class="common-form">
+    <form name="myform" action="__CONTROLLER__/edit" method="post" id="myform">
+      <input type="hidden" name="linkageid" value="<?php echo $linkage['id']; ?>" />
+      <table width="100%" class="table_form contentWrap">
+        <tbody>
+          <tr>
+            <td>菜单名称</td>
+            <td>
+              <input name="info[name]" id="name" class="input" value="<?php echo $linkage['name']; ?>" />
+            </td>
+          </tr>
+          <tr>
+            <td>菜单描述</td>
+            <td>
+              <textarea name="info[description]" rows="2" cols="20" id="description" class="inputtext" style="height:45px;width:300px;"><?php echo $linkage['description']; ?></textarea>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="bk15"></div>
+      <input name="dosubmit" type="submit" value="提交" class="dialog" id="dosubmit"/>
+    </form>
+  </div>
+</block>

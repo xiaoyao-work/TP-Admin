@@ -1,0 +1,39 @@
+<extend name="Public:list_layout" />
+<block name="title"><title>站点管理</title></block>
+<block name="subnav">
+  <a class="add fb" href="__CONTROLLER__/add"><em>添加站点</em></a>　    <a class="on" href="__CONTROLLER__/index"><em>管理站点</em></a>
+</block>
+<block name="main">
+  <div class="table-list">
+    <table width="100%" cellspacing="0">
+      <thead>
+        <tr>
+          <th width="80">ID</th>
+          <th>站点名</th>
+          <th>站点目录</th>
+          <th>站点域名</th>
+          <!-- <th align="center">域名绑定目录</th> -->
+          <th width="150">管理操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($sites as $key => $site) { ?>
+        <tr>
+          <td align="center"><?php echo $site['id']; ?></td>
+          <td align="center"><?php echo $site['name']; ?></td>
+          <td align="center"><?php echo empty($site['dirname']) ? '/' : $site['dirname']; ?></td>
+          <td align="center"><?php echo $site['domain']; ?></td>
+          <td align="center">
+          <a href="__CONTROLLER__/edit?siteid=<?php echo $site['id']; ?>">编辑</a>&nbsp;|&nbsp;
+            <?php if($site['id']!=1) { ?>
+            <a href="__CONTROLLER__/delete?siteid=<?php echo $site['id']?>" onclick="return confirm('确认删除站点<?php echo $site['name']; ?>？')">删除</a>
+            <?php } else { ?>
+            <font color="#cccccc">删除</font>
+            <?php } ?>
+          </td>
+        </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  </div>
+</block>

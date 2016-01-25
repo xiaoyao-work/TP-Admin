@@ -1,0 +1,36 @@
+{
+    "name": "476552238li/TP-Admin-V2.0",
+    "description": "TP-Admin 通用后台管理系统",
+    "type": "cms",
+    "keywords": ["cms","tp-admin","ORM"],
+    "homepage": "http://tp-admin.hhailuo.com/",
+    "license": "Apache2",
+    "authors": [
+        {
+            "name": "lizhiliang",
+            "email": "476552238li@gmail.com"
+        }
+    ],
+    "repositories": [{
+        "type": "package",
+        "package": {
+            "name": "PHPOffice/PHPExcel",
+            "version": "1.8.0",
+            "source": {
+                "url": "https://github.com/PHPOffice/PHPExcel.git",
+                "type": "git",
+                "reference": "1.8.0"
+            },
+            "autoload": {
+                "psr-0": {
+                    "PHPExcel": "Classes/"
+                }
+            }
+        }
+    }],
+    "require": {
+        "php": ">=5.3.0",
+        "PHPOffice/PHPExcel": "1.8.*"
+    },
+    "minimum-stability": "dev"
+}

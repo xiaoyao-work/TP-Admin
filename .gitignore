@@ -1,0 +1,6 @@
+/Public/Runtime
+/Public/Uploads
+/App/Common/Conf/local.php
+/App/Common/Conf/sitelist.php
+/vendor
+/composer.lock

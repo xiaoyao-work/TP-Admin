@@ -1,0 +1,82 @@
+<extend name="Public:form_layout" />
+<block name="subheader">
+    <script language="javascript" type="text/javascript" src="__PUBLIC__/js/admin/content_add.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/admin/attachupload.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/ckeditor/ckeditor.js"></script>
+</block>
+<block name="main">
+    <form name="myform" id="myform" action="" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="moduleid" value="<?php echo $module['id']; ?>">
+        <div class="post-body clearfix" style="margin-right: 300px;">
+        <div class="common-form post-body-content" style="width: 100%; min-width: 463px; float: left;">
+            <table width="100%" cellspacing="0" class="table_form">
+                <tbody>
+                    <?php
+                    if(is_array($forminfos)) {
+                        foreach($forminfos as $field=>$info) {
+                            if($info['isomnipotent']) continue;
+                            if($info['formtype']=='omnipotent') {
+                                foreach($forminfos as $_fm=>$_fm_value) {
+                                    if($_fm_value['isomnipotent']) {
+                                        $info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+                                    }
+                                }
+                            }
+                            ?>
+                            <tr>
+                                <th width="80"><?php if($info['star']){ ?> <font color="red">*</font><?php } ?> <?php echo $info['name']?>
+                                </th>
+                                <td><?php echo $info['form']?>  <?php echo $info['tips']?></td>
+                            </tr>
+                            <?php
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <style type="text/css">
+            .postbox {
+                position: relative;
+                min-width: 255px;
+                border: 1px solid #e5e5e5;
+                -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.04);
+                box-shadow: 0 1px 1px rgba(0,0,0,.04);
+                background: #fff;
+            }
+        </style>
+        <div class="post-body-sidebar" style="margin-right: -300px; width: 280px; float: right;">
+            <div class="postbox">
+                <?php if($_SESSION['user_info']['role_id']==1) { ?>
+                    <label for="post_status">状态：</label>
+                    <label><input type="radio" name="info[status]" value="99" checked/> 发布 </label>
+                    <label><input type="radio" name="info[status]" value="1" > 审核 </label>
+                <?php } ?>
+                <input name="dosubmit" type="submit" class="button" value="提交">
+            </div>
+        </div>
+        </div>
+        <div class="bk15"></div>
+    </form>
+</block>
+<block name="footer">
+    <script type="text/javascript">
+        $(function(){
+            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){
+                window.top.art.dialog({
+                    id:'check_content_id',
+                    content:msg,
+                    lock:true,
+                    width:'200',
+                    height:'50'}, function(){
+                        $(obj).focus();
+                        boxid = $(obj).attr('id');
+                        if($('#'+boxid).attr('boxid')!=undefined) {
+                            check_content(boxid);
+                        }
+                    })
+            }});
+            <?php echo $formValidator;?>
+        });
+    </script>
+</block>

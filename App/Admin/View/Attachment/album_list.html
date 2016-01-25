@@ -1,0 +1,112 @@
+<?php defined('THINK_PATH') or exit('No permission resources.'); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>后台管理中心</title>
+  <link href="__PUBLIC__/css/admin/reset.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/zh-cn-system.css" rel="stylesheet" type="text/css">
+  <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
+  <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/admin/admin_common.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/JSCal/jscal2.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/JSCal/lang/cn.js"></script>
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/jscal2.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/border-radius.css">
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/win2k/win2k.css">
+  <link rel="stylesheet" type="text/css" href="CSS_PATH/admin/upload.css">
+</head>
+<body>
+  <div>
+    <form name="myform" action="" method="get">
+      <table width="100%" cellspacing="0" class="search-form">
+        <tr>
+          <td>
+            <?php foreach ($_GET as $key => $value) {
+              echo "<input type='hidden' name='$key' value='$value'>";
+            } ?>
+            <div class="lh26 explain-col"> 时间：<input type="text" name="start_time" id="start_time" value="<?php echo $_GET['start_time']; ?>" size="10" class="date input-text" readonly="">
+              <script type="text/javascript">
+              Calendar.setup({
+                weekNumbers: false,
+                inputField : "start_time",
+                trigger    : "start_time",
+                dateFormat: "%Y-%m-%d",
+                showTime: false,
+                minuteStep: 1,
+                onSelect   : function() {this.hide();}
+              });
+              </script>&nbsp;-&nbsp;<input type="text" name="end_time" id="end_time" value="<?php echo $_GET['end_time']; ?>" size="10" class="date input-text" readonly=""><script type="text/javascript">
+              Calendar.setup({
+                weekNumbers: false,
+                inputField : "end_time",
+                trigger    : "end_time",
+                dateFormat: "%Y-%m-%d",
+                showTime: false,
+                minuteStep: 1,
+                onSelect   : function() {this.hide();}
+              });
+              </script>
+              <label>名称</label>
+              <input type="text" value="<?php echo $_GET['filename']; ?>" class="input-text" size="10" name="filename">
+              <input type="submit" value="搜索" class="button" name="search">
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+    <ul class="attachment-list" id="fsUploadProgress">
+      <?php foreach ($attachs as $key => $attach) { ?>
+      <li>
+        <div class="img-wrap">
+          <a href="javascript:;" onclick="javascript:album_cancel(this,'<?php echo $attach['id']; ?>')">
+            <div class="icon"></div>
+            <?php if( in_array($attach['ext'], array( 'jpg','gif','png','jpeg' ) )  ) { ?>
+            <img src="<?php echo $attach['url']; ?>" width="80" path="<?php echo $attach['url']; ?>" title="<?php echo $attach['name']; ?>">
+            <?php } else { ?>
+            <img src="IMG_PATH/admin/flv.png" width="80" path="<?php echo $attach['url']; ?>" title="<?php echo $attach['name']; ?>">
+            <?php } ?>
+          </a>
+        </div>
+      </li>
+      <?php } ?>
+    </ul>
+    <div id="pages"><?php echo $pages; ?></div>
+  </div>
+  <script type="text/javascript">
+  function album_cancel(obj,id){
+    var src = $(obj).children("img").attr("path");
+    var filename = $(obj).children("img").attr("title");
+
+    if($(obj).hasClass('on')){
+      $(obj).removeClass("on");
+      var imgstr = parent.window.$("#att-status").html();
+      var length = $("a[class='on']").children("img").length;
+      var ids = strs = filenames = '';
+      for(var i=0;i<length;i++){
+        strs += '|'+$("a[class='on']").children("img").eq(i).attr('path');
+        filenames += '|'+$("a[class='on']").children("img").eq(i).attr('title');
+        ids += '|'+id;
+      }
+      parent.window.$('#att-status').html(strs);
+      parent.window.$('#att-name').html(filenames);
+      parent.window.$('#att-ids').html(ids);
+    } else {
+      var num = parent.window.$('#att-status').html().split('|').length;
+      var file_upload_limit = <?php echo $params[2]; ?>;
+      if(num > file_upload_limit) {alert('不能选择超过'+file_upload_limit+'个附件'); return false;}
+      $(obj).addClass("on");
+      parent.window.$('#att-status').append('|'+src);
+      parent.window.$('#att-name').append('|'+filename);
+      parent.window.$('#att-ids').append('|'+id);
+    }
+  }
+  </script>
+</body>
+</html>

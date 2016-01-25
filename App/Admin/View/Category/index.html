@@ -1,0 +1,45 @@
+<extend name="Public:list_layout" />
+<block name="title"><title>栏目管理</title></block>
+<block name="subnav">
+  <a class="add fb" href="__MODULE__/Category/add"><em>添加栏目</em></a>　
+  <a class="on" href="__MODULE__/Category/index"><em>栏目管理</em></a>
+</block>
+<block name="main">
+  <form name="myform" action="__CONTROLLER__/listorder" method="post">
+    <div class="table-list">
+      <table width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th width="38">排序</th>
+            <th width="30">catid</th>
+            <th>栏目名称</th>
+            <th align="left" width="50">栏目类型</th>
+            <th align="left" width="50">所属模型</th>
+            <th align="center" width="40">数据量</th>
+            <th align="center" width="30">访问</th>
+            <!-- <th align="center" width="80">域名绑定须知</th> -->
+            <th>管理操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php  foreach ($cats as $key => $value) { ?>
+          <tr>
+            <td align="center"><input name="listorder[<?php echo $value['id']; ?>]" type="text" size="3" value="<?php echo $value['listorder']; ?>" class="input-text-c input-text"></td>
+            <td align="center"><?php echo $value['id']; ?></td>
+            <td><?php echo cat_empty_deal($value, $cats[$key+1]['parentid']); ?><?php echo $value['catname']; ?></td>
+            <td><?php echo ($value['type'] ? '内部栏目' : '单网页'); ?></td>
+            <td align="center"><?php echo $value['module']; ?></td>
+            <td align="center"><?php echo $value['items']; ?></td>
+            <td align="center"><?php echo $value['hits']; ?></td>
+            <td align="center"><a href="__MODULE__/Category/add/cat_id/<?php echo $value['id']; ?>">添加子栏目</a> | <a href="__MODULE__/Category/edit/id/<?php echo $value['id']; ?>">修改</a> | <a onclick="return ConfirmDel();" href="__MODULE__/Category/del/id/<?php echo $value['id']; ?>">删除</a></td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+    <div class="btn">
+      <input type="submit" class="button" name="排序" name="dosubmit" />
+      <!-- <input type="button" class="button" name="dosubmit" onClick="document.myform.action='__CONTROLLER__/delete'" value="删除"/> -->
+    </div>
+  </form>
+</block>

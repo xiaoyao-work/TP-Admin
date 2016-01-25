@@ -1,0 +1,148 @@
+.create_access, .photo {
+  display: block;
+  width: 150px;
+  border: 3px dashed #B8B8B8;
+  text-align: center;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  margin: 0 5px 10px 5px;
+  float:left;
+  position: relative;
+}
+.create_access {
+  height: 140px;
+  line-height: 140px;
+  padding: 5px;
+}
+.first i {
+  cursor: pointer;
+}
+.icon42_common.add_gray {
+  background: url("../../images/admin/addicon.png") center center no-repeat;
+}
+.icon42_common {
+  width: 42px;
+  height: 42px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -21px;
+  margin-top: -21px;
+  display: inline-block;
+  overflow: hidden;
+}
+.photo img {
+  width: 140px;
+  height: 140px;
+  padding: 5px;
+}
+.photo input {
+  padding: 5px;
+  width: 140px;
+}
+.remove_photo {
+  font-size: 24px;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 122px;
+  width: 20px;
+  height: 20px;
+  background: url("../../images/admin/cross.png") bottom left no-repeat;
+}
+.contedit .brightspot li {
+  clear: none;
+  float: left;
+  white-space: nowrap;
+  margin: 0 9px 10px 0;
+  line-height: 26px;
+  text-align: center;
+  height: 26px;
+  border: 1px solid #C8C8C8;
+  cursor: pointer;
+  position: relative;
+}
+
+.contedit .checkbox_list li{
+  clear: none;
+  float: left;
+  margin: 5px;
+}
+
+.brightspot li.actived {
+  border: 2px solid #F28748;
+  background: #FCFCFC;
+}
+
+.brightspot li {
+  padding: 0 25px 0 15px;
+}
+
+.brightspot .cbdel {
+  position: absolute;
+  top: 9px;
+  right: 5px;
+  display: block;
+  width: 15px;
+  height: 10px;
+  padding-left: 1px;
+  background: url(../../images/admin/cross.png) 0 0 no-repeat;
+  cursor: pointer;
+}
+
+.addbrig {
+  height: 28px;
+  border: 1px solid #DCDEE1;
+  border-left: none;
+  width: 69px;
+  text-align: center;
+  color: #585858;
+  background: none;
+  background: #FAFAFA;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.textstyle {
+  float: left;
+  width: 142px;
+  height: 26px;
+  border: 1px solid #CDCDCD;
+  margin: 0;
+  padding: 0 0 0 5px;
+}
+.lp_results {
+  background-color: #FFF;
+  padding: 0 0 10px;
+  border: 1px solid #CCC;
+}
+.lp_results {
+  min-width: 316px;
+  height: 300px;
+  overflow-y: scroll;
+  z-index: 100;
+}
+.pa {
+  position: absolute;
+}
+.pr {
+  position: relative;
+}
+.lp_results li {
+  height: 25px;
+  line-height: 25px;
+  font-size: 12px;
+  margin: 0px;
+  padding: 0 10px;
+}
+.lp_results li .fr {
+  margin-left: 20px;
+  color: #999;
+}
+.fr {
+  float: right;
+}
+.lp_results .mc {
+  color: #1B5A9A;
+}

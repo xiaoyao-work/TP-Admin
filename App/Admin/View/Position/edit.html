@@ -1,0 +1,88 @@
+<extend name="Public:form_layout" />
+<block name="title"><title>添加推荐位</title></block>
+<block name="subheader">
+  <script type="text/javascript">
+  <!--
+  $(function(){
+    $.formValidator.initConfig({autotip:true,formid:"myform",onerror:function(msg){}});
+    $("#name").formValidator({onshow:"请输入推荐位名字",onfocus:"推荐位名称不能为空"}).inputValidator({min:1,max:999,onerror:"推荐位名称不能为空"});
+    $("#maxnum").formValidator({onshow:"请输入最大保存条数",onfocus:"最大保存条数不能为空"}).inputValidator({min:1,onerror:"最大保存条数不能为空"}).regexValidator({datatype:'enum',regexp:'intege1',onerror:'必须为正整数'}).defaultPassed();
+    $("#typeid").formValidator({onshow:"请选择类型",onfocus:"请选择类型"}).inputValidator({min:0,onerror:"推荐位类型必选"}).defaultPassed();
+  })
+//-->
+</script>
+</block>
+<block name="subnav">
+  <a class="add fb" href="__CONTROLLER__/add"><em>添加推荐位</em></a>　    <a class="on" href="__CONTROLLER__/index"><em>推荐位管理</em></a><!-- <span>|</span><a href="__CONTROLLER__/add_type"><em>添加类别</em></a><span>|</span><a href="__CONTROLLER__/list_type"><em>分类管理</em></a> -->
+</block>
+<block name="main">
+  <div class="common-form">
+    <form name="myform" action="__CONTROLLER__/edit" method="post" id="myform">
+      <input type="hidden" name="posid" value="<?php echo $position['id']; ?>">
+      <table width="100%" class="table_form contentWrap">
+        <tr>
+          <th width="100">推荐位名称  </th>
+          <td>
+            <input type="text" name="info[name]" value="<?php echo $position['name'] ?>" class="input-text" id="name">
+          </td>
+        </tr>
+        <tr>
+          <th width="100"><font class="red">*</font> 所属类型  </th>
+          <td>
+            <select name="info[typeid]" onchange="type_change(this);" id="typeid">
+              <?php foreach ($types as $key => $value) {
+                $selected = ($key == $position['typeid']) ? 'selected' : '';
+                echo "<option value='".$key."' " .$selected. ">".$value."</option>";
+              }?>
+            </select>
+          </td>
+        </tr>
+        <tr id="module">
+          <th width="100">所属模型  </th>
+          <td id="load_model">
+            <?php echo $modelstr;?>
+          </td>
+        </tr>
+        <tr id="category">
+          <th>所属栏目</th>
+          <td id="load_catid">
+            <?php echo \Org\Util\Form::select_category('',$position['catid'],'name="info[catid]"','≡ 作为一级栏目 ≡');?>
+          </td>
+        </tr>
+        <tr>
+          <th>排序</th>
+          <td><input type="text" name="info[listorder]" id="listorder" class="input-text" size="5" value="<?php echo $position['listorder']; ?>"></input></td>
+        </tr>
+        <tr>
+          <th>最大保存条数</th>
+          <td>
+            <input type="text" name="info[maxnum]" id="maxnum" class="input-text" size="5" value="<?php echo $position['maxnum']; ?>"/>条
+          </td>
+        </tr>
+      </table>
+      <div class="bk15"></div>
+      <input name="dosubmit" type="submit" class="button" value="提交">
+    </form>
+  </div>
+  <script type="text/javascript">
+  function type_change(obj) {
+    var typeid = $(obj).attr('value');
+    if (typeid!=0) {
+      $("#category, #module").hide();
+    } else {
+      var typeid = $(obj).attr('value');
+      $.get('__CONTROLLER__/public_model_load?typeid='+typeid,function(data){
+        $('#load_model').html(data);
+      });
+      $("#category, #module").show();
+    }
+  }
+
+  function category_load(obj) {
+    var modelid = $(obj).attr('value');
+    $.get('__CONTROLLER__/public_category_load?modelid='+modelid,function(data){
+      $('#load_catid').html(data);
+    });
+  }
+  </script>
+</block>

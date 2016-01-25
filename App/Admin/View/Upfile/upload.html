@@ -1,0 +1,196 @@
+<?php defined('THINK_PATH') or exit('No permission resources.'); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>后台管理中心</title>
+    <link href="__PUBLIC__/css/admin/upload.css" rel="stylesheet" type="text/css">
+    <link href="__PUBLIC__/css/admin/table_form.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles1.css" title="styles1" media="screen">
+    <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles2.css" title="styles2" media="screen">
+    <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles3.css" title="styles3" media="screen">
+    <link rel="alternate stylesheet" type="text/css" href="__PUBLIC__/css/admin/style/zh-cn-styles4.css" title="styles4" media="screen">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/js/admin/uploadify/uploadify.css">
+    <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/admin/jquery.cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/admin/styleswitch.js"></script>
+    <style type="text/css">
+        .bar {
+            height: 18px;
+            background: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="col-tab pad-10">
+        <ul class="tabBut cu-li">
+            <li id="tab_attach_1" class="on" onclick="tab_switch('attach','on','',4,1);">上传附件</li>
+            <li id="tab_attach_2" onclick="tab_switch('attach','on','',4,2);">网络文件</li>
+            <li id="tab_attach_3" onclick="tab_switch('attach','on','',4,3);set_iframe('album_list','<?php echo U('Attachment/album_list');?>');">图库</li>
+            <!-- <li id="tab_attach_4" onclick="tab_switch('attach','on','',4,4);">目录浏览</li> -->
+        </ul>
+        <div class="content" id="div_attach_1">
+            <div class="img_upload">
+                <script src="__PUBLIC__/js/admin/uploadify/jquery.uploadify.js"></script>
+                <form>
+                <input id="file_upload" name="file_upload" type="file" multiple="true">
+                <a href="javascript:$('#file_upload').uploadify('upload','*');" class="btupload">开始上传</a>
+                </form>
+                <div id="nameTip" class="onShow">
+                    最多上传 <font color="red"> <?php echo $args['file_upload_limit']; ?></font> 个附件, 单文件最大 <font color="red"><?php echo $file_size_limit; ?></font>
+                </div>
+                <div class="bk3"></div>
+            </div>
+            <div class="bk3"></div>
+            <div class="lh24">
+                支持 <font><?php echo str_replace(array('*.',';'),array('','、'),$args['file_types'])?></font> 格式。
+            </div>
+            <input type="checkbox" id="watermark_enable" value="1" checked="<?php echo (isset($args['watermark_enable']) && $args['watermark_enable'] == 1) ? 'checked' : ''; ?>"><label for="watermark_enable">是否添加水印</label>
+            <div class="bk10"></div>
+            <fieldset class="blue pad-10" id="swfupload">
+                <legend>列表</legend>
+                    <div id="progress"></div>
+                <ul id="attachment_list"></ul>
+            </fieldset>
+        </div>
+        <div id="div_attach_2" class="contentList pad-10 hidden">
+            <div class="bk10"></div>
+            请输入网络地址<div class="bk3"></div><input type="text" name="info[filename]" class="input-text" value="" style="width:350px;" onblur="addonlinefile(this)">
+            <div class="bk10"></div>
+        </div>
+        <div id="div_attach_3" class="contentList pad-10 hidden">
+            <iframe name="album-list" src="javascript:void(0);" scrolling="no" width="100%" height="345" style="overflow-x:hidden;border:none" allowtransparency="true" id="album_list" ></iframe>
+        </div>
+        <div id="div_attach_4" class="contentList pad-10 hidden"></div>
+    </div>
+    <div id="att-status" class="hidden"></div>
+    <div id="att-status-del" class="hidden"></div>
+    <div id="att-ids" class="hidden"></div>
+    <div id="att-name" class="hidden"></div>
+    <script type="text/javascript">
+        var fileSizeLimit = "<?php echo (isset($file_size_limit) ? $fileSizeLimit : '2MB'); ?>";
+        var fileTypeDesc = "<?php echo (isset($_GET['fileTypeDesc']) ? $_GET['fileTypeDesc'] : '图片');?>";
+        var fileTypeExts = "<?php echo ($args['file_types'] ? $args['file_types'] : '*.gif; *.jpg; *.png');?>";
+        var queueSizeLimit = <?php echo ($args['file_upload_limit'] ? $args['file_upload_limit'] : '20');?>;
+        var uploadLimit = <?php echo ($args['allowupload'] ? $args['allowupload'] : '20');?>;
+        var type = "<?php echo isset($_GET['type']) ? $_GET['type'] : 'image'; ?>";
+        $(function() {
+            $('#file_upload').uploadify({
+                'auto'            : false,
+                'formData'        : {"thumb_width": "<?php echo $args['thumb_width']; ?>","thumb_height":"<?php echo $args['thumb_height']; ?>","watermark_enable":"<?php echo $args['watermark_enable']; ?>","filetype_post":"<?php echo $args['file_types_post']; ?>"},
+                'swf'             : '__PUBLIC__/js/admin/uploadify/uploadify.swf?' + Math.random(),
+                'uploader'        : '__MODULE__/Upfile/upload',
+                'buttonImage'     : '',
+                'buttonClass'     : 'addnew',
+                'buttonText'      : '',
+                'height'          : '28',
+                'width'           : '75',
+                'fileSizeLimit'   : fileSizeLimit + "MB",
+                'fileTypeDesc'    : fileTypeDesc,
+                'fileTypeExts'    : fileTypeExts,
+                'removeTimeout'   : 0,
+                'queueSizeLimit'  : queueSizeLimit,
+                'uploadLimit'     : uploadLimit,
+                'onUploadError'   : function(file, errorCode, errorMsg, errorString) {
+                    $('#file_upload').uploadify('settings', 'uploadLimit', $('#file_upload').uploadify('settings', 'uploadLimit') + 1);
+                    alert(file.name + ' 上传失败，错误原因: ' + errorString);
+                },
+                'onUploadSuccess' : function(file, data, response) {
+                    var result = $.parseJSON(data);
+                    set_thumb(result);
+                }
+            });
+        });
+
+        function set_thumb(result) {
+            var attachment_length = $('#attachment_list li').length;
+            if (result.status == 'error') {
+                $('#file_upload').uploadify('settings', 'uploadLimit', $('#file_upload').uploadify('settings', 'uploadLimit') + 1);
+                alert(result.error_info);
+            } else {
+                if ( type == 'video' || type == 'swf' ) {
+                    var src = "__PUBLIC__/images/admin/flv.png";
+                }  else {
+                    var src = result.attachment_info['path'];
+                }
+                var html = '<li><div id="attachment_' + result.attachment_id +'" class="img-wrap">';
+                html += '<a href="javascript:void(0);" onclick="javascript:att_cancel(this,' + result.attachment_id + ',\'upload\'' + ')" ' + ((attachment_length < uploadLimit) ?  'class="on"' : '') + '>';
+                html += '<div class="icon"></div>';
+                html += '<img src="' + src + '" width="80" imgid="' + result.attachment_id + '" path="' + result.attachment_info['path'] + '" title="' + result.attachment_info['name'] + '">';
+                html += '</a></div></li>';
+                $('#attachment_list').append(html);
+                if (attachment_length < uploadLimit) {
+                    att_insert(result.attachment_info['name'], result.attachment_id);
+                }
+            }
+
+        }
+
+        function att_insert(file_name,id) {
+            var uploadfile = $("#attachment_"+id+" img").attr('path');
+            $('#att-status').append('|'+uploadfile);
+            $('#att-name').append('|'+file_name);
+            $('#att-ids').append('|'+id);
+        }
+
+        function att_cancel(obj, id, source) {
+            var src = $(obj).children("img").attr("path");
+            var filename = $(obj).children("img").attr("title");
+            if($(obj).hasClass('on')){
+                $(obj).removeClass("on");
+                var imgstr = $("#att-status").html();
+                var length = $("a[class='on']").children("img").length;
+                var ids = strs = filenames = '';
+                for(var i=0;i<length;i++) {
+                    strs += '|'+$("a[class='on']").children("img").eq(i).attr('path');
+                    filenames += '|'+$("a[class='on']").children("img").eq(i).attr('title');
+                    ids += '|' + id;
+                }
+                $('#att-status').html(strs);
+                $('#att-name').html(filenames);
+                $('#att-ids').html(ids);
+                if(source=='upload') $('#att-status-del').append('|'+id);
+            } else {
+                var num = $('#att-status').html().split('|').length;
+                if(num > uploadLimit) {
+                    alert('不能选择超过' + uploadLimit + '个附件');
+                    return false;
+                }
+                $(obj).addClass("on");
+                $('#att-status').append('|'+src);
+                $('#att-name').append('|'+filename);
+                $('#att-ids').append('|'+id);
+                var imgstr_del = $("#att-status-del").html();
+                var imgstr_del_obj = $("a[class!='on']").children("img")
+                var length_del = imgstr_del_obj.length;
+                var strs_del='';
+                for(var i=0;i<length_del;i++){
+                    strs_del += '|'+imgstr_del_obj.eq(i).attr('imgid');
+                }
+                if(source=='upload') $('#att-status-del').html(strs_del);
+            }
+        }
+
+        function tab_switch(name,cls_show,cls_hide,cnt,cur) {
+            for(i=1;i<=cnt;i++) {
+                if(i==cur) {
+                    $('#div_'+name+'_'+i).show();
+                    $('#tab_'+name+'_'+i).attr('class',cls_show);
+                } else {
+                    $('#div_'+name+'_'+i).hide();
+                    $('#tab_'+name+'_'+i).attr('class',cls_hide);
+                }
+            }
+        }
+
+        function addonlinefile(obj) {
+            var strs = $(obj).val() ? '|'+ $(obj).val() :'';
+            $('#att-status').html(strs);
+        }
+
+        function set_iframe(id,src) {
+            $("#"+id).attr("src",src+"?args="+queueSizeLimit+","+ fileSizeLimit +"," + uploadLimit);
+        }
+    </script>
+</body>
+</html>

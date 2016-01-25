@@ -1,0 +1,46 @@
+<extend name="Public:form_layout" />
+<block name="title"><title>添加类型</title></block>
+<block name="subheader">
+  <script type="text/javascript">
+  $(function(){
+    $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true,width:'200',height:'50'}, function(){this.close();$(obj).focus();})}});
+    $("#model_name").formValidator({onshow:"请输入分类名称",onfocus:"请输入模型名称"}).inputValidator({min:1,onerror:"请输入模型名称"}).ajaxValidator({type : "get",url : "__CONTROLLER__/public_check_name?field=name&modelid=<?php echo $model['id']; ?>",data :"",datatype : "html",async:'false',success : function(data){  if( data=="1" ){return true;}else{return false;}},buttons: $("#dosubmit"),onerror : "名称已存在。",onwait : "正在连接，请稍候。"}).defaultPassed();
+  });
+  </script>
+</block>
+<block name="subnav">
+  <a class="add fb" href="__CONTROLLER__/add"><em>添加模型</em></a>　    <a class="on" href="__CONTROLLER__/index"><em>模型管理</em></a>
+</block>
+<block name="main">
+  <form action="__CONTROLLER__/edit" method="post" name="myform" id="myform">
+    <input type="hidden" name="modelid" value="<?php echo $model['id']; ?>" />
+    <table cellpadding="2" cellspacing="1" class="table_form" width="100%">
+      <tbody>
+        <tr>
+          <th width="100">模型名称：</th>
+          <td><input type="text" name="model[name]" id="model_name" size="30" class="input-text" value="<?php echo $model['name']; ?>"></td>
+        </tr>
+        <tr>
+          <th width="100">控制器：</th>
+          <td><?php echo $model['controller']; ?></td>
+        </tr>
+        <tr>
+          <th width="100">所属类型：</th>
+          <td><?php echo $types[$model['typeid']]; ?></td>
+        </tr>
+        <tr>
+          <th width="100">模型表名：</th>
+          <td><?php echo $model['tablename']; ?></td>
+        </tr>
+        <tr>
+          <th>描述：</th>
+          <td><textarea name="model[description]" id="description" cols="50" rows="6"><?php echo $model['description']; ?></textarea></td>
+        </tr>
+        <tr>
+          <th></th>
+          <td><input type="hidden" name="forward" value="__CONTROLLER__/index"> <input type="submit" name="dosubmit" id="dosubmit" class="button" value=" 提交 "></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</block>

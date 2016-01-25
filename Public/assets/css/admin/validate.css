@@ -1,0 +1,7 @@
+.field-val-error{ position:absolute; left:125px; margin-top:4px;/*border:1px dotted #FF0000;*/ background:url(imgs/pic.png) no-repeat left -15px;  display:inline-block;/*padding:3px 5px;*/padding-left:18px;color:#FF0000;line-height:20px;}
+.field-val-valid{/*border:1px dashed #090;*/background:url(imgs/pic.png) no-repeat left -38px;display:inline-block;/*padding:3px 5px;*/padding-left:18px;color:#090;line-height:20px;}
+.field-val-default{/*border:1px dashed #FFF;*/display:inline-block;padding:3px 5px;line-height:24px;}
+
+.input-val-error{}
+.input-val-valid{}
+.input-val-default{}

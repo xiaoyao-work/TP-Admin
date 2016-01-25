@@ -1,0 +1,118 @@
+<?php defined('THINK_PATH') or exit('No permission resources.'); ?>
+<extend name="Public:list_layout" />
+<block name="title"><title>新闻列表</title></block>
+<block name="subnav">
+  <a class="add fb" href="javascript:openwinx('<?php echo U('Content/add'). "?catid=" .$catid; ?>','');void(0);"><em>添加内容</em></a>　    <a class="on" href="<?php echo U('Content/index'). "?catid=" .$catid; ?>"><em>内容管理</em></a><span>|</span><a href="javascript:;" onclick="javascript:$('#searchid').css('display','');"><em>搜索</em></a>
+</block>
+<block name="search">
+  <div id="searchid" style="display: <?php echo ($_GET['search'] ? "" : "none"); ?>;">
+    <form name="searchform" action="" method="get">
+      <input type="hidden" value="<?php echo $catid; ?>" name="catid">
+      <input type="hidden" value="1" name="search">
+      <table width="100%" cellspacing="0" class="search-form">
+        <tbody>
+          <tr>
+            <td>
+              <div class="explain-col">
+                添加时间：
+                <script type="text/javascript" src="__PUBLIC__/js/JSCal/jscal2.js"></script>
+                <script type="text/javascript" src="__PUBLIC__/js/JSCal/lang/cn.js"></script>
+                <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/jscal2.css">
+                <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/border-radius.css">
+                <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/JSCal/win2k/win2k.css">
+                <input type="text" name="start_time" id="start_time" value="<?php echo $_GET['start_time']; ?>" size="10" class="date input-text" readonly="">&nbsp;<script type="text/javascript">
+                Calendar.setup({
+                  weekNumbers: false,
+                  inputField : "start_time",
+                  trigger    : "start_time",
+                  dateFormat: "%Y-%m-%d",
+                  showTime: false,
+                  minuteStep: 1,
+                  onSelect   : function() {this.hide();}
+                });
+                </script>- &nbsp;<input type="text" name="end_time" id="end_time" value="<?php echo $_GET['end_time']; ?>" size="10" class="date input-text" readonly="">&nbsp;<script type="text/javascript">
+                Calendar.setup({
+                  weekNumbers: false,
+                  inputField : "end_time",
+                  trigger    : "end_time",
+                  dateFormat: "%Y-%m-%d",
+                  showTime: false,
+                  minuteStep: 1,
+                  onSelect   : function() {this.hide();}
+                });
+                </script>
+                <select name="posids">
+                  <option value="">全部</option>
+                  <option value="1" <?php if($_GET['posids']==1) echo "selected"; ?>>推荐</option>
+                  <option value="0" <?php if($_GET['posids']==="0") echo "selected"; ?>>不推荐</option>
+                </select>
+                <select name="searchtype">
+                  <option value="0" <?php if($_GET['searchtype']==0) echo "selected"; ?>>标题</option>
+                  <option value="1" <?php if($_GET['searchtype']==1) echo "selected"; ?>>简介</option>
+                  <option value="2" <?php if($_GET['searchtype']==2) echo "selected"; ?>>用户名</option>
+                  <option value="3" <?php if($_GET['searchtype']==3) echo "selected"; ?>>ID</option>
+                </select>
+                <input name="keyword" type="text" value="<?php echo $_GET['keyword']; ?>" class="input-text">
+                <input type="submit" name="search" class="button" value="搜索">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</block>
+<block name="main">
+  <form name="myform" action="<?php echo U('Content/listorder'). "?catid=" .$catid; ?>" method="post">
+    <input type="hidden" name="catid" value="<?php echo $catid; ?>">
+    <div class="table-list">
+      <table width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th width="16"><input type="checkbox" value="" id="check_box" onclick="selectall('ids[]');"></th>
+            <th width="37">排序</th>
+            <th width="40">ID</th>
+            <th>标题</th>
+            <th width="70">发布人</th>
+            <th width="118">更新时间</th>
+            <th width="102">管理操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($contents as $key => $content) { ?>
+          <tr>
+            <td align="center"><input class="inputcheckbox " name="ids[]" value="<?php echo $content['id']; ?>" type="checkbox"></td>
+            <td align="center"><input name="listorders[<?php echo $content['id']; ?>]" type="text" size="3" value="<?php echo $content['listorder']; ?>" class="input-text-c input-text"></td>
+            <td align="center"><?php echo $content['id']; ?></td>
+            <td><a href="<?php echo $content['url']; ?>" target="_blank"><span style=""><?php echo $content['title']; ?></span></a><?php if($content['thumb']) { ?><img src="__PUBLIC__/images/admin/icon/small_img.gif" title="缩略图"><?php } if($content['posids']) { ?><img src="__PUBLIC__/images/admin/icon/small_elite.gif" title="推荐"><?php } ?></td>
+            <td align="center"><?php echo $content['username']; ?></td>
+            <td align="center"><?php echo date("Y-m-d H:i:s",$content['updatetime']); ?></td>
+            <td align="center">
+              <a href="javascript:;" onclick="javascript:openwinx('__CONTROLLER__/edit?catid=<?php echo $content['catid'] ?>&contentid=<?php echo $content['id'] ?>','')">修改</a> | <a href="__CONTROLLER__/delete?catid=<?php echo $content['catid'] ?>&id=<?php echo $content['id']; ?>" onClick="return confirm('确认删除『 <?php echo addslashes($content['title']); ?> 』 吗？')">删除</a>
+            </td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+      <div class="btn"><label for="check_box">全选/取消</label>
+        <input name="submit" type="submit" class="button" value="排序">&nbsp;
+        <input name="deletesubmit" type="submit" class="button" value="删除" onclick="document.myform.action='<?php echo U('Content/delete'). "?catid=" .$catid; ?>';return confirm('确认要删除 『 选中 』 吗？')">
+      </div>
+      <div id="pages">
+        <?php echo $pages; ?>
+      </div>
+    </div>
+  </form>
+  <script language="javascript" type="text/javascript" src="__PUBLIC__/js/admin/cookie.js"></script>
+  <script type="text/javascript">
+  setcookie('refersh_time', 0);
+  function refersh_window() {
+    var refersh_time = getcookie('refersh_time');
+    if(refersh_time==1) {
+      window.location.reload();
+    }
+  }
+  setInterval("refersh_window()", 3000);
+  </script>
+</block>
+<block name="footer"></block>

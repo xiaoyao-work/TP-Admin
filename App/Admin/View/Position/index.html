@@ -1,0 +1,62 @@
+<extend name="Public:list_layout" />
+<block name="title"><title>推荐位管理</title></block>
+<block name="subnav">
+  <a class="add fb" href="__CONTROLLER__/add"><em>添加推荐位</em></a>　    <a class="on" href="__CONTROLLER__/index"><em>推荐位管理</em></a><span>|</span>
+</block>
+<block name="search">
+  <table width="100%" cellspacing="0" class="search-form">
+    <tbody>
+      <tr>
+        <td>
+          <div class="explain-col">
+            所有分类: &nbsp;&nbsp; <a href="__CONTROLLER__/index" <?php if( !isset($_GET['typeid']) ) { echo "class='on'"; } ?>>全部</a> &nbsp;&nbsp;
+            <?php foreach ($types as $key => $type) { ?>
+            <a href="__CONTROLLER__/index/typeid/<?php echo $key; ?>" <?php if($_GET['typeid'] == $key) { echo "class='on'"; } ?>><?php echo $type; ?></a>&nbsp;
+            <?php } ?>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</block>
+<block name="main">
+  <form name="myform" id="myform" action="__CONTROLLER__/listorder" method="post">
+    <div class="table-list">
+      <table width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th width="10%" align="left">排序</th>
+            <th width="5%" align="left">ID</th>
+            <th width="15%">推荐位名称</th>
+            <th width="15%">所属栏目</th>
+            <th width="15%">所属模型</th>
+            <th width="20%">管理操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($positions as $key => $position) { ?>
+          <tr>
+            <td width="10%">
+              <input name="listorders[<?php echo $position['id']; ?>]" type="text" size="2" value="<?php echo $position['listorder']; ?>" class="input-text-c input-text">
+            </td>
+            <td width="5%" align="left"><?php echo $position['id']; ?></td>
+            <td width="15%" align="center"><?php echo $position['name']; ?></td>
+            <td width="15%" align="center"><?php echo $position['catname']; ?></td>
+            <td width="15%" align="center"><?php echo $position['modelname']; ?></td>
+            <td width="20%" align="center">
+              <a href="__CONTROLLER__/public_item?posid=<?php echo $position['id']; ?>">信息管理</a> |
+              <!-- <a href="javascript:edit(2, '首页头条推荐')">修改</a> |  -->
+              <a href="__CONTROLLER__/edit?posid=<?php echo $position['id']; ?>">修改</a> |
+              <a href="javascript:confirmurl('__CONTROLLER__/delete?posid=<?php echo $position['id']; ?>', '是否删除?')">删除</a>
+            </td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+    <div class="btn">
+      <input type="submit" class="button" name="dosubmit" value="排序"/>
+    </div>
+    <div id="pages"><?php echo $pages; ?></div>
+  </form>
+</block>

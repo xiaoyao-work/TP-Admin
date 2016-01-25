@@ -1,0 +1,48 @@
+<extend name="Public:list_layout" />
+<block name="title"><title><?php echo $big_menu[1]; ?></title></block>
+<block name="subheader">
+  <script src="__PUBLIC__/js/admin/jquery.artDialog.source.js?skin=default"></script>
+  <script src="__PUBLIC__/js/admin/plugins/iframeTools.source.js"></script>
+</block>
+<block name="subnav">
+  <a class="on" href="__CONTROLLER__/index"><em>联动菜单管理</em></a>
+</block>
+<block name="main">
+  <form name="myform" action="__CONTROLLER__/listorder" method="post">
+    <div class="table-list">
+      <table width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th width="10%">排序</th>
+            <th width="10%">ID</th>
+            <th width="10%" align="left">菜单名称</th>
+            <th width="20%">菜单描述</th>
+            <th width="15%">管理操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php  foreach ($menus as $key => $value) { ?>
+          <tr>
+            <td width="10%" align="center"><input name="listorder[<?php echo $value['id']; ?>]" type="text" size="3" value="<?php echo $value['listorder']; ?>" class="input-text-c input-text"></td>
+            <td width="10%" align="center"><?php echo $value['id']; ?></td>
+            <td width="10%" align="left"><?php echo $value['name'] ?></td>
+            <td width="20%" align="center"><?php echo $value['description']; ?></td>
+
+            <td width="15%" align="center">
+              <?php if($value['child']) { ?><a href="__CONTROLLER__/show_sub_menu?keyid=<?php echo $value['keyid']; ?>&parentid=<?php echo $value['id']; ?>">管理子菜单</a> | <?php } ?>
+
+              <a href="javascript:art.dialog.open('<?php echo U('Admin/Linkage/add','keyid=' . $value['keyid'] . '&parentid='.$value['id']); ?>', { id:'add', title:'添加子菜单菜单',  width:'540px', height:'320px', ok:function(){ var d = this.iframe.contentWindow; var form = d.document.getElementById('dosubmit'); form.click(); return false; }, cancel: true, lock: true});void(0);">添加子菜单</a>
+              | <a href="javascript:art.dialog.open('<?php echo U('Admin/Linkage/edit','id='.$value['id']); ?>', { id:'edit', title:'添加子菜单菜单',  width:'540px', height:'320px', ok:function(){ var d = this.iframe.contentWindow; var form = d.document.getElementById('dosubmit'); form.click(); return false; }, cancel: true, lock: true});void(0);">修改</a>
+              | <a onclick="return ConfirmDel('确认删除<?php echo $value['name']; ?>及其子栏目?');" href="__CONTROLLER__/delete/id/<?php echo $value['id']; ?>">删除</a>
+            </td>
+
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+    <div class="btn">
+      <input type="submit" class="button" name="排序" name="dosubmit" />
+    </div>
+  </form>
+</block>

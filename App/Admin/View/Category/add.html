@@ -1,0 +1,277 @@
+<extend name="Public:form_layout" />
+<block name="title"><title>添加链接</title></block>
+<block name="subheader">
+  <script type="text/javascript">
+  $(function(){
+    $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true,width:'200',height:'50'}, function(){this.close();$(obj).focus();})}});
+    $("#modelid").formValidator({onshow:"请选择模型",onfocus:"请选择模型",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请选择模型"});
+    $("#catname").formValidator({onshow:"请输入栏目名称",onfocus:"请输入栏目名称",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入栏目名称"});
+    $("#catdir").formValidator({onshow:"请输入目录名称",onfocus:"请输入目录名称"}).regexValidator({regexp:"^([a-zA-Z0-9、-]|[_]){0,30}$",onerror:"目录名称必须为字母、数字、下划线、中划线"}).inputValidator({min:1,onerror:"请输入目录名称"}).ajaxValidator({type : "get",url : "__CONTROLLER__/public_check_catdir",data :"",datatype : "html",cached:false,getdata:{parentid:'parentid'},async:'false',success : function(data){ if( data == "1" ){return true;}else{return false;}},buttons: $("#dosubmit"),onerror : "目录名称已存在",onwait : "正在连接，请稍候。"});
+    $("#url").formValidator({onshow:" ",onfocus:"域名可为空，格式应该为http://www.phpcms.cn/",tipcss:{width:'300px'},empty:true}).inputValidator({onerror:"域名可为空，格式应该为http://www.phpcms.cn/"}).regexValidator({regexp:"http:\/\/(.+)\/$",onerror:"格式应该为http://www.phpcms.cn/，请以‘/’结束"});
+    $("#template_list").formValidator({onshow:"请在【模板设置】选项中设置模板",onfocus:"请在【模板设置】选项中设置模板",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请在【模板设置】选项中设置模板"});
+  });
+  function SwapTab(name,cls_show,cls_hide,cnt,cur){
+    for(i=1;i<=cnt;i++){
+      if(i==cur){
+        $('#div_'+name+'_'+i).show();
+        $('#tab_'+name+'_'+i).attr('class',cls_show);
+      }else{
+        $('#div_'+name+'_'+i).hide();
+        $('#tab_'+name+'_'+i).attr('class',cls_hide);
+      }
+    }
+  }
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/admin/attachupload.js"></script>
+</block>
+<block name="subnav">
+  <a class="add fb" href="__MODULE__/Category/add"><em>添加栏目</em></a>　 
+  <a href="__MODULE__/Category/index"><em>栏目管理</em></a>
+</block>
+<block name="main">
+  <form name="myform"  id="myform"  action="__MODULE__/Category/add" method="post">
+    <div class="col-tab">
+      <ul class="tabBut cu-li">
+        <li id="tab_setting_1" class="on" onclick="SwapTab('setting','on','',5,1);">基本选项</li>
+        <!-- <li id="tab_setting_2" onclick="SwapTab('setting','on','',5,2);" class="">生成HTML设置</li>
+        <li id="tab_setting_3" onclick="SwapTab('setting','on','',5,3);" class="">模板设置</li> -->
+        <li id="tab_setting_4" onclick="SwapTab('setting','on','',5,4);" class="">SEO 设置</li>
+        <!-- <li id="tab_setting_5" onclick="SwapTab('setting','on','',5,5);" class="">权限设置</li> -->
+      </ul>
+      <div id="div_setting_1" class="contentList pad-10" style="display: block;">
+        <table width="100%" class="table_form ">
+          <tbody>
+            <tr>
+              <th width="200">请选择模型：</th>
+              <td>
+                <select name="info[modelid]" id="modelid"> <!--  onchange="change_tpl(this.value)" -->
+                  <option value="" selected="">请选择模型</option>
+                  <?php foreach ($model_list as $key => $value) { ?>
+                  <option value="<?php echo $value['id']; ?>" <?php if(isset($category) && $category['modelid'] == $value['id']) {echo "selected";} ?>><?php echo $value['name']; ?></option>
+                  <?php } ?>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <th width="200">上级栏目：</th>
+              <td>
+                <select name="info[parentid]" id="parentid">
+                  <option value="0" <?php if($cat_id == 0) echo "selected"; ?>>≡ 作为一级栏目 ≡</option>
+                  <?php  foreach ($cats as $key => $value) { ?>
+                  <option value="<?php echo $value['id'] ?>" <?php if($cat_id == $value['id']) echo "selected"; ?>><?php echo cat_empty_deal($value, $cats[$key+1]['parentid'],'parentid','&nbsp;&nbsp;&nbsp;'); ?><?php echo $value['catname']; ?></option>
+                  <?php } ?>
+                </select>    
+              </td>
+            </tr>
+            <tr>
+              <th>栏目名称：</th>
+              <td>
+                <span id="normal_add">
+                  <input type="text" name="info[catname]" id="catname" class="input-text" value="">
+                </span>
+                <!-- <span id="batch_add" style="display:none"> 
+                  <table width="100%" class="sss"><tbody>
+                    <tr>
+                      <td width="310"><textarea name="batch_add" maxlength="255" style="width:300px;height:60px;"></textarea></td>
+                      <td align="left">例如：<br><font color="#959595">国内新闻|china<br>国际新闻|world<br></font>竖线以及后面的英文名可留空，默认会自动生成栏目的拼音 </td>
+                    </tr>
+                  </tbody></table>
+                </span> -->
+              </td>
+            </tr>
+            <tr id="catdir_tr">
+              <th>英文目录：</th>
+              <td><input type="text" name="info[catdir]" id="catdir" class="input-text" value=""></td>
+            </tr>
+            <tr>
+              <th>栏目图片：</th>
+              <td>
+                <input type="text" name="info[image]" id="image" value="" size="50" class="input-text">  <input type="button" class="button" onclick="javascript:attachupload('logo_images', '附件上传','image',preview,'1,jpg|jpeg|png|gif,1','image','<?php echo U("Upfile/upload"); ?>');void(0);" value="上传图片">
+              </td>
+            </tr>
+            <tr>
+              <th>描述：</th>
+              <td>
+                <textarea name="info[description]" maxlength="255" style="width:300px;height:60px;"></textarea>
+              </td>
+            </tr>
+            <!-- <tr>
+              <th>工作流：</th>
+              <td>
+                <select name="setting[workflowid]"><option value="" selected="">不需要审核</option><option value="1">一级审核</option><option value="2">二级审核</option><option value="3">三级审核</option><option value="4">四级审核</option></select> 
+              </td>
+            </tr> -->
+            <tr>
+             <th>是否在导航显示：</th>
+             <td>
+              <input type="radio" name="info[ismenu]" value="1" checked=""> 是&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="radio" name="info[ismenu]" value="0"> 否</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- <div id="div_setting_2" class="contentList pad-10 hidden" style="display: none;">
+        <table width="100%" class="table_form ">
+          <tbody>
+            <tr>
+              <th width="200">栏目生成Html：</th>
+              <td>
+                <input type="radio" name="setting[ishtml]" value="1" onclick="$('#category_php_ruleid').css('display','none');$('#category_html_ruleid').css('display','');$('#tr_domain').css('display','');"> 是&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="setting[ishtml]" value="0" checked="" onclick="$('#category_php_ruleid').css('display','');$('#category_html_ruleid').css('display','none');$('#tr_domain').css('display','none');"> 否    
+              </td>
+            </tr>
+            <tr>
+              <th>内容页生成Html：</th>
+              <td>
+                <input type="radio" name="setting[content_ishtml]" value="1" onclick="$('#show_php_ruleid').css('display','none');$('#show_html_ruleid').css('display','')"> 是&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="setting[content_ishtml]" value="0" checked="" onclick="$('#show_php_ruleid').css('display','');$('#show_html_ruleid').css('display','none')"> 否   
+              </td>
+            </tr>
+            <tr>
+              <th>栏目页URL规则：</th>
+              <td>
+                <div id="category_php_ruleid" style="display:">
+                  <select name="category_php_ruleid"><option value="6">index.php?m=content&amp;c=index&amp;a=lists&amp;catid=1&amp;page=1</option><option value="30">list-1-1.html</option></select>
+                </div>
+                <div id="category_html_ruleid" style="display:none">
+                  <select name="category_html_ruleid"><option value="1">news/china/1000.html</option></select>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>内容页URL规则：</th>
+              <td>
+                <div id="show_php_ruleid" style="display:">
+                  <select name="show_php_ruleid"><option value="16">index.php?m=content&amp;c=index&amp;a=show&amp;catid=1&amp;id=1</option><option value="17">show-1-2-1.html</option><option value="18">content-1-2-1.html</option></select>  
+                </div>
+                <div id="show_html_ruleid" style="display:none">
+                  <select name="show_html_ruleid"><option value="11">2010/catdir_0720/1_2.html</option><option value="12">it/product/2010/0720/1_2.html</option></select> 
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>是否生成到根目录：</th>
+              <td>
+                <input type="radio" name="setting[create_to_html_root]" value="1"> 是&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="setting[create_to_html_root]" value="0" checked=""> 否   （当设置了 caches/configs/system.php 中的 html_root 时，将生成到该目录）
+              </td>
+            </tr>
+            <tr id="tr_domain" style="display:none">
+              <th>绑定域名：</th>
+              <td><input type="text" name="info[url]" id="url" class="input-text" size="50" value=""><div id="urlTip" class="onShow"> </div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div> -->
+      <!-- <div id="div_setting_3" class="contentList pad-10 hidden" style="display: none;">
+        <table width="100%" class="table_form ">
+          <tbody>
+            <tr>
+              <th width="200">可用风格：</th>
+              <td>
+                <select name="setting[template_list]" id="template_list" onchange="load_file_list(this.value)"><option value="" selected="">请选择</option><option value="default">默认模板</option></select> 
+                <div id="template_listTip" class="onShow">请在【模板设置】选项中设置模板</div>
+              </td>
+            </tr>
+            <tr>
+              <th width="200">栏目首页模板：</th>
+              <td id="category_template">
+              </td>
+            </tr>
+            <tr>
+              <th width="200">栏目列表页模板：</th>
+              <td id="list_template">
+              </td>
+            </tr>
+            <tr>
+              <th width="200">内容页模板：</th>
+              <td id="show_template">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div> -->
+      <div id="div_setting_4" class="contentList pad-10 hidden" style="display: none;">
+        <table width="100%" class="table_form ">
+          <tbody>
+            <tr>
+              <th width="200"><strong>META Title（栏目标题）</strong><br>针对搜索引擎设置的标题</th>
+              <td><input name="setting[meta_title]" type="text" id="meta_title" value="" size="60" maxlength="60" class="input-text"></td>
+            </tr>
+            <tr>
+              <th><strong>META Keywords（栏目关键词）</strong><br>关键字中间用半角逗号隔开</th>
+              <td><textarea name="setting[meta_keywords]" id="meta_keywords" style="width:90%;height:40px"></textarea></td>
+            </tr>
+            <tr>
+              <th><strong>META Description（栏目描述）</strong><br>针对搜索引擎设置的网页描述</th>
+              <td><textarea name="setting[meta_description]" id="meta_description" style="width:90%;height:50px"></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- <div id="div_setting_5" class="contentList pad-10 hidden" style="display: none;">
+        <table width="100%">
+          <tbody>
+            <tr>
+              <th width="200">角色权限：</th>
+              <td>
+                <table width="100%" class="table-list">
+                  <thead>
+                    <tr>
+                      <th align="left">角色名称</th><th>查看</th><th>添加</th><th>修改</th><th>删除</th><th>排序</th><th>推送</th><th>移动</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>超级管理员</td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" disabled="" value="init,1"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" disabled="" value="add,1"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" disabled="" value="edit,1"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" disabled="" value="delete,1"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" disabled="" value="listorder,1"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" disabled="" value="push,1"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" disabled="" value="move,1"></td>
+                    </tr>
+                    <tr>
+                      <td>站点管理员</td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="init,2"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="add,2"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="edit,2"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="delete,2"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="listorder,2"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="push,2"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="move,2"></td>
+                    </tr>
+                    <tr>
+                      <td>运营总监</td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="init,3"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="add,3"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="edit,3"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="delete,3"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="listorder,3"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="push,3"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="move,3"></td>
+                    </tr>
+                    <tr>
+                      <td>编辑</td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="init,5"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="add,5"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="edit,5"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="delete,5"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="listorder,5"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="push,5"></td>
+                      <td align="center"><input type="checkbox" name="priv_roleid[]" value="move,5"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div> -->
+      <div class="bk15"></div>
+      <input name="catid" type="hidden" value="">
+      <input name="dosubmit" type="submit" value="提交" class="button">
+    </div>
+  </form>
+</block>
