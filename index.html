@@ -131,15 +131,15 @@
                     <a href="./Public/Admin/Index/index" target="_blank" class="btn btn-outline-inverse btn-lg">进入系统</a>
                     <a href="http://www.hhailuo.com/tp-admin-wiki" class="btn btn-outline-inverse btn-lg">WIKI</a>
                     <a href="http://www.hhailuo.com/about-us" target="_blank" class="btn btn-outline-inverse btn-lg">作者介绍</a>
-                    <a href="http://git.oschina.net/xiaoyao-work/TP-Admin-V2.0" target="_blank" class="btn btn-outline-inverse btn-lg">os-china下载</a>
-                    <a href="https://github.com/xiaoyao-work/TP-Admin-V2.0" target="_blank" class="btn btn-outline-inverse btn-lg">github下载</a>
+                    <a href="http://git.oschina.net/xiaoyao-work/TP-Admin" target="_blank" class="btn btn-outline-inverse btn-lg">os-china下载</a>
+                    <a href="https://github.com/xiaoyao-work/TP-Admin" target="_blank" class="btn btn-outline-inverse btn-lg">github下载</a>
                     <p class="desc">重组站群系统，全新模型架构，融入WP Taxonomy分类管理思想；强大的权限系统，模型、分类全自动节点。历经三月只为简单，快捷，舒适。</p>
                     <div class="clearfix">
                         <div class="row">
                             <div class="col-xs-2 pull-left"></div>
                             <div class="col-xs-4 pull-left author">
                                 <p>作者：<a href="http://www.hhailuo.com/about-us">逍遥·李志亮</a>;&nbsp;&nbsp;</p>
-                                <p>反馈: <a href="https://github.com/xiaoyao-work/TP-Admin-V2.0/issues" target="_blank">tp-admin issues</a> 填报;&nbsp;&nbsp;</p>
+                                <p>反馈: <a href="https://github.com/xiaoyao-work/TP-Admin/issues" target="_blank">tp-admin issues</a> 填报;&nbsp;&nbsp;</p>
                                 <p><code>QQ交流群：TP-Admin 群   号：495760597</code></p>
                             </div>
                             <div class="col-xs-4 pull-left donate">
@@ -189,7 +189,7 @@
             <div class="container">
                 <h2>安装</h2>
                 <ul class="text-left">
-                    <li>1、下载最新版本<a href="https://github.com/xiaoyao-work/TP-Admin-V2.0">TP-Admin</a></li>
+                    <li>1、下载最新版本<a href="https://github.com/xiaoyao-work/TP-Admin">TP-Admin</a></li>
                     <li>2、创建数据库并导入<code>Docs/tp3.sql。</code></li>
                     <li>3、修改数据库配置参数<code>APP/Common/Conf/database.php</code>(线上配置)，或者添加本地配置文件<code>APP/Common/Conf/local.php</code>(本地参数)。local将覆盖database的配置</li>
                     <li style="color: red;">4、Apache必须开启重写模块</li>
@@ -206,7 +206,7 @@
                 <div class="slide">
                     <div class="intro">
                         <h2>服务器配置</h2>
-                        <p>你可以直接通过http://localhost/TP-Admin-V2.0/Public/ 来访问。系统入口文件在<code>/Public/index.php</code><strong>但是建议通过配置虚拟主机用域名访问</strong></p>
+                        <p>你可以直接通过http://localhost/TP-Admin/Public/ 来访问。系统入口文件在<code>/Public/index.php</code><strong>但是建议通过配置虚拟主机用域名访问</strong></p>
                     </div>
                     <div class="text-left">
                         <div class="panel-group">
@@ -256,7 +256,7 @@ server {
     listen 80;
     server_name tp-admin.hhailuo.com;
     index index.html index.php;
-    root /var/www/TP-Admin-V2.0/Public/;
+    root /var/www/TP-Admin/Public/;
     location / {
         rewrite  ^(.*)$  /index.php?s=$1  last;
     }
@@ -291,11 +291,11 @@ server {
                 <p>476552238@qq.com 或者点<a href="mailto:476552238@qq.com">这儿</a></p>
                 <h3> 电话 </h3>
                 <p>181 8215 6697</p>
-                <p><a href="https://github.com/xiaoyao-work/TP-Admin-V2.0">贡献代码</a> | <a href="javascript:void(0);" id="donate">捐赠一杯咖啡</a> | <a href="javascript:void(0);" id="license">商业授权</a></p>
+                <p><a href="https://github.com/xiaoyao-work/TP-Admin">贡献代码</a> | <a href="javascript:void(0);" id="donate">捐赠一杯咖啡</a> | <a href="javascript:void(0);" id="license">商业授权</a></p>
             </div>
         </div>
     </div>
-    <div id="site-navbar" style="position: absolute; top: 51px; right: 0px; border: 0; z-index: 200;padding:0;margin:0;"><a href="https://github.com/xiaoyao-work/TP-Admin-V2.0" title="fork me on github" style="background:none;" target="_blank"><img src="./Public/assets/images/home/git-fork.png" style="padding:0;margin:0;border:0; -webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;"></a></div>
+    <div id="site-navbar" style="position: absolute; top: 51px; right: 0px; border: 0; z-index: 200;padding:0;margin:0;"><a href="https://github.com/xiaoyao-work/TP-Admin" title="fork me on github" style="background:none;" target="_blank"><img src="./Public/assets/images/home/git-fork.png" style="padding:0;margin:0;border:0; -webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;"></a></div>
     <footer class="footer" style="position: fixed; bottom: 0; text-align: center; width: 100%; padding: 10px 0;">
         <section>All content copyright <a href="http://www.hhailuo.com">红海螺</a> © 2015 • All rights reserved. </section>
     </footer>
