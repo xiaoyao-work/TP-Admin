@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>TP-Admin 使用简易指南</title>
-    <link rel="stylesheet" href="./Public/assets/bootstrap/css/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="./Public/assets/css/jquery.fullPage.css" type="text/css">
-    <link rel="stylesheet" type="text/css" href="./Public/assets/css/artdialog/ui-dialog.css" />
+    <link rel="stylesheet" href="{:asset('bootstrap/css/bootstrap.css')}" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{:asset('css/jquery.fullPage.css')}" />
+    <link rel="stylesheet" type="text/css" href="{:asset('css/artdialog/ui-dialog.css')}" />
     <style type="text/css">
         h1 {
             font-size: 60px;
@@ -128,7 +128,7 @@
                 <div class="row header">
                     <h1>TP-Admin</h1>
                     <p class="desc">3.0 全新架构，重磅来袭。助你开启快速开发之路;)。</p>
-                    <a href="./Public/Admin/Index/index" target="_blank" class="btn btn-outline-inverse btn-lg">进入系统</a>
+                    <a href="<?php echo U('Admin/Index/index'); ?>" target="_blank" class="btn btn-outline-inverse btn-lg">进入系统</a>
                     <a href="http://www.hhailuo.com/tp-admin-wiki" class="btn btn-outline-inverse btn-lg">WIKI</a>
                     <a href="http://www.hhailuo.com/about-us" target="_blank" class="btn btn-outline-inverse btn-lg">作者介绍</a>
                     <a href="http://git.oschina.net/xiaoyao-work/TP-Admin-V2.0" target="_blank" class="btn btn-outline-inverse btn-lg">os-china下载</a>
@@ -145,7 +145,7 @@
                             <div class="col-xs-4 pull-left donate">
                                 <p class="donate-title">赞助</p>
                                 <div>
-                                    <p><img class="img-rounded" src="./Public/assets/images/donate.png" width="200px" alt="支付宝扫描二维码"/></p>
+                                    <p><img class="img-rounded" src="{:asset('images/donate.png')}" width="200px" alt="支付宝扫描二维码"/></p>
                                     <p class="donate-desc">支付宝扫描二维码</p>
                                 </div>
                             </div>
@@ -295,14 +295,14 @@ server {
             </div>
         </div>
     </div>
-    <div id="site-navbar" style="position: absolute; top: 51px; right: 0px; border: 0; z-index: 200;padding:0;margin:0;"><a href="https://github.com/xiaoyao-work/TP-Admin-V2.0" title="fork me on github" style="background:none;" target="_blank"><img src="./Public/assets/images/home/git-fork.png" style="padding:0;margin:0;border:0; -webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;"></a></div>
+    <div id="site-navbar" style="position: absolute; top: 51px; right: 0px; border: 0; z-index: 200;padding:0;margin:0;"><a href="https://github.com/xiaoyao-work/TP-Admin-V2.0" title="fork me on github" style="background:none;" target="_blank"><img src="{:asset('images/home/git-fork.png')}" style="padding:0;margin:0;border:0; -webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;"></a></div>
     <footer class="footer" style="position: fixed; bottom: 0; text-align: center; width: 100%; padding: 10px 0;">
         <section>All content copyright <a href="http://www.hhailuo.com">红海螺</a> © 2015 • All rights reserved. </section>
     </footer>
-    <script type="text/javascript" src="./Public/assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="./Public/assets/js/jquery-ui.js"></script>
-    <script type="text/javascript" src="./Public/assets/js/artdialog/dialog-min.js"></script>
-    <script type="text/javascript" src="./Public/assets/js/jquery.fullPage.js"></script>
+    <script type="text/javascript" src="{:asset('js/jquery.min.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/jquery-ui.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/artdialog/dialog-min.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/jquery.fullPage.js')}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#tp-admin').fullpage({

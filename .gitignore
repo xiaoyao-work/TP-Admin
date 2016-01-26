@@ -3,6 +3,7 @@
 /App/Common/Conf/local.php
 /App/Common/Conf/taxonomy*.php
 /App/Common/Conf/sitelist.php
+/App/Common/Cache/*.php
 /vendor
 /composer.lock
 App/Admin/M/

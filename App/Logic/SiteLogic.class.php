@@ -41,7 +41,7 @@ class SiteLogic extends BaseLogic {
             $data[$val['id']]['url'] = $url_parse['host'];
         }
         $data = "<?php\nreturn ".var_export($data, true).";\n?>";
-        $file_size = file_put_contents(CONF_PATH . "sitelist.php", $data, LOCK_EX);
+        $file_size = file_put_contents(COMMON_PATH . "Cache/sitelist.php", $data, LOCK_EX);
     }
 
 }

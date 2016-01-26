@@ -32,7 +32,7 @@ function template_list($siteid = '', $disable = 0) {
 */
 function siteinfo($siteid) {
 	static $sitelist;
-	if (empty($sitelist)) $sitelist  = include CONF_PATH.'sitelist.php';
+	if (empty($sitelist)) $sitelist  = include COMMON_PATH . "Cache/sitelist.php";
 	return isset($sitelist[$siteid]) ? $sitelist[$siteid] : '';
 }
 

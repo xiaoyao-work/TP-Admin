@@ -160,7 +160,7 @@ function get_site_setting($siteid) {
 }
 
 function get_site_info($siteid="") {
-	$sitelist = include(CONF_PATH.'sitelist.php');
+	$sitelist = include(COMMON_PATH . "Cache/sitelist.php");
 	if (empty($siteid)) {
 		return $sitelist;
 	} else {
@@ -750,7 +750,7 @@ function showmessage($message, $jumpUrl='', $waitSecond=3, $dialog='', $returnjs
 * @param $symbol 栏目间隔符
 */
 function catpos($catid, $symbol=' > ', $category_arr){
-	$sites = include(CONF_PATH.'sitelist.php');
+	$sites = include(COMMON_PATH . "Cache/sitelist.php");
 	$siteid = get_siteid();
 	if(!isset($category_arr[$catid])) return '';
 	$pos = '';
