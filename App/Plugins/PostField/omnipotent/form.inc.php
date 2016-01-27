@@ -1,25 +1,11 @@
+<?php
 	function omnipotent($field, $value, $fieldinfo) {
 		extract($fieldinfo);
-		if (is_array($value)) {
-		foreach ($value as $key => $val) {
-			$formtext = str_replace('{FIELD_VALUE_'.strtoupper($key).'}', join('|' , $val), $formtext);
-		}
-		} else {
-		$formtext = str_replace('{FIELD_VALUE}',$value,$formtext);
-		}
-		$formtext = str_replace('{URL_ADD_RELATION}',U("Content/public_relationlist"),$formtext);
-		$formtext = str_replace('{URL_SHOW_RELATION}',U("Content/public_relationlist"),$formtext);
-		$formtext = str_replace('{MODELID}',$this->modelid,$formtext);
-		preg_match_all('/{FUNC\((.*)\)}/',$formtext,$_match);
-		foreach($_match[1] as $key=>$match_func) {
-			$string = '';
-			$params = explode('~~',$match_func);
-			$user_func = $params[0];
-			$string = $user_func($params[1]);
-			$formtext = str_replace($_match[0][$key],$string,$formtext);
-		}
-		$id  = $this->id ? $this->id : 0;
-		$formtext = str_replace('{ID}',$id,$formtext);
+		var_dump($formtext);
+		$formtext = eval($formtext);
+		exit();
+		$formtext .= '<input type="text" name="info['.$field.']" id="'.$field.'" value="'.$value.'" class="omnipotent-'.$field.'" '.$formattribute.'>';
+
 		$errortips = $this->fields[$field]['errortips'];
 		if($errortips) $this->formValidator .= '$("#'.$field.'").formValidator({onshow:"",onfocus:"'.$errortips.'"}).inputValidator({min:'.$minlength.',max:'.$maxlength.',onerror:"'.$errortips.'"});';
 

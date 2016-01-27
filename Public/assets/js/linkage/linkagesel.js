@@ -372,7 +372,6 @@ LinkageSel.prototype.fill = function (bindIdx, selValue) {
     else {                              // 普通调用
         selValue = typeof selValue !== 'undefined' && selValue !== '' ? selValue : null;    // select默认值
     }
-    console.log(selValue);
     // 触发事件的(上级)select无值或空值则不操作直接跳过
     if ( bindIdx > 0 && (bindEls[bindIdx - 1].value === null || bindEls[bindIdx - 1].value === '') ) {
         //console.log([bindIdx, bindEls[bindIdx -1]]);
@@ -494,7 +493,6 @@ LinkageSel.prototype.fill = function (bindIdx, selValue) {
         if (! st.ie6) {
             typeof elm[0].options[selectedIdx] === 'object' && (elm[0].options[selectedIdx].selected = true);
         } else {
-            console.log(st.ie6);
             setTimeout(function(){
                 typeof elm[0].options[selectedIdx] === 'object' && (elm[0].options[selectedIdx].selected = true);
                 if (selValue) {     // ie6

@@ -59,7 +59,14 @@ class FileController extends CommonController {
                 $result['code'] = 10015;
                 $result['message'] = '请先选择图片!';
             }
-            $this->ajaxReturn($result);
+            if (isset($_GET['CKEditor'])) {
+                $funcNum = $_GET['CKEditorFuncNum'];
+                $url = IMAGE_DOMAIN . $attach_info['url'];
+                $message = $result['message'];
+                $this->ajaxReturn("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>", 'EVAL');
+            } else {
+                $this->ajaxReturn($result);
+            }
         } else {
             $args = $_GET['args'];
             $args = getUploadParams($args);

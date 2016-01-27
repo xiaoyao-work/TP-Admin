@@ -320,7 +320,7 @@ class content_form {
 		return '<input type="button" name="'.$field.'_mark" id="'.$field.'_mark" value="'.$tips.'" class="button" onclick="omnipotent(\'selectid\',\''.APP_PATH.'api.php?op=map&field='.$field.'&modelid='.$modelid.'\',\''.L('mapmark','','map').'\',1,700,420)"><input type="hidden" name="info['.$field.']" value="'.$value.'" id="'.$field.'" >';
 	}*/
 
-	public function omnipotent($field, $value, $fieldinfo) {
+	/*public function omnipotent($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		if (is_array($value)) {
 			foreach ($value as $key => $val) {
@@ -341,6 +341,18 @@ class content_form {
 		$formtext = str_replace('{ID}',$id,$formtext);
 		$errortips = $fieldinfo['errortips'];
 		if($errortips) $this->formValidator .= '$("#'.$field.'").formValidator({onshow:"",onfocus:"'.$errortips.'"}).inputValidator({min:'.$minlength.',max:'.$maxlength.',onerror:"'.$errortips.'"});';
+		return $formtext;
+	}*/
+
+	function omnipotent($field, $value, $fieldinfo) {
+		extract($fieldinfo);
+		eval("\$formtext = \"$formtext\";");
+		$formtext .= '<input type="' . ($ishide ? 'hidden' : $fieldtype) . '" name="info['.$field.']" id="'.$field.'" value="'.$value.'" class="omnipotent-'.$field.'">';
+
+		$errortips = $this->fields[$field]['errortips'];
+		if($errortips) $this->formValidator .= '$("#'.$field.'").formValidator({onshow:"",onfocus:"'.$errortips.'"}).inputValidator({min:'.$minlength.',max:'.$maxlength.',onerror:"'.$errortips.'"});';
+
+		if($errortips) $this->formValidator .= '$("#'.$field.'").formValidator({onshow:"'.$errortips.'",onfocus:"'.$errortips.'"}).inputValidator({min:1,onerror:"'.$errortips.'"});';
 		return $formtext;
 	}
 }?>

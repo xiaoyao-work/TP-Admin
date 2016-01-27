@@ -24,7 +24,7 @@ $fields = array(
 	// 'template'=>'模板',
 	// 'downfiles'=>'多文件上传',
 	// 'map'=>'地图字段',
-	// 'omnipotent'=>'万能字段'
+	'omnipotent'=>'万能字段'
 	);
 	//不允许删除的字段，这些字段讲不会在字段添加处显示
 	$not_allow_fields = array('title', 'username');

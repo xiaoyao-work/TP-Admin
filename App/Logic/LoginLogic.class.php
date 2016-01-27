@@ -35,14 +35,6 @@ class LoginLogic extends BaseLogic {
         $map['account'] = $username;
         $map["status"] = array('gt', 0);
 
-        $data = array();
-        $data['ip']    = get_client_ip();
-        $data['date']  = date("Y-m-d H:i:s");
-        $data['username'] = $username;
-        $data['module'] = MODULE_NAME;
-        $data['action'] = ACTION_NAME;
-        $data['querystring'] = U( MODULE_NAME . '/' . ACTION_NAME );
-
         $authInfo = RBAC::authenticate($map);
         $allow_try_error_time = C('ALLOW_TRY_ERROR_TIME', null, 5);
         if ($authInfo['try_time'] >= $allow_try_error_time) {
@@ -51,6 +43,15 @@ class LoginLogic extends BaseLogic {
             return false;
         }
         model('User')->where(array('id' => $authInfo['id']))->save(array('try_time' => array('exp', '`try_time` + 1')));
+
+        $data = array();
+        $data['ip']    = get_client_ip();
+        $data['date']  = date("Y-m-d H:i:s");
+        $data['username'] = $username;
+        $data['module'] = MODULE_NAME;
+        $data['action'] = ACTION_NAME;
+        $data['querystring'] = U( MODULE_NAME . '/' . ACTION_NAME );
+
         //使用用户名、密码和状态的方式进行认证
         if(false === $authInfo) {
             $data['status'] = 0;

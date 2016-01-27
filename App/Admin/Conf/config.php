@@ -18,6 +18,10 @@ return array(
 	'RBAC_USER_TABLE'           =>  'xy_role_user',
 	'RBAC_ACCESS_TABLE'         =>  'xy_access',
 	'RBAC_NODE_TABLE'           =>  'xy_node',
-	// 'URL_CASE_INSENSITIVE'      =>  true,
-	'AD_TYPE'                   => array('banner'=>'矩形横幅', 'fixure'=>'固定位置', 'float'=>'漂浮', 'couplet'=>'对联', 'imagechange'=>'图片轮换',  'imagelist'=>'图片列表', 'text'=>'文字', 'code'=>'代码')
+
+	'URL_ROUTE_RULES' => array(
+
+		),
+
+
 );

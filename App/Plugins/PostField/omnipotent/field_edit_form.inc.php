@@ -2,7 +2,11 @@
     <tr>
         <td width="100">表单</td>
         <td><textarea name="setting[formtext]" rows="2" cols="20" id="options" style="height:100px;width:400px;"><?php echo htmlspecialchars($setting['formtext']);?></textarea><BR>
-            例如：&lt;input type='text' name='info[voteid]' id='voteid' value='{FIELD_VALUE}' style='50' &gt;</td>
+            注意：输入框内请不要输入字符 "（双引号）否则将导致程序错误。如需输入"请用' | \' 替代！！！
+        </tr>
+        <tr>
+            <td>是否隐藏输入框</td>
+            <td><input type="radio" name="setting[ishide]" value="1" <?php if($setting['ishide']==1) echo 'checked';?>> 是 <input type="radio" name="setting[ishide]" value="0" <?php if($setting['ishide']===0) echo 'checked';?>> 否</td>
         </tr>
         <tr>
             <td>字段类型</td>

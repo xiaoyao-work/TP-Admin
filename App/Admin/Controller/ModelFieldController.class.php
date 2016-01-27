@@ -58,7 +58,7 @@ class ModelFieldController extends CommonController {
             require MODEL_PATH.'add.sql.php';
 
             //附加属性值
-            $_POST['info']['setting'] = array2string($_POST['setting']);
+            $_POST['info']['setting'] = array2string($_POST['setting'], 0);
             $_POST['info']['siteid'] = $this->siteid;
 
             if ($this->db->add($_POST['info'])) {
@@ -111,7 +111,7 @@ class ModelFieldController extends CommonController {
             $oldfield = $_POST['oldfield'];
             require MODEL_PATH.'edit.sql.php';
             //附加属性值
-            $_POST['info']['setting'] = array2string($_POST['setting']);
+            $_POST['info']['setting'] = array2string($_POST['setting'], 0);
             $fieldid = intval($_POST['fieldid']);
 
             /*$_POST['info']['unsetgroupids'] = isset($_POST['unsetgroupids']) ? implode(',',$_POST['unsetgroupids']) : '';

@@ -49,6 +49,9 @@ class CommonController extends Controller {
 
     protected function filterLogin() {
         if (!$_SESSION[C('USER_AUTH_KEY')]) {
+            if (IS_AJAX) {
+                $this->ajaxReturn("<script type='text/javascript'>window.top.location.reload();</script>", 'eval');
+            }
             //跳转到认证网关
             $this->assign('jumpUrl', __MODULE__ . C('USER_AUTH_GATEWAY'));
             $this->assign('waitSecond',3);
