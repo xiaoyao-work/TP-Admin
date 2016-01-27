@@ -105,15 +105,6 @@ class content_form {
 		return "<div id='{$field}_tip'></div>".'<textarea name="info['.$field.']" id="'.$field.'" boxid="'.$field.'">'.stripslashes($value).'</textarea>'.\Org\Util\Form::editor($field,$toolbar,'content',$this->catid,'',$allowupload,1,'',$height,$disabled_page);
 	}
 
-	public function catid($field, $value, $fieldinfo) {
-		$catid = $value ? $value : $this->catid;
-		$publish_str = '';
-		if(defined('IN_ADMIN') && !$value)  {
-				$publish_str = " <a href='javascript:;' onclick=\"omnipotent('selectid','".U('Content/add_othors')."','同时发布到其他栏目',1);return false;\" style='color:#B5BFBB'>[同时发布到其他栏目]</a><ul class='list-dot-othors' id='add_othors_text'></ul>";
-		}
-		return '<input type="hidden" name="info['.$field.']" value="'.$catid.'">'.$this->categorys[$catid]['catname'].$publish_str;
-	}
-
 	public function title($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		$style_arr = explode(';',$this->data['style']);
@@ -176,10 +167,10 @@ class content_form {
 		if($show_type && defined('IN_ADMIN')) {
 			$preview_img = $value ? $value : asset('images/admin/icon/upload-pic.png');
 			return $str."<div class='upload-pic img-wrap'><input type='hidden' name='info[$field]' id='$field' value='$value'>
-			<a href='javascript:void(0);' onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$upload_maxsize,$images_width,$images_height,$watermark','image','".U("File/upload")."');return false;\">
-			<img src='$preview_img' id='{$field}_preview' width='135' height='113' style='cursor:hand' /></a>" . "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$upload_maxsize,$images_width,$images_height,$watermark','image','".U("File/upload")."');return false;\" value=\"上传图片\">" .$html."</div>";
+			<a href='javascript:void(0);' onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$isselectimage,$images_width,$images_height,$watermark','image','".U("File/upload")."');return false;\">
+			<img src='$preview_img' id='{$field}_preview' width='135' height='113' style='cursor:hand' /></a>" . "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$isselectimage,$images_width,$images_height,$watermark','image','".U("File/upload")."');return false;\" value=\"上传图片\">" .$html."</div>";
 		} else {
-			return $str."<input type='text' name='info[$field]' id='$field' value='$value' size='$size' class='input-text' />  <input type='button' class='button' onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$upload_maxsize,$images_width,$images_height,$watermark','image','".U("File/upload")."');return false;\"/ value='上传图片'>".$html;
+			return $str."<input type='text' name='info[$field]' id='$field' value='$value' size='$size' class='input-text' />  <input type='button' class='button' onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$isselectimage,$images_width,$images_height,$watermark','image','".U("File/upload")."');return false;\"/ value='上传图片'>".$html;
 		}
 	}
 
@@ -244,29 +235,6 @@ class content_form {
 		return \Org\Util\Form::date("info[$field]",$value,$isdatetime,1,'true',$timesystem);
 	}
 
-	public function posid($field, $value, $fieldinfo) {
-		$setting = string2array($fieldinfo['setting']);
-		$position = D('Position')->where(array('siteid' => $this->siteid))->field(array('id', 'name', 'catid', 'modelid'))->select();
-		if(empty($position)) return '';
-		$array = array();
-		foreach($position as $_key=>$_value) {
-			if($_value['modelid'] && ($_value['modelid'] !=  $this->modelid || ($_value['catid'] && strpos(','.$this->categorys[$_value['catid']]['arrchildid'].',',','.$this->catid.',')===false))) continue;
-			$array[$_value['id']] = $_value['name'];
-		}
-		$posids = array();
-		if(ACTION_NAME=='edit') {
-			$position_data = D('PositionData')->where(array('id' => $this->id, 'modelid' => $this->modelid, 'siteid' => $this->siteid))->field('posid')->group('posid')->select();
-			$position_data_ids = array();
-			foreach ($position_data as $key => $pos) {
-				$position_data_ids[] = $pos['posid'];
-			}
-			$posids = implode(',', $position_data_ids);
-		} else {
-			$posids = $fieldinfo['defaultvalue'];
-		}
-		return "<input type='hidden' name='info[$field][]' value='-1'>".\Org\Util\Form::checkbox($array,$posids,"name='info[$field][]'",'',$fieldinfo['width']);
-	}
-
 	public function keyword($field, $value, $fieldinfo) {
 		extract($fieldinfo);
 		if(!$value) $value = $defaultvalue;
@@ -299,58 +267,6 @@ class content_form {
 		}
 		$size = $fieldinfo['size'] ? $fieldinfo['size'] : 25;
 		return '<input type="hidden" name="info[islink]" value="0"><input type="text" name="linkurl" id="linkurl" value="'.$url.'" size="'.$size.'" maxlength="255" '.$disabled.' class="input-text"> <input name="info[islink]" type="checkbox" id="islink" value="1" onclick="ruselinkurl();" '.$checked.'> <font color="red">转向链接</font>';
-	}
-
-	public function template($field, $value, $fieldinfo) {
-		$sitelist = get_site_info();
-		$default_style = $sitelist[$this->siteid]['default_style'];
-		$template = \Org\Util\Form::select_template($default_style,'content',$value,'name="info['.$field.']" id="'.$field.'"','show');
-		return $template;
-	}
-
-	/*public function pages($field, $value, $fieldinfo) {
-		extract($fieldinfo);
-		if($value) {
-			$v = explode('|', $value);
-			$data = "<select name=\"info[paginationtype]\" id=\"paginationtype\" onchange=\"if(this.value==1)\$('#paginationtype1').css('display','');else \$('#paginationtype1').css('display','none');\">";
-			$type = array(L('page_type1'), L('page_type2'), L('page_type3'));
-			if($v[0]==1) $con = 'style="display:"';
-			else $con = 'style="display:none"';
-			foreach($type as $i => $val) {
-				if($i==$v[0]) $tag = 'selected';
-				else $tag = '';
-				$data .= "<option value=\"$i\" $tag>$val</option>";
-			}
-			$data .= "</select><span id=\"paginationtype1\" $con><input name=\"info[maxcharperpage]\" type=\"text\" id=\"maxcharperpage\" value=\"$v[1]\" size=\"8\" maxlength=\"8\">".L('page_maxlength')."</span>";
-			return $data;
-		} else {
-			return "<select name=\"info[paginationtype]\" id=\"paginationtype\" onchange=\"if(this.value==1)\$('#paginationtype1').css('display','');else \$('#paginationtype1').css('display','none');\">
-			<option value=\"0\">".L('page_type1')."</option>
-			<option value=\"1\">".L('page_type2')."</option>
-			<option value=\"2\">".L('page_type3')."</option>
-			</select>
-			<span id=\"paginationtype1\" style=\"display:none\"><input name=\"info[maxcharperpage]\" type=\"text\" id=\"maxcharperpage\" value=\"10000\" size=\"8\" maxlength=\"8\">".L('page_maxlength')."</span>";
-		}
-	}*/
-
-	public function typeid($field, $value, $fieldinfo) {
-		extract($fieldinfo);
-		$setting = string2array($setting);
-		if(!$value) $value = $setting['defaultvalue'];
-		if($errortips) {
-			$this->formValidator .= '$("#'.$field.'").formValidator({onshow:"",onfocus:"'.$errortips.'"}).inputValidator({min:1,onerror:"'.$errortips.'"});';
-		}
-		$usable_type = $this->categorys[$this->catid]['usable_type'];
-		$usable_array = array();
-		if($usable_type) $usable_array = explode(',',$usable_type);
-
-		//获取站点ID
-		if(intval($_GET['siteid'])){
-			$siteid = intval($_GET['siteid']);
-		}else{
-			$siteid = $this->siteid;
-		}
-		return \Org\Util\Form::select($data,$value,'name="info['.$field.']" id="'.$field.'" '.$formattribute.' '.$css, '≡请选择≡');
 	}
 
 	public function readpoint($field, $value, $fieldinfo) {
@@ -413,10 +329,6 @@ class content_form {
 		} else {
 			$formtext = str_replace('{FIELD_VALUE}',$value,$formtext);
 		}
-		// $formtext = str_replace('{FIELD_VALUE}',$value,$formtext);
-		$formtext = str_replace('{URL_ADD_RELATION}',U("Content/public_relationlist"),$formtext);
-		$formtext = str_replace('{URL_SHOW_RELATION}',U("Content/show_relation"),$formtext);
-		$formtext = str_replace('{MODELID}',$this->modelid,$formtext);
 		preg_match_all('/{FUNC\((.*)\)}/',$formtext,$_match);
 		foreach($_match[1] as $key=>$match_func) {
 			$string = '';

@@ -65,7 +65,6 @@ class FileController extends CommonController {
             $args = getUploadParams($args);
             $this->assign('args',$args);
             $this->display();
-           // abort(404);
         }
     }
 

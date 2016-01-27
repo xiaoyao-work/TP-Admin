@@ -175,7 +175,8 @@ function getUploadParams($args) {
 	$site_setting = get_site_setting($siteid);
 	$site_allowext = $site_setting['upload_allowext'];
 	$args = explode(',',$args);
-	$allowupload = empty($args[2]) ? $site_setting['upload_maxsize'] : $args[2];
+	// $allowupload = empty($args[2]) ? $site_setting['upload_maxsize'] : $args[2];
+	$allowupload = $site_setting['upload_maxsize'];
 	$watermark_enable = empty($args[5]) ? $site_setting['watermark_enable'] : $args['5'];
 
 	$arr['file_upload_limit'] = intval($args[0]) ? intval($args[0]) : '8';
