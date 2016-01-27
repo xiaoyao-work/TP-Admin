@@ -1,6 +1,4 @@
 <?php
-
-
 $field_type				= 'varchar'; //字段数据库类型
 $field_basic_table		= 0; //是否允许作为主表字段
 $field_allow_index		= 0; //是否允许建立索引

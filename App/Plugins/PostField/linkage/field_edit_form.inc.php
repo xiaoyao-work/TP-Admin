@@ -4,7 +4,7 @@
     <td>菜单ID</td>
     <td>
       <input type="text" id="linkageid" name="setting[linkageid]" value="<?php echo $setting['linkageid'];?>" size="5">
-      <input type='button' value="在列表中选择" onclick="omnipotent('selectid','<?php echo U('Linkage/public_get_list'); ?>','在列表中选择')" class="button">
+      <input type='button' value="在列表中选择" onclick="omnipotent('selectid','<?php echo U('Linkage/public_get_list'); ?>','在列表中选择', 1)" class="button">
       请到导航 扩展 > 联动菜单 > 添加联动菜单
     </td>
   </tr>
