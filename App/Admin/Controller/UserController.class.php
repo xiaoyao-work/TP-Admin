@@ -47,9 +47,12 @@ class UserController extends CommonController {
             if ( !empty($datas['pwd']) ) {
                 $datas['password'] = md5(trim($datas['pwd']));
             }
-            if($this->db->where(array('id' => $_POST['id']))->save($datas)) {
+            $this->db->startTrans();
+            if($this->db->where(array('id' => $_POST['id']))->save($datas) !== false && model('role_user')->where(array('user_id' => $_POST['id']))->save(array('role_id' => $datas['role_id'])) !== false ) {
+                $this->db->commit();
                 $this->success('操作成功！',__MODULE__.'/User/index');
             } else {
+                $this->db->rollback();
                 $this->error('操作失败！',__MODULE__.'/User/index');
             }
         } else {
