@@ -78,7 +78,7 @@ class content_form {
 			$this->formValidator .= '.functionValidator({fun: function(value, _this) { return '.$pattern.'.test(value); }, onerror:\''. $errortips .'\'})';
 		}
 		$this->formValidator .= ';';
-		return '<input type="text" name="info['.$field.']" id="'.$field.'" size="'.$size.'" value="'.$value.'" class="input-text" '.$formattribute.' '.$css.'>';
+		return '<input type="' . $type . '" name="info['.$field.']" id="'.$field.'" size="'.$size.'" value="'.$value.'" class="input-text" '.$formattribute.' '.$css.'>';
 	}
 
 	public function textarea($field, $value, $fieldinfo) {

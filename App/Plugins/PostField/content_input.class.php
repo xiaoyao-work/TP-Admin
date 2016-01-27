@@ -166,6 +166,11 @@ class content_input {
 		return $value;
 	}
 
+	function text($field, $value) {
+		if($this->fields[$field]['ispassword']) $value = md5($value);
+		return $value;
+	}
+
 
 
 }?>
