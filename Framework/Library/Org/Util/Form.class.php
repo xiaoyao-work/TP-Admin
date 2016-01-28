@@ -24,7 +24,8 @@ class Form {
     * @param string $disabled_page 是否禁用分页和子标题
     */
     public static function editor($textareaid = 'content', $toolbar_type = 'basic', $module = '', $catid = '', $color = '', $allowupload = 0, $allowbrowser = 1,$alowuploadexts = '',$height = 200,$disabled_page = 0, $allowuploadnum = '10') {
-        $str ='';
+        $str .= "<script type=\"text/javascript\">\r\n";
+        $str .= "if ( CKEDITOR.env.ie && CKEDITOR.env.version < 9 ) { CKEDITOR.tools.enableHtml5Elements( document ) };\r\n";
         if($toolbar_type == 'basic') {
             $toolbar = "[\r\n";
             $toolbar .= defined('IN_ADMIN') ? "{ name: 'document', items: [ 'Source' ] },\r\n" : '';
@@ -55,22 +56,37 @@ class Form {
         } else {
             $toolbar = '';
         }
-        $str .= "<script type=\"text/javascript\">\r\n";
-        $str .= "CKEDITOR.replace( '$textareaid',\r\n{\r\nheight:{$height},\r\n";
+        $ck_options = "{\r\nheight:{$height},\r\n";
             if($allowupload) {
-                $str .="flashupload:true,\r\n" .
+                /*$ck_options .="flashupload:true,\r\n" .
                     "alowuploadexts:'".$alowuploadexts."',\r\n" .
                     "allowbrowser:'".$allowbrowser."',\r\n" .
-                    "allowuploadnum:'".$allowuploadnum."',\r\n";
-                $str .= "filebrowserUploadUrl : '" . __MODULE__  . "/File/upload',\r\n";
-                $str .= "filebrowserBrowseUrl: '" . __MODULE__  . "/Attachment/album_list',\r\n";
+                    "allowuploadnum:'".$allowuploadnum."',\r\n";*/
+                $ck_options .= "imageUploadUrl : '" . __MODULE__  . "/File/upload?type=ck_drag',\r\n";
+                $ck_options .= "filebrowserUploadUrl : '" . __MODULE__  . "/File/upload?type=ck_image',\r\n";
+                $ck_options .= "filebrowserBrowseUrl: '" . __MODULE__  . "/Attachment/album_list',\r\n";
             }
             if($color) {
-                $str .= "extraPlugins : 'uicolor',uiColor: '$color',";
+                $ck_options .= "extraPlugins : 'uicolor',uiColor: '$color',";
             }
-            $str .= "toolbar :\r\n";
-            $str .= $toolbar;
-            $str .= "});\r\n";
+            $ck_options .= "toolbar :\r\n";
+            $ck_options .= $toolbar;
+            $ck_options .= "}\r\n";
+        $str .= "( function() {\r\nvar wysiwygareaAvailable = isWysiwygareaAvailable();\r\n" .
+            "if ( wysiwygareaAvailable ) {\r\n" .
+                "CKEDITOR.replace( '".$textareaid."', ". $ck_options ." );\r\n" .
+            "} else {\r\n" .
+                "var editorElement = CKEDITOR.document.getById( '".$textareaid."' );\r\n" .
+                "editorElement.setAttribute( 'contenteditable', 'true' );\r\n" .
+                "CKEDITOR.inline( '".$textareaid."', ". $ck_options ." );\r\n" .
+            "}\r\n" .
+            "function isWysiwygareaAvailable() {\r\n" .
+                "if ( CKEDITOR.revision == ( '%RE' + 'V%' ) ) {\r\n" .
+                    "return true;\r\n" .
+                "}" .
+                "return !!CKEDITOR.plugins.get( 'wysiwygarea' );\r\n" .
+            "}\r\n" .
+        "} )();";
         $str .= '</script>';
         return $str;
     }

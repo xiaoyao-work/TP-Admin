@@ -59,13 +59,30 @@ class FileController extends CommonController {
                 $result['code'] = 10015;
                 $result['message'] = '请先选择图片!';
             }
+            $type = I('get.type', 'file');
+            switch ($type) {
+                case 'ck_image':
+                    $funcNum = $_GET['CKEditorFuncNum'];
+                    $url = IMAGE_DOMAIN . $attach_info['url'];
+                    $message = $result['message'];
+                    $this->ajaxReturn("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>", 'EVAL');
+                    break;
+                case 'ck_drag':
+                    if ($result['code'] === 0) {
+                        $ck_drag_res = array('uploaded' => 1, 'fileName' => $result['data']['title'], 'url' => IMAGE_DOMAIN . $result['data']['url']);
+                    } else {
+                        $ck_drag_res = array('uploaded' => 1, 'error' => array('message' => $result['message']));
+                    }
+                    $this->ajaxReturn($ck_drag_res);
+                    break;
+                case 'file':
+                default:
+                    $this->ajaxReturn($result);
+                    break;
+            }
             if (isset($_GET['CKEditor'])) {
-                $funcNum = $_GET['CKEditorFuncNum'];
-                $url = IMAGE_DOMAIN . $attach_info['url'];
-                $message = $result['message'];
-                $this->ajaxReturn("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>", 'EVAL');
+
             } else {
-                $this->ajaxReturn($result);
             }
         } else {
             $args = $_GET['args'];

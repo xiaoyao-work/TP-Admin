@@ -8,6 +8,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.uiColor = '#AADC6E';
     config.defaultLanguage = "zh-cn";
     config.skin = 'moonocolor';
+    config.extraPlugins = 'uploadimage';
     config.toolbar = [
         { name: 'document', items: [ 'Source' ] },
         { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },
