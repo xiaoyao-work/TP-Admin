@@ -67,7 +67,7 @@
                         </div>
                         <div class="major-operate clear">
                             <div class="left-link">
-                                <a href="javascript:void(0);window.top.art.dialog({id:'notice',content:'开发中……',lock:true,width:'200',height:'50'});">添加<?php echo $taxonomy['label'] ?></a>
+                                <a href="javascript:void(0);window.top.art.dialog({id:'notice',content:'开发中……',lock:true});">添加<?php echo $taxonomy['label'] ?></a>
                             </div>
                             <div class="right-button"></div>
                         </div>
@@ -81,7 +81,7 @@
 <block name="footer">
     <script type="text/javascript">
         $(function(){
-            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({id:'check_content_id',content:msg,lock:true,width:'200',height:'50'},   function(){$(obj).focus();
+            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({id:'check_content_id',content:msg,lock:true},   function(){$(obj).focus();
                 boxid = $(obj).attr('id');
                 if($('#'+boxid).attr('boxid')!=undefined) {
                     check_content(boxid);

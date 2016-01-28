@@ -120,9 +120,9 @@ class Tree {
                 $is_checked = in_array($value['id'], $term_ids);
 
                 if ($value['child']) {
-                    $nstr = '<li id="'.$value['taxonomy'] . "-" .$value['id'].'" class="popular-' . $value['taxonomy'] . '"><label class="selectit"><input value="'. $value['id'] .'" type="checkbox" name="'. $value['post_type'] . "_" . $value['taxonomy'] .'[]" id="in-'.$value['taxonomy'] . "-" .$value['id'].'" '. ($is_checked ? 'checked' : '') .'/> ' . $value['catname'] . $value['child'] . '</label><ul class="children">';
+                    $nstr = '<li id="'.$value['taxonomy'] . "-" .$value['id'].'" class="popular-' . $value['taxonomy'] . '"><label class="selectit"><input value="'. $value['id'] .'" type="checkbox" name="'. $value['post_type'] . "_" . $value['taxonomy'] .'[]" id="in-'.$value['taxonomy'] . "-" .$value['id'].'" '. ($is_checked ? 'checked' : '') .'/> ' . $value['catname'] . '</label><ul class="children">';
                 } else {
-                    $nstr = '<li id="'.$value['taxonomy'] . "-" .$value['id'].'" class="popular-' . $value['taxonomy'] . '"><label class="selectit"><input value="'. $value['id'] .'" type="checkbox" name="'. $value['post_type'] . "_" . $value['taxonomy'] .'[]" id="in-'.$value['taxonomy'] . "-" .$value['id'].'" '. ($is_checked ? 'checked' : '') .'/> ' . $value['catname'] . $value['child'] . '</label>';
+                    $nstr = '<li id="'.$value['taxonomy'] . "-" .$value['id'].'" class="popular-' . $value['taxonomy'] . '"><label class="selectit"><input value="'. $value['id'] .'" type="checkbox" name="'. $value['post_type'] . "_" . $value['taxonomy'] .'[]" id="in-'.$value['taxonomy'] . "-" .$value['id'].'" '. ($is_checked ? 'checked' : '') .'/> ' . $value['catname'] . '</label>';
                 }
 
                 $this->ret .= $nstr;

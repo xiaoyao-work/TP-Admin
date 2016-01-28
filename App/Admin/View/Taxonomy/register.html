@@ -38,7 +38,7 @@
 <block name="footer">
     <script type="text/javascript">
         $(function() {
-            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true,width:'200',height:'50'}, function(){this.close();$(obj).focus();})}});
+            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true}, function(){this.close();$(obj).focus();})}});
             $("#name").formValidator({onshow:"请输入分类名称",onfocus:"请输入分类名称",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入分类名称"});
         });
     </script>

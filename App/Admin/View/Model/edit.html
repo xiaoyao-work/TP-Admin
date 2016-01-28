@@ -31,7 +31,7 @@
 <block name="footer">
     <script type="text/javascript">
         $(function(){
-            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true,width:'200',height:'50'}, function(){this.close();$(obj).focus();})}});
+            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true}, function(){this.close();$(obj).focus();})}});
 
             $("#model_name").formValidator({onshow:"请输入分类名称",onfocus:"请输入模型名称"}).inputValidator({min:1,onerror:"请输入模型名称"}).ajaxValidator({type : "get",url : "__CONTROLLER__/public_check_name?field=name&modelid=<?php echo $model['id']; ?>",data :"",datatype : "html",async:'false',success : function(data){  if( data=="1" ){return true;}else{return false;}},buttons: $("#dosubmit"),onerror : "名称已存在。",onwait : "正在连接，请稍候。"}).defaultPassed();
         });

@@ -50,7 +50,7 @@
 
     <script type="text/javascript">
         $(function(){
-            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true,width:'200',height:'50'}, function(){this.close();$(obj).focus();})}});
+            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true}, function(){this.close();$(obj).focus();})}});
 
             $("#catname").formValidator({onshow:"请输入栏目名称",onfocus:"请输入栏目名称",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入栏目名称"}).defaultPassed();
             $("#catdir").formValidator({onshow:"请输入目录名称",onfocus:"通常使用小写，只能包含字母，数字和连字符（-）"}).regexValidator({regexp:"^([a-zA-Z0-9、-]|[_]){0,30}$",onerror:"目录名称必须为字母、数字、下划线、中划线"}).inputValidator({min:1,onerror:"请输入目录名称"}).ajaxValidator({type : "get",url : "__CONTROLLER__/public_check_catdir",data :"",datatype : "html",cached:false,getdata:{parentid:'parentid'},async:'false',success : function(data){ if( data == "1" ){return true;}else{return false;}},buttons: $("#dosubmit"),onerror : "目录名称已存在",onwait : "正在连接，请稍候。"}).defaultPassed();

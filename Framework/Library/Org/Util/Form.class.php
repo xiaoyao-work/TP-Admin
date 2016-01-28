@@ -23,42 +23,45 @@ class Form {
     * @param string $height 编辑器高度
     * @param string $disabled_page 是否禁用分页和子标题
     */
-    public static function editor($textareaid = 'content', $toolbar = 'basic', $module = '', $catid = '', $color = '', $allowupload = 0, $allowbrowser = 1,$alowuploadexts = '',$height = 200,$disabled_page = 0, $allowuploadnum = '10') {
+    public static function editor($textareaid = 'content', $toolbar_type = 'basic', $module = '', $catid = '', $color = '', $allowupload = 0, $allowbrowser = 1,$alowuploadexts = '',$height = 200,$disabled_page = 0, $allowuploadnum = '10') {
         $str ='';
-        if($toolbar == 'basic') {
-            $toolbar = defined('IN_ADMIN') ? "['Source']," : '';
-            $toolbar .= "['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink' ],['Maximize'],\r\n";
-        } elseif($toolbar == 'full') {
-            if(defined('IN_ADMIN')) {
-                $toolbar = "['Source',";
-            } else {
-                $toolbar = '[';
-            }
-            $toolbar .= "'-','Templates'],
-            ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print'],
-            ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],['ShowBlocks'],['Image','Capture','Flash','MyVideo'],['Maximize'],
-            '/',
-            ['Bold','Italic','Underline','Strike','-'],
-            ['Subscript','Superscript','-'],
-            ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
-            ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-            ['Link','Unlink','Anchor'],
-            ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
-            '/',
-            ['Styles','Format','Font','FontSize'],
-            ['TextColor','BGColor'],
-            ['attachment'],\r\n";
-        } elseif($toolbar == 'desc') {
-            $toolbar = "['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink', '-', 'Image', '-','Source'],['Maximize'],\r\n";
+        if($toolbar_type == 'basic') {
+            $toolbar = "[\r\n";
+            $toolbar .= defined('IN_ADMIN') ? "{ name: 'document', items: [ 'Source' ] },\r\n" : '';
+            $toolbar .= "{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },\r\n" .
+            "{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },\r\n" .
+            "'/'," .
+            "{ name: 'editing', items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ] },\r\n" .
+            "{ name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },\r\n" .
+            "{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },\r\n" .
+            "'/'," .
+            "{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },\r\n" .
+            "{ name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] }\r\n" .
+            "],\r\n";
+        } elseif($toolbar_type == 'full') {
+            $toolbar = "[\r\n";
+            $toolbar .= defined('IN_ADMIN') ? "{ name: 'document', items: [ 'Source' ] },\r\n" : '';
+            $toolbar .=  "{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },\r\n" .
+                "{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },\r\n" .
+                "'/'," .
+                "{ name: 'editing', items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ] },\r\n" .
+                "{ name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },\r\n" .
+                "{ name: 'insert', items: [ 'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe' ] },\r\n" .
+                "'/'," .
+                "{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },\r\n" .
+                "{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },\r\n" .
+                "{ name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] }\r\n" .
+            "],\r\n";
         } else {
             $toolbar = '';
         }
         $str .= "<script type=\"text/javascript\">\r\n";
-        $str .= "CKEDITOR.replace( '$textareaid',{"; $str .= "height:{$height},";
+        $str .= "CKEDITOR.replace( '$textareaid',\r\n{\r\nheight:{$height},\r\n";
             if($allowupload) {
-                $str .="flashupload:true,alowuploadexts:'".$alowuploadexts."',allowbrowser:'".$allowbrowser."',allowuploadnum:'".$allowuploadnum."',\r\n";
-            }
-            if($allowupload) {
+                $str .="flashupload:true,\r\n" .
+                    "alowuploadexts:'".$alowuploadexts."',\r\n" .
+                    "allowbrowser:'".$allowbrowser."',\r\n" .
+                    "allowuploadnum:'".$allowuploadnum."',\r\n";
                 $str .= "filebrowserUploadUrl : '" . __MODULE__  . "/File/upload',\r\n";
                 $str .= "filebrowserBrowseUrl: '" . __MODULE__  . "/Attachment/album_list',\r\n";
             }
@@ -66,9 +69,7 @@ class Form {
                 $str .= "extraPlugins : 'uicolor',uiColor: '$color',";
             }
             $str .= "toolbar :\r\n";
-            $str .= "[\r\n";
             $str .= $toolbar;
-            $str .= "]\r\n";
             $str .= "});\r\n";
         $str .= '</script>';
         return $str;

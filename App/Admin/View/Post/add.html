@@ -68,7 +68,7 @@
                         </div>
                         <div class="major-operate clear">
                             <div class="left-link">
-                                <a href="javascript:void(0);window.top.art.dialog({id:'notice',content:'开发中……',lock:true,width:'200',height:'50'});">添加<?php echo $taxonomy['label'] ?></a>
+                                <a href="javascript:void(0);window.top.art.dialog({id:'notice',content:'开发中……',lock:true});">添加<?php echo $taxonomy['label'] ?></a>
                             </div>
                             <div class="right-button"></div>
                         </div>
@@ -88,8 +88,7 @@
                     id:'check_content_id',
                     content:msg,
                     lock:true,
-                    width:'200',
-                    height:'50'}, function(){
+                }, function() {
                         $(obj).focus();
                         boxid = $(obj).attr('id');
                         if($('#'+boxid).attr('boxid')!=undefined) {

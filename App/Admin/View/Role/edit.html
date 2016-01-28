@@ -39,7 +39,7 @@
 <block name="footer">
 <script type="text/javascript">
     $(function(){
-        $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true,width:'200',height:'50'}, function(){this.close();$(obj).focus();})}});
+        $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){window.top.art.dialog({content:msg,lock:true}, function(){this.close();$(obj).focus();})}});
         $("#name").formValidator({onshow:"请输入角色名称",onfocus:"请输入角色名称",oncorrect:"输入正确"}).inputValidator({min:1,onerror:"请输入角色名称"}).defaultPassed();
         // .ajaxValidator({type:"get",url:"__CONTROLLER__/public_check_poster",data:"",datatype:"html",cached:false,async:'true',success : function(data) {if( data == "1" ) { return true; } else { return false; } }, error: function(){alert("服务器没有返回数据，可能服务器忙，请重试");}, onerror : "该广告已存在", onwait : "正进行合法性校验..."});
     });
