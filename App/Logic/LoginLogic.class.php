@@ -53,7 +53,7 @@ class LoginLogic extends BaseLogic {
         $data['querystring'] = U( MODULE_NAME . '/' . ACTION_NAME );
 
         //使用用户名、密码和状态的方式进行认证
-        if(false === $authInfo) {
+        if(empty($authInfo)) {
             $data['status'] = 0;
             model("Log")->add($data);
             $this->errorCode = 10003;
