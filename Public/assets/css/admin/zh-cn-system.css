@@ -1,6 +1,4 @@
 body{color:#444; height:100%}a{text-decoration:none; color:#444}
-html.off,html.off body {background: #e2e9ea url(../../images/admin/admin_img/left_bg.png) repeat-y -40px top;}
-html.on,html.on body{background: #e2e9ea; background-image:none;}
 html.addbg,html.addbg body{background:#e2e9ea}
 a:hover{text-decoration:underline;}
 .pad-6{padding:6px; overflow:hidden}.pad-10{padding:10px; overflow:hidden}.pad_10,.pad-lr-10{padding:0 10px}.pad-lr-6{padding:0 6px}
@@ -73,23 +71,68 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 #Skin .s3 {background-position:0 -33px}
 #Skin .s4 {}
 /*主体样式*/
-.left_menu{width:145px; position:relative; display:block; padding-top:10px; overflow:hidden; }
-#Scroll{ float:left; width:125px;padding:0 2px 0 10px; overflow:hidden}
+.left_menu{
+    width:145px;
+    position:relative;
+    overflow:hidden;
+    background-color: #222;
+}
+#Scroll{
+    float:left;
+    width:135px;
+    overflow:hidden
+}
 .left_menu_on{ width:10px; padding:0;}
 .left_menu_on #Scroll{display:none}
-.left_menu h3{font-weight: 700;color: #275d96;border-bottom:1px solid #d9e4ea; line-height:24px; height:24px; margin-bottom:5px}
-.left_menu ul li{color:#666; display:block; margin-right:1px}
-.left_menu ul li a{line-height:24px;padding-left:8px;display:block;text-decoration: none;background-color:#f7fbfc;}
+.left_menu h3 {
+    font-weight: 700;
+    color: #FFF;
+    line-height:34px;
+    height:34px;
+    overflow: hidden;
+    text-indent: 16px;
+}
+.left_menu h3.on {
+    background-color: #0074a2;
+}
+.left_menu ul {
+    background-color: #333;
+    padding: 7px 0;
+}
+.left_menu ul li {
+    display:block;
+    height: 27px;
+}
+.left_menu ul li a {
+    font-size: 13px;
+    display: inline-block;
+    height: 27px;
+    line-height: 27px;
+    padding: 0 12px;
+    text-decoration: none;
+    color: #FFF;
+}
+
+.left_menu h3 span{
+    background: url(../../images/admin/admin_img/left_menu.png) no-repeat;text-decoration: none; margin-right:6px
+}
+
 .left_menu ul li a:hover,
-.left_menu ul li.on,.left_menu h3 span{background: url(../../images/admin/admin_img/left_menu.png) no-repeat;text-decoration: none; margin-right:6px}
-.left_menu ul li.on{ height:29px; padding-left:20px; margin-right:0}
-.left_menu ul li.on a{ height:29px; line-height:29px; background:none; padding:0; display:block}
-.left_menu ul li.on a:hover{background:none}
-.left_menu ul li a:hover{background-position: left -38px}
-.left_menu a.open,.left_menu a.close,.addContent a.r-open,.addContent a.r-close{background: url(../../images/admin/admin_img/left_menu_openClose.png) no-repeat 3px center;width:8px; display:block; float:left;height:auto; right:-11px; top:0}
-.left_menu a.open:hover,.left_menu a.close:hover,.addContent a.r-open:hover,.addContent a.r-close:hover{ background-color:#d6e1e4}
+.left_menu ul li.on a {
+    color: #2ea2cc;
+}
+.left_menu a.open,.left_menu a.close,.addContent a.r-open,.addContent a.r-close{
+    background: url(../../images/admin/admin_img/left_menu_openClose.png) no-repeat 3px center;width:8px; display:block; float:left;height:auto; right:-11px; top:0
+}
 .left_menu a.close,.addContent a.r-close{background-position:right center; width:10px}
-.left_menu h3 span{background-position: left -78px; display:block; float:right; height:14px; width:14px; margin-top:5px}
+.left_menu h3 span{
+    background-position: left -78px;
+    display:block;
+    float:right;
+    height:14px;
+    width:14px;
+    margin-top: 10px
+}
 .left_menu h3 span.on{background-position: -33px -78px;}
 .scroll{ position:absolute; left:10px; bottom:14px; width:120px; height:17px; overflow:hidden; display:none}
 .scroll a{ background:url(../../images/admin/admin_img/scroll_bg.png) no-repeat left top; width:48px; height:17px; margin:0 5px}
@@ -113,8 +156,7 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
 .col-tab .content-r{border-top:1px solid #dce3ed}
 .col-tab .contentList{border:1px solid #dce3ed;_zoom:1;}
 
-.col-1{ border:1px solid #f4f6f5;zoom:1; background:#fff}
-.col-1 div.content{border:1px solid #c2d1d8;zoom:1;}
+.col-1{background:#fff}
 
 .col-2{ border:1px solid #c7d8ea;zoom:1;}
 .col-2 h6{border-bottom:1px solid #c7d8ea; color:#3a6ea5;background: url(../../images/admin/admin_img/x_bg.png) repeat-x left -42px; height:26px; line-height:28px; padding:0 10px}
@@ -285,7 +327,11 @@ body fieldset.blue legend{padding:3px 8px;font-weight:700;color:#347add; backgro
     background: #fff;
     margin-bottom: 20px;
 }
-
+.postbox p {
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 1em 0;
+}
 .postbox h3.title {
     font-size: 14px;
     padding: 8px 12px;

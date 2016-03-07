@@ -46,9 +46,9 @@ function wSize() {
         Body.addClass('objbody');
     }
     var openClose = $("#rightMain").height();
-    $('#center_frame').height(openClose + 22);
-    $("#openClose").height(openClose + 22);
-    $("#Scroll").height(openClose + 22);
+    $('#center_frame').height(openClose + 28);
+    $("#openClose").height(openClose + 28);
+    $("#Scroll").height(openClose + 28);
     windowW();
 }
 function windowW(){
