@@ -244,21 +244,4 @@ class ModelFieldController extends CommonController {
         $this->ajaxReturn($settings);
     }
 
-    /**
-     * 预览模型
-     */
-    public function public_priview() {
-        import('ORG.Util.Form');
-        $modelid = intval($_GET['modelid']);
-        require MODEL_PATH.'content_form.class.php';
-        $content_form = new \content_form($modelid);
-        $module = $this->model_db->where(array('id'=>$modelid))->find();
-        $forminfos = $content_form->get();
-
-        $forminfos = array_merge($forminfos['base'], $forminfos['senior']);
-        $this->assign('formValidator', $content_form->formValidator);
-        $this->assign('forminfos', $forminfos);
-        $this->assign('module', $module);
-        $this->display();
-    }
 }

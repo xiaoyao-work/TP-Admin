@@ -7,9 +7,6 @@ $fields = array(
 	'box'		=> '选项',
 	'image'		=> '图片',
 	'images'	=> '多图片',
-
-	// 'downfiles'=>'多文件上传',
-
 	'number'	=> '数字',
 	'datetime'	=> '日期和时间',
 	'keyword'	=> '关键词',
@@ -19,12 +16,13 @@ $fields = array(
 	'readpoint'	=> '积分、点数',
 	'linkage'	=> '联动菜单',
 	// 'typeid'	=> '类别',
+	// 'downfiles'=>'多文件上传',
 	// 'posid'=>'推荐位',
 	// 'groupid'=>'会员组',
 	// 'template'=>'模板',
 	// 'downfiles'=>'多文件上传',
 	// 'map'=>'地图字段',
-	'omnipotent'=>'万能字段'
+	// 'omnipotent'=>'万能字段'
 	);
 	//不允许删除的字段，这些字段讲不会在字段添加处显示
 	$not_allow_fields = array('title', 'username');

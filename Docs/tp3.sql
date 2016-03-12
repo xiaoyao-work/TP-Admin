@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2016-01-26 17:42:01
--- 服务器版本： 5.5.38-0ubuntu0.14.04.1-log
--- PHP Version: 5.5.9-1ubuntu4.11
+-- Generation Time: 2016-03-12 23:27:02
+-- 服务器版本： 5.5.38
+-- PHP Version: 5.6.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -118,7 +118,28 @@ CREATE TABLE IF NOT EXISTS `xy_category` (
   `taxonomy` varchar(255) NOT NULL,
   `listorder` smallint(5) unsigned NOT NULL DEFAULT '0',
   `level` smallint(2) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33 ;
+
+--
+-- 转存表中的数据 `xy_category`
+--
+
+INSERT INTO `xy_category` (`id`, `siteid`, `catname`, `catdir`, `parentid`, `child`, `post_type`, `taxonomy`, `listorder`, `level`) VALUES
+(1, 1, '头条', 'toutiao', 4, 0, 'news', 'category', 8, 3),
+(2, 1, '导购', 'daogou', 4, 0, 'news', 'category', 3, 3),
+(3, 1, '快讯', 'kuaixun', 4, 0, 'news', 'category', 5, 3),
+(4, 1, '热点', '', 6, 1, 'news', 'category', 0, 2),
+(6, 1, '顶级栏目', '', 0, 1, 'news', 'category', 1, 1),
+(9, 1, '服装', '', 0, 1, 'news', 'category', 0, 1),
+(20, 2, '测试的', '', 0, 1, 'news', 'category', 0, 1),
+(21, 2, '5456', '', 20, 0, 'news', 'category', 0, 2),
+(22, 2, '123', '', 20, 0, 'news', 'category', 0, 2),
+(26, 1, '人物', 'renwu', 0, 0, 'news', 'category', 0, 2),
+(28, 1, '艺人', 'actor', 0, 0, 'news', 'category', 0, 1),
+(29, 1, '城市', 'city', 0, 0, 'news', 'category', 0, 2),
+(30, 1, '男人', 'man', 9, 0, 'news', 'category', 0, 2),
+(31, 1, '城市地产', 'csdc', 0, 1, 'news', 'category', 0, 1),
+(32, 1, '地产人物', 'dcrw', 31, 0, 'news', 'category', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -630,15 +651,14 @@ CREATE TABLE IF NOT EXISTS `xy_model` (
   `description` varchar(200) NOT NULL DEFAULT '',
   `listorder` smallint(3) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
 
 --
 -- 转存表中的数据 `xy_model`
 --
 
 INSERT INTO `xy_model` (`id`, `siteid`, `name`, `tablename`, `description`, `listorder`, `status`) VALUES
-(28, 1, 'TP3', 'tp3', '', 0, 0),
-(29, 1, '内容模型', 'news', '', 0, 0);
+(27, 1, '资讯', 'news', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -675,21 +695,29 @@ CREATE TABLE IF NOT EXISTS `xy_model_field` (
   `listorder` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `disabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `isomnipotent` tinyint(1) unsigned NOT NULL DEFAULT '0'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=211 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=219 ;
 
 --
 -- 转存表中的数据 `xy_model_field`
 --
 
 INSERT INTO `xy_model_field` (`fieldid`, `modelid`, `siteid`, `field`, `name`, `tips`, `css`, `minlength`, `maxlength`, `pattern`, `errortips`, `formtype`, `setting`, `formattribute`, `unsetgroupids`, `unsetroleids`, `iscore`, `issystem`, `isunique`, `isbase`, `issearch`, `isadd`, `islist`, `isfulltext`, `isposition`, `listorder`, `disabled`, `isomnipotent`) VALUES
-(203, 28, 1, 'title', '标题', '', 'inputtitle', 1, 80, '', '请输入标题', 'title', '', '', '', '', 0, 1, 0, 1, 1, 1, 1, 1, 1, 4, 0, 0),
-(204, 28, 1, 'updatetime', '更新时间', '', '', 0, 0, '', '', 'datetime', 'array (\r\n  ''dateformat'' => ''datetime'',\r\n  ''format'' => ''Y-m-d H:i:s'',\r\n  ''defaulttype'' => ''0'',\r\n  ''defaultvalue'' => '''',\r\n)', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 12, 0, 0),
-(205, 28, 1, 'inputtime', '发布时间', '', '', 0, 0, '', '', 'datetime', 'array (\n  ''fieldtype'' => ''datetime'',\n  ''format'' => ''Y-m-d H:i:s'',\n  ''defaulttype'' => ''0'',\n)', '', '', '', 0, 1, 0, 0, 0, 0, 0, 0, 1, 17, 0, 0),
-(206, 28, 1, 'listorder', '排序', '', '', 0, 6, '', '', 'number', '', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 51, 0, 0),
-(207, 29, 1, 'title', '标题', '', 'inputtitle', 1, 80, '', '请输入标题', 'title', '', '', '', '', 0, 1, 0, 1, 1, 1, 1, 1, 1, 4, 0, 0),
-(208, 29, 1, 'updatetime', '更新时间', '', '', 0, 0, '', '', 'datetime', 'array (\r\n  ''dateformat'' => ''datetime'',\r\n  ''format'' => ''Y-m-d H:i:s'',\r\n  ''defaulttype'' => ''0'',\r\n  ''defaultvalue'' => '''',\r\n)', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 12, 0, 0),
-(209, 29, 1, 'inputtime', '发布时间', '', '', 0, 0, '', '', 'datetime', 'array (\n  ''fieldtype'' => ''datetime'',\n  ''format'' => ''Y-m-d H:i:s'',\n  ''defaulttype'' => ''0'',\n)', '', '', '', 0, 1, 0, 0, 0, 0, 0, 0, 1, 17, 0, 0),
-(210, 29, 1, 'listorder', '排序', '', '', 0, 6, '', '', 'number', '', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 51, 0, 0);
+(203, 27, 1, 'title', '标题', '', 'inputtitle', 1, 80, '', '请输入标题', 'title', '', '', '', '', 0, 1, 0, 1, 1, 1, 1, 1, 1, 4, 0, 0),
+(204, 27, 1, 'updatetime', '更新时间', '', '', 0, 0, '', '', 'datetime', 'array (\r\n  ''dateformat'' => ''datetime'',\r\n  ''format'' => ''Y-m-d H:i:s'',\r\n  ''defaulttype'' => ''0'',\r\n  ''defaultvalue'' => '''',\r\n)', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 12, 0, 0),
+(205, 27, 1, 'inputtime', '发布时间', '', '', 0, 0, '', '', 'datetime', 'array (\n  ''fieldtype'' => ''datetime'',\n  ''format'' => ''Y-m-d H:i:s'',\n  ''defaulttype'' => ''0'',\n)', '', '', '', 0, 1, 0, 0, 0, 0, 0, 0, 1, 17, 0, 0),
+(206, 27, 1, 'listorder', '排序', '', '', 0, 6, '', '', 'number', '', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 51, 0, 0),
+(207, 27, 1, 'text', '单行文本', '', '', 0, 0, '', '', 'text', 'array (\n  ''size'' => ''50'',\n  ''defaultvalue'' => '''',\n  ''ispassword'' => ''0'',\n)', '', '', '', 0, 1, 0, 1, 0, 1, 0, 0, 0, 5, 0, 0),
+(208, 27, 1, 'textarea', '多行文本', '', '', 0, 0, '', '', 'textarea', 'array (\n  ''width'' => ''98'',\n  ''height'' => ''46'',\n  ''defaultvalue'' => '''',\n  ''enablehtml'' => ''0'',\n)', '', '', '', 0, 1, 0, 1, 0, 1, 0, 0, 0, 5, 0, 0),
+(209, 27, 1, 'editor', '编辑器', '', '', 0, 0, '', '', 'editor', 'array (\n  ''toolbar'' => ''basic'',\n  ''defaultvalue'' => '''',\n  ''enablekeylink'' => ''0'',\n  ''replacenum'' => ''1'',\n  ''link_mode'' => ''0'',\n  ''enablesaveimage'' => ''0'',\n  ''height'' => ''200'',\n)', '', '', '', 0, 1, 0, 1, 0, 1, 0, 0, 0, 5, 0, 0),
+(210, 27, 1, 'select', '选线', '', '', 0, 0, '', '', 'box', 'array (\n  ''options'' => ''选项名称1|选项值1\r\n选项名称2|选项值2\r\n选项名称3|选项值3\r\n选项名称4|选项值4'',\n  ''boxtype'' => ''select'',\n  ''fieldtype'' => ''varchar'',\n  ''minnumber'' => ''1'',\n  ''width'' => ''80'',\n  ''size'' => ''1'',\n  ''defaultvalue'' => '''',\n  ''outputtype'' => ''0'',\n)', '', '', '', 0, 1, 0, 1, 0, 1, 0, 0, 0, 5, 0, 0),
+(211, 27, 1, 'image', '图片', '', '', 0, 0, '', '', 'image', 'array (\n  ''size'' => '''',\n  ''defaultvalue'' => '''',\n  ''show_type'' => ''0'',\n  ''upload_allowext'' => ''gif|jpg|jpeg|png|bmp'',\n  ''watermark'' => ''0'',\n  ''isselectimage'' => ''1'',\n  ''images_width'' => '''',\n  ''images_height'' => '''',\n)', '', '', '', 0, 1, 0, 1, 0, 1, 0, 0, 0, 5, 0, 0),
+(212, 27, 1, 'mutile_image', '多图上传', '', '', 0, 0, '', '', 'images', 'array (\n  ''upload_allowext'' => ''gif|jpg|jpeg|png|bmp'',\n  ''isselectimage'' => ''0'',\n  ''upload_number'' => ''10'',\n)', '', '', '', 0, 1, 0, 1, 0, 1, 0, 0, 0, 5, 0, 0),
+(213, 27, 1, 'date', '日期', '', '', 0, 0, '', '', 'datetime', 'array (\n  ''fieldtype'' => ''date'',\n  ''format'' => ''Y-m-d Ah:i:s'',\n  ''defaulttype'' => ''0'',\n)', '', '', '', 0, 1, 0, 1, 0, 1, 0, 0, 0, 5, 0, 0),
+(214, 27, 1, 'linkage', '联动菜单', '', '', 0, 0, '', '', 'linkage', 'array (\n  ''linkageid'' => ''3360'',\n)', '', '', '', 0, 1, 0, 1, 0, 1, 0, 0, 0, 5, 0, 0),
+(215, 28, 2, 'title', '标题', '', 'inputtitle', 1, 80, '', '请输入标题', 'title', '', '', '', '', 0, 1, 0, 1, 1, 1, 1, 1, 1, 4, 0, 0),
+(216, 28, 2, 'updatetime', '更新时间', '', '', 0, 0, '', '', 'datetime', 'array (\r\n  ''dateformat'' => ''datetime'',\r\n  ''format'' => ''Y-m-d H:i:s'',\r\n  ''defaulttype'' => ''0'',\r\n  ''defaultvalue'' => '''',\r\n)', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 12, 0, 0),
+(217, 28, 2, 'inputtime', '发布时间', '', '', 0, 0, '', '', 'datetime', 'array (\n  ''fieldtype'' => ''datetime'',\n  ''format'' => ''Y-m-d H:i:s'',\n  ''defaulttype'' => ''0'',\n)', '', '', '', 0, 1, 0, 0, 0, 0, 0, 0, 1, 17, 0, 0),
+(218, 28, 2, 'listorder', '排序', '', '', 0, 6, '', '', 'number', '', '', '', '', 1, 1, 0, 1, 0, 0, 0, 0, 0, 51, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -705,7 +733,15 @@ CREATE TABLE IF NOT EXISTS `xy_news` (
   `username` char(20) NOT NULL,
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `inputtime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updatetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+  `updatetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `text` varchar(255) NOT NULL DEFAULT '',
+  `textarea` mediumtext NOT NULL,
+  `editor` mediumtext NOT NULL,
+  `select` varchar(255) NOT NULL DEFAULT '',
+  `image` varchar(255) NOT NULL DEFAULT '',
+  `mutile_image` mediumtext NOT NULL,
+  `date` date DEFAULT NULL,
+  `linkage` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -725,7 +761,7 @@ CREATE TABLE IF NOT EXISTS `xy_node` (
   `pid` smallint(6) unsigned NOT NULL DEFAULT '0',
   `params` varchar(255) NOT NULL DEFAULT '',
   `request_method` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否验证请求方式；0: 否,1:是'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=335 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=403 ;
 
 --
 -- 转存表中的数据 `xy_node`
@@ -801,7 +837,7 @@ INSERT INTO `xy_node` (`id`, `module`, `action`, `title`, `status`, `post_type`,
 (307, 'ModelField', 'public_checkfield', '字段重复检查', 1, '', 0, 301, '', 0),
 (308, 'ModelField', 'public_field_setting', '字段属性异步载入', 1, '', 0, 301, '', 0),
 (309, 'ModelField', 'public_priview', '模型预览', 1, '', 1, 249, '', 0),
-(310, 'Attachment', 'index', '附件管理', 0, '', 1, 245, '', 0),
+(310, 'Attachment', 'index', '附件管理', 1, '', 1, 245, '', 0),
 (311, 'Attachment', 'album_list', '图库', 1, '', 0, 310, '', 0),
 (312, 'Index', 'change_site', '站点切换', 1, '', 0, 115, '', 0),
 (315, 'Module', 'index', '内容设置', 1, '', 0, 62, '', 0),
@@ -809,14 +845,14 @@ INSERT INTO `xy_node` (`id`, `module`, `action`, `title`, `status`, `post_type`,
 (317, 'Taxonomy', 'register', '注册分类', 1, '', 0, 316, '', 1),
 (318, 'Taxonomy', 'delete', '注销分类', 1, '', 0, 316, '', 0),
 (320, 'Post', 'index', 'TP4', 1, '', 0, 319, 'moduleid=25', 0),
-(323, 'Post', 'index', 'TP4', 1, '', 0, 322, 'moduleid=26', 0),
+(323, 'Post', 'index', '内容', 1, '', 0, 322, 'moduleid=16', 0),
 (325, 'Post', 'index', '模型内容管理', 1, '', 0, 249, '', 0),
 (326, 'Post', 'listorder', '排序', 1, '', 0, 325, '', 0),
-(328, 'Post', 'index', 'TP3', 1, '', 0, 327, 'moduleid=27', 0),
-(329, 'Post', 'index', 'TP3管理', 1, 'tp3', 0, 245, '', 0),
-(330, 'Post', 'index', 'TP3', 1, '', 0, 329, 'moduleid=28', 0),
-(333, 'Post', 'index', '内容模型管理', 1, 'news', 0, 245, '', 0),
-(334, 'Post', 'index', '内容模型', 1, '', 0, 333, 'moduleid=29', 0);
+(327, 'Post', 'index', '资讯管理', 1, 'news', 0, 245, '', 0),
+(328, 'Post', 'index', '资讯', 1, '', 0, 327, 'moduleid=27', 0),
+(329, 'Category', 'index', '栏目', 1, '', 0, 327, 'post_type=news&taxonomy_name=category', 0),
+(330, 'Post', 'index', '内容模型管理', 1, 'fc_news', 0, 245, '', 0),
+(331, 'Post', 'index', '内容模型', 1, '', 0, 330, 'moduleid=28', 0);
 
 -- --------------------------------------------------------
 
@@ -908,23 +944,6 @@ INSERT INTO `xy_site` (`id`, `name`, `dirname`, `domain`, `site_title`, `keyword
 -- --------------------------------------------------------
 
 --
--- 表的结构 `xy_tp3`
---
-
-CREATE TABLE IF NOT EXISTS `xy_tp3` (
-`id` mediumint(8) NOT NULL,
-  `siteid` smallint(5) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `listorder` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `username` char(20) NOT NULL,
-  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `inputtime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updatetime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `xy_user`
 --
 
@@ -946,9 +965,8 @@ CREATE TABLE IF NOT EXISTS `xy_user` (
 --
 
 INSERT INTO `xy_user` (`id`, `account`, `password`, `realname`, `email`, `last_login_time`, `last_login_ip`, `try_time`, `status`, `role_id`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '', 1453704479, NULL, 0, 1, 1),
-(45, 'tp-admin', 'b990e224fe46ed9cf0a8cd8c49d59629', '', '', 1453702321, NULL, 0, 1, 2),
-(51, '476552238@qq.com', '2067cc5f3541bc1ba330c8af61748ff8', '', '', 0, NULL, 0, 0, 2);
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '', 1457795794, NULL, 0, 1, 1),
+(45, 'tp-admin', 'b990e224fe46ed9cf0a8cd8c49d59629', '', '', 1453702321, NULL, 0, 1, 2);
 
 --
 -- Indexes for dumped tables
@@ -1033,12 +1051,6 @@ ALTER TABLE `xy_site`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `xy_tp3`
---
-ALTER TABLE `xy_tp3`
- ADD PRIMARY KEY (`id`), ADD KEY `listorder` (`listorder`);
-
---
 -- Indexes for table `xy_user`
 --
 ALTER TABLE `xy_user`
@@ -1057,7 +1069,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `xy_category`
 --
 ALTER TABLE `xy_category`
-MODIFY `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+MODIFY `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `xy_linkage`
 --
@@ -1072,12 +1084,12 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `xy_model`
 --
 ALTER TABLE `xy_model`
-MODIFY `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=30;
+MODIFY `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `xy_model_field`
 --
 ALTER TABLE `xy_model_field`
-MODIFY `fieldid` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=211;
+MODIFY `fieldid` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=219;
 --
 -- AUTO_INCREMENT for table `xy_news`
 --
@@ -1087,7 +1099,7 @@ MODIFY `id` mediumint(8) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `xy_node`
 --
 ALTER TABLE `xy_node`
-MODIFY `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=335;
+MODIFY `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=403;
 --
 -- AUTO_INCREMENT for table `xy_role`
 --
@@ -1098,11 +1110,6 @@ MODIFY `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 ALTER TABLE `xy_site`
 MODIFY `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `xy_tp3`
---
-ALTER TABLE `xy_tp3`
-MODIFY `id` mediumint(8) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `xy_user`
 --
