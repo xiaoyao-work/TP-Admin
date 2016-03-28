@@ -1,7 +1,7 @@
 # TP-Admin #
 
 ## 最新动态
-[最新动态在线查看](http://www.hhailuo.com/archives/18203)
+[点击查看最新动态](http://www.hhailuo.com/archives/18203)
 
 ## 概述 
 3.0 全新架构，重组站群系统，全新模型架构，融入WP Taxonomy分类管理思想；强大的权限系统，模型、分类全自动节点。历经三月只为简单，快捷，舒适。
