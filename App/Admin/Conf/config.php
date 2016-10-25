@@ -1,7 +1,6 @@
 <?php
 defined('IN_ADMIN')   or define('IN_ADMIN', 'true');
 return array(
-	'SESSION_AUTO_START'        =>  true,
 	'TMPL_ACTION_ERROR'         =>  'Public:success',   // 默认错误跳转对应的模板文件
 	'TMPL_ACTION_SUCCESS'       =>  'Public:success',   // 默认成功跳转对应的模板文件
 	'USER_AUTH_ON'              =>  true,
@@ -19,9 +18,10 @@ return array(
 	'RBAC_ACCESS_TABLE'         =>  'xy_access',
 	'RBAC_NODE_TABLE'           =>  'xy_node',
 
-	'URL_ROUTE_RULES' => array(
+  	'TOKEN_ON'          => true,       //是否开启令牌验证
+	'TOKEN_NAME'        => '__hash__', //令牌验证的表单隐藏字段名称
+	'TOKEN_TYPE'        => 'md5',      //令牌哈希验证规则 默认为MD5
+	'TOKEN_RESET'       => false,       //令牌验证出错后是否重置令牌 默认为true
 
-		),
-
-
+    'DEFAULT_FILTER'    => '',
 );

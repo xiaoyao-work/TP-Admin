@@ -1,0 +1,41 @@
+<extend name="Layout:list" />
+<block name="title"><title>角色管理</title></block>
+<block name='subnav'>
+    <a class="add fb" href="__MODULE__/Role/add"><em>添加角色</em></a>&nbsp;&nbsp;&nbsp;
+    <a class="on" href="__MODULE__/Role/index"><em>角色管理</em></a>
+</block>
+<block name="main">
+    <form name="myform" action="__CONTROLLER__/listorder" method="post">
+        <div class="table-list">
+            <table width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <!-- <th width="10%" align="center">排序</th> -->
+                        <th width="10%" align="center">ID</th>
+                        <th width="15%" align="left">角色名称</th>
+                        <th width="265" align="left">角色描述</th>
+                        <th width="5%" align="left">状态</th>
+                        <th class="text-c">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($roles as $key => $role) { ?>
+                    <tr>
+                        <td align="center" width="10%"><?php echo $role['id']?></td>
+                        <td width="15%"><?php echo $role['name']; ?></td>
+                        <td width="265"><?php echo $role['remark']; ?></td>
+                        <td width="5%"><?php echo ($role['status']==1) ? "<font color='red'>√</font>" : "<font color='blue'>×</font>"; ?></td>
+                        <td class="text-c">
+                            <?php if($role['id'] !='1' ) { ?>
+                            <a href="__MODULE__/Role/limits/role_id/<?php echo $role['id']; ?>">权限分配</a> | <a href="__MODULE__/Role/edit/id/<?php echo $role['id']; ?>">修改</a> | <a onclick="return ConfirmDel();" href="__MODULE__/Role/del/id/<?php echo $role['id']; ?>">删除</a>
+                            <?php } else { ?>
+                            <font color="#cccccc">修改 | 删除 | 权限分配</font>
+                            <?php } ?>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</block>

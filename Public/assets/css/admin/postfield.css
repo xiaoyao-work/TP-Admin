@@ -1,0 +1,83 @@
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../../bootstrap/fonts/glyphicons-halflings-regular.eot');
+  src: url('../../bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+/*---------------------------------------------------------------------------------------------
+    Relationship, User
+---------------------------------------------------------------------------------------------*/
+.cfs_relationship .post_list {
+    float: left;
+    overflow-y: scroll;
+    background: #f5f5f5;
+    border: 1px solid #dfdfdf;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 205px;
+    width: 49%;
+    -webkit-border-radius: 1px 1px 1px 1px;
+    border-radius: 1px 1px 1px 1px;
+}
+
+.cfs_relationship .post_list.selected_posts {
+    float: right;
+}
+
+.cfs_relationship .post_list div {
+    padding: 4px 6px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.cfs_relationship .post_list.available_posts > div {
+    position: relative;
+    padding-right: 3em;
+}
+
+.cfs_relationship .post_list.available_posts > div:after {
+    font-family: "Glyphicons Halflings";
+    position: absolute;
+    right: 1px;
+    top: 3px;
+    content: '\e092';
+    font-size: 12px;
+}
+
+.cfs_relationship .post_list div:last-child {
+    border-bottom: none;
+}
+
+.cfs_relationship .post_list div:hover {
+    background: #eee;
+}
+
+.cfs_relationship .available_posts div.used {
+    display: none;
+}
+
+.cfs_relationship .selected_posts div {
+    cursor: move;
+}
+
+.cfs_relationship .selected_posts div span.remove {
+    float: right;
+    width: 20px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.cfs_relationship .filter_posts {
+    margin-bottom: 10px;
+}
+
+.cfs_input .field .cfs_relationship .cfs_filter_input {
+    width: 220px;
+    margin: 0;
+}
+
+.cfs_relationship .selected_posts div span.remove:before {
+    font-family: "Glyphicons Halflings";
+    content: "\e014";
+    font-size: 12px;
+    top: -2px;
+}

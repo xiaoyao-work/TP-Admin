@@ -1,0 +1,98 @@
+<extend name="Layout:content" />
+<block name="head">
+    <link href="{:asset('css/news/news.css')}" rel="stylesheet" type="text/css" />
+</block>
+<block name="top-banner">
+    <div class="container">
+        <div class="row nav-news clearfix">
+            <ul class="main-menu">
+                <li class="on"><a href="<?php echo url('news', 'Home'); ?>">首页</a></li>
+                <?php echo get_terms_menu($parent_post_type, 'category', $siteid); ?>
+            </ul>
+        </div>
+    </div>
+</block>
+
+<block name="content">
+    <div class="container single">
+        <div class="row clearfix">
+            <div class="content-body">
+                <h1><?php echo $post['title']; ?></h1>
+                <p>
+                    <span class="name"><?php echo $post['author']; ?></span>
+                    <span class="time"> · <?php echo $post['inputtime']; ?></span>
+                </p>
+                <?php if (!empty($post['description'])) { ?>
+                <p class="description">
+                    <b>文章摘要：</b>
+                    <span><?php echo $post['description']; ?></span>
+                </p>
+                <?php } ?>
+                <div class="editor">
+                    <?php echo htmlspecialchars_decode($post['content']); ?>
+                </div>
+                <h4 id="comment">参与评论</h4>
+                <div class="comments">
+                    <div class="comment-form">
+                        <textarea class="form-control comment-input-box" <?php echo empty($member_info) ? 'placeholder="请登录后参与评论..." readonly' : 'placeholder="填写评论"' ?>></textarea>
+                        <div class="user clearfix">
+                            <?php if (!empty($member_info)) { ?>
+                                <img src="<?php echo thumb(IMAGE_DOMAIN . $member_info['avatar'], 30, 30); ?>" width="30" height="30" class="avatar-30 img-circle">
+                                <span><?php echo $member_info['username']; ?></span>
+                            <?php } else { ?>
+                                <a href="{:url('login', 'User', array('redirect' => 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']))}" target="_blank" class="name">登录</a>后参与讨论
+                            <?php } ?>
+                            <button class="commit-comment pull-right btn btn-success">提交评论</button>
+                        </div>
+                    </div>
+                    <div class="comment-list">
+                        <ul>
+                            <li>
+                                <img src="" width="30" height="30" class="member-avatar avatar-30 img-circle">
+                                <div class="mswrap">
+                                    <p>
+                                        <span class="name">逍遥</span>
+                                        <span class="time"> · 两天前</span>
+                                    </p>
+                                    <p class="text">嘻嘻嘻嘻嘻嘻</p>
+                                    <div class="reply_button text-right">
+                                        <a href="">回复</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 class="title">
+                    <span>相关文章</span>
+                </h3>
+                <div class="relation-posts">
+                    <?php $relation_posts = get_relation_posts($post['relation'], false); ?>
+                    <?php if(!empty($relation_posts)) { ?>
+                    <ul>
+                        <?php foreach ($relation_posts as $key => $post) { ?>
+                        <li><a href="<?php echo url('post/' . $post['post_type'] . '/' . $post['id']); ?>"><?php echo $post['title']; ?></a></li>
+                        <?php } ?>
+                    </ul>
+                    <?php } else { ?>
+                    <p class="tips">暂无相关文章！</p>
+                    <?php } ?>
+                </div>
+
+            </div>
+            <div class="content-sidebar">
+                <h3 class="title">
+                    <span>标签</span>
+                </h3>
+                <div class="tags">
+                    <a href=""><code>TP-Admin</code></a>
+                    <a href=""><code>TP</code></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="footer-script">
+    <script type="text/javascript" src="{:asset('js/home/news.js')}"></script>
+</block>

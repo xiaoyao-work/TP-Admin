@@ -1,0 +1,23 @@
+<extend name="Layout:form" />
+<block name="title"><title>添加站点</title></block>
+<block name="subheader">
+    <style type="text/css">
+        .radio-label{ border-top:1px solid #e4e2e2; border-left:1px solid #e4e2e2}
+        .radio-label td{ border-right:1px solid #e4e2e2; border-bottom:1px solid #e4e2e2;background:#f6f9fd}
+    </style>
+</block>
+<block name="main">
+    <form action="" method="post" id="myform">
+        <fieldset>
+            <legend>站点设置</legend>
+            <table width="100%"  class="table_form">
+                <tr>
+                    <th width="80">站点主域：</th>
+                    <td class="y-bg"><input type="text" class="input-text" name="info[base_domain]" id="base_domain" size="30" value="<?php echo isset($options['base_domain']) ? $options['base_domain'] : ''; ?>" /></td>
+                </tr>
+            </table>
+        </fieldset>
+        <div class="bk10"></div>
+        <input type="submit" class="button" id="dosubmit" name="dosubmit" value="提交" />
+    </form>
+</block>

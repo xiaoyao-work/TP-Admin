@@ -108,10 +108,15 @@ class LinkageController extends CommonController {
 
     public function listorder() {
         if (isset($_POST['listorder']) && is_array($_POST['listorder'])) {
-            $listorder = $_POST['listorder'];
-            foreach ($listorder as $k => $v) {
-                $this->db->where(array('id'=>$k))->save(array('listorder'=>$v));
+            $sort = $_POST['listorder'];
+            $sql = "UPDATE `". $this->db->getTableName() ."` SET `listorder` = CASE ";
+            foreach ($sort as $k => $v) {
+                $sql .= " WHEN `id` = " . $k . " THEN " . $v;
             }
+            $sql .= " END WHERE `id` in (" . implode(',', array_keys($sort)) . ")";
+            if ($this->db->execute($sql) === false) {
+                $this->error('操作失败！');
+            };
         }
         $this->success('操作成功');
     }

@@ -22,7 +22,7 @@ class IndexController extends CommonController {
 		$top_menu = logic('Menu')->getAccessibleTopMenu();
 		$seo = get_site_seo_info();
 		$role = model('Role')->find(session('user_info.role_id'));
-		$_SESSION['user_info']['name'] = $role['name'];
+		$_SESSION['user_info']['role_name'] = $role['name'];
 		$site_info = get_site_info($this->siteid);
 		$this->assign('seo', $seo);
 		$this->assign('sites', $sites);
@@ -55,10 +55,13 @@ class IndexController extends CommonController {
 			'4' => ini_get('upload_max_filesize'),
 			'5' => $gd,
 			);
-		$this->assign('system_info', $system_info);
-		$this->assign('area',get_location($_SESSION['user_info']['last_login_ip']));
-		$this->assign('user_info', $_SESSION['user_info']);
-		$this->display();
+		$user_info = $_SESSION['user_info'];
+		$area = get_location($user_info['last_login_ip']);
+		ob_start();
+		include dirname(__DIR__) . '/View/' . C('DEFAULT_THEME') . '/Index/main.html';
+		$html = ob_get_contents();
+		ob_end_clean();
+		system_information($html);
 	}
 
 	public function change_site() {
@@ -71,15 +74,15 @@ class IndexController extends CommonController {
 	}
 
 	/**
-	* 维持 session 登陆状态
-	*/
+	 * 维持 session 登陆状态
+	 */
 	public function public_session_life() {
-		return true;
+		$this->ajaxReturn('1');
 	}
 
 	/**
-	* 清理缓存，待完善
-	*/
+	 * 清理缓存，待完善
+	 */
 	public function cache_clean() {
 		echo "<span style='color: red;'>缓存清理中……</span><br/>";
 		$path = RUNTIME_PATH . "Cache/";

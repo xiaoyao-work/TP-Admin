@@ -33,7 +33,9 @@ const EXT               =   '.class.php';
 
 // 系统常量定义
 defined('THINK_PATH')   or define('THINK_PATH',     __DIR__.'/');
-defined('APP_PATH')     or define('APP_PATH',       dirname($_SERVER['SCRIPT_FILENAME']).'/');
+defined('ROOT_PATH')    or define('ROOT_PATH',      dirname(__DIR__) . '/');
+defined('DOC_PATH')     or define('DOC_PATH',      ROOT_PATH . 'Public/');
+defined('APP_PATH')     or define('APP_PATH',       ROOT_PATH . 'App/');
 defined('APP_STATUS')   or define('APP_STATUS',     ''); // 应用状态 加载对应的配置文件
 defined('APP_DEBUG')    or define('APP_DEBUG',      false); // 是否调试模式
 
@@ -45,7 +47,7 @@ if(function_exists('saeAutoLoader')){// 自动识别SAE环境
     defined('STORAGE_TYPE') or define('STORAGE_TYPE',   'File'); // 存储类型 默认为File
 }
 
-defined('RUNTIME_PATH') or define('RUNTIME_PATH',   APP_PATH.'Runtime/');   // 系统运行时目录
+defined('RUNTIME_PATH') or define('RUNTIME_PATH',   ROOT_PATH.'Public/Runtime/');   // 系统运行时目录
 defined('LIB_PATH')     or define('LIB_PATH',       realpath(THINK_PATH.'Library').'/'); // 系统核心类库目录
 defined('CORE_PATH')    or define('CORE_PATH',      LIB_PATH.'Think/'); // Think类库目录
 defined('BEHAVIOR_PATH')or define('BEHAVIOR_PATH',  LIB_PATH.'Behavior/'); // 行为类库目录
@@ -93,5 +95,13 @@ if(!IS_CLI) {
 
 // 加载核心Think类
 require CORE_PATH.'Think'.EXT;
-// 应用初始化
-Think\Think::start();
+
+\Think\Think::start();
+
+$app = new \Think\App;
+
+// 加载路由配置
+include APP_PATH . "/router.php";
+
+// 运行应用
+$app->run();

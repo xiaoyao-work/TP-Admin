@@ -197,7 +197,7 @@ class Image {
               //png和gif的透明处理 by luofei614
             if('png'==$type){
                 imagealphablending($thumbImg, false);//取消默认的混色模式（为解决阴影为绿色的问题）
-                imagesavealpha($thumbImg,true);//设定保存完整的 alpha 通道信息（为解决阴影为绿色的问题）    
+                imagesavealpha($thumbImg,true);//设定保存完整的 alpha 通道信息（为解决阴影为绿色的问题）
             }elseif('gif'==$type){
                 $trnprt_indx = imagecolortransparent($srcImg);
                  if ($trnprt_indx >= 0) {
@@ -372,7 +372,7 @@ class Image {
      * @param string $height  高度
      * @return string
      */
-    static function buildImageVerify($length=4, $mode=1, $type='png', $width=48, $height=22, $verifyName='verify') {
+    static function buildImageVerify($length=4, $mode=1, $type='png', $width=100, $height=45, $verifyName='verify', $size=22) {
         import('ORG.Util.String');
         $randval = String::randString($length, $mode);
         session($verifyName, md5($randval));
@@ -400,7 +400,7 @@ class Image {
             imagesetpixel($im, mt_rand(0, $width), mt_rand(0, $height), $stringColor);
         }
         for ($i = 0; $i < $length; $i++) {
-            imagestring($im, 5, $i * 10 + 5, mt_rand(1, 8), $randval{$i}, $stringColor);
+            imagettftext($im, $size, rand(0, 30), ($i+0.5) * $size + 5, $size + mt_rand(1, $height - $size), $stringColor, __DIR__ . '/SF_Arch_Rival.ttf', $randval{$i});
         }
         Image::output($im, $type);
     }

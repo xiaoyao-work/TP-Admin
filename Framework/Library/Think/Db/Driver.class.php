@@ -702,7 +702,7 @@ abstract class Driver {
      * @return string
      */
     protected function parseGroup($group) {
-        return !empty($group)? ' GROUP BY '.$group:'';
+        return !empty($group)? ' GROUP BY '. $group : '';
     }
 
     /**

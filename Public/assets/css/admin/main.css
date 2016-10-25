@@ -1,0 +1,204 @@
+.header {
+    background-color: #222;
+    height: 42px;
+    position: relative
+}
+
+.header .logo {
+    float: left;
+    width: 230px;
+    height: 42px;
+    padding: 0 5px;
+}
+
+.header .logo a {
+    display: inline-block;
+    height: 42px;
+    line-height: 42px;
+    color: #FFF;
+}
+
+.header .nav {
+    display: block;
+    position: relative;
+    border-bottom: 0;
+    top: 4px;
+    float: left;
+}
+
+.header .nav > li > a {
+    padding: 8px 15px;
+}
+
+.nav-tabs > li > a {
+    color: #FFF;
+}
+
+.nav-tabs > li > a:hover, .nav-tabs > li.open > a  {
+    color: #222;
+}
+
+.user-menu {
+    display: inline-block;
+    margin-top: 14px;
+    margin-right: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+/* 菜单样式 */
+.left_menu {
+    width: 220px;
+    position: relative;
+    overflow: hidden;
+    background: #3d3d3d;
+}
+
+#Scroll {
+    float: left;
+    width: 220px;
+    overflow: hidden
+}
+
+.left_menu_on {
+    width: 10px;
+    padding: 0;
+}
+
+.left_menu_on #Scroll {
+    display: none
+}
+
+.sidebar {
+    margin-top: 15px;
+}
+
+.sidebar ul.nav a,
+.sidebar ul.nav a:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.sidebar ul.nav li > a:hover,
+.sidebar ul.nav li > a:focus {
+    background:#303030;
+}
+
+.sidebar ul.nav .active > a,
+.sidebar ul.nav .active > a:hover,
+.sidebar ul.nav .active > a:focus {
+    color: #fff;
+    background: #e02222;
+}
+
+.sidebar ul.nav li.has-children a.active, 
+.sidebar ul.nav li.has-children a.active:hover, 
+.sidebar ul.nav li.has-children a.active:focus {
+    background: #575757;
+}
+
+.sidebar ul.nav > li > a {
+    border-top: 1px solid #5c5c5c;
+}
+
+.sidebar ul.nav > li > ul.children {
+    margin: 8px 0px 8px 0px;
+}
+
+.sidebar ul.nav > li > ul.children > li {
+    margin: 0px;
+    padding: 0px;
+    margin-top: 1px;
+}
+
+.sidebar ul.nav > li > ul.children > li.active > a, .sidebar ul.nav > li > ul.children > li > a:hover {
+    color: #fff;
+    background: #575757;
+}
+
+.sidebar ul.nav ul,
+.sidebar ul.nav ul li {
+    list-style: none;
+    list-style-type: none;
+}
+
+.sidebar ul.nav ul.children {
+    width: auto;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul.nav li.has-children ul li a {
+    border: none;
+    display:block;
+    padding: 5px 0 5px 30px;
+    color: #fff;
+}
+
+
+.sidebar span.glyphicon {
+    margin-right: 10px;
+}
+
+.sidebar ul.nav li.divider {
+    border-bottom: 1px solid #eee;
+    margin: 20px 0;
+}
+
+.sidebar .attribution {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+    border-top: 1px solid #eee;
+    font-size: 12px;
+}
+
+.scroll {
+    position: absolute;
+    left: 10px;
+    bottom: 14px;
+    width: 120px;
+    height: 17px;
+    overflow: hidden;
+    display: none
+}
+
+.scroll a {
+    background: url(../../images/admin/admin_img/scroll_bg.png) no-repeat left top;
+    width: 48px;
+    height: 17px;
+    margin: 0 5px
+}
+
+.scroll a:hover {
+    background-position: left bottom
+}
+
+.scroll a.next {
+    background-position: right top
+}
+
+.scroll a.next:hover {
+    background-position: right bottom
+}
+
+.main {
+    margin-left: 220px;
+}
+
+.crumbs {
+    background-color: #eee;
+    padding: 8px 10px;
+}
+
+.crumbs span {
+    padding-left: 10px;
+}
+
+.copyright {
+    background-color: #3d3d3d;
+    padding: 10px;
+    color: #fff;
+}

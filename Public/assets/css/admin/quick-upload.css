@@ -1,0 +1,51 @@
+#quick_upload {
+    position: relative;
+    margin-bottom: 10px;
+}
+.quick_upload_btn {
+    text-align: center;
+    font-size: 22px;
+    border: 1px solid #ccc;
+}
+.photos li {
+    width: 150px;
+    padding: 10px;
+    height: 175px;
+    float: left;
+}
+.wrap-image {
+    height: 100px;
+}
+.photos li img {
+    max-width: 150px;
+    max-height: 100px;
+}
+.edit-photo-title {
+    width: 148px;
+    height: 28px;
+    padding: 0;
+    font-size: 14px;
+}
+.saveBtn, .deleteBtn {
+    float: right;
+    padding: 3px;
+}
+.deleteBtn {
+    float: left;
+}
+.saveBtn:hover, .deleteBtn:hover {
+    color: #fa5557;
+}
+.progress {
+    background-color: #E5E5E5;
+    margin-top: 10px;
+    width: 100%;
+}
+.progress {
+    margin-top: 70px;
+    width: 100%;
+}
+.progress-bar {
+    background-color: #09F;
+    height: 3px;
+}

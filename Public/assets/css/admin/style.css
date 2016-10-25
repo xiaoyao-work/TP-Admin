@@ -1,0 +1,14 @@
+.mt10 {
+    margin-top: 10px;
+}
+
+/** 版权 */
+.copyright {
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+}
+
+.copyright a {
+    font-weight: bold;
+}

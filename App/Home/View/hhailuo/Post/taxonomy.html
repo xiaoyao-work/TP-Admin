@@ -1,0 +1,75 @@
+<extend name="Layout:content" />
+<block name="title"><?php echo $term['catname'] . '-' . $siteInfo['site_title']; ?></block>
+<block name="head">
+    <link href="{:asset('css/flexslider.css')}" rel="stylesheet" type="text/css" />
+    <link href="{:asset('css/news/news.css')}" rel="stylesheet" type="text/css" />
+</block>
+
+<block name="top-banner">
+    <div class="container">
+        <div class="row nav-news clearfix">
+            <ul class="main-menu">
+                <li><a href="<?php echo url('news', 'Home'); ?>">首页</a></li>
+                <?php echo get_terms_menu($term['post_type'], $term['taxonomy'], $siteid, $term['id']); ?>
+            </ul>
+        </div>
+    </div>
+</block>
+
+<block name="content">
+    <div class="container">
+        <div class="r-col-pd-r row">
+            <div class="col-xs-8">
+                <div class="wrap-list">
+                    <div class="crumbs">您的位置:<a href="/news.html">资讯</a> > <?php echo $term['catname']; ?></div>
+                    <div class="post-list">
+                        <?php if (isset($posts['data']) && !empty($posts['data'])) { ?>
+                        <ul>
+                            <?php foreach ($posts['data'] as $key => $value) { ?>
+                            <li>
+                                <span class="time pull-right"><?php echo $value['inputtime']; ?></span>
+                                <a href="<?php echo url('post/' . $value['post_type'] . '/' . $value['id']); ?>"><?php echo $value['title']; ?></a>
+                            </li>
+                            <?php } ?>
+                        </ul>
+                        <?php } else { ?>
+                        <p>暂无内容</p>
+                        <?php } ?>
+                    </div>
+                    <?php if(!empty($posts['page'])) { ?>
+                    <div class="nav-page">
+                        <ul class="pager">
+                            <?php echo $posts['page']; ?>
+                        </ul>
+                    </div>
+                    <?php } ?>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="wrap-cat">
+                    <a href="<?php echo url('news'); ?>" class="pull-right more">更多</a>
+                    <h3 class="cat-title">每日头条</h3>
+                    <div class="cat-list">
+                        <ul></ul>
+                    </div>
+                </div>
+
+                <div class="wrap-cat">
+                    <a href="" class="pull-right more">更多</a>
+                    <h3 class="cat-title">图片推荐</h3>
+                    <div class="cat-list">
+                        <ul></ul>
+                    </div>
+                </div>
+
+                <div class="wrap-cat">
+                    <a href="" class="pull-right more">更多</a>
+                    <h3 class="cat-title">房产推荐</h3>
+                    <div class="cat-list">
+                        <ul></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

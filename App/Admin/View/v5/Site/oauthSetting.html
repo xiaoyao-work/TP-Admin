@@ -1,0 +1,40 @@
+<extend name="Layout:form" />
+<block name="title"><title>第三方应用</title></block>
+<block name="subheader">
+    <style type="text/css">
+        .radio-label{ border-top:1px solid #e4e2e2; border-left:1px solid #e4e2e2}
+        .radio-label td{ border-right:1px solid #e4e2e2; border-bottom:1px solid #e4e2e2;background:#f6f9fd}
+    </style>
+    <link rel="stylesheet" href="{:asset('js/jquery-ui/jquery-ui.min.css')}" type="text/css">
+    <script src="{:asset('js/jquery-ui/jquery-ui.min.js')}"></script>
+</block>
+<block name="main">
+    <form action="" method="post" id="myform">
+        <div id="tabs">
+            <ul>
+                <?php foreach($options_tab as $value) { ?>
+                <li><a href="#<?php echo $value['id'] ?>"><?php echo $value['name']; ?></a></li>
+                <?php } ?>
+            </ul>
+            <?php foreach($options_tab as $value) { ?>
+            <div id="<?php echo $value['id'] ?>">
+                <table width="100%"  class="table_form">
+                    <?php foreach ($value['options'] as $key => $option) {?>
+                    <tr>
+                        <th width="80"><?php echo $option['name'] ?>：</th>
+                        <td class="y-bg"><input type="text" class="input-text" name="info[<?php echo $option['key'] ?>]" id="wb_app_key" size="30" value="<?php echo isset($options[$option['key']]) ? $options[$option['key']] : ''; ?>" /></td>
+                    </tr>
+                    <?php } ?>
+                </table>
+            </div>
+            <?php } ?>
+        </div>
+        <div class="bk10"></div>
+        <input type="submit" class="button" id="dosubmit" name="dosubmit" value="提交" />
+    </form>
+    <script>
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
+    </script>
+</block>

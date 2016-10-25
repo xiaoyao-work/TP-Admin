@@ -1,0 +1,185 @@
+<extend name="Layout:community" />
+<block name="title">{$community['title']}-</block>
+<block name="head">
+    <link rel="stylesheet" type="text/css" href="{:asset('css/home/community.css')}">
+    <link rel="stylesheet" type="text/css" href="{:asset('css/flexslider.css')}">
+</block>
+
+<block name="content">
+    <div class="container">
+        <div class="row">
+            <?php $active = '小区首页'; ?>
+            <include file="_nav"/>
+            <div class="community-info clearfix">
+                <div class="community-slider pull-left">
+                    <div id="js-slider" class="flexslider">
+                        <ul class="slides large">
+                            <?php foreach ($albums as $key => $album) { ?>
+                            <li>
+                                <img src="{:thumb($album['cover'], 450, 337)}" />
+                            </li>
+                            <?php } ?>
+                            <a href="{:url('community/' . $community['id'] . '/album')}" class="album-all">查看全部</a>
+                        </ul>
+                    </div>
+                    <div id="js-carousel" class="flexslider">
+                        <ul class="slides carousel">
+                            <?php foreach ($albums as $key => $album) { ?>
+                            <li>
+                                <img src="{:thumb($album['cover'], 450, 337)}" />
+                                <p>{$album['title']}</p>
+                            </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="community-base-info pull-right">
+                    <a href="{:url('community/' . $community['id'] . '/detail')}" class="pull-right detail">查看小区详情</a>
+                    <h1 class="community-title">{$community['title']}</h1>
+                    <ul class="clearfix">
+                        <li><strong>所在区域：</strong>{$community['region']}</li>
+                        <li><strong>楼栋总数：</strong>{$community['building_num']}</li>
+                        <li><strong>建筑年代：</strong>{:date('Y-m-d', strtotime($community['complete_date']))}</li>
+                        <li><strong>占地面积：</strong>{$community['floor_area']}平方米</li>
+                        <li><strong>物业类型：</strong>{$community['property_type']}</li>
+                        <li><strong>容 积 率：</strong>{$community['rjl']}</li>
+                        <li><strong>开 发 商：</strong>{$community['developer']}</li>
+                        <li><strong>绿 化 率：</strong>{$community['lhl']}</li>
+                        <li><strong>物业公司：</strong>{$community['property_corportion']}</li>
+                        <li><strong>物 业 费：</strong>{$community['property_fee']}元/平米·月</li>
+                    </ul>
+                    <p><strong>小区地址：</strong>{$community['address']}<a class="link_map" href="#map">查看地图</a></p>
+                    <p><strong>小区简介：</strong><?php echo msubstr(strip_tags($community['content']), 0, 150); ?></p>
+                </div>
+            </div>
+            <div class="clearfix mb20">
+                <div class="community-left-block pull-left mr20">
+                    <div class="community-around mb10">
+                        <h3 class="tab-title">周边配套</h3>
+                        <table class="base-info-table">
+                            <tr>
+                                <th>地址：</th>
+                                <td>{$community['address']}</td>
+                            </tr>
+                            <tr>
+                                <th>交通信息：</th>
+                                <td>{$community['traffic']}</td>
+                            </tr>
+                            <tr>
+                                <th>周边配套：</th>
+                                <td>{$community['round']}</td>
+                            </tr>
+                        </table>
+                        <div class="map" id="map">
+                            <h5 class="map-tab"><span class="active">百度地图</span></h5>
+                            <div class="map-tab-pane map-content">
+                                <div id="js-community_map">
+                                    <?php if(empty($community['map'])) {echo '<p class="text-center">暂无地图信息</p>'; } ?>
+                                </div>
+                            </div>
+                            <div class="js-map-info">
+                                <div class="map-tab clearfix">
+                                    <span class="active" data-keywords="公交$地铁">交通</span>
+                                    <span data-keywords="学校">学校</span>
+                                    <span data-keywords="医院">医疗</span>
+                                    <span data-keywords="餐饮">餐饮</span>
+                                    <span data-keywords="超市$商场">购物</span>
+                                </div>
+                                <div class="map-tab-pane" id="js-map-query-result"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box mb10">
+                        <h3 class="tab-title">附近小区</h3>
+
+                        <div class="housepic-list">
+                            <ul class="clearfix">
+                                <?php $around_community = get_around_community($community['id'], $community['region_ori']); ?>
+                                <?php foreach ($around_community as $key => $value) { ?>
+                                <li>
+                                    <a href="{:url('community/' . $value['id'])}" target="_blank"><img src="<?php echo thumb($value['cover'], 200, 150); ?>" class="thumbnail" width="200px" height="150px"/></a>
+                                    <div class="info">
+                                        <a href="{:url('community/' . $value['id'])}" class="title text-overflow" target="_blank">{$value['title']}</a>
+                                        <p class="other"><span>***</span><span class="price red pull-right"><?php echo empty($value['price']) ? '暂无报价' : $value['price'] . '元/㎡'; ?></span></p>
+                                    </div>
+                                </li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="community-right-block pull-right">
+                    <div class="community-relation-post mb10">
+                        <h3 class="tab-title">相关文章</h3>
+                        <div class="relation-posts">
+                            <?php $relation_posts = get_relation_posts($community['news_relation'], false); ?>
+                            <?php if(!empty($relation_posts)) { ?>
+                            <ul>
+                                <?php foreach ($relation_posts as $key => $post) { ?>
+                                <li><a class="text-overflow" href="<?php echo url('post/' . $post['post_type'] . '/' . $post['id']); ?>" target="_blank"><?php echo $post['title']; ?></a></li>
+                                <?php } ?>
+                            </ul>
+                            <?php } else { ?>
+                            <p class="tips">暂无相关文章！</p>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="footer-script">
+    <script type="text/javascript" src="{:asset('js/jquery.flexslider.js')}"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=1uWFbCYO6wyXHHODQIgGabyi"></script>
+    <script type="text/javascript" src="{:asset('js/home/map.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/common/community.js')}"></script>
+    <script type="text/javascript">
+        $(window).load(function() {
+            // The slider being synced must be initialized first
+            $('#js-carousel').flexslider({
+                animation: "slide",
+                controlNav: false,
+                animationLoop: false,
+                slideshow: false,
+                itemWidth: 105,
+                itemMargin: 10,
+                asNavFor: '#js-slider'
+            });
+
+            $('#js-slider').flexslider({
+                animation: "slide",
+                controlNav: false,
+                animationLoop: false,
+                slideshow: false,
+                sync: "#js-carousel"
+            });
+            <?php if ($community['map']) { ?>
+                // 百度地图API功能
+                var map = new BMap.Map("js-community_map",{minZoom:4,maxZoom:15});
+                <?php list($longitude , $latitude) = split(',', $community['map']); ?>
+                var default_point = new BMap.Point(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
+                map.centerAndZoom(default_point, 15);
+                // var marker = new BMap.Marker(default_point);
+                // marker.setLabel(new BMap.Label("<?php echo $community['title']; ?>",{offset:new BMap.Size(20,-10)}));
+                // map.addOverlay(marker);
+                // 添加负载覆盖物
+                var myCompOverlay = new ComplexCustomOverlay(default_point, "<?php echo $community['title']; ?>","<?php echo $community['title']; ?>");
+                map.addOverlay(myCompOverlay);
+
+                map.addControl(new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT}));
+
+                var custom_map = new MapOP(map, {ak: '1uWFbCYO6wyXHHODQIgGabyi',location: '<?php echo $latitude . ',' . $longitude; ?>'});
+                $('.js-map-info span').click(function(e) {
+                    e.preventDefault();
+                    var _this = $(this);
+                    _this.addClass('active').siblings('.active').removeClass('active');
+                    custom_map.query('#js-map-query-result', _this.data('keywords'));
+                });
+                custom_map.query('#js-map-query-result', '公交$地铁');
+                <?php } ?>
+            });
+        </script>
+    </block>

@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>控制面板</title>
+    <link href="<?php echo asset('bootstrap/css/bootstrap.css'); ?>" rel="stylesheet" type="text/css">
+    <link href="<?php echo asset('css/admin/style.css'); ?>" rel="stylesheet" type="text/css">
+    <script src="<?php echo asset('admin/js/jquery-1.10.1.min.js'); ?>" type="text/javascript"></script>
+    <script src="<?php echo asset('admin/js/bootstrap.min.js'); ?>" type="text/javascript"></script>
+    <script type="text/javascript">
+        if(self==top){
+            window.top.location.href = '<?php echo U("Index/index"); ?>';
+        }
+    </script>
+</head>
+<body>
+    <div class="container-fluid mt10">
+        <div class="alert alert-danger alert-dismissible" role="alert">感谢体验TP-Admin 5.0 alpha 版本</div>
+        <div class="alert alert-danger alert-dismissible" role="alert">我更希望收到来自您的反馈信息，<a href="https://github.com/xiaoyao-work/TP-Admin/issues/new" target="_blank">点击反馈</a></div>
+        <div class="panel panel-danger">
+            <div class="panel-heading">TP-Admin V5 特性</div>
+            <div class="panel-body">
+                <ul>
+                    <li class="page_item page-item-18258 page_item_has_children"><a href="http://www.hhailuo.com/tp-admin-v5/%e8%b7%af%e7%94%b1" target="_blank">路由(改造框架实现全RESTful路由模式)</a>
+                        <ul class="children">
+                            <li class="page_item page-item-18264"><a href="http://www.hhailuo.com/tp-admin-v5/%e8%b7%af%e7%94%b1/%e8%b7%af%e7%94%b1%e5%8f%82%e6%95%b0" target="_blank">路由参数</a></li>
+                            <li class="page_item page-item-18266"><a href="http://www.hhailuo.com/tp-admin-v5/%e8%b7%af%e7%94%b1/%e5%91%bd%e5%90%8d%e8%b7%af%e7%94%b1" target="_blank">命名路由</a></li>
+                            <li class="page_item page-item-18268"><a href="http://www.hhailuo.com/tp-admin-v5/%e8%b7%af%e7%94%b1/%e4%b8%ad%e9%97%b4%e9%94%ae" target="_blank">中间键</a></li>
+                            <li class="page_item page-item-18275"><a href="http://www.hhailuo.com/tp-admin-v5/%e8%b7%af%e7%94%b1/%e8%b7%af%e7%94%b1%e7%bb%84" target="_blank">路由组</a></li>
+                        </ul>
+                    </li>
+                    <li class="page_item page-item-18303"><a href="http://www.hhailuo.com/tp-admin-v5/request" target="_blank">Request</a></li>
+                    <li class="page_item page-item-18299"><a href="http://www.hhailuo.com/tp-admin-v5/%e7%8e%af%e5%a2%83%e5%8f%98%e9%87%8f" target="_blank">环境变量</a></li>
+                    <li class="page_item page-item-18305"><a href="http://www.hhailuo.com/tp-admin-v5/%e4%be%9d%e8%b5%96%e6%b3%a8%e5%85%a5ioc" target="_blank">依赖注入(IOC)</a></li>
+                    <li class="page_item page-item-18320 page_item_has_children"><a href="http://www.hhailuo.com/tp-admin-v5/%e5%8a%9f%e8%83%bd%e4%bb%8b%e7%bb%8d" target="_blank">功能介绍</a>
+                        <ul class="children">
+                            <li class="page_item page-item-18318"><a href="http://www.hhailuo.com/tp-admin-v5/%e5%8a%9f%e8%83%bd%e4%bb%8b%e7%bb%8d/%e5%8d%95%e9%a1%b5%e9%9d%a2" target="_blank">单页面</a></li>
+                            <li class="page_item page-item-18316"><a href="http://www.hhailuo.com/tp-admin-v5/%e5%8a%9f%e8%83%bd%e4%bb%8b%e7%bb%8d/%e7%ba%a7%e8%81%94%e8%8f%9c%e5%8d%95" target="_blank">级联菜单</a></li>
+                            <li class="page_item page-item-18314"><a href="http://www.hhailuo.com/tp-admin-v5/%e5%8a%9f%e8%83%bd%e4%bb%8b%e7%bb%8d/menu%e8%87%aa%e5%8a%a8%e8%8f%9c%e5%8d%95" target="_blank">Menu自动菜单</a></li>
+                            <li class="page_item page-item-18312"><a href="http://www.hhailuo.com/tp-admin-v5/%e5%8a%9f%e8%83%bd%e4%bb%8b%e7%bb%8d/rbac%e6%9d%83%e9%99%90%e7%ae%a1%e7%90%86" target="_blank">RBAC权限管理</a></li>
+                            <li class="page_item page-item-18310"><a href="http://www.hhailuo.com/tp-admin-v5/%e5%8a%9f%e8%83%bd%e4%bb%8b%e7%bb%8d/%e6%a8%a1%e5%9e%8b" target="_blank">模型</a></li>
+                            <li class="page_item page-item-18308"><a href="http://www.hhailuo.com/tp-admin-v5/%e5%8a%9f%e8%83%bd%e4%bb%8b%e7%bb%8d/%e7%ab%99%e7%be%a4" target="_blank">站群</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">个人信息 Profile&nbsp; Info</div>
+                    <div class="panel-body">
+                        <ul>
+                            <li><span>用户帐号:</span><?php echo $user_info['account']; ?></li>
+                            <li><span>用户角色:</span><?php echo $user_info['role_name']; ?></li>
+                            <li><span>上次登陆IP:</span><?php echo $user_info['last_login_ip']; ?></li>
+                            <li><span>上次登陆地址:</span><?php echo $area; ?></li>
+                            <li><span>上次登陆时间:</span><?php echo date('Y-m-d H:i:s', $user_info['last_login_time']); ?></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">作者信息 Author&nbsp; Info</div>
+                    <div class="panel-body">
+                        <ul>
+                            <li><span>官方网站:</span><a target="_blank" href="http://tp-admin.hhailuo.com/">TP-Admin</a></li>
+                            <li><span>创作人:</span><a href="http://www.hhailuo.com/">逍遥·李志亮</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">系统信息 System&nbsp; Info</div>
+                    <div class="panel-body">
+                        <ul>
+                            <li><span>操作系统:</span><?php echo $system_info['0']; ?></li>
+                            <li><span>运行方式:</span><?php echo $system_info['1']; ?></li>
+                            <li><span>PHP版本:</span><?php echo $system_info['3']; ?></li>
+                            <li><span>MYSQL版本:</span><?php echo $system_info['2']; ?></li>
+                            <li><span>上传限制:</span><?php echo $system_info['4']; ?></li>
+                            <li><span>GD库版本:</span><?php echo $system_info['5']; ?></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+.more {
+    background-color: #f65720;
+    border-color: #f65720;
+    color: #FFF;
+}
+.more:focus, .more:active, .more:hover {
+    background-color: #f65720;
+    border-color: #f65720;
+    color: #FFF;
+}
+
+.page-header {
+    border-left: 3px solid #f65720;
+    padding-left: 10px;
+}
+.page-header h2 {
+    margin: 0;
+}
+
+.top-banner {
+    background: url('../../images/home/top_bg.jpg') #F3F7FA no-repeat center center;
+    height: 470px;
+}
+
+.top-banner .info {
+    padding-top: 90px;
+}
+
+.top-banner .info h1 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #f65720;
+    padding-bottom: 10px;
+    display: inline-block;
+    border-bottom: 2px solid #d7e8e0;
+}
+
+.top-banner .info p {
+    color: #83ae9a;
+    font-size: 18px;
+    line-height: 30px;
+    text-indent: 36px;
+    font-family: sans-serif;
+}
+.item {
+    text-align: center;
+}
+.item h4.title {
+    font-size: 24px;
+    color: #222;
+}
+
+.item .description {
+    margin-top: 20px;
+    color: #999;
+    line-height: 1.7;
+}
+
+.item p.blank {
+    height: 75px;
+}
+
+.pro {
+    background-size: cover;
+}
+
+.complete {
+    background-image: url('../../images/home/icon-i-1.png');
+}
+
+.underway {
+    background-image: url('../../images/home/icon-i-2.png');
+}
+
+.plan {
+    background-image: url('../../images/home/icon-i-3.png');
+}
+
+.itembg {
+    height: 250px;
+    background-color: rgba(250,250,250, 0.7);
+    padding: 50px 15px 0 15px;
+}
+
+.itembg:hover {
+    background-color: rgba(250,250,250, 0.9);
+}
+
+.itembg:hover h4.title {
+    color: #000;
+}
+
+.itembg:hover p {
+    color: #222;
+}
+
+.itembg h4.title {
+    color: #222;
+    text-align: center;
+    font-size: 24px;
+}
+
+.itembg p {
+    color: #444;
+    text-indent: 24px;
+}
+

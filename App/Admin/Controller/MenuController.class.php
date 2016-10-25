@@ -37,7 +37,6 @@ class MenuController extends CommonController {
     }
 
     public function edit() {
-        $nid = $_GET['nid'];
         if (IS_POST) {
             $this->checkToken();
             if (model("Menu")->where(array('id' => $_POST['nid']))->save($_POST['info']) !== false) {
@@ -46,6 +45,7 @@ class MenuController extends CommonController {
                 $this->error('操作失败！', __MODULE__ . '/Menu/index');
             }
         } else {
+            $nid = I('nid');
             if (empty($nid)) {
                 $this->error('异常操作！', __MODULE__ . '/Menu/index');
             }
@@ -74,10 +74,16 @@ class MenuController extends CommonController {
 
     public function listorder() {
         if (isset($_POST['sort']) && is_array($_POST['sort'])) {
+            $model = model('Menu');
             $sort = $_POST['sort'];
+            $sql = "UPDATE `". $model->getTableName() ."` SET `sort` = CASE ";
             foreach ($sort as $k => $v) {
-                model('Menu')->where(array('id'=>$k))->save(array('sort'=>$v));
+                $sql .= " WHEN `id` = " . $k . " THEN " . $v;
             }
+            $sql .= " END WHERE `id` in (" . implode(',', array_keys($sort)) . ")";
+            if ($model->execute($sql) === false) {
+                $this->error('操作失败！');
+            };
         }
         $this->success('排序成功');
     }

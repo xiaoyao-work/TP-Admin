@@ -1,0 +1,129 @@
+<extend name="Layout:base" />
+<block name="head">
+    <link href="{:asset('css/home/home.css')}" rel="stylesheet" type="text/css" />
+</block>
+
+<block name="content">
+    <div class="top-banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6 info">
+                    <h1>红海螺CMS</h1>
+                    <p>红海螺CMS（TP-Admin V5）是一个拥有站群功能的多功能CMS基础系统，底层融合了Slim 2.6和ThinkPHP 3.2两个框架，在此基础上改造了MVC结构、泛域名匹配机制、在MVC的基础上新增Logic层、重构路由机制实现与当下主流的开源框架（如：laravel，YII等）路由机制相类似的RESTful。能帮助你快速构建大型门户站点，以及快速的开发一个简单但是强大的WEB应用以及API接口</p>
+                    <div class="text-right">
+                    <a href="http://www.hhailuo.com/tp-admin-v5" target="_blank" class="btn more btn-lg">了解更多</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row content">
+            <div class="page-header">
+                <h2>CMS优势</h2>
+            </div>
+            <div class="col-xs-3">
+                <div class="item first">
+                    <img src="{:asset('images/home/icon-2.png')}" />
+                    <h4 class="title">站群</h4>
+                    <p class="description">多站点一站式集中管理，为您轻松，快速建立大型门户系统</p>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="item">
+                    <img src="{:asset('images/home/icon-1.png')}" />
+                    <h4 class="title">动态模型</h4>
+                    <p class="description">它的强大远非你所想象，你的功能都能由他来实现。</p>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="item">
+                    <img src="{:asset('images/home/icon-3.png')}" />
+                    <h4 class="title">分类机制</h4>
+                    <p class="description">为您的内容来划分类别吧，随心所欲想怎么玩就怎么玩！</p>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="item">
+                    <img src="{:asset('images/home/icon-4.png')}" />
+                    <h4 class="title">单页面</h4>
+                    <p class="description">这是一个神奇的创作，当你真正了解了他，你会对他爱不释手的！</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt20">
+            <div class="col-xs-3">
+                <div class="item">
+                    <img src="{:asset('images/home/icon-5.png')}" width="150px" />
+                    <h4 class="title">…………</h4>
+                    <p class="description">更多功能等着你来探索，<a href="{:url('/', 'Admin')}">立即体验</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="page-header">
+                <h2>计划功能</h2>
+            </div>
+            <div class="col-xs-3">
+                <div class="item">
+                    <h4 class="title">插件系统</h4>
+                    <p class="description">实现插件引擎，建立插件库。通过插件机制来增强系统功能和扩展性！</p>
+                </div>
+            </div>
+
+            <div class="col-xs-3">
+                <div class="item">
+                    <h4 class="title">工作流</h4>
+                    <p class="description">加强内容审核机制，建立自定义工作流。为您的系统建立起强大的审核机制！</p>
+                </div>
+            </div>
+
+            <div class="col-xs-3">
+                <div class="item">
+                    <h4 class="title">权限细化</h4>
+                    <p class="description">细化现有RBAC权限控制功能；为动态模型、分类类别等做到更细粒度的权限控制；提供更便捷的权限控制方案建立插件库！</p>
+                </div>
+            </div>
+
+            <div class="col-xs-3">
+                <div class="item">
+                    <h4 class="title">字段仓库</h4>
+                    <p class="description">字段是模型的元素，我们将继续完善和丰富字段类型，创建字段类型创库，并将其融入插件系统。让我们的系统支持广泛，更便捷！</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="row mb20">
+            <div class="page-header">
+                <h2>产品&规划</h2>
+            </div>
+            <div class="col-xs-3">
+                <div class="complete pro">
+                    <div class="itembg">
+                        <h4 class="title">大型门户CMS</h4>
+                        <p class="description">下载红海螺CMS(TP-Admin V5)你就拥有了一个大型CMS门户站，你只需要专注于你的内容建设，技术的事情红海螺CMS已经为你全部完成了！我们正在准备一个拥有丰富内容的Demo站点</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-3">
+                <div class="underway pro">
+                <div class="itembg">
+                    <h4 class="title">房产门户</h4>
+                    <p class="description">房产门户，我们已经在开发中了，并且已经完成了初步的功能。等通过测试它就能和大家相见了！</p>
+                </div>
+                </div>
+            </div>
+
+            <div class="col-xs-3">
+                <div class="plan pro">
+                    <div class="itembg">
+                        <h4 class="title">商城</h4>
+                        <p class="description">我们正在积极部署实现一个企业商城，这已经是在我们的行程单上面了，期待不就之后的和你相遇</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

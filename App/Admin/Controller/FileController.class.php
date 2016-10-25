@@ -9,7 +9,6 @@
 
 namespace Admin\Controller;
 
-use Logic\AttachmentLogic;
 use Lib\Log;
 
 class FileController extends CommonController {
@@ -17,53 +16,20 @@ class FileController extends CommonController {
     public function upload() {
         if (IS_POST) {
             $result = array('code' => 0, 'message' => '');
-            $data = array();
-            if (isset($_FILES)) {
-                $upload = new \Think\Upload(array(
-                    'maxSize' =>  C('IMAGE_UPLOAD_LIMIT'),
-                    'exts' => C('ALLOW_EXTS'),
-                    'rootPath' => UPLOAD_PATH,
-                    'savePath' => '',
-                ));
-                $info = $upload->upload();
-                if(!$info) {
-                    // 上传错误提示错误信息
-                    $result['code'] = 10016;
-                    $result['message'] = $upload->getError();
-                } else {
-                    $attach_info = current($info);
-                    $attach_info = array(
-                        'title' => $attach_info['name'],
-                        'siteid' => $this->siteid,
-                        'url'   => $attach_info["savepath"] . $attach_info["savename"],
-                        'path'  => $attach_info["savepath"] . $attach_info["savename"],
-                        'name'  => $attach_info["savename"],
-                        'size'  => $attach_info['size'],
-                        'ext'   => $attach_info['ext'],
-                        'ip'    => get_client_ip(),
-                        'uploaded_at' => date('Y-m-d H:i:s'),
-                        );
-                    $thumbs = AttachmentLogic::createThumb($attach_info);
-                    $attach_info['thumbs'] = json_encode($thumbs);
-                    // 将附件插入附件表
-                    if($attachment_id = model("Attachment")->add($attach_info)) {
-                        $attach_info['id'] = $attachment_id;
-                        $attach_info['thumbs'] = json_decode($attach_info['thumbs']);
-                        $result['data'] = $attach_info;
-                    } else {
-                        $result['code'] = 10014;
-                        $result['message'] = '附件保存失败!';
-                    }
-                }
+            $logic = logic('Attachment');
+            $data = $logic->upload();
+            if ($data == false) {
+                $result['code'] = $logic->getErrorCode();
+                $result['message'] = $logic->getErrorMessage();
             } else {
-                $result['code'] = 10015;
-                $result['message'] = '请先选择图片!';
+                $result['data'] = $data;
             }
+
             $type = I('get.type', 'file');
             switch ($type) {
                 case 'ck_image':
                     $funcNum = $_GET['CKEditorFuncNum'];
-                    $url = IMAGE_DOMAIN . $attach_info['url'];
+                    $url = IMAGE_DOMAIN . $data['url'];
                     $message = $result['message'];
                     $this->ajaxReturn("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($funcNum, '$url', '$message');</script>", 'EVAL');
                     break;
@@ -79,10 +45,6 @@ class FileController extends CommonController {
                 default:
                     $this->ajaxReturn($result);
                     break;
-            }
-            if (isset($_GET['CKEditor'])) {
-
-            } else {
             }
         } else {
             $args = $_GET['args'];

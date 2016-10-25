@@ -1,4 +1,3 @@
-
 // 窗口修改
 if(!Array.prototype.map) {
     Array.prototype.map = function(fn,scope) {
@@ -33,7 +32,9 @@ function wSize() {
     var str=getWindowSize();
     var strs= new Array();
     strs=str.toString().split(",");
-    var heights = strs[0]-112,Body = $('body');$('#rightMain').height(heights);
+    var heights = strs[0] - 118,
+    Body = $('body');
+    $('#rightMain').height(heights);
     if(strs[1]<980){
         $('.header').css('width',980+'px');
         $('#content').css('width',980+'px');
@@ -45,10 +46,9 @@ function wSize() {
         Body.attr('scroll','no');
         Body.addClass('objbody');
     }
-    var openClose = $("#rightMain").height();
-    $('#center_frame').height(openClose + 28);
-    $("#openClose").height(openClose + 28);
-    $("#Scroll").height(openClose + 28);
+
+    $("#openClose").height(heights + 36);
+    $("#Scroll").height(heights + 36);
     windowW();
 }
 function windowW(){
@@ -108,19 +108,6 @@ function menuScroll(num){
 
 //站点下拉菜单
 $(function(){
-    var offset = $(".tab_web").offset();
-    var tab_web_panel = $(".tab-web-panel");
-    $(".tab_web").mouseover(function(){
-        tab_web_panel.css({ "left": +$(this).offset().left+4, "top": +offset.top+$('.tab_web').height()});
-        tab_web_panel.show();
-        if(tab_web_panel.height() > 200){
-            tab_web_panel.children("ul").addClass("tab-scroll");
-        }
-    });
-    $(".tab_web span").mouseout(function(){hidden_site_list_1()});
-    $(".tab-web-panel").mouseover(function(){clearh();$('.tab_web a').addClass('on')}).mouseout(function(){hidden_site_list_1();
-        $('.tab_web a').removeClass('on')
-    });
     //默认载入左侧菜单
     $("#leftMain").load(module + "/Index/left/mid/59");
 
@@ -143,24 +130,6 @@ $(function(){
     });
 });
 
-//隐藏站点下拉。
-var s = 0;
-var h;
-function hidden_site_list() {
-    s++;
-    if(s>=3) {
-        $('.tab-web-panel').hide();
-        clearInterval(h);
-        s = 0;
-    }
-}
-function clearh(){
-    if(h)clearInterval(h);
-}
-function hidden_site_list_1() {
-    h = setInterval("hidden_site_list()", 1);
-}
-
 function _M(menuid,targetUrl) {
     $("#menuid").val(menuid);
     $("#bigid").val(menuid);
@@ -168,16 +137,15 @@ function _M(menuid,targetUrl) {
     $("#leftMain").load(module + "/Index/left/mid/"+menuid, {limit: 25}, function(responseText, textStatus, XHR){
         windowW();
     });
-    // $("#rightMain").attr('src', targetUrl);
-    $('.top_menu').removeClass("on");
-    $('#_M'+menuid).addClass("on");
+
+    $('#_M'+menuid).addClass("active").siblings('li').removeClass('active');
     //当点击顶部菜单后，隐藏中间的框架
     $('#display_center_id').css('display','none');
 
     //显示左侧菜单，当点击顶部时，展开左侧
     $(".left_menu").removeClass("left_menu_on");
     $("#openClose").removeClass("close");
-    $("html").removeClass("on");
+
     $("#openClose").data('clicknum', 0);
     $("#current_pos").data('clicknum', 1);
 }
@@ -186,13 +154,11 @@ function _MP(menuid,targetUrl) {
     $("#menuid").val(menuid);
     $("#paneladd").html('<a class="panel-add" href="javascript:add_panel();"><em>添加</em></a>');
     $("#rightMain").attr('src', targetUrl+'&menuid='+menuid);
-    $('.sub_menu').removeClass("on fb blue");
-    $('#_MP'+menuid).addClass("on fb blue");
-    $("#current_pos").data('clicknum', 1).text($("#top_menu .on a").text() + " > " + $('#_MP'+menuid).text());
+    $("#current_pos").data('clicknum', 1).text($("#top_menu .active a").text() + " > " + $('#_MP'+menuid).text());
 }
 
-function paneladdclass(id) {
-    $("#panellist span a[class='on']").removeClass();
-    $(id).addClass('on')
-}
-
+setInterval(function() {
+    $.get(module + "/Index/public_session_life", function(res) {
+        eval(res);
+    });
+}, 60000);

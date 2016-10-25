@@ -7,10 +7,6 @@ $core_config = array(
     'config'    =>  array(
         THINK_PATH.'Conf/convention.php',   // 系统惯例配置
         CONF_PATH.'config'.CONF_EXT,      // 应用公共配置
-        CONF_PATH.'database.php',
-        CONF_PATH.'routes.php',
-        CONF_PATH.'rsync.php',
-        CONF_PATH.'others.php',
     ),
 
     // 别名定义
@@ -29,8 +25,8 @@ $core_config = array(
     // 函数和类文件
     'core'      =>  array(
         THINK_PATH.'Common/functions.php',
-        'constants' => CONF_PATH.'constants.php',
         COMMON_PATH.'Common/function.php',
+        COMMON_PATH.'Common/iconv.func.php',
         CORE_PATH . 'Hook'.EXT,
         CORE_PATH . 'App'.EXT,
         CORE_PATH . 'Dispatcher'.EXT,
@@ -69,7 +65,8 @@ if (file_exists(CONF_PATH.'local.php')) {
     $core_config['config'][] = CONF_PATH.'local.php';
 }
 if (file_exists(CONF_PATH.'local-constants.php')) {
-    $core_config['core']['constants'] = CONF_PATH.'local-constants.php';
+    $core_config['core'][] = CONF_PATH.'local-constants.php';
 }
+$core_config['core'][] = CONF_PATH.'constants.php';
 
 return $core_config;

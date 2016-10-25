@@ -12,7 +12,7 @@ use Admin\Controller\CommonController;
 
 /**
  * 附件操作
-*/
+ */
 class AttachmentController extends CommonController {
     protected $db;
     function __construct() {
@@ -24,20 +24,23 @@ class AttachmentController extends CommonController {
     }
 
     public function album_list() {
-        $search = array();
+        $search = [];
         if (isset($_GET['search'])) {
-            if($_GET['start_time'] && !is_numeric($_GET['start_time'])) {
-                $search['_string'] =  "uploadtime >= " . strtotime($_GET['start_time']);
+            $start_time = I('get.start_time');
+            $end_time   = I('get.end_time');
+            $filename   = safe_replace(I('get.filename'));
+            if ($start_time) {
+                $search['_string'] = "uploaded_at >= '{$start_time}'";
             }
-            if($_GET['end_time'] && !is_numeric($_GET['end_time'])) {
-                if ( isset($search['_string'])) {
-                    $search['_string'] .=  " and uploadtime <= " . strtotime($_GET['end_time']);
+            if ($end_time) {
+                if (isset($search['_string'])) {
+                    $search['_string'] .= " and uploaded_at <= '{$end_time}'";
                 } else {
-                    $search['uploadtime'] = array( 'lt',strtotime($_GET['end_time']) );
+                    $search['uploaded_at'] = ['lt', $end_time];
                 }
             }
-            if ($_GET['filename']) {
-                $search['name'] = array('like', "%".safe_replace($_GET['filename'])."%");
+            if ($filename) {
+                $search['name'] = ['like', "%" . $filename . "%"];
             }
         }
 
@@ -50,7 +53,7 @@ class AttachmentController extends CommonController {
             $data = $this->db->attachment_list($search);
             $this->assign('attachs', $data['data']);
             $this->assign('pages', $data['pages']);
-            $this->assign('params', explode(',', $_GET['args']));
+            $this->assign('params', explode(',', I('get.args')));
             $this->display();
         }
     }

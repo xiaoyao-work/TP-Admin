@@ -1,0 +1,80 @@
+<extend name="Layout:form" />
+<block name="subheader">
+    <link rel="stylesheet" type="text/css" href="{:asset('js/jquery-ui/jquery-ui.min.css')}">
+    <script language="javascript" type="text/javascript" src="{:asset('js/admin/content_add.js')}" charset="UTF-8"></script>
+    <script type="text/javascript" src="{:asset('js/admin/attachupload.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/ckeditor/ckeditor.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/jquery-ui/jquery-ui.min.js')}"></script>
+</block>
+<block name="main">
+    <form name="myform" id="myform" action="" method="post" enctype="multipart/form-data">
+        <div class="post-body clear" style="margin-right: 300px;">
+            <div class="common-form post-body-content" style="width: 100%; min-width: 463px; float: left;">
+                <table width="100%" cellspacing="0" class="table_form">
+                    <tr>
+                        <th width="80"> <font color="red">*</font> 标题 </th>
+                        <td>
+                            <input type="text" style="width:400px;" name="page[title]" id="title" value="" style="color:" class="measure-input " onkeyup="strlen_verify(this, 'title_len', 80);"/>
+                            <input type="button" class="button" id="check_title_alt" value="检测重复" onclick="$.get('__CONTROLLER__/public_check_title?sid='+Math.random()*5, {data:$('#title').val()}, function(data){if(data=='1') {$('#check_title_alt').val('标题重复');$('#check_title_alt').css('background-color','#FFCC66');} else if(data=='0') {$('#check_title_alt').val('标题不重复');$('#check_title_alt').css('background-color','#F8FFE1')}})" style="width:73px;"/> 还可输入<B><span id="title_len">80</span></B> 个字符
+                        </td>
+                    </tr>
+                    <tr>
+                        <th width="80"> 内容 </th>
+                        <td>
+                            <textarea name="page[content]" id="content" boxid="content"></textarea><?php echo \Org\Util\Form::editor('content', 'full','', 1 , 1,'',200); ?>
+                            <div id='content_tip'></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="post-body-sidebar" style="margin-right: -300px; width: 280px; float: right;">
+                <div class="postbox">
+                    <h3 class="title">
+                        <span>发布</span>
+                    </h3>
+                    <div class="inside">
+                        <div class="major-content">
+                            <p><strong>slug</strong></p>
+                            <input type="text" value="" name="page[slug]" />
+                            <p><strong>模板</strong></p>
+                            <select name="page[template]">
+                                <?php foreach ($template_list as $key => $value) { ?>
+                                <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="major-operate clear">
+                            <div class="left-link"></div>
+                            <div class="right-button">
+                                <input name="dosubmit" type="submit" class="button-primary bt-button" value="提交">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="bk15"></div>
+    </form>
+</block>
+<block name="footer">
+    <script type="text/javascript">
+        $(function(){
+            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){
+                window.top.art.dialog({
+                    id:'check_content_id',
+                    content:msg,
+                    lock:true,
+                }, function() {
+                    $(obj).focus();
+                    boxid = $(obj).attr('id');
+                    if($('#'+boxid).attr('boxid')!=undefined) {
+                        check_content(boxid);
+                    }
+                })
+            }});
+            $("#title").formValidator({onshow:"",onfocus:"请输入标题"}).inputValidator({min:1,max:255,onerror:"标题不能为空"});
+        });
+    </script>
+</block>

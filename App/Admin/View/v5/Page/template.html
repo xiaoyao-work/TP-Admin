@@ -1,0 +1,28 @@
+<extend name="Layout:list" />
+<block name="subnav">
+    <a href="<?php echo U('Page/index'); ?>"><em>页面管理</em></a>　|　<a class="on" href="<?php echo U('Page/template'); ?>"><em>模板设置</em></a>
+</block>
+<block name="main">
+    <div class="table-list">
+        <table width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>名字</th>
+                    <th>文件名</th>
+                    <th width="200">管理操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($template_list as $key => $template) { ?>
+                <tr>
+                    <td align="center"><?php echo $template; ?></td>
+                    <td align="center"><?php echo $key; ?></td>
+                    <td align="center">
+                        <a href="__CONTROLLER__/fields?template=<?php echo $key; ?>">字段管理</a> | <a href="__CONTROLLER__/fieldadd?template=<?php echo $key; ?>">添加字段</a>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</block>

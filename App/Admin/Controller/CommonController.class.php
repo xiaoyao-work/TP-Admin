@@ -23,6 +23,8 @@ class CommonController extends Controller {
 
     function __construct() {
         parent::__construct();
+        C('DEFAULT_THEME', 'v5');
+
 		$this->siteid = get_siteid();
         $this->filterLogin();
         if (isset($this->exceptAuth[CONTROLLER_NAME]) && in_array(ACTION_NAME, $this->exceptAuth[CONTROLLER_NAME])) {
@@ -48,9 +50,9 @@ class CommonController extends Controller {
     }
 
     protected function filterLogin() {
-        if (!$_SESSION[C('USER_AUTH_KEY')]) {
+        if (!session(C('USER_AUTH_KEY'))) {
             if (IS_AJAX) {
-                $this->ajaxReturn("<script type='text/javascript'>window.top.location.reload();</script>", 'eval');
+                $this->ajaxReturn("window.top.location.reload();", 'eval');
             }
             //跳转到认证网关
             $this->assign('jumpUrl', __MODULE__ . C('USER_AUTH_GATEWAY'));

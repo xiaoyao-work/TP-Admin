@@ -23,7 +23,12 @@ class ModelController extends CommonController {
     }
 
     public function index() {
-        $models =  $this->db->where("siteid = %d", $this->siteid)->select();
+        // $models =  $this->db->where("siteid = %d", $this->siteid)->select();
+        // 模型共享
+        $models =  $this->db->select();
+        $list = list_to_tree($models,'id','parentid');
+        $models = array();
+        tree_to_array($list,$models);
         $this->assign("models",$models);
         $this->display();
     }
@@ -33,13 +38,14 @@ class ModelController extends CommonController {
             $this->checkToken();
             $data = $_POST['model'];
             $data['siteid'] = (isset($this->siteid) ? $this->siteid : 1);
-
             if (logic('model')->addModel($data)) {
                 $this->success('添加成功！');
             } else {
                 $this->error("添加失败! ");
             }
         } else {
+            $models = m('model')->where(array('type' => 1, 'siteid' => $this->siteid))->select();
+            $this->assign('models', $models);
             $this->display();
         }
     }
@@ -54,7 +60,9 @@ class ModelController extends CommonController {
                 $this->error("更新失败! ");
             }
         } else {
-            $model = $this->db->where(array('siteid' => $this->siteid))->find($_GET['modelid']);
+            // 模型共享
+            // $model = $this->db->where(array('siteid' => $this->siteid))->find($_GET['modelid']);
+            $model = $this->db->find($_GET['modelid']);
             if (empty($model)) {
                 $this->error('模型不存在！');
             }

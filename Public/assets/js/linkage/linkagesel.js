@@ -105,8 +105,7 @@ var LinkageSel = function(opts) {
 
     var loader = $('#linkagesel_loader');
     if (!loader || !loader[0]) {
-        $(document.body).append('<img id="linkagesel_loader" style="display: none; position: absolute;"  src="' +
-                encodeURI(this.st.loaderImg || 'ui-anim_basic_16x16.gif') + '" />');
+        // $(document.body).append('<img id="linkagesel_loader" style="display: none; position: absolute;"  src="' + encodeURI(this.st.loaderImg || 'ui-anim_basic_16x16.gif') + '" />');
         this.loader = $('#linkagesel_loader') || null;
     }
     else {

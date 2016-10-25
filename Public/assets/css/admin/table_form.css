@@ -22,10 +22,11 @@ div.btn{background:#f6f6f6; padding:6px 12px 0 12px; height:30px;line-height:30p
 }
 a.close-own{background: url(../../images/admin/cross.png) no-repeat left 3px; display:block; width:16px; height:16px;position: absolute;outline:none;right:7px; top:8px; text-indent:200px; overflow: hidden}
 a.close-own:hover{background-position: left -46px}
+
 /*通用表单*/
 .common-form{}
 .common-form div.contentWrap{padding-right:20px}
-.common-form ul li{color:#444; clear:both; vertical-align:middle}
+.common-form ul li{color:#444; vertical-align:middle}
 .common-form ul li span.text{width:60px}
 .common-form .set{border:1px dashed #e0e7ed;zoom:1; background:#f2f7fb; padding:10px; font-size:12px; margin-bottom:10px}
 .common-form .set table td,.common-form .set table th{padding-left:12px}
@@ -39,6 +40,7 @@ input.date,input.endDate{background: #fff url(../../images/admin/admin_img/input
 textarea,textarea.input-text,textarea.input-focus{font-size:12px;height:auto; padding:5px; margin:0;}
 select{ vertical-align:middle;background:none repeat scroll 0 0 #F9F9F9;border-color:#666666 #CCCCCC #CCCCCC #666666;border-style:solid;border-width:1px;color:#333;padding:2px;}
 .search-form{ margin-bottom:10px}
+
 /*表格表单*/
 .table_form{font-size:12px}
 .table_form td{padding-left:12px}

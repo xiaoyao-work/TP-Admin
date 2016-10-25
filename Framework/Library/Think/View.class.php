@@ -17,14 +17,14 @@ class View {
      * 模板输出变量
      * @var tVar
      * @access protected
-     */ 
+     */
     protected $tVar     =   array();
 
     /**
      * 模板主题
      * @var theme
      * @access protected
-     */ 
+     */
     protected $theme    =   '';
 
     /**
@@ -90,7 +90,7 @@ class View {
         // 网页字符编码
         header('Content-Type:'.$contentType.'; charset='.$charset);
         header('Cache-control: '.C('HTTP_CACHE_CONTROL'));  // 页面缓存控制
-        header('X-Powered-By:ThinkPHP');
+        header('X-Powered-By: hhailuo.com');
         // 输出模板文件
         echo $content;
     }
@@ -180,7 +180,7 @@ class View {
         $theme = $this->getTemplateTheme();
         // 获取当前主题的模版路径
         $tmplPath   =   C('VIEW_PATH'); // 模块设置独立的视图目录
-        if(!$tmplPath){ 
+        if(!$tmplPath){
             // 定义TMPL_PATH 则改变全局的视图目录到模块之外
             $tmplPath   =   defined('TMPL_PATH')? TMPL_PATH.$module.'/' : APP_PATH.$module.'/'.C('DEFAULT_V_LAYER').'/';
         }

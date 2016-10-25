@@ -1,4 +1,4 @@
-var regexEnum = 
+var regexEnum =
 {
 	intege:"^-?[1-9]\\d*$",					//整数
 	intege1:"^[1-9]\\d*$",					//正整数
@@ -35,19 +35,19 @@ var regexEnum =
 	ps_username:"^[\\u4E00-\\u9FA5\\uF900-\\uFA2D_\\w]+$" //中文、字母、数字 _
 }
 
-function isCardID(sId){ 
+function isCardID(sId){
 	var iSum=0 ;
 	var info="" ;
-	if(!/^\d{17}(\d|x)$/i.test(sId)) return "你输入的身份证长度或格式错误"; 
-	sId=sId.replace(/x$/i,"a"); 
-	if(aCity[parseInt(sId.substr(0,2))]==null) return "你的身份证地区非法"; 
-	sBirthday=sId.substr(6,4)+"-"+Number(sId.substr(10,2))+"-"+Number(sId.substr(12,2)); 
+	if(!/^\d{17}(\d|x)$/i.test(sId)) return "你输入的身份证长度或格式错误";
+	sId=sId.replace(/x$/i,"a");
+	if(aCity[parseInt(sId.substr(0,2))]==null) return "你的身份证地区非法";
+	sBirthday=sId.substr(6,4)+"-"+Number(sId.substr(10,2))+"-"+Number(sId.substr(12,2));
 	var d=new Date(sBirthday.replace(/-/g,"/")) ;
-	if(sBirthday!=(d.getFullYear()+"-"+ (d.getMonth()+1) + "-" + d.getDate()))return "身份证上的出生日期非法"; 
+	if(sBirthday!=(d.getFullYear()+"-"+ (d.getMonth()+1) + "-" + d.getDate()))return "身份证上的出生日期非法";
 	for(var i = 17;i>=0;i --) iSum += (Math.pow(2,i) % 11) * parseInt(sId.charAt(17 - i),11) ;
-	if(iSum%11!=1) return "你输入的身份证号非法"; 
-	return true;//aCity[parseInt(sId.substr(0,2))]+","+sBirthday+","+(sId.substr(16,1)%2?"男":"女") 
-} 
+	if(iSum%11!=1) return "你输入的身份证号非法";
+	return true;//aCity[parseInt(sId.substr(0,2))]+","+sBirthday+","+(sId.substr(16,1)%2?"男":"女")
+}
 
 
 //短时间，形如 (13:04:06)
@@ -65,18 +65,18 @@ function isTime(str)
 //短日期，形如 (2003-12-05)
 function isDate(str)
 {
-	var r = str.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/); 
-	if(r==null)return false; 
-	var d= new Date(r[1], r[3]-1, r[4]); 
+	var r = str.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+	if(r==null)return false;
+	var d= new Date(r[1], r[3]-1, r[4]);
 	return (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4]);
 }
 
 //长时间，形如 (2003-12-05 13:04:06)
 function isDateTime(str)
 {
-	var reg = /^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$/; 
-	var r = str.match(reg); 
-	if(r==null) return false; 
-	var d= new Date(r[1], r[3]-1,r[4],r[5],r[6],r[7]); 
+	var reg = /^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2}) (\d{1,2}):(\d{1,2}):(\d{1,2})$/;
+	var r = str.match(reg);
+	if(r==null) return false;
+	var d= new Date(r[1], r[3]-1,r[4],r[5],r[6],r[7]);
 	return (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4]&&d.getHours()==r[5]&&d.getMinutes()==r[6]&&d.getSeconds()==r[7]);
 }

@@ -1,0 +1,186 @@
+
+/* 新闻详情样式 */
+.content-body {
+    float: left;
+    width: 800px;
+    padding: 0px 50px 60px 0;
+}
+
+.content-sidebar {
+    float: left;
+    width: 400px;
+    padding: 30px 20px 0;
+    min-height: 300px;
+    background-color: #fafafa;
+    border-left: 1px solid #f1f1f1;
+}
+
+.content-body h1 {
+    color: #333;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 15px 0 15px 0;
+    text-align: left;
+    line-height: 36px;
+}
+
+.content-body p.description {
+    background-color: #fafafa;
+    padding: 15px;
+    position: relative;
+    line-height: 1.6;
+    border-radius: 5px;
+}
+
+.editor {
+    line-height: 30px;
+    font-size: 15px;
+    margin-bottom: 30px;
+}
+
+.editor h2 {
+    font-size: 24px;
+}
+
+.editor h3 {
+    font-size: 20px;
+}
+
+.editor p {
+    text-indent: 32px;
+}
+
+.editor a, .editor a:hover {
+    color: #4285f4;
+}
+
+.editor img {
+    margin: 20px auto;
+    max-width: 100%;
+}
+/* 新闻详情样式END */
+
+/* POST sidebar */
+.content-sidebar h3.title span {
+    display: inline-block;
+    padding: 0 20px 0 0;
+    background-color: #fafafa;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+}
+
+.content-sidebar h3.title:after {
+    width: 100%;
+    content: '';
+    border-bottom: 1px solid #efefef;
+    display: block;
+    position: relative;
+    top: -12px;
+}
+
+.content-body h3.title span {
+    background-color: #fff;
+}
+
+.comment-form .user {
+    margin: 20px 0;
+}
+
+.content-body span.name, .comments a.name, .reply_button a {
+    color: #4285f4;
+}
+
+.member-avatar {
+    float: left;
+    margin-right: 20px;
+}
+
+.mswrap {
+    overflow: hidden;
+}
+/*  */
+
+
+/* 新闻列表样式 */
+.tax-title {
+    font-size: 30px;
+}
+.wrap-content {
+    margin-bottom: 30px;
+}
+
+.r-col-pd-r {
+    margin-right: -30px;
+}
+
+.wrap-list {
+    margin-left: -15px;
+    border: 1px solid #dfdfdf;
+}
+
+.crumbs {
+    padding: 5px 15px;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #dfdfdf;
+}
+
+.post-list {
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.post-list li a {
+    display: block;
+    margin-right: 160px;
+}
+
+.wrap-cat {
+    border: 1px solid #CCC;
+    border-top: 2px solid #005e9a;
+    overflow: hidden;
+    height: 200px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-left: -15px;
+}
+
+.wrap-cat .cat-title {
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 20px;
+    border-bottom: 1px solid #CCC;
+}
+
+.wrap-cat .more {
+    padding: 10px 15px 0 0;
+    font-size: 12px;
+}
+
+.wrap-cat .cat-list {
+    padding: 7px 15px;
+}
+
+.wrap-cat .cat-list li a, .post-list li a {
+    display: block;
+    line-height: 28px;
+    overflow: hidden;
+}
+
+.post-list li.line {
+    border-bottom: 1px dashed #DCDCDC;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+}
+
+.nav-page {
+    padding: 0 15px;
+}
+/* 新闻列表样式END
+
+/* 搜索列表 */
+.search-list {
+}
+
+/* 搜索列表END */

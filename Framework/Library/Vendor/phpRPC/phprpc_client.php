@@ -459,8 +459,7 @@ class _PHPRPC_Client {
         global $_PHPRPC_COOKIE, $_PHPRPC_COOKIES;
         if (preg_match('/PHPRPC Server\/([^,]*)(,|$)/i', implode(',', $header['x-powered-by']), $match)) {
             $this->_server['version'] = (float)$match[1];
-        }
-        else {
+        } else {
             return new PHPRPC_Error(E_ERROR, "Illegal PHPRPC server.");
         }
         if (preg_match('/text\/plain\; charset\=([^,;]*)([,;]|$)/i', $header['content-type'][0], $match)) {

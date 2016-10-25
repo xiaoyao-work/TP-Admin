@@ -1,0 +1,39 @@
+<extend name="Layout:content" />
+<block name="head">
+    <link href="{:asset('css/news/news.css')}" rel="stylesheet" type="text/css" />
+</block>
+
+<block name="top-banner">
+    <div class="container">
+        <div class="row nav-news clearfix">
+            <ul class="main-menu">
+                <li class="on"><a href="<?php echo url('news', 'Home'); ?>">首页</a></li>
+                <?php echo get_terms_menu('post', 'category', $siteid); ?>
+            </ul>
+        </div>
+    </div>
+</block>
+
+<block name="content">
+    <div class="container page">
+        <div class="row clearfix">
+            <div class="content-body">
+                <h1><?php echo $page['title']; ?></h1>
+                <div class="editor">
+                    <?php echo htmlspecialchars_decode($page['content']); ?>
+                </div>
+            </div>
+            <div class="content-sidebar">
+                <h3 class="title">
+                    <span>相关文章</span>
+                </h3>
+                <div class="relation-posts">
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="footer-script">
+    <script type="text/javascript" src="{:asset('js/home/news.js')}"></script>
+</block>

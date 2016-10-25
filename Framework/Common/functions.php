@@ -1232,16 +1232,21 @@ function session($name='',$value='') {
         }elseif(isset($name['id'])) {
             session_id($name['id']);
         }
+
         if('common' == APP_MODE){ // 其它模式可能不支持
             ini_set('session.auto_start', 0);
         }
+
         if(isset($name['name']))            session_name($name['name']);
-        if(isset($name['path']))            session_save_path($name['path']);
-        if(isset($name['domain']))          ini_set('session.cookie_domain', $name['domain']);
         if(isset($name['expire']))          {
             ini_set('session.gc_maxlifetime',   $name['expire']);
             ini_set('session.cookie_lifetime',  $name['expire']);
         }
+        $name['expire'] = isset($name['expire']) ? $name['expire'] : 0;
+        $name['path'] = isset($name['path']) ? $name['path'] : '/';
+        $name['domain'] = isset($name['domain']) ? $name['domain'] : '';
+        session_set_cookie_params($name['expire'], $name['path'], $name['domain']);
+
         if(isset($name['use_trans_sid']))   ini_set('session.use_trans_sid', $name['use_trans_sid']?1:0);
         if(isset($name['use_cookies']))     ini_set('session.use_cookies', $name['use_cookies']?1:0);
         if(isset($name['cache_limiter']))   session_cache_limiter($name['cache_limiter']);
@@ -1260,7 +1265,10 @@ function session($name='',$value='') {
                 array(&$hander,"gc"));
         }
         // 启动session
-        if(C('SESSION_AUTO_START'))  session_start();
+        if(C('SESSION_AUTO_START'))  {
+            session_start();
+            cookie(session_name(), session_id(), array('expire' => ini_get('session.gc_maxlifetime')));
+        }
     }elseif('' === $value){
         if(''===$name){
             // 获取全部的session
@@ -1391,8 +1399,8 @@ function cookie($name='', $value='', $option=null) {
     if ('' === $value) {
         if(isset($_COOKIE[$name])){
             $value =    $_COOKIE[$name];
-            if(0===strpos($value,'think:')){
-                $value  =   substr($value,6);
+            if(0===strpos($value,'hhailuo:')){
+                $value  =   substr($value,8);
                 return array_map('urldecode',json_decode(MAGIC_QUOTES_GPC?stripslashes($value):$value,true));
             }else{
                 return $value;
@@ -1407,7 +1415,7 @@ function cookie($name='', $value='', $option=null) {
         } else {
             // 设置cookie
             if(is_array($value)){
-                $value  = 'think:'.json_encode(array_map('urlencode',$value));
+                $value  = 'hhailuo:'.json_encode(array_map('urlencode',$value));
             }
             $expire = !empty($config['expire']) ? time() + intval($config['expire']) : 0;
             setcookie($name, $value, $expire, $config['path'], $config['domain'],$config['secure'],$config['httponly']);

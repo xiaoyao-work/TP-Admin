@@ -13,22 +13,22 @@ class Form {
     /**
     * 编辑器
     * @param int $textareaid
-    * @param int $toolbar
-    * @param string $module 模块名称
-    * @param int $catid 栏目id
+    * @param int $toolbar_type
     * @param int $color 编辑器颜色
     * @param boole $allowupload  是否允许上传
     * @param boole $allowbrowser 是否允许浏览文件
     * @param string $alowuploadexts 允许上传类型
     * @param string $height 编辑器高度
-    * @param string $disabled_page 是否禁用分页和子标题
     */
-    public static function editor($textareaid = 'content', $toolbar_type = 'basic', $module = '', $catid = '', $color = '', $allowupload = 0, $allowbrowser = 1,$alowuploadexts = '',$height = 200,$disabled_page = 0, $allowuploadnum = '10') {
-        $str .= "<script type=\"text/javascript\">\r\n";
+    public static function editor($textareaid = 'content', $toolbar_type = 'basic', $color = '', $allowupload = 0, $allowbrowser = 1,$alowuploadexts = '',$height = 200) {
+        $str = "<script type=\"text/javascript\">\r\n";
         $str .= "if ( CKEDITOR.env.ie && CKEDITOR.env.version < 9 ) { CKEDITOR.tools.enableHtml5Elements( document ) };\r\n";
         if($toolbar_type == 'basic') {
             $toolbar = "[\r\n";
-            $toolbar .= defined('IN_ADMIN') ? "{ name: 'document', items: [ 'Source' ] },\r\n" : '';
+            $toolbar .= defined('IN_ADMIN') ? " { name: 'document', items: [ 'Source' ] },\r\n" : '';
+            $toolbar .= "{ name: 'basicstyles', items: ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink' ]},\r\n { name: 'tools', items: ['Maximize']}\r\n],\r\n";
+            /*
+            $toolbar .= defined('IN_ADMIN') ? " { name: 'document', items: [ 'Source' ] },\r\n" : '';
             $toolbar .= "{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ] },\r\n" .
             "{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },\r\n" .
             "'/'," .
@@ -38,7 +38,7 @@ class Form {
             "'/'," .
             "{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },\r\n" .
             "{ name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] }\r\n" .
-            "],\r\n";
+            "],\r\n";*/
         } elseif($toolbar_type == 'full') {
             $toolbar = "[\r\n";
             $toolbar .= defined('IN_ADMIN') ? "{ name: 'document', items: [ 'Source' ] },\r\n" : '';
@@ -58,13 +58,11 @@ class Form {
         }
         $ck_options = "{\r\nheight:{$height},\r\n";
             if($allowupload) {
-                /*$ck_options .="flashupload:true,\r\n" .
-                    "alowuploadexts:'".$alowuploadexts."',\r\n" .
-                    "allowbrowser:'".$allowbrowser."',\r\n" .
-                    "allowuploadnum:'".$allowuploadnum."',\r\n";*/
-                $ck_options .= "imageUploadUrl : '" . __MODULE__  . "/File/upload?type=ck_drag',\r\n";
-                $ck_options .= "filebrowserUploadUrl : '" . __MODULE__  . "/File/upload?type=ck_image',\r\n";
-                $ck_options .= "filebrowserBrowseUrl: '" . __MODULE__  . "/Attachment/album_list',\r\n";
+                $ck_options .= "imageUploadUrl : '" . UPLOAD_IMAGE_URL  . "?type=ck_drag',\r\n";
+                // $ck_options .= "filebrowserUploadUrl : '" . UPLOAD_IMAGE_URL  . "?type=ck_image',\r\n";
+                if ($allowbrowser) {
+                    $ck_options .= "filebrowserBrowseUrl: '" . __MODULE__  . "/Attachment/album_list',\r\n";
+                }
             }
             if($color) {
                 $ck_options .= "extraPlugins : 'uicolor',uiColor: '$color',";
@@ -92,51 +90,6 @@ class Form {
     }
 
     /**
-    *
-    * @param string $name 表单名称
-    * @param int $id 表单id
-    * @param string $value 表单默认值
-    * @param string $moudle 模块名称
-    * @param int $catid 栏目id
-    * @param int $size 表单大小
-    * @param string $class 表单风格
-    * @param string $ext 表单扩展属性 如果 js事件等
-    * @param string $alowexts 允许图片格式
-    * @param array $thumb_setting
-    * @param int $watermark_setting  0或1
-    */
-    public static function images($name, $id = '', $value = '', $moudle='', $catid='', $size = 50, $class = '', $ext = '', $alowexts = '',$thumb_setting = array(),$watermark_setting = 0 ) {
-        if(!$id) $id = $name;
-        if(!$size) $size= 50;
-        if(!empty($thumb_setting) && count($thumb_setting)) $thumb_ext = $thumb_setting[0].','.$thumb_setting[1];
-        else $thumb_ext = ',';
-        if(!$alowexts) $alowexts = 'jpg|jpeg|gif|bmp|png';
-        return $str."<input type=\"text\" name=\"$name\" id=\"$id\" value=\"$value\" size=\"$size\" class=\"$class\" $ext/>  <input type=\"button\" class=\"button\" onclick=\"javascript:attachupload('{$id}_images', '附件上传','{$id}',attaches,'1,{$alowexts},1,{$thumb_ext},{$watermark_setting}','images','". U('Upfile/upload') ."')\"/ value=\"上传图片\">";
-    }
-
-    /**
-    * @param string $name 表单名称
-    * @param int $id 表单id
-    * @param string $value 表单默认值
-    * @param string $moudle 模块名称
-    * @param int $catid 栏目id
-    * @param int $size 表单大小
-    * @param string $class 表单风格
-    * @param string $ext 表单扩展属性 如果 js事件等
-    * @param string $alowexts 允许上传的文件格式
-    * @param array $file_setting
-    */
-    public static function upfiles($name, $id = '', $value = '', $moudle='', $catid='', $size = 50, $class = '', $ext = '', $alowexts = '',$file_setting = array() ) {
-        if(!$id) $id = $name;
-        if(!$size) $size= 50;
-        if(!empty($file_setting) && count($file_setting)) $file_ext = $file_setting[0].','.$file_setting[1];
-        else $file_ext = ',';
-        if(!$alowexts) $alowexts = 'rar|zip';
-        $authkey = upload_key("1,$alowexts,1,$file_ext");
-        return $str."<input type=\"text\" name=\"$name\" id=\"$id\" value=\"$value\" size=\"$size\" class=\"$class\" $ext/>  <input type=\"button\" class=\"button\" onclick=\"javascript:flashupload('{$id}_files', '附件上传','{$id}',submit_attachment,'1,{$alowexts},1,{$file_ext}','{$moudle}','{$catid}','{$authkey}')\"/ value=\"上传文件\">";
-    }
-
-    /**
     * 日期时间控件
     * @param $name 控件name，id
     * @param $value 选中值
@@ -144,7 +97,7 @@ class Form {
     * @param $loadjs 是否重复加载js，防止页面程序加载不规则导致的控件无法显示
     * @param $showweek 是否显示周，使用，true | false
     */
-    public static function date($name, $value = '', $isdatetime = 0, $loadjs = 0, $showweek = 'true', $timesystem = 1) {
+    public static function date($name, $value = '', $isdatetime = 0, $loadjs = 0, $showweek = true, $timesystem = 1) {
         if($value == '0000-00-00 00:00:00') $value = '';
         $id = preg_match("/\[(.*)\]/", $name, $m) ? $m[1] : $name;
         if($isdatetime) {
@@ -162,8 +115,8 @@ class Form {
             $showsTime = 'false';
         }
         $str = '';
-        if($loadjs && !defined('CALENDAR_INIT')) {
-            define('CALENDAR_INIT', 1);
+        if($loadjs || !defined('CALENDAR_INIT')) {
+            defined('CALENDAR_INIT') or define('CALENDAR_INIT', 1);
             $str .= '<link rel="stylesheet" type="text/css" href="'.asset('css/JSCal/jscal2.css').'"/>
             <link rel="stylesheet" type="text/css" href="'.asset('css/JSCal/border-radius.css').'"/>
             <link rel="stylesheet" type="text/css" href="'.asset('css/JSCal/win2k/win2k.css').'"/>
@@ -176,69 +129,39 @@ class Form {
     }
 
     /**
-    * 栏目选择
-    * @param string $file 栏目缓存文件名
-    * @param intval/array $catid 别选中的ID，多选是可以是数组
-    * @param string $str 属性
-    * @param string $default_option 默认选项
-    * @param intval $modelid 按所属模型筛选
-    * @param intval $type 栏目类型
-    * @param intval $onlysub 只可选择子栏目
-    * @param intval $siteid 如果设置了siteid 那么则按照siteid取
-    */
-    public static function select_category($file = '',$catid = 0, $str = '', $default_option = '', $modelid = 0, $type = -1, $onlysub = 0,$siteid = 0,$is_push = 0) {
+     * 类目下拉选择
+     * @param string $file 栏目缓存文件名
+     * @param intval $termid 选中的ID
+     * @param string $str 属性
+     * @param string $default_option 默认选项
+     */
+    public static function term_select($terms='', $termid=0, $attr='', $default_option='') {
         $tree = new Tree();
-        if(!$siteid) $siteid = get_siteid();
-        if ($modelid) {
-            $result = D('Category')->where('siteid = %d and modelid = %d', $siteid, $modelid)->select();
-        } else {
-            $result = D('Category')->where('siteid = %d', $siteid)->select();
-        }
-        $string = '<select '.$str.'>';
-        if($default_option) $string .= "<option value='0'>$default_option</option>";
-        if (is_array($result)) {
-            foreach($result as $r) {
-                if($siteid != $r['siteid'] || ($type >= 0 && $r['type'] != $type)) continue;
-                $r['selected'] = '';
-                if(is_array($catid)) {
-                    $r['selected'] = in_array($r['id'], $catid) ? 'selected' : '';
-                } elseif(is_numeric($catid)) {
-                    $r['selected'] = $catid==$r['id'] ? 'selected' : '';
-                }
-                $r['html_disabled'] = "0";
-                if (!empty($onlysub) && $r['child'] != 0) {
-                    $r['html_disabled'] = "1";
-                }
-                $categorys[$r['id']] = $r;
-                if($modelid && $r['modelid']!= $modelid ) unset($categorys[$r['catid']]);
-            }
-        }
-        $str  = "<option value='\$id' \$selected>\$spacer \$catname</option>;";
-        $str2 = "<optgroup label='\$spacer \$catname'></optgroup>";
-
-        $tree->init($categorys);
-        $string .= $tree->get_tree_category(0, $str, $str2);
-
+        $tree->init($terms);
+        $string = '<select ' . $attr . '>';
+        $default_selected = (empty($id) && $default_option) ? 'selected' : '';
+        if($default_option) $string .= "<option value='' $default_selected>$default_option</option>";
+        $string .= $tree->get_tree(0, "<option value=\$id \$selected>\$spacer\$catname</option>", $termid);
         $string .= '</select>';
         return $string;
     }
 
     /**
-    * 类目选择
-    * @param string $file 栏目缓存文件名
-    * @param intval/array $catid 选中的ID，多选是可以是数组
-    * @param string $str 属性
-    * @param string $default_option 默认选项
-    */
-    public static function taxonomy($terms = '', $taxonomy = 'category', $catid = 0, $default_option=array()) {
-        if (is_numeric($catid)) {
-            $catid = array($catid);
+     * 类目选择
+     * @param string $terms 类目
+     * @param string $taxonomy 分类
+     * @param intval/array $termid 选中的ID，多选是可以是数组
+     * @param string $str 属性
+     */
+    public static function taxonomy($terms = '', $taxonomy = 'category', $termid = 0) {
+        if (is_numeric($termid)) {
+            $termid = array($termid);
         }
         $tree = new Tree();
         $tree->init($terms);
         $string = '<ul id="'.$taxonomy.'checklist" class="'.$taxonomy.'checklist">';
-        $string .= $tree->get_taxonomy_tree(0, $catid);
-        $string .= '</select>';
+        $string .= $tree->get_taxonomy_tree(0, $termid);
+        $string .= '</ul>';
         return $string;
     }
 
@@ -304,42 +227,27 @@ class Form {
         }
         return $string;
     }
-    /**
-    * 模板选择
-    *
-    * @param $style  风格
-    * @param $module 模块
-    * @param $id 默认选中值
-    * @param $str 属性
-    * @param $pre 模板前缀
-    */
-    public static function select_template($style, $module, $id = '', $str = '', $pre = '') {
-        $tpl_root = TMPL_PATH;
-        $templatedir = $tpl_root.DIRECTORY_SEPARATOR. C("DEFAULT_GROUP") .DIRECTORY_SEPARATOR.$style.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR;
-        $confing_path = $tpl_root.DIRECTORY_SEPARATOR. C("DEFAULT_GROUP") .DIRECTORY_SEPARATOR.$style.DIRECTORY_SEPARATOR.'config.php';
-        $localdir = $style.'|'.$module;
-        $templates = glob($templatedir.$pre.'*.html');
-        if(empty($templates)) {
-            $style = 'default';
-            $templatedir = $tpl_root.DIRECTORY_SEPARATOR. C("DEFAULT_GROUP") .DIRECTORY_SEPARATOR.$style.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR;
-            $confing_path = $tpl_root.DIRECTORY_SEPARATOR. C("DEFAULT_GROUP") .DIRECTORY_SEPARATOR.$style.DIRECTORY_SEPARATOR.'config.php';
-            $localdir = $style.'|'.$module;
-            $templates = glob($templatedir.$pre.'*.html');
-        }
-        if(empty($templates)) return false;
-        $files = @array_map('basename', $templates);
-        $names = array();
-        if(file_exists($confing_path)) {
-            $names = include $confing_path;
-        }
-        $templates = array();
-        if(is_array($files)) {
-            foreach($files as $file) {
-                $key = substr($file, 0, -5);
-                $templates[$key] = isset($names['file_explan'][$localdir][$file]) && !empty($names['file_explan'][$localdir][$file]) ? $names['file_explan'][$localdir][$file].'('.$file.')' : $file;
-            }
-        }
-        ksort($templates);
-        return self::select($templates, $id, $str,'请选择');
+
+    public static function image($field, $value='', $setting=array()) {
+        $preview_img = $value ? $value : asset('images/admin/icon/upload-pic.png');
+        $default_setting = array(
+            'upload_allowext' => '',
+            'isselectimage' => '',
+            'images_width'  => 100,
+            'images_height'  => 100,
+            'watermark'  => 1,
+            'upload_url'  => U("File/upload"),
+            );
+        $setting = array_merge($default_setting, $setting);
+        extract($setting);
+        $html = "<div class='upload-pic img-wrap'>".
+            "<input type='hidden' name='info[$field]' id='$field' value='$value'>" .
+            "<a href='javascript:void(0);' onclick=\"attachupload('".$field."_images', '附件上传','".$field."',thumb_images,'1,".$upload_allowext.",$isselectimage,$images_width,$images_height,$watermark','image','".$upload_url."');return false;\">" .
+            "<img src='$preview_img' id='".$field."_preview' width='135' height='113' style='cursor:hand' /></a>" .
+            "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"attachupload('".$field."_images', '附件上传','".$field."',thumb_images,'1,".$upload_allowext.",$isselectimage,$images_width,$images_height,$watermark','image','". $upload_url ."');return false;\" value=\"上传图片\">" .
+            "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"$('#".$field."_preview').attr('src','".asset('images/admin/icon/upload-pic.png')."'); $('#".$field."').val(' ');return false;\" value=\"取消图片\">".
+            "</div>";
+        return $html;
     }
+
 }

@@ -1,0 +1,132 @@
+<extend name="Layout:community" />
+<block name="head">
+    <link rel="stylesheet" type="text/css" href="{:asset('css/home/community.css')}">
+</block>
+<block name="content">
+    <div class="container">
+        <div class="row">
+            <div class="clearfix">
+            <div class="keywords-search-form pull-left">
+                <form action="{:url('community/search')}" method="get">
+                    <input type="text" id="js-mykeyword" class="form-control keywords-search" placeholder="请输小区名称" name="search" autocomplete="off" value="<?php echo (isset($s['k']) ? $s['k'] : ''); ?>">
+                    <input type="submit" class="btn-keywords-search btn" value="搜 索">
+                </form>
+                <ul id="keywords-match-community" class="match-content"></ul>
+            </div>
+            </div>
+            <div class="wrap-search">
+                <ul class="nav nav-tabs js-nav-search" role="tablist">
+                    <li class="active"><a href="#search-pane">按区域查找</a></li>
+                </ul>
+
+                <div class="search tab-content">
+                    <div class="tab-pane active js-search" id="search-pane">
+                        <div class="wrap-area">
+                            <div class="clearfix">
+                                <span class="type pull-left">区域：</span>
+                                <p class="area pull-left">
+                                    <a href="#" data-val="" data-type="r" class="<?php if(!isset($s['r'])) { echo 'active'; } ?>">不限</a>
+                                    <?php foreach ($locations as $key => $location) { ?>
+                                    <a href="#" data-val="{$location['id']}" data-type="r" class="<?php if(isset($s['r']) && $s['r'] == $location['id']) { echo 'active'; } ?>">{$location['catname']}</a>
+                                    <?php } ?>
+                                </p>
+                            </div>
+                            <?php if (isset($r_second)) { ?>
+                            <p class="contain">
+                                <a href="" data-val="<?php echo $s['r']; ?>" data-type="r" class="<?php if($r_second == 0) { echo 'active'; } ?>">不限</a>
+                                <?php foreach ($locations[$s['r']]['_child'] as $key => $s_location) { ?>
+                                    <a href="#" data-val="{$s_location['id']}" data-type="r" class="<?php if($r_second == $s_location['id']) { echo 'active'; } ?>">{$s_location['catname']}</a>
+                                <?php } ?>
+                            </p>
+                            <?php } ?>
+                            <input type="hidden" name="r" id="r" value="<?php echo ((isset($r_second) && $r_second) ? $r_second : (isset($s['r']) ? $s['r'] : '')); ?>" />
+                        </div>
+                        <ul>
+                            <li class="clearfix">
+                                <span class="type pull-left">总价：</span>
+                                <p class="pull-left">
+                                    <a class="<?php if(!isset($s['p'])) { echo 'active'; } ?>" data-val='' data-type="p" rel="nofollow">不限</a>
+                                    <a href="#" class="<?php if(isset($s['p']) && $s['p'] == 'l100') { echo 'active'; } ?>" data-val='l100' data-type="p" rel="nofollow">100万以下</a>
+                                    <a href="#" class="<?php if(isset($s['p']) && $s['p'] == 'g100_l150') { echo 'active'; } ?>" data-val='g100_l150' data-type="p" rel="nofollow">100-150万</a>
+                                    <a href="#" class="<?php if(isset($s['p']) && $s['p'] == 'g150_l200') { echo 'active'; } ?>" data-val='g150_l200' data-type="p" rel="nofollow">150-200万</a>
+                                    <a href="#" class="<?php if(isset($s['p']) && $s['p'] == 'g200_l300') { echo 'active'; } ?>" data-val='g200_l300' data-type="p" rel="nofollow">200-300万</a>
+                                    <a href="#" class="<?php if(isset($s['p']) && $s['p'] == 'g500_l300') { echo 'active'; } ?>" data-val='g500_l300' data-type="p" rel="nofollow">300-500万</a>
+                                    <a href="#" class="<?php if(isset($s['p']) && $s['p'] == 'g500_l1000') { echo 'active'; } ?>" data-val='g500_l1000' data-type="p" rel="nofollow">500-1000万</a>
+                                    <a href="#" class="<?php if(isset($s['p']) && $s['p'] == 'g1000') { echo 'active'; } ?>" data-val='g1000' data-type="p" rel="nofollow">1000万以上</a>
+                                    <input type="hidden" name="p" id="p" value="<?php echo isset($s['p']) ? $s['p'] : ''; ?>" />
+                                </p>
+                            </li>
+                            <li class="clearfix">
+                                <span class="type pull-left">类型：</span>
+                                <p class="pull-left">
+                                    <a href="#" class="<?php if(!isset($s['t'])) { echo 'active'; } ?>" data-val='' data-type="t" rel="nofollow">不限</a>
+                                    <a href="#" class="<?php if(isset($s['t']) && $s['t'] == '住宅') { echo 'active'; } ?>" data-val='住宅' data-type="t" rel="nofollow">住宅</a>
+                                    <a href="#" class="<?php if(isset($s['t']) && $s['t'] == '商住两用') { echo 'active'; } ?>" data-val='商住两用' data-type="t" rel="nofollow">商住两用</a>
+                                    <input type="hidden" name="t" id="t" value="<?php echo isset($s['t']) ? $s['t'] : ''; ?>" />
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="community-body">
+                <div class="pull-right community-list-sidebar">
+
+                </div>
+                <div class="community-list">
+                    <div class="list-title clearfix">
+                        <h4 class="title pull-left">共有 <span class="orange">{$community_count}</span> 小区</h4>
+                        <div class="pull-right orderby" id="orderby_panel">
+                            <span class="item">
+                                <a rel="nofollow" class="active">智能排序</a>
+                            </span>
+                            <span class="item">
+                                <a rel="nofollow" class="">均价&nbsp;<span class="desc"></span></a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="list-content">
+                    <?php if (is_array($communities)) { foreach ($communities as $key => $community) { ?>
+                    <div class="item clearfix">
+                        <div class="img pull-left">
+                            <a href="{:url('community/' . $community['id'])}" target="_blank"><img class="thumbnail mb0" src="<?php echo thumb($community['cover'], 160, 120); ?>" width="160px" height="120px"/></a>
+                        </div>
+                        <div class="info pull-left">
+                            <h3 class="community-title">
+                                <a href="{:url('community/' . $community['id'])}" target="_blank">{$community['title']}</a>
+                                <span>[{:trim($community['property_type'], ',')}]</span>
+                            </h3>
+                            <p>[{$regions[$community['id']]['location']}] {$community['address']}</p>
+                            <p><?php echo msubstr(strip_tags($community['content']), 0, 100); ?></p>
+                            <p class="detail-link">
+                                <a href="{:url('community/' . $community['id'])}"><i class="glyphicon glyphicon-duplicate mr5"></i>查看详情</a>
+                                <a href="{:url('community/' . $community['id'] . '/album')}"><i class="glyphicon glyphicon-picture mr5"></i>小区图片</a>
+                                <a href="{:url('community/' . $community['id'])}#map"><i class="glyphicon glyphicon-map-marker mr5"></i>地图位置</a>
+                            </p>
+                        </div>
+                        <div class="more-info pull-right">
+                            <span class="price"><?php echo $community['price'] ? $community['price'] . '元/平米' : '暂无报价'; ?></span>
+                        </div>
+                    </div>
+                    <?php } } ?>
+                    </div>
+                    <nav class="text-center">
+                        {$pages}
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+
+<block name="footer-script">
+    <script type="text/javascript" src="{:asset('js/common/community.js')}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('.js-nav-search a').click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+        });
+    </script>
+</block>

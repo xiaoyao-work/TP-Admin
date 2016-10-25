@@ -285,7 +285,7 @@ abstract class Controller {
             // 中止执行
             exit ;
         }else{
-            $this->assign('error',$message);// 提示信息
+            $this->assign('message',$message);// 提示信息
             //发生错误时候默认停留3秒
             if(!isset($this->waitSecond))    $this->assign('waitSecond','3');
             // 默认发生错误的话自动返回上页

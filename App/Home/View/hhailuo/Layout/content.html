@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link rel="shortcut icon" type="image/x-icon" href="http://www.hhailuo.com/wp-content/themes/coffee-beans/images/logo.png">
+    <meta name="keywords" content="<?php echo $siteInfo['keywords']; ?>">
+    <meta name="description" content="<?php echo $siteInfo['description']; ?>">
+    <title><block name="title">资讯 - <?php echo $siteInfo['site_title']; ?></block></title>
+    <link rel="stylesheet" type="text/css" href="{:asset('bootstrap/css/bootstrap.min.css')}">
+    <link rel="stylesheet" type="text/css" href="{:asset('css/common.css')}">
+    <link rel="stylesheet" type="text/css" href="{:asset('js/jquery-ui/jquery-ui.min.css')}">
+    <script type="text/javascript" src="{:asset('js/jquery.min.js')}"></script>
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        window.globalParams = {
+            'DOMAIN' : '<?php echo $siteInfo["domain"]; ?>',
+            'IMAGE_DOMAIN' : '<?php echo IMAGE_DOMAIN; ?>',
+            'ASSETS_DOMAIN' : '<?php echo ASSETS_DOMAIN; ?>',
+            'UPLOAD_IMAGE_URL' : '<?php echo UPLOAD_IMAGE_URL; ?>',
+        };
+    </script>
+    <block name="head"></block>
+</head>
+<body>
+    <div class="header">
+        <div class="top-nav">
+            <div class="container">
+                <div class="row clearfix">
+                    <div class="rt-nav">
+                        <a href="{:url('/', 'Home')}">首页</a>
+                        <a href="{:url('news', 'Home')}" class="on">资讯</a>
+                        <a href="http://www.tp3.hhailuo.com/house" target="_blank">新房</a>
+                        <a href="http://www.tp3.hhailuo.com/esf" target="_blank">二手房</a>
+                        <a href="http://www.tp3.hhailuo.com/community" target="_blank">小区</a>
+                    </div>
+                    <?php if (empty($member_info)) { ?>
+                    <div class="login" id="userInfo"><a href="http://u.tp3.hhailuo.com">登录</a> / <a href="http://u.tp3.hhailuo.com/register">注册</a></div>
+                    <?php } else { ?>
+                    <div class="login" id="userInfo"><a href="<?php echo url('/', 'User');?>">{$member_info['username']}</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="<?php echo url('logout', 'User');?>">退出</a></div>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="ad" style="height: 70px;"></div>
+                <div class="lf-nav">
+                    <div class="logo">
+                        <img height="40" src="http://www.hhailuo.com/wp-content/themes/coffee-beans/images/logo.png" alt="红海螺">
+                        <h2 class="channel-title">新闻中心</h2>
+                    </div>
+
+                    <div class="change-city">
+                        <a class="current" href="{$siteInfo['domain']}"><?php echo $siteInfo['name']; ?></a>
+                        <div class="city-wrap">
+                            <div class="city-list">
+                                <dl class="clearfix">
+                                    <dt>分站</dt>
+                                    <dd>
+                                        <?php foreach ($sites as $key => $value) {?>
+                                        <a href="<?php echo $value['domain']; ?>/news.html">
+                                            <?php echo $value['name']; ?>
+                                        </a>
+                                        <?php }?>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="top-search pull-right">
+                    <block name="top-search">
+                        <form class="form-inline" action="<?php echo url('search'); ?>" method="get">
+                            <select name="post_type" id="sel-search">
+                                <option value="news">新闻</option>
+                                <option value="picture">图片</option>
+                                <option value="video">视频</option>
+                            </select>
+                            <input type="text" id="mykeyword" class="form-control inp-search" placeholder="请输入关键字" name="keyword" autocomplete="off">
+                            <input type="submit" class="btn-search btn" value="搜 索">
+                        </form>
+                    </block>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrap-content">
+        <block name="top-banner">
+        </block>
+        <block name="content"></block>
+    </div>
+    <block name="footer">
+        <div class="common-footer footer-minwd">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-sm-2">
+                        <ul>
+                            <li class="footer-title">关于我们</li>
+                            <li><a target="_blank" href="{:url('about-us', 'Home')}">关于我们</a></li>
+                            <li><a target="_blank" href="http://www.hhailuo.com/">了解红海螺</a></li>
+                            <li><a target="_blank" href="{:url('contact-us', 'Home')}">联系我们</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-2">
+                        <ul>
+                            <li class="footer-title">产品</li>
+                            <li><a target="_blank" href="http://tp3.hhailuo.com">TP-Admin</a></li>
+                            <li><a target="_blank" href="http://cncity.cn">中国城市网</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-2">
+                        <ul>
+                            <li class="footer-title">服务支持</li>
+                            <li>高标准网站建设</li>
+                            <li>房地产门户系统</li>
+                            <li>各类系统开发</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <ul>
+                            <li class="footer-title">联系我们</li>
+                            <li>
+                                <a class="no-cursor" href="mailto:xiaoyao.working@gmail.com"> 邮箱: xiaoyao.working@gmail.com </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-2">
+                        <ul class="qr_code">
+                            <li><img class="img-rounded" src="<?php echo asset("images/wechat.jpg"); ?>" width="170px"/></li>
+                            <li class="text-center">赞助</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <h6 class="text-center">copyright © 2012-2016 www.hhailuo.com All Rights Reserved 湘ICP备14002982号</h6>
+        </div>
+    </block>
+    <script type="text/javascript" src="{:asset('js/jquery-ui/jquery-ui.min.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/jquery-placeholder.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/home/common.js')}"></script>
+    <block name="footer-script"></block>
+</body>
+</html>

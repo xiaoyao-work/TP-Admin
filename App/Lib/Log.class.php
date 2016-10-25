@@ -47,6 +47,6 @@ class Log {
     protected static function write($message, $level=self::ERR, $destination='') {
         $type = empty($type) ? C('LOG_TYPE') : $type;
         $destination = empty($destination) ? C('LOG_PATH') . $level . '/' . date('y_m_d').'.log' : $destination;
-        SLog::write(json_encode($message), $level, 'file', $destination);
+        SLog::write(is_string($message) ? $message : json_encode($message), $level, 'file', $destination);
     }
 }

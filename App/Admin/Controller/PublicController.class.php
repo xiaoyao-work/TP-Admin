@@ -12,6 +12,11 @@ use Think\Controller;
 use Org\Util\Image as Image;
 
 class PublicController extends Controller {
+	function __construct() {
+        parent::__construct();
+        C('DEFAULT_THEME', 'v5');
+    }
+
 	public function index() {
 		header("Location:".__MODULE__."/Public/login");
 	}
@@ -32,10 +37,10 @@ class PublicController extends Controller {
 	}
 
 	// 用户登出
-	public function loginout() {
+	public function logout() {
 		session(null);
 		session_destroy();
-		$this->success('登出成功！',__CONTROLLER__.'/login/');
+		$this->success('登出成功！',__CONTROLLER__.'/login.html');
 	}
 
 	// 登录检测

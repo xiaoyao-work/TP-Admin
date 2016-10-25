@@ -109,7 +109,7 @@ class Model {
             // 如果数据表字段没有定义则自动获取
             if(C('DB_FIELDS_CACHE')) {
                 $db   =  $this->dbName?:C('DB_NAME');
-                $fields = F('_fields/'.strtolower($db.'.'.$this->tablePrefix.$this->name));
+                $fields = F('_fields/'.strtolower($db.'.'.$this->getTableName()));
                 if($fields) {
                     $this->fields   =   $fields;
                     if(!empty($fields['_pk'])){
@@ -163,7 +163,7 @@ class Model {
         if(C('DB_FIELDS_CACHE')){
             // 永久缓存数据表信息
             $db   =  $this->dbName?:C('DB_NAME');
-            F('_fields/'.strtolower($db.'.'.$this->tablePrefix.$this->name),$this->fields);
+            F('_fields/'.strtolower($db.'.'.$this->getTableName()),$this->fields);
         }
     }
 
@@ -441,8 +441,7 @@ class Model {
                 $options['where']   =   $where;
             }
         }
-
-        if(is_array($options['where']) && isset($options['where'][$pk])){
+        if(is_array($options['where']) && is_string($pk) && isset($options['where'][$pk])) {
             $pkValue    =   $options['where'][$pk];
         }
         if(false === $this->_before_update($data,$options)) {
@@ -470,7 +469,7 @@ class Model {
         $pk   =  $this->getPk();
         if(empty($options) && empty($this->options['where'])) {
             // 如果删除条件为空 则删除当前数据对象所对应的记录
-            if(!empty($this->data) && isset($this->data[$pk]))
+            if(!empty($this->data) && is_string($pk) && isset($this->data[$pk]))
                 return $this->delete($this->data[$pk]);
             else
                 return false;
@@ -508,7 +507,7 @@ class Model {
             // 如果条件为空 不进行删除操作 除非设置 1=1
             return false;
         }
-        if(is_array($options['where']) && isset($options['where'][$pk])){
+        if(is_array($options['where']) && is_string($pk) && isset($options['where'][$pk])){
             $pkValue            =  $options['where'][$pk];
         }
 

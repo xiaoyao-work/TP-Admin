@@ -1,0 +1,67 @@
+<extend name="Layout:content" />
+<block name="head">
+    <link href="{:asset('css/news/news.css')}" rel="stylesheet" type="text/css" />
+</block>
+
+<block name="top-banner">
+    <div class="container">
+        <div class="row">
+            <div class="taxonomy-line"><a href="javascript:void(0);">大家正在关注</a></div>
+            <div class="focus-recommend row">
+                <div class="col-xs-3">
+                    <a href="{:url('tp-admin')}" class="item" style="background-image: url({:asset('images/home/bg.jpg');})">TP-Admin</a>
+                </div>
+                <div class="col-xs-3">
+                    <a href="{:url('news')}" class="item" style="background-image: url({:asset('images/home/bg-2.jpg');})">CMS</a>
+                </div>
+                <div class="col-xs-3">
+                    <a href="http://www.house.hhailuo.com" class="item" style="background-image: url({:asset('images/home/bg-3.jpg');})">房产</a>
+                </div>
+                <div class="col-xs-3">
+                    <a href="http://www.hhailuo.com" class="item" style="background-image: url({:asset('images/home/bg-1.jpg');})">红海螺</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row nav-news clearfix">
+            <ul class="main-menu">
+                <li class="on"><a href="<?php echo url($post_type, 'Home'); ?>">首页</a></li>
+                <?php echo get_terms_menu((isset($parent_post_type) ? $parent_post_type : $post_type), 'category', $siteid); ?>
+            </ul>
+        </div>
+    </div>
+</block>
+
+<block name="content">
+    <?php
+        $taxonomies = get_post_type_taxonomies(isset($parent_post_type) ? array($parent_post_type, $post_type) : $post_type);
+        foreach ($taxonomies as $key => $taxonomy) {
+        $terms = get_terms($parent_post_type, $taxonomy['name'], $siteid);
+        if (empty($terms)) {
+            continue;
+        }
+    ?>
+    <div class="container">
+        <div class="r-col-pd-r row clearfix">
+            <h4 class="tax-title">{$taxonomy['label']}</h4>
+            <?php foreach ($terms as $key => $term) { ?>
+                <div class="col-xs-4">
+                    <div class="wrap-cat">
+                        <a href="<?php echo url('taxonomy/'.$term['taxonomy'].'/'.$term['id']); ?>" class="pull-right more">更多</a>
+                        <h3 class="cat-title"><?php echo $term['catname']; ?></h3>
+                        <div class="cat-list">
+                            <ul>
+                            <?php foreach(get_term_posts($term['id'], true, 'id desc', 5, false) as $key => $post) { ?>
+                                <li><a href="<?php echo url('post/'.$post['post_type'].'/'. $post['id']) ?>"><?php echo $post['title']; ?></a></li>
+                            <?php } ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+    <?php } ?>
+</block>

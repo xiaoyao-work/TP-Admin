@@ -1,0 +1,89 @@
+<extend name="Layout:community" />
+<block name="title">{$community['title']}详情-</block>
+<block name="body-attr">data-spy="scroll"</block>
+<block name="head">
+    <link rel="stylesheet" type="text/css" href="{:asset('css/home/community.css')}">
+    <link rel="stylesheet" type="text/css" href="{:asset('js/fancybox/jquery.fancybox.css')}">
+</block>
+
+<block name="content">
+    <div class="container">
+        <div class="row">
+            <?php $active = '小区相册'; ?>
+            <include file="_nav"/>
+            <div class="community-album">
+                <div id="js-leftAlbum" class="album-nav pull-left">
+                    <ul class="nav">
+                        <li class="active">
+                            <a href="#part_0">全部图片<span>(<?php echo count($photos); ?>)</span></a>
+                        </li>
+                        <?php foreach($albums as $key => $album) { ?>
+                        <li>
+                            <a href="#part_{$album['id']}">{$album['title']}<span>({$album['photo_count']})</span></a>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                </div>
+                <div class="albums">
+                    <div class="all-photo">
+                        <h3 class="tab-title" id="part_0">全部图片<span>(<?php echo count($photos); ?>)</span></h3>
+                        <div class="js-photo-list photo-list clearfix" data-count="<?php echo count($photos); ?>">
+                            <?php foreach ($photos as $key => $photo) { ?>
+                                <a class="fancybox photo-thumb <?php if($key ==7) { echo 'more'; } elseif($key > 7) { echo 'hidden'; } ?>" rel="part_0" href="{:thumb($photo['url'], 220, 165, 1)}" title="{$photo['title']}">
+                                    <img src="{:thumb($photo['url'], 220, 165)}" alt="{$photo['title']}" class="thumbnail" />
+                                    <?php if($key ==7) { ?>
+                                        <p class="more-cover"><?php echo '+' . (count($photos) - 7); ?></p>
+                                    <?php } ?>
+                                </a>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php foreach($albums as $key => $album) { ?>
+                    <div class="all-photo">
+                        <h3 class="tab-title" id="part_{$album['id']}">{$album['title']}<span>(<?php echo count($album['photos']); ?>)</span></h3>
+                        <div class="js-photo-list photo-list clearfix" data-count="<?php echo count($album['photos']); ?>">
+                            <?php foreach ($album['photos'] as $key => $photo) { ?>
+                                <a class="fancybox photo-thumb <?php if($key ==7) { echo 'more'; } elseif($key > 7) { echo 'hidden'; } ?>" rel="part_{$album['id']}" href="{:thumb($photo['url'], 220, 165, 1)}" title="{$photo['title']}">
+                                    <img src="{:thumb($photo['url'], 220, 165)}" alt="{$photo['title']}" class="thumbnail" />
+                                    <?php if($key ==7) { ?>
+                                        <p class="more-cover"><?php echo '+' . (count($album['photos']) - 7); ?></p>
+                                    <?php } ?>
+                                </a>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="footer-script">
+    <script type="text/javascript" src="{:asset('js/fancybox/jquery.fancybox.pack.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/common/community.js')}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#js-leftAlbum').affix({
+                offset: {
+                    top: 200
+                },
+            });
+
+            $('.js-photo-list .more .more-cover').click(function(e) {
+                e.preventDefault();
+                var _this = $(this);
+                _this.parent('.more').removeClass('more').siblings('a').removeClass('hidden');
+                _this.remove();
+            })
+            $(".fancybox").fancybox({
+                prevEffect  : 'none',
+                nextEffect  : 'none',
+                helpers : {
+                    title   : {
+                        type: 'inside'
+                    }
+                }
+            });
+        });
+    </script>
+</block>

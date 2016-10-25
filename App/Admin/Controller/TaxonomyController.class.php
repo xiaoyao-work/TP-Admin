@@ -21,9 +21,12 @@ class TaxonomyController extends CommonController {
     public function register() {
         if (IS_POST) {
             $taxonomy = I('post.info');
+            model('taxonomy')->startTrans();
             if (logic('taxonomy')->registerTaxonomy($taxonomy) !== false) {
+                model('taxonomy')->commit();
                 $this->success('添加成功！');
             } else {
+                model('taxonomy')->rollback();
                 $this->error(logic('taxonomy')->getErrorMessage());
             }
         } else {

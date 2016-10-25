@@ -39,7 +39,7 @@ class RedisHandler {
      * @return RedisHandle
      */
     public static function getInstance($config = 'REDIS_DEFAULT') {
-        if (!(self::$_instance[$config] instanceof self)) {
+        if (!isset(self::$_instance[$config]) || !(self::$_instance[$config] instanceof self)) {
             self::$_instance[$config] = new self ($config);
         }
         return self::$_instance[$config];
@@ -155,6 +155,6 @@ class RedisHandler {
      * @return mixed
      */
     public function __call($name, $params) {
-        return call_user_method_array($name, $this->redis, $params);
+        return call_user_func_array(array($this->redis, $name), $params);
     }
 }

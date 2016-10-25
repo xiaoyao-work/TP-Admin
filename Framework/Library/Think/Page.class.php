@@ -16,7 +16,7 @@ class Page{
     public $parameter; // 分页跳转时要带的参数
     public $totalRows; // 总行数
     public $totalPages; // 分页总页面数
-    public $rollPage   = 11;// 分页栏每页显示的页数
+    public $rollPage   = 5;// 分页栏每页显示的页数
 	public $lastSuffix = true; // 最后一页是否显示总页数
 
     private $p       = 'p'; //分页参数名
@@ -45,6 +45,7 @@ class Page{
         $this->totalRows  = $totalRows; //设置总记录数
         $this->listRows   = $listRows;  //设置每页显示行数
         $this->parameter  = empty($parameter) ? $_GET : $parameter;
+        unset($this->parameter['s']);
         $this->nowPage    = empty($_GET[$this->p]) ? 1 : intval($_GET[$this->p]);
         $this->nowPage    = $this->nowPage>0 ? $this->nowPage : 1;
         $this->firstRow   = $this->listRows * ($this->nowPage - 1);
@@ -142,4 +143,98 @@ class Page{
             $this->config['theme']);
         return "<div>{$page_str}</div>";
     }
+
+    /**
+     * 组装分页链接
+     * @return string
+     */
+    public function bootcssPager($route='') {
+        if(0 == $this->totalRows) return '';
+        /* 生成URL */
+        $this->parameter[$this->p] = '[PAGE]';
+        $path_info = empty($route) ? (empty($_SERVER['PATH_INFO']) ? '/' : $_SERVER['PATH_INFO']) : $route;
+        $query_string = $_SERVER['QUERY_STRING'];
+        if (!empty($query_string)) {
+            parse_str($query_string, $url_params);
+            unset($url_params['s']);
+        }
+        $url_params[$this->p] = '[PAGE]';
+        $this->url = url($path_info, $url_params);
+        /* 计算分页信息 */
+        $this->totalPages = ceil($this->totalRows / $this->listRows); //总页数
+        if(!empty($this->totalPages) && $this->nowPage > $this->totalPages) {
+            $this->nowPage = $this->totalPages;
+        }
+
+        //上一页
+        $up_row  = $this->nowPage - 1;
+        $page_str = $up_row > 0 ? '<li class="previous"><a href="'.$this->url($up_row).'"><span aria-hidden="true">&larr;</span> 上一页</a></li>' : '';
+
+        //下一页
+        $down_row  = $this->nowPage + 1;
+        $page_str .= ($down_row <= $this->totalPages) ? '<li class="next"><a href="'.$this->url($down_row).'">下一页 <span aria-hidden="true">&rarr;</span></a></li>' : '';
+        return $page_str;
+    }
+
+
+    /**
+     * 组装分页链接
+     * @return string
+     */
+    public function bootcssPagination($route='') {
+        if(0 == $this->totalRows) return '';
+        /* 生成URL */
+        $this->parameter[$this->p] = '[PAGE]';
+        $path_info = empty($route) ? (empty($_SERVER['PATH_INFO']) ? '/' : $_SERVER['PATH_INFO']) : $route;
+        $query_string = $_SERVER['QUERY_STRING'];
+        if (!empty($query_string)) {
+            parse_str($query_string, $url_params);
+            unset($url_params['s']);
+        }
+        $url_params[$this->p] = '[PAGE]';
+        $this->url = url($path_info, $url_params);
+        /* 计算分页信息 */
+        $this->totalPages = ceil($this->totalRows / $this->listRows); //总页数
+        if(!empty($this->totalPages) && $this->nowPage > $this->totalPages) {
+            $this->nowPage = $this->totalPages;
+        }
+
+        //上一页
+        $up_row  = $this->nowPage - 1;
+        $page_str = '<ul class="pagination">';
+        $page_str .= $up_row > 0 ? '<li class="previous"><a href="'.$this->url($up_row).'"><span aria-hidden="true">&larr;</span> 上一页</a></li>' : '';
+
+        /* 计算分页临时变量 */
+        $now_cool_page      = $this->rollPage/2;
+        $now_cool_page_ceil = ceil($now_cool_page);
+        //数字连接
+        for($i = 1; $i <= $this->rollPage; $i++){
+            if(($this->nowPage - $now_cool_page) <= 0 ){
+                $page = $i;
+            }elseif(($this->nowPage + $now_cool_page - 1) >= $this->totalPages){
+                $page = $this->totalPages - $this->rollPage + $i;
+            }else{
+                $page = $this->nowPage - $now_cool_page_ceil + $i;
+            }
+            if($page > 0 && $page != $this->nowPage){
+                if($page <= $this->totalPages){
+                    $page_str .= '<li><a href="' . $this->url($page) . '">' . $page . '</a><li>';
+                }else{
+                    break;
+                }
+            }else{
+                if($page > 0 && $this->totalPages != 1) {
+                    $page_str .= '<li class="active"><a href="javascript:void(0)">' . $page . '</a></li>';
+                }
+            }
+        }
+
+        //下一页
+        $down_row  = $this->nowPage + 1;
+        $page_str .= ($down_row <= $this->totalPages) ? '<li class="next"><a href="'.$this->url($down_row).'">下一页 <span aria-hidden="true">&rarr;</span></a></li>' : '';
+        $page_str .= '</ul>';
+        return $page_str;
+    }
+
+
 }

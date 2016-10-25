@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="150px" height="150px" viewBox="0 0 150 150" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.7.2 (28276) - http://www.bohemiancoding.com/sketch -->
+    <title>em-home-easy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="新首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="登录后首页" transform="translate(-1094.000000, -2398.000000)">
+            <g id="whyChooseUS" transform="translate(0.000000, 2367.000000)">
+                <g id="em_homeStep_a" transform="translate(1094.000000, 31.000000)">
+                    <g id="em-home-" transform="translate(34.000000, 19.000000)">
+                        <circle id="Oval-2" stroke="#EDEDED" stroke-width="4" opacity="0.5" cx="70.5" cy="22.5" r="22.5"></circle>
+                        <path d="M39.0200874,54.3806159 L69.7167695,23.0601113" id="Stroke-3" stroke="#CDB05D" stroke-width="2" stroke-linejoin="round"></path>
+                        <path d="M13.0459718,43.5389028 L13.0459718,47.1528071 C6.52646881,47.1528071 1.23955564,41.7596572 1.23955564,35.1064592 C1.23955564,28.4532612 6.52646881,23.0601113 13.0459718,23.0601113 C19.5654748,23.0601113 24.852388,28.4532612 24.852388,35.1064592 C24.852388,38.3902937 23.564308,41.3657416 21.4769336,43.5389028" id="Stroke-5" stroke="#CDB05D" stroke-width="2" stroke-linejoin="round"></path>
+                        <path d="M21.3104632,42 L61.4522782,42" id="Stroke-6" stroke="#CDB05D" stroke-width="2" stroke-linejoin="round"></path>
+                        <path d="M0.0589140168,77.0408682 C3.42314281,77.0408682 3.42314281,79.4501378 6.7873716,79.4501378 C10.154295,79.4501378 10.154295,77.0408682 13.5212184,77.0408682 C16.8854472,77.0408682 16.8854472,79.4501378 20.2510233,79.4501378 C23.6179467,79.4501378 23.6179467,77.0408682 26.9848701,77.0408682 C30.3531408,77.0408682 30.3531408,79.4501378 33.7214115,79.4501378 C37.0896822,79.4501378 37.0896822,77.0408682 40.457953,77.0408682 C43.8248764,77.0408682 43.8248764,79.4501378 47.1931471,79.4501378 C50.5627651,79.4501378 50.5627651,77.0408682 53.9323831,77.0408682 C57.2993065,77.0408682 57.2993065,79.4501378 60.6662299,79.4501378 C64.0371953,79.4501378 64.0371953,77.0408682 67.4068133,77.0408682 C70.7791259,77.0408682 70.7791259,79.4501378 74.1527859,79.4501378 C77.5250985,79.4501378 77.5250985,77.0408682 80.8974112,77.0408682" id="Stroke-9" stroke="#EDEDED" stroke-width="4" opacity="0.5"></path>
+                        <path d="M81.0330296,107 L0.0589140168,107" id="Stroke-10-Copy" stroke="#EDEDED" stroke-width="4"></path>
+                        <path d="M41.2258065,82.0872161 L41.2258065,64.0176942" id="Stroke-1" stroke="#CDB05D" stroke-width="4" stroke-linejoin="round"></path>
+                        <polygon id="Stroke-2" stroke="#CDB05D" stroke-width="4" stroke-linejoin="round" points="41.3813707 64.0176942 13.0459718 35.1064592 69.7167695 35.1064592"></polygon>
+                        <path d="M28.3943129,97.7474684 C35.5667107,97.7474684 41.3813707,89.4053725 41.3813707,82.0872161 C41.3813707,89.4053725 47.1960307,97.7474684 54.3684285,97.7474684 L28.3943129,97.7474684 Z" id="Stroke-4" stroke="#CDB05D" stroke-width="4"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

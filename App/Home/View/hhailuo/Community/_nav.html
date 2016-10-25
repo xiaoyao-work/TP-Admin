@@ -1,0 +1,30 @@
+<div class="community-crumbs">
+    <a href="{siteInfo['domain']}"><?php echo $siteInfo['name']; ?></a>&nbsp;>&nbsp;<a href="{:url('community')}">小区</a>&nbsp;>&nbsp;<span>{$community['title']}</span>
+</div>
+<div class="clearfix">
+    <div class="top-thumb pull-left">
+        <img src="<?php echo thumb($community['cover'], 100, 75); ?>" class="pull-left" width="100px" height="75px"/>
+        <div class="thumb-info">
+            <h1>{$community['title']}</h1>
+            <p><span>123456</span>次浏览</p>
+        </div>
+    </div>
+    <div class="keywords-search-form pull-right">
+        <form action="{:url('community/search')}" method="get">
+            <input type="text" id="js-mykeyword" class="form-control keywords-search" placeholder="请输小区名称" name="search" autocomplete="off">
+            <input type="submit" class="btn-keywords-search btn" value="搜 索">
+        </form>
+        <ul id="keywords-match-community" class="match-content"></ul>
+    </div>
+</div>
+<div class="community-nav">
+    <ul class="clearfix">
+        <li <?php if($active == '小区首页') { echo 'class="active"'; } ?>><a href="{:url('community/' . $community['id'])}">小区首页</a></li>
+        <li <?php if($active == '小区详情') { echo 'class="active"'; } ?>><a href="{:url('community/' . $community['id'] . '/detail')}">小区详情</a></li>
+        <!-- <li <?php if($active == '二手房') { echo 'class="active"'; } ?>><a href="">二手房</a></li>
+        <li <?php if($active == '租房') { echo 'class="active"'; } ?>><a href="">租房</a></li> -->
+        <li <?php if($active == '小区相册') { echo 'class="active"'; } ?>><a href="{:url('community/' . $community['id'] . '/album')}">小区相册</a></li>
+        <!-- <li <?php if($active == '价格走势') { echo 'class="active"'; } ?>><a href="">价格走势</a></li>
+        <li <?php if($active == '小区成交') { echo 'class="active"'; } ?>><a href="" target="_blank ">小区成交</a></li> -->
+    </ul>
+</div>

@@ -123,6 +123,7 @@ return  array(
     'TMPL_LAYOUT_ITEM'      =>  '{__CONTENT__}', // 布局模板的内容替换标识
     'LAYOUT_ON'             =>  false, // 是否启用布局
     'LAYOUT_NAME'           =>  'layout', // 当前布局名称 默认为layout
+    'AUTHOR'                =>  base64_decode('6YCN6YGlwrfmnY7lv5fkuq4='),
 
     // Think模板引擎标签库相关设定
     'TAGLIB_BEGIN'          =>  '<',  // 标签库标签开始标记
@@ -163,6 +164,6 @@ return  array(
     'CHECK_APP_DIR'         =>  true,       // 是否检查应用目录是否创建
     'FILE_UPLOAD_TYPE'      =>  'Local',    // 文件上传方式
     'DATA_CRYPT_TYPE'       =>  'Think',    // 数据加密方式
-    'COPYRIGHT'             => 'Copyright @ 2012 - 2015 <a href="http://www.hhailuo.com" target="_blank">红海螺</a> All Rights Reserved. <a href="http://tp-admin.hhailuo.com" target="_blank">官网</a>',
+    'COPYRIGHT'             => base64_decode('Q29weXJpZ2h0IEAgMjAxMiAtIDIwMTUgPGEgaHJlZj0iaHR0cDovL3d3dy5oaGFpbHVvLmNvbSIgdGFyZ2V0PSJfYmxhbmsiPue6oua1t+ieujwvYT4gQWxsIFJpZ2h0cyBSZXNlcnZlZC4gPGEgaHJlZj0iaHR0cDovL3RwMy5oaGFpbHVvLmNvbSIgdGFyZ2V0PSJfYmxhbmsiPuWumOe9kTwvYT4='),
 
 );
