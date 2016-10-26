@@ -372,8 +372,7 @@ function set_site_by_domain($domain = '') {
     if (empty($current_site)) {
         $current_site = reset($sites);
     }
-    $base_domain = $current_site['base_domain'];
-    cookie('siteid', $current_site['id'], ['expire' => 86400000, 'domain' => $base_domain]);
+    cookie('siteid', $current_site['id'], ['expire' => 86400000, 'domain' => $current_site['base_domain']]);
     return $current_site;
 }
 
@@ -383,8 +382,7 @@ function set_site_by_domain($domain = '') {
  */
 function set_site_by_id($siteid) {
     $site        = get_site_info($siteid);
-    $main_domain = $site['base_domain'];
-    cookie('siteid', $site['id'], ['expire' => 86400000, 'domain' => $main_domain]);
+    cookie('siteid', $site['id'], ['expire' => 86400000, 'domain' => $site['base_domain']]);
     return $site;
 }
 

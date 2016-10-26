@@ -18,7 +18,8 @@ class BaseController extends Controller {
 
     function __construct() {
         parent::__construct();
-
+        // $this->route = $this->app->router->getCurrentRoute();
+        set_site_by_domain();
         $this->siteid   = get_siteid();
         $this->sites    = get_site_info();
         $this->siteInfo = $this->sites[$this->siteid];

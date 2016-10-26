@@ -394,6 +394,9 @@ class Route {
             $key = str_replace('{' . $sub_domain_key . '}', '([^\.]*)', $quote_key);
             $result = preg_match('/' . $key . '/', $this->domain, $match);
         }
+        if ($result) {
+            $this->domain = $domain;
+        }
         return $result;
     }
 

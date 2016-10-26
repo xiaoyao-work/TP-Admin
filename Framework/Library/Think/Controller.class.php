@@ -33,9 +33,11 @@ abstract class Controller {
      * @access public
      */
     public function __construct() {
+        global $app;
         Hook::listen('action_begin',$this->config);
         //实例化视图类
         $this->view     = Think::instance('Think\View');
+        $this->app      = $app;
         //控制器初始化
         if(method_exists($this,'_initialize'))
             $this->_initialize();

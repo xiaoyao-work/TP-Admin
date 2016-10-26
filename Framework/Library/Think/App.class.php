@@ -278,7 +278,8 @@ class App {
                 // 未匹配处理
                 if ($dispatched === false) {
                     $module = self::getModule($current_route->getModule());
-                    if ($current_route->getDomain()) {
+                    $current_domain = $current_route->getDomain();
+                    if ($current_domain) {
                         define('BIND_MODULE', $module);
                     }
                     define('MODULE_NAME', $module);
