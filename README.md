@@ -17,7 +17,7 @@
 > 演示站点账户 => 用户名/密码 ：tp-admin / tp-admin
 
 # 问题反馈 #
-有任何问题或建议都可以 [ 在这 ](https://github.com/xiaoyao-work/TP-Admin-V2.0/issues) 提交。
+有任何问题或建议都可以 [ 在这 ](https://github.com/xiaoyao-work/TP-Admin/issues) 提交。
 
 # Creator #
 红海螺CMS (TP-Admin V5) 是由 [逍遥·李志亮](http://www.hhailuo.com) 创建和维护。
