@@ -46,7 +46,8 @@ class PostController extends BaseController {
             abort(404);
         }
         $post_logic = logic('Post');
-        $posts      = $post_logic->getPostByTerm($id, ['recusion' => true, 'siteid' => $this->siteid]);
+
+        $posts      = $post_logic->getPostByTerm($id, ['recusion' => true, 'pagenum' => I('get.p', 1), 'siteid' => $this->siteid]);
         $taxonomy   = logic('taxonomy', 'Admin')->getTaxonomy($term['post_type'], $term['taxonomy']);
         $this->assign('taxonomy', $taxonomy);
         $this->assign('post_type', $term['post_type']);

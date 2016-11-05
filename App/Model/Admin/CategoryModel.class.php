@@ -20,10 +20,10 @@ class CategoryModel extends BaseModel {
         return $term;
     }
 
-    public function getTerms($post_type, $taxonomy_name, $siteid, $level = 2) {
+    public function getTerms($taxonomy_name, $siteid, $level = 2) {
         $where = [
             'siteid'    => $siteid,
-            'post_type' => $post_type,
+            // 'post_type' => $post_type,
             'taxonomy'  => $taxonomy_name,
         ];
         if ($level > 0) {
@@ -56,7 +56,7 @@ class CategoryModel extends BaseModel {
         if (empty($term)) {
             return $term_id;
         }
-        $similar_terms  = $this->getTerms($term['post_type'], $term['taxonomy'], $siteid, 0);
+        $similar_terms  = $this->getTerms($term['taxonomy'], $siteid, 0);
         $similar_terms  = array_key_translate($similar_terms, 'id');
         $recusion_terms = [];
         if (is_array($term_id)) {

@@ -28,7 +28,7 @@
         <div class="row nav-news clearfix">
             <ul class="main-menu">
                 <li class="on"><a href="<?php echo url($post_type, 'Home'); ?>">首页</a></li>
-                <?php echo get_terms_menu((isset($parent_post_type) ? $parent_post_type : $post_type), 'category', $siteid); ?>
+                <?php echo get_terms_menu('category', $siteid); ?>
             </ul>
         </div>
     </div>
@@ -38,7 +38,7 @@
     <?php
         $taxonomies = get_post_type_taxonomies(isset($parent_post_type) ? array($parent_post_type, $post_type) : $post_type);
         foreach ($taxonomies as $key => $taxonomy) {
-        $terms = get_terms($parent_post_type, $taxonomy['name'], $siteid);
+        $terms = get_terms($taxonomy['name'], $siteid);
         if (empty($terms)) {
             continue;
         }

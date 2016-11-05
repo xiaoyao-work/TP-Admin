@@ -24,14 +24,14 @@ class CategoryLogic extends BaseLogic {
         return model('Category', 'Admin')->getTerm($id, $this->siteid);
     }
 
-    public function getTerms($post_type, $taxonomy_name, $siteid = '') {
-        if (empty($taxonomy_name) || empty($post_type)) {
+    public function getTerms($taxonomy_name, $siteid = '') {
+        if (empty($taxonomy_name)) {
             $this->errorCode    = 10001;
             $this->errorMessage = '参数不合法！';
             return false;
         }
         $siteid = empty($siteid) ? $this->siteid : $siteid;
-        $taxs   = model('Category', 'Admin')->getTerms($post_type, $taxonomy_name, $this->siteid);
+        $taxs   = model('Category', 'Admin')->getTerms($taxonomy_name, $this->siteid);
         $cats   = list_to_tree($taxs, 'id', 'parentid');
         $list   = [];
         tree_to_array($cats, $list);
@@ -67,7 +67,7 @@ class CategoryLogic extends BaseLogic {
         if (empty($taxonomy_names)) {
             return [];
         }
-        $terms = model('category', 'Admin')->getTerms(['in', $post_type], ['in', $taxonomy_names], $this->siteid);
+        $terms = model('category', 'Admin')->getTerms(['in', $taxonomy_names], $this->siteid);
         return $terms;
     }
 

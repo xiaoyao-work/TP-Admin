@@ -93,7 +93,8 @@ class TaxonomyLogic extends BaseLogic {
         }
         $taxonomy['label']     = $taxonomy['label'] ?: $taxonomy['name'];
         $taxonomy['menu_name'] = $taxonomy['menu_name'] ?: $taxonomy['name'];
-        if (model('Taxonomy', 'Admin')->where(['post_type' => $taxonomy['post_type'], 'name' => $taxonomy['name']])->find()) {
+        // if (model('Taxonomy', 'Admin')->where(['post_type' => $taxonomy['post_type'], 'name' => $taxonomy['name']])->find()) {
+        if (model('Taxonomy', 'Admin')->where(['name' => $taxonomy['name']])->find()) {
             $this->errorCode    = 30001;
             $this->errorMessage = '分类已存在！';
             return false;

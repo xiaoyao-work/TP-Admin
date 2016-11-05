@@ -39,13 +39,8 @@ defined('APP_PATH')     or define('APP_PATH',       ROOT_PATH . 'App/');
 defined('APP_STATUS')   or define('APP_STATUS',     ''); // 应用状态 加载对应的配置文件
 defined('APP_DEBUG')    or define('APP_DEBUG',      false); // 是否调试模式
 
-if(function_exists('saeAutoLoader')){// 自动识别SAE环境
-    defined('APP_MODE')     or define('APP_MODE',      'sae');
-    defined('STORAGE_TYPE') or define('STORAGE_TYPE',  'Sae');
-}else{
-    defined('APP_MODE')     or define('APP_MODE',       'common'); // 应用模式 默认为普通模式
-    defined('STORAGE_TYPE') or define('STORAGE_TYPE',   'File'); // 存储类型 默认为File
-}
+defined('APP_MODE')     or define('APP_MODE',       'common'); // 应用模式 默认为普通模式
+defined('STORAGE_TYPE') or define('STORAGE_TYPE',   'File'); // 存储类型 默认为File
 
 defined('RUNTIME_PATH') or define('RUNTIME_PATH',   ROOT_PATH.'Public/Runtime/');   // 系统运行时目录
 defined('LIB_PATH')     or define('LIB_PATH',       realpath(THINK_PATH.'Library').'/'); // 系统核心类库目录

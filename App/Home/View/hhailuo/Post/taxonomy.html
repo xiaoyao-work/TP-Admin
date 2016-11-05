@@ -10,7 +10,7 @@
         <div class="row nav-news clearfix">
             <ul class="main-menu">
                 <li><a href="<?php echo url('news', 'Home'); ?>">首页</a></li>
-                <?php echo get_terms_menu($term['post_type'], $term['taxonomy'], $siteid, $term['id']); ?>
+                <?php echo get_terms_menu($term['taxonomy'], $siteid, $term['id']); ?>
             </ul>
         </div>
     </div>

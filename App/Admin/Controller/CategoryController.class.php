@@ -24,7 +24,7 @@ class CategoryController extends CommonController {
         $taxonomy_name = I('get.taxonomy_name');
         $post_type = I('get.post_type');
         // 获取分类
-        $terms = logic('Category')->getTerms($post_type, $taxonomy_name);
+        $terms = logic('Category')->getTerms($taxonomy_name);
         $this->assign('terms', $terms);
         $this->assign('query_string', http_build_query(array('post_type' => $post_type, 'taxonomy_name' => $taxonomy_name)));
         $this->display();
@@ -72,7 +72,7 @@ class CategoryController extends CommonController {
             $post_type = I('get.post_type');
             $taxonomy_name = I('get.taxonomy_name');
             // 获取分类
-            $terms = logic('Category')->getTerms($post_type, $taxonomy_name);
+            $terms = logic('Category')->getTerms($taxonomy_name);
             if ($terms === false) {
                 $this->error(logic('Category')->getErrorMessage());
             }
@@ -174,7 +174,7 @@ class CategoryController extends CommonController {
             }
 
             // 获取分类
-            $terms = logic('Category')->getTerms($term['post_type'], $term['taxonomy']);
+            $terms = logic('Category')->getTerms($term['taxonomy']);
             if ($terms === false) {
                 $this->error(logic('Category')->getErrorMessage());
             }

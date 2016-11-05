@@ -9,7 +9,7 @@ class TaxonomyController extends BaseController {
         if (empty($post_type) || empty($taxonomy)) {
             $this->ajaxReturn(['code' => 10001, 'message' => '参数异常']);
         }
-        $terms = model('Category', 'Admin')->getTerms($post_type, $taxonomy, $this->siteid);
+        $terms = model('Category', 'Admin')->getTerms($taxonomy, $this->siteid);
         $tree  = new \Org\Util\Tree();
         $tree->init($terms);
         $terms_html = $tree->get_tree_ul(0);

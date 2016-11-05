@@ -150,9 +150,10 @@ class Page{
      */
     public function bootcssPager($route='') {
         if(0 == $this->totalRows) return '';
+        global $app;
         /* 生成URL */
         $this->parameter[$this->p] = '[PAGE]';
-        $path_info = empty($route) ? (empty($_SERVER['PATH_INFO']) ? '/' : $_SERVER['PATH_INFO']) : $route;
+        $path_info = empty($route) ? $app->environment['PATH_INFO'] : $route;
         $query_string = $_SERVER['QUERY_STRING'];
         if (!empty($query_string)) {
             parse_str($query_string, $url_params);
@@ -183,9 +184,10 @@ class Page{
      */
     public function bootcssPagination($route='') {
         if(0 == $this->totalRows) return '';
+        global $app;
         /* 生成URL */
         $this->parameter[$this->p] = '[PAGE]';
-        $path_info = empty($route) ? (empty($_SERVER['PATH_INFO']) ? '/' : $_SERVER['PATH_INFO']) : $route;
+        $path_info = empty($route) ? $app->environment['PATH_INFO'] : $route;
         $query_string = $_SERVER['QUERY_STRING'];
         if (!empty($query_string)) {
             parse_str($query_string, $url_params);
