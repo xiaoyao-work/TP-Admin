@@ -1,0 +1,180 @@
+<extend name="Layout:form" />
+<block name="subheader">
+    <link rel="stylesheet" type="text/css" href="{:asset('js/jquery-ui/jquery-ui.min.css')}">
+    <script language="javascript" type="text/javascript" src="{:asset('js/admin/content_add.js')}" charset="UTF-8"></script>
+    <script type="text/javascript" src="{:asset('js/admin/attachupload.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/ckeditor/ckeditor.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/jquery-ui/jquery-ui.min.js')}"></script>
+</block>
+<block name="subnav">
+    <a class="btn red" href="javascript:void(0);">添加广告</a>　<a class="btn red-stripe" href="__CONTROLLER__/index">版位</a>　<a class="btn" href="__CONTROLLER__/poster_template">广告模板设置</a>
+</block>
+
+<block name="main">
+    <div class="pad-lr-10">
+        <form name="myform" id="myform" action="" method="post">
+            <table cellpadding=0 cellspacing=0 class="table_form" width="100%">
+                <tr>
+                    <th width="100">广告标题：</th>
+                    <td>
+                        <input type="text" class="input-text" name="poster[name]" id="name" value="" size="40"/>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="100">所属版位：</th>
+                    <td>
+                        <?php if($spaceid) { echo '<b style="color:#F60;">'.$sinfo['name'].'</b>&nbsp;['.$types[$sinfo['type']].']<input type="hidden" name="poster[spaceid]" value="'.$spaceid.'">'; } ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th align="right"  valign="top">广告类型：</th>
+                        <td valign="top" colspan="2">
+                            <select name="poster[type]" id="type" onchange="AdsType(this.value)">
+                                <option value='0'>请选择广告类型</option>
+                                <?php foreach ($setting['type'] as $key => $value) {
+                                echo "<option value='$key'>$value</option>";
+                            }?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="100">上线时间：</th>
+                    <td>
+                        <?php echo \Org\Util\Form::date("poster[startdate]", '', 1, "class='Wdate m-wrap small' placeholder='上线时间'");
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th>下线时间：</th>
+                    <td>
+                        <?php echo \Org\Util\Form::date("poster[enddate]", '', 1, "class='Wdate m-wrap small' placeholder='下线时间'");
+                        ?>
+                    </td>
+                </tr>
+            </table>
+
+            <?php if(array_key_exists('images', $setting['type'])) {?>
+            <div class="pad-10" id="imagesdiv" style="display: none;">
+                <fieldset>
+                    <legend>图片设置</legend>
+                    <?php if($setting['num']>1) { for($i=1; $i<=$setting['num']; $i++) { ?>
+                    <table width="100%" class="table_form">
+                        <tbody>
+                            <tr>
+                                <th width="80">链接地址：</th>
+                                <td class="y-bg"><input type="text" class="input-text" name="setting[images][<?php echo $i;?>][linkurl]" id="linkurl<?php echo $i;?>" size="30" value="http://"></td>
+                                <td rowspan="2">
+                                    <?php echo \Org\Util\Form::image('setting[images][' . $i . '][imageurl]', '', ['upload_allowext' => 'jpg|jpeg|png|gif']); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>文字提示：</th>
+                                <td class="y-bg"><input type="text" class="input-text" name="setting[images][<?php echo $i;?>][alt]" id="alt<?php echo $i;?>" size="30"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <?php } } else { ?>
+                    <table width="100%" class="table_form">
+                        <tbody>
+                            <tr>
+                                <th width="80">链接地址：</th>
+                                <td class="y-bg"><input type="text" class="input-text" name="setting[images][1][linkurl]" id="linkurl3" size="30" value="http://"></td>
+                                <td rowspan="2">
+                                    <?php echo \Org\Util\Form::image('setting[images][1][imageurl]', '', ['upload_allowext' => 'jpg|jpeg|png|gif', 'is_full_field' => true]); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>文字提示：</th>
+                                <td class="y-bg"><input type="text" class="input-text" name="setting[images][1][alt]" id="alt3" size="30"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <?php } ?>
+                </fieldset>
+            </div>
+            <?php } ?>
+
+            <?php if(array_key_exists('flash', $setting['type'])) {?>
+            <div class="pad-10" id="flashdiv" style="display: none;">
+                <fieldset>
+                    <legend>动画设置</legend>
+                    <?php if($setting['num']>1) { for($i=1; $i<=$setting['num']; $i++) { ?>
+                    <table width="100%" class="table_form">
+                        <tbody>
+                            <tr>
+                                <th width="80">动画地址：</th>
+                                <td class="y-bg">
+                                    <?php echo \Org\Util\Form::image('setting[images][' . $i . '][imageurl]', '', ['show_type' => 'text', 'upload_allowext' => 'swf', 'title' => '动画上传', 'is_full_field' => true]); ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <?php } } else { ?>
+                    <table width="100%" class="table_form">
+                        <tbody>
+                            <tr>
+                                <th width="80">动画地址：</th>
+                                <td class="y-bg">
+                                    <?php echo \Org\Util\Form::image('setting[flash][1][flashurl]', '', ['upload_allowext' => 'swf', 'show_type' => 'text', 'title' => '动画上传', 'is_full_field' => true]); ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <?php } ?>
+                </fieldset>
+            </div>
+            <?php } ?>
+
+            <?php if(array_key_exists('text', $setting['type'])) {?>
+            <div class="pad-10" id="textdiv" style="display: none;">
+                <fieldset>
+                    <legend><?php if ($sinfo['type']=='code') { echo '代码设置'; } else { echo '文字连接设置'; } ?></legend>
+                    <table width="100%"  class="table_form">
+                        <tbody>
+                            <?php if($sinfo['type']=='code') {?>
+                            <tr>
+                                <th width="80">代码：</th>
+                                <td class="y-bg"><textarea name="setting[text][code]" id="code" cols="55" rows="6"></textarea></td>
+                            </tr>
+                            <?php } else { ?>
+                            <tr>
+                                <th width="80">标题：</th>
+                                <td class="y-bg"><input type="text" class="input-text" name="setting[text][1][title]" value="" id="title" size="30" /></td>
+                            </tr>
+                            <tr>
+                                <th>连接：</th>
+                                <td class="y-bg"><input type="text" class="input-text" name="setting[text][1][linkurl]" id="link" size="30" value=""  /></td>
+                            </tr><?php }?>
+                        </tbody>
+                    </table>
+                </fieldset>
+            </div>
+            <?php }?>
+
+            <div class="bk15" style="margin-left:10px; line-height:30px;"><input type="submit" name="dosubmit" id="dosubmit" value="确定" class="button">&nbsp;<input type="reset" value="返回" class="button" onclick="history.go(-1)"></div>
+        </form>
+    </div>
+</block>
+<block name="footer">
+    <script type="text/javascript">
+        function AdsType(type) {
+            $('#imagesdiv').css('display', 'none');
+            $('#flashdiv').css('display', 'none');
+            $('#'+type+'div').css('display', '');
+        }
+
+        $(document).ready(function() {
+            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){art.dialog.through({content:msg,lock:true,width:'220',height:'70'}, function(){this.close();$(obj).focus();})}});
+            $('#name').formValidator({onshow:"请输入广告名称!",onfocus:"广告名称至少3个汉字以上",oncorrect:"输入正确!"}).inputValidator({min:6,onerror:"广告名称不能为空"}).ajaxValidator({type:"get",url:"__URL__/public_check_poster",data:"",datatype:"html",cached:false,async:'true',success : function(data) { if( data==1) { return true; } else { return false; } }, error: function(){alert("服务器没有返回数据，可能服务器忙，请重试");}, onerror : "该广告已存在", onwait : "正进行合法性校验..."});
+            $('#type').formValidator({onshow:"请选择广告类型",onfocus:"必须类型选择",oncorrect:"输入正确!",defaultvalue:"images"}).inputValidator({min:1,onerror: "请选择广告类型"});
+            $('#startdate').formValidator({onshow:"请选择上线时间",onfocus:"请选择上线时间",oncorrect:"输入正确!"}).functionValidator({fun:isDateTime});
+            $('#enddate').formValidator({onshow:"默认为一个月",onfocus:"请选择下线时间",oncorrect:"输入正确!"}).inputValidator();
+            <?php if(array_key_exists('text', $setting['type'])) { ?>
+                <?php if($sinfo['type']=='text') { ?>
+                    $('#title').formValidator({onshow:'输入文字链接内容',onfoucs:'输入文字链接内容',oncorrect:'输入正确!'}).inputValidator({min:1,onerror:'没有输入内容'});
+                    <?php } elseif($sinfo['type']=='code') { ?>
+                        $('#code').formValidator({onshow:"输入代码",onfocus:"输入代码",oncorrect:"输入正确!"}).inputValidator({min:1,onerror:'输入代码'});
+                        <?php } } ?>
+                    });
+                </script>
+            </block>

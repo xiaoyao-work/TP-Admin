@@ -18,13 +18,13 @@
     </li>
 
     <?php foreach ($menulist as $key => $menu) { ?>
-    <li class="open <?php echo ($key == 0 ? 'start ' : (($key + 1) == count($menulist) ? 'last ' : '')); ?>">
+    <li class="<?php echo ($key == 0 ? 'start open ' : (($key + 1) == count($menulist) ? 'last ' : '')); ?>">
         <a href="javascript:;">
         <i class="icon-bookmark-empty"></i>
         <span class="title"><?php echo $menu['title']; ?></span>
-        <span class="arrow open"></span>
+        <span class="arrow <?php echo $key == 0 ? 'open ' : ''; ?>"></span>
         </a>
-        <ul class="sub-menu" style="display: block;">
+        <ul class="sub-menu" <?php echo $key == 0 ? 'style="display: block;"' : ''; ?>>
             <?php foreach($menu['childs'] as $child_menu) { ?>
             <li id="_MP<?php echo $child_menu['id']; ?>">
                 <a href="javascript:Index._MP(<?php echo $child_menu['id']; ?>,'<?php echo url($child_menu['module'] . '/' . $child_menu['action'], ['cid' => $child_menu['id']]) . ($child_menu['params'] ? ('&'. $child_menu['params']) : '') ?>');"><?php echo $child_menu['title']; ?></a>

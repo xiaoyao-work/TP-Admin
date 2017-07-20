@@ -1,0 +1,105 @@
+<extend name="Layout:list" />
+<block name="title"><title>列表</title></block>
+<block name="subnav">
+    <a class="btn green" href="javascript:void(0);">会员管理</a>
+</block>
+<block name="search">
+    <div id="searchid" class="row-fluid">
+        <div class="span12">
+            <div class="portlet box blue">
+                <div class="portlet-title">
+                    <div class="caption"><i class="icon-reorder"></i>搜索</div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse"></a>
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <form id="searchform" name="searchform" action="<?php echo U('Member/index'); ?>" method="get" class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label">基础搜索</label>
+                            <div class="controls">
+                                <input name="filter[id]" type="text" value="<?php echo $filter['id']; ?>" placeholder="UID" class='m-wrap'>　
+                                <input name="filter[phone]" type="text" value="<?php echo $filter['phone']; ?>" placeholder="手机号码" class='m-wrap'>　
+                                <input name="filter[username]" type="text" value="<?php echo $filter['username']; ?>" placeholder="用户名" class='m-wrap'>　
+                                <input name="filter[email]" type="text" value="<?php echo $filter['email']; ?>" placeholder="邮箱" class='m-wrap'>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">注册时间</label>
+                            <div class="controls">
+                                <?php echo \Org\Util\Form::date("filter[start_time]", $filter['start_time'], 1, "class='Wdate m-wrap small' placeholder='开始时间'");
+                                ?> - &nbsp;
+                                <?php echo \Org\Util\Form::date("filter[end_time]", $filter['end_time'], 1, "class='Wdate m-wrap small' placeholder='结束时间'");
+                                ?>&nbsp;
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"></label>
+                            <div class="controls">
+                                <input id="search_submit" type="submit" class="btn green" name="search" value="搜索">
+                                <button class="btn green" id="export_csv">导出</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="main">
+    <form name="myform" action="" method="post">
+        <div class="table-list">
+            <table width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th width="40">ID</th>
+                        <th width="200">昵称</th>
+                        <th width="200">邮箱</th>
+                        <th width="200">手机号码</th>
+                        <th width="200">注册时间</th>
+                        <!-- <th width="102">管理操作</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($members as $key => $value) { ?>
+                    <tr>
+                        <td align="center"><?php echo $value['id']; ?></td>
+                        <td align="center"><?php echo $value['username']; ?></td>
+                        <td align="center"><?php echo $value['email']; ?></td>
+                        <td align="center"><?php echo $value['phone']; ?></td>
+                        <td align="center"><?php echo $value['inputtime']; ?></td>
+                        <!-- <td align="center">
+                            <a href="__CONTROLLER__/edit?id=<?php echo $value['id']; ?>">修改</a>
+                            |
+                            <a href="__CONTROLLER__/singleMemberOrder?uid=<?php echo $value['id']; ?>">订单记录</a>
+                        </td> -->
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+            <div class="mt-20 clearfix">
+                <?php echo $pages; ?>
+                <div class="pull-right form-inline">
+                    <?php echo \Org\Util\Form::select(C('list_rows_select'), cookie('list_rows_select'), 'class="m-wrap small" name="list_rows_select" onchange="change_list_rows()"'); ?>
+                </div>
+            </div>
+        </div>
+    </form>
+</block>
+<block name="footer">
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#export_csv").click(function(){
+                $("#searchform").attr("action", 'index?method=export_member');
+                $("#searchform").submit();
+            });
+
+            $("#search_submit").click(function(){
+                $("#searchform").attr("action", '');
+                $("#searchform").submit();
+            });
+
+        })
+    </script>
+</block>

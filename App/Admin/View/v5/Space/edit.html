@@ -1,0 +1,132 @@
+<extend name="Layout:form" />
+<block name="subheader">
+    <link rel="stylesheet" type="text/css" href="{:asset('js/jquery-ui/jquery-ui.min.css')}">
+    <script language="javascript" type="text/javascript" src="{:asset('js/admin/content_add.js')}" charset="UTF-8"></script>
+    <script type="text/javascript" src="{:asset('js/admin/attachupload.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/ckeditor/ckeditor.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/jquery-ui/jquery-ui.min.js')}"></script>
+</block>
+<block name="subnav">
+    <a class="btn red" href="__CONTROLLER__/add">添加版位</a>　<a class="btn red-stripe" href="__CONTROLLER__/index">版位</a>　<a class="btn" href="__CONTROLLER__/poster_template">广告模板设置</a>
+</div>
+</block>
+
+<block name="main">
+    <form name="myform" id="myform" action="" method="post" enctype="multipart/form-data">
+        <input name="spaceid" value="<?php echo $space['spaceid'] ?>" type="hidden" />
+        <table class="table_form" width="100%" cellspacing="0">
+            <tbody>
+                <tr>
+                    <th width="80"><strong>版位名称：</strong></th>
+                    <td><input name="space[name]" id="name" class="input-text" type="text" size="25" value="<?php echo $space['name'] ?>"></td>
+                </tr>
+                <tr>
+                    <th><strong>版位类型：</strong></th>
+                    <td>
+                        <select name="space[type]" id="type" onchange="AdsType(this.value)">
+                            <?php foreach ($types as $key => $value) {?>
+                            <option value="<?php echo $key; ?>"<?php if ($space['type'] == $key) {echo "selected";}?> ><?php echo $value; ?></option>
+                            <?php }?>
+                        </select>
+                        <span id="ScrollSpan" style="padding-left:30px;display:none;"><label><input type="checkbox" id="ScrollBox" name="setting[scroll]" value='1'                                                                                                                                            <?php if (isset($space['setting']['scroll']) && $space['setting']['scroll'] == '1') {
+                            echo "checked";
+                        }
+                        ?> />随屏滚动</label></span><span id="AlignSpan" style="padding-left:30px;display:none;"><label><input type="checkbox" id="AlignBox" name="setting[align]" value='1'<?php if (isset($space['setting']['align']) && $space['setting']['align'] == '1') {
+                        echo "checked";
+                    }
+                    ?>/>全屏居中</label></span>
+                </td>
+            </tr>
+            <tr id="trPosition" style="display:none;">
+                <th align="right"  valign="top"><strong>版位位置：</strong></th>
+                <td valign="top" colspan="2">
+                    左边距：<input name='setting[paddleft]' id='PaddingLeft' type='text' size='5' value='<?php echo $space['setting']['paddleft']; ?>'class="input-text"> px&nbsp;&nbsp;
+                    上边距：<input name='setting[paddtop]' id='PaddingTop' type='text' size='5' value='<?php echo $space['setting']['paddtop']; ?>' class="input-text" /> px
+                </td>
+            </tr>
+
+            <tr id="SizeFormat" style="display: ;">
+                <th><strong>版位尺寸：</strong></th>
+                <td><label>宽</label><input name="space[width]" id="s_width" class="input-text" type="text" size="10" value="<?php echo $space['width']; ?>"> px &nbsp;&nbsp;&nbsp;&nbsp; <label>高</label><input name="space[height]" type="text" id="h_height" class="input-text" size="10" value="<?php echo $space['height']; ?>"> px</td>
+            </tr>
+            <tr>
+                <th><strong>版位描述：</strong></th>
+                <td><textarea name="space[description]" id="description" class="input-textarea" cols="45" rows="4">                                                                                                    <?php echo $space['description']; ?></textarea></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="bk15"></div>
+    <div class="btn">
+        <input type="submit" name="dosubmit" id="dosubmit" value="提交" class='button'>&nbsp;<input type="reset" value="重置" class='button'>
+    </div>
+</form>
+</block>
+<block name="footer">
+    <script language="javascript" type="text/javascript">
+        function AdsType(adstype) {
+            $('input[type=checkbox]').attr('checked', false);
+            $('#ScrollSpan').css('display', 'none');
+            $('#AlignSpan').css('display', 'none');
+            $('#trPosition').css('display', 'none');
+            $('#SizeFormat').css('display', '');
+            $('#PaddingLeft').attr('disabled', false);
+            $('#PaddingTop').attr('disabled', false);
+
+            <?php
+            if (is_array($poster_template) && !empty($poster_template)) {
+                $n = 0;
+                foreach ($poster_template as $key => $p) {
+                    if ($n == 0) {
+                        echo 'if (adstype==\'' . $key . '\') {';
+                    } else {
+                        echo '} else if (adstype==\'' . $key . '\') {';
+                    }
+                    if (isset($p['align'])) {
+                        if ($p['align'] == 'align') {
+                            echo '$(\'#AlignSpan\').css(\'display\', \'\');';
+                            if ($p['select']) {
+                                echo '$(\'#AlignBox\').attr(\'checked\', \'true\');';
+                                echo '$(\'#PaddingLeft\').attr(\'disabled\', true);';
+                                echo '$(\'#PaddingTop\').attr(\'disabled\', true);';
+                            }
+                        } elseif ($p['align'] == 'scroll') {
+                            echo '$(\'#ScrollSpan\').css(\'display\', \'\');';
+                            if ($p['select']) {
+                                echo '$(\'#ScrollBox\').attr(\'checked\', \'true\');';
+                            }
+                        }
+                    }
+                    if (isset($p['padding'])) {
+                        echo '$(\'#trPosition\').css(\'display\', \'\');';
+                    }
+                    if (!isset($p['size']) || !$p['size']) {
+                        echo '$(\'#SizeFormat\').css(\'display\', \'none\');';
+                    }
+                    $n++;
+                }
+            }
+            echo '}';
+            ?>
+        }
+        $('#AlignBox').click( function (){
+            if($('#AlignBox').attr('checked')) {
+                $('#PaddingLeft').attr('disabled', true);
+                $('#PaddingTop').attr('disabled', true);
+            } else {
+                $('#PaddingLeft').attr('disabled', false);
+                $('#PaddingTop').attr('disabled', false);
+            }
+        });
+        AdsType("<?php echo $space['type']; ?>");
+        $(document).ready(function(){
+            $.formValidator.initConfig({formid:"myform",autotip:true,onerror:function(msg,obj){art.dialog.through({content:msg,lock:true,width:'220',height:'70'}, function(){this.close();$(obj).focus();})}});
+            $("#name").formValidator({onshow:"请输入版位名称!",onfocus:"版位名称至少3个汉字以上",oncorrect:"输入正确"}).inputValidator({min:6,onerror:"版位名称至少3个汉字以上"}).ajaxValidator({type:"get",url:"__URL__/public_check_space",data:"spaceid=<?php echo $space['spaceid'] ?>",datatype:"html",cached:false,async:'true',success : function(data) { if( data == "1" ) { return true; } else { return false; } },
+                error: function(){alert("服务器没有返回数据，可能服务器忙，请重试");},
+                onerror : "该版位已存在",
+                onwait : "正进行合法性校验..."
+            }).defaultPassed();
+            $('#type').formValidator({onshow:"选择版位类型",onfocus:"修改版位将删除版位下的所有广告",oncorrect:"输入正确"}).inputValidator().defaultPassed();
+            $('#s_width').formValidator({tipid:"w_hTip",onshow:"输入宽度、高度",onfocus:"3位以下数字",oncorrect:"输入正确"}).inputValidator().defaultPassed();
+        });
+    </script>
+</block>

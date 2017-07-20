@@ -20,7 +20,7 @@ class CategoryModel extends BaseModel {
         return $term;
     }
 
-    public function getTerms($taxonomy_name, $siteid, $level = 2) {
+    public function getTerms($taxonomy_name, $siteid, $level = 0) {
         $where = [
             'siteid'    => $siteid,
             // 'post_type' => $post_type,

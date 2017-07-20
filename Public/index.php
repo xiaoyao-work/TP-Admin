@@ -12,21 +12,11 @@
 if (version_compare(PHP_VERSION, '5.4.0', '<')) {
     die('require PHP > 5.4.0 !');
 }
-if (!file_exists(dirname(__DIR__) . '/install.lock')) {
-    header("Location: ./install/index.php");
-}
-// 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
-define('APP_DEBUG', true);
 
-$scriptName = $_SERVER['SCRIPT_NAME'];
-$requestUri = $_SERVER['REQUEST_URI'];
-if (strpos($requestUri, $scriptName) !== false) {
-    $physicalPath = $scriptName;
-} else {
-    $physicalPath = str_replace('\\', '', dirname($scriptName));
-}
-$script_name = rtrim($physicalPath, '/');
-define("BASE_URL", $script_name . '/');
+define("APP_ENV", isset($_SERVER['APP_ENV']) ? strtolower($_SERVER['APP_ENV']) : 'local');
+
+// 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
+define('APP_DEBUG', in_array(APP_ENV, ['local', 'testing']));
 
 // 引入框架入口文件
 require '../Framework/ThinkPHP.php';

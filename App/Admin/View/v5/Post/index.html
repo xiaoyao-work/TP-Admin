@@ -1,40 +1,26 @@
 <extend name="Layout:list" />
 <block name="title"><title><?php echo $module['name']; ?>列表</title></block>
 <block name="subheader">
-    <script type="text/javascript" src="{:asset('js/JSCal/jscal2.js')}"></script>
-    <script type="text/javascript" src="{:asset('js/JSCal/lang/cn.js')}"></script>
-    <link rel="stylesheet" type="text/css" href="{:asset('css/JSCal/jscal2.css')}">
-    <link rel="stylesheet" type="text/css" href="{:asset('css/JSCal/border-radius.css')}">
-    <link rel="stylesheet" type="text/css" href="{:asset('css/JSCal/win2k/win2k.css')}">
 </block>
 <block name="subnav">
-    <b style="font-size: 20px;"><?php echo $module['name']; ?></b>　<a class="on" href="<?php echo U('Post/add') . "?moduleid=" . $module['id']; ?>"><em>添加内容</em></a>
+    <button class="btn red-stripe"><?php echo $module['name']; ?></button>　<a class="btn red" href="<?php echo U('Post/add') . "?moduleid=" . $module['id']; ?>">添加内容</a>
 </block>
 <block name="search">
     <div id="searchid">
-        <form name="searchform" action="" method="post">
-            <table width="100%" cellspacing="0" class="search-form">
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="explain-col">
-                                <select name="date" class="filter-select">
-                                    <option value="0">全部日期</option>
-                                    <?php foreach ($months as $key => $month) { ?>
-                                        <option value="<?php echo $month['month']; ?>" <?php if ($date == $month['month']) { echo "selected"; } ?>><?php echo $month['month']; ?></option>
-                                    <?php } ?>
-                                </select>
-                                <?php foreach ($taxonomies as $key => $taxonomy) { ?>
-                                <?php if (isset($termsGroupByTaxonomy[$taxonomy['name']])) { ?>
-                                <?php echo \Org\Util\Form::term_select($termsGroupByTaxonomy[$taxonomy['name']], ((is_array($tax) && isset($tax[$taxonomy['name']])) ? $tax[$taxonomy['name']] : 0), 'name="tax[' . $taxonomy['name'] . ']"', '所有' . $taxonomy['label']); ?>
-                                <?php } } ?>
-                                <input name="title" type="text" value="<?php echo isset($title) ? $title : ''; ?>" class="input-text">
-                                <input type="submit" class="button" value="搜索">
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <form name="searchform" action="" method="post" class="form-inline">
+            <select name="date" class="filter-select m-wrap small">
+                <option value="0">全部日期</option>
+                <?php foreach ($months as $key => $month) { ?>
+                    <option value="<?php echo $month['month']; ?>" <?php if ($date == $month['month']) { echo "selected"; } ?>><?php echo $month['month']; ?></option>
+                <?php } ?>
+            </select>
+            <?php foreach ($taxonomies as $key => $taxonomy) { ?>
+            <?php if (isset($termsGroupByTaxonomy[$taxonomy['name']])) { ?>
+                <?php echo \Org\Util\Form::term_select($termsGroupByTaxonomy[$taxonomy['name']], ((is_array($tax) && isset($tax[$taxonomy['name']])) ? $tax[$taxonomy['name']] : 0), 'name="tax[' . $taxonomy['name'] . ']" class="m-wrap small"', '所有' . $taxonomy['label']); ?>
+            <?php } } ?>
+            &nbsp;
+            <input name="title" type="text" value="<?php echo isset($title) ? $title : ''; ?>" class="m-wrap small" placeholder="标题" />
+            <input type="submit" class="btn green" value="搜索" />
         </form>
     </div>
 </block>
@@ -51,8 +37,8 @@
                         <?php foreach ($list_fields as $key => $field) { ?>
                         <th align="left"><?php echo $field['name']; ?></th>
                         <?php } ?>
-                        <th width="118">更新时间</th>
-                        <th width="102">管理操作</th>
+                        <th width="200">更新时间</th>
+                        <th align="center">管理操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,23 +48,24 @@
                         <td align="center"><input name="listorders[<?php echo $content['id']; ?>]" type="text" size="3" value="<?php echo $content['listorder']; ?>" class="input-text-c input-text"></td>
                         <td align="center"><?php echo $content['id']; ?></td>
                         <?php foreach ($list_fields as $key => $field) { ?>
-                        <td><?php echo $content[$field['field']]; ?></td>
+                        <td><?php echo content_post($module['tablename'], $field['field'], $content[$field['field']]); ?></td>
                         <?php } ?>
                         <td align="center"><?php echo $content['updatetime']; ?></td>
                         <td align="center">
+                            <?php echo operation_post($module, $content); ?>
                             <a href="__CONTROLLER__/edit?moduleid=<?php echo $module['id']; ?>&id=<?php echo $content['id']; ?>">修改</a> | <a href="__CONTROLLER__/delete?moduleid=<?php echo $module['id']; ?>&id=<?php echo $content['id']; ?>" onClick="return confirm('确认删除『 <?php echo isset($content['title']) ? addslashes($content['title']) : '这条记录'; ?> 』 吗？')">删除</a>
                         </td>
                     </tr>
                     <?php } ?>
                 </tbody>
             </table>
-            <div class="btn">
-                <label for="check_box">全选/取消</label>
-                <input name="submit" type="submit" class="button" value="排序">&nbsp;
-                <input name="deletesubmit" type="submit" class="button" value="删除" onclick="document.myform.action='__CONTROLLER__/delete?moduleid=<?php echo $module['id']; ?>';return confirm('确认要删除 『 选中 』 吗？')">&nbsp;&nbsp;
-            </div>
-            <div id="pages">
+
+            <div class="mt-20 clearfix">
+                <a href="javascript:$('#check_box').click();" class="btn">全选/取消</a>&nbsp; <input name="submit" type="submit" class="btn" value="排序">&nbsp; <input name="deletesubmit" type="submit" class="btn" value="删除" onclick="document.myform.action='__CONTROLLER__/delete?moduleid=<?php echo $module['id']; ?>';return confirm('确认要删除 『 选中 』 吗？')">
                 <?php echo $pages; ?>
+                <div class="pull-right form-inline">
+                <?php echo \Org\Util\Form::select(C('list_rows_select'), cookie('list_rows_select'), 'class="m-wrap small" name="list_rows_select" onchange="change_list_rows()"'); ?>
+                </div>
             </div>
         </div>
     </form>

@@ -65,7 +65,6 @@ class PostModel extends BaseModel {
         require MODEL_PATH . 'content_input.class.php';
         $content_input = new \content_input($modelid);
         $inputinfo     = $content_input->get($data);
-
         $inputinfo['creator']   = session('user_info.account');
         $inputinfo['siteid']    = get_siteid();
         $inputinfo['post_type'] = $this->tableName;
@@ -79,6 +78,7 @@ class PostModel extends BaseModel {
             $post_id   = $this->add($post_data);
             if ($post_id) {
                 $this->where(['id' => $post_id])->save(['listorder' => $post_id]);
+                $inputinfo['listorder'] = $post_id;
             } else {
                 return false;
             }
@@ -97,6 +97,10 @@ class PostModel extends BaseModel {
             $post_id   = $this->add($post_data);
             if ($post_id) {
                 $this->where(['id' => $post_id])->save(['listorder' => $post_id]);
+                $inputinfo['id'] = $post_id;
+                $inputinfo['listorder'] = $post_id;
+            } else {
+                return false;
             }
         }
 
@@ -109,7 +113,7 @@ class PostModel extends BaseModel {
             $content_update = new \content_update(current($modelid), $content_input->fields);
             $content_update->update($data);
         }
-        return $post_id;
+        return $inputinfo;
     }
 
     public function editContent($post_id, $data) {

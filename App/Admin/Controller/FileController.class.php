@@ -16,8 +16,15 @@ class FileController extends CommonController {
     public function upload() {
         if (IS_POST) {
             $result = array('code' => 0, 'message' => '');
-            $logic = logic('Attachment');
-            $data = $logic->upload();
+            $options = array();
+            if (I('post.fileTypeExts')) {
+                $options['exts'] = str_replace('|', ',', I('post.fileTypeExts'));
+            }
+            if (I('post.fileSizeLimit')) {
+                $options['maxSize'] = size2int(I('post.fileSizeLimit'));
+            }
+            $logic = logic('Attachment', 'Admin');
+            $data = $logic->upload($options);
             if ($data == false) {
                 $result['code'] = $logic->getErrorCode();
                 $result['message'] = $logic->getErrorMessage();
@@ -47,7 +54,7 @@ class FileController extends CommonController {
                     break;
             }
         } else {
-            $args = $_GET['args'];
+            $args = I('get.args');
             $args = getUploadParams($args);
             $this->assign('args',$args);
             $this->display();

@@ -40,6 +40,16 @@ function thumb_images(returnid) {
     }
 }
 
+function resource_pack(returnid) {
+    var in_content = this.$("#att-status").html().substring(1);
+    var att_name = this.$("#att-name").html().substring(1);
+    if (in_content) {
+        $('#'+returnid).val(in_content);
+        $('#'+returnid+'_preview').attr('src', in_content);
+    }
+    $('#title').val(att_name);
+}
+
 function preview(returnid) {
     var in_content = this.$("#att-status").html().substring(1);
     if (in_content) {

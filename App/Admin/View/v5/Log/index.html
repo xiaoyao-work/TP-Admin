@@ -1,61 +1,22 @@
 <extend name="Layout:list" />
 <block name="title"><title>日志管理</title></block>
-<block name="subheader">
-    <script type="text/javascript" src="{:asset('js/JSCal/jscal2.js')}"></script>
-    <script type="text/javascript" src="{:asset('js/JSCal/lang/cn.js')}"></script>
-    <link rel="stylesheet" type="text/css" href="{:asset('css/JSCal/jscal2.css')}">
-    <link rel="stylesheet" type="text/css" href="{:asset('css/JSCal/border-radius.css')}">
-    <link rel="stylesheet" type="text/css" href="{:asset('css/JSCal/win2k/win2k.css')}">
-    <style type="text/css">
-        input#start_time, input#end_time {
-            background: white url("{:asset('images/admin/input_date.png')}") no-repeat right 2px;
-        }
-    </style>
-</block>
 <block name="subnav">
-    <a class="on" href="__MODULE__/Log/index"><em>日志查询</em></a>
+    <a class="btn red-stripe" href="__MODULE__/Log/index">日志查询</a>
 </block>
 
 <block name="main">
-        <form name="searchform" action="__MODULE__/Log/search" method="get">
-            <table width="100%" cellspacing="0" class="search-form">
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="explain-col">
-                                用户名:<input type="text" size="20" name="account" class="input-text" value="<?php if(isset($_REQUEST['account'])) echo $_REQUEST['account']; ?>" />
-                                ip:<input type="text" size="20" name="login_ip" class="input-text" />
-                                登陆状态:<select name="status">
-                                <option value="all" <?php if(isset($_REQUEST['account']) && $_REQUEST['status'] == 'all') echo 'selected'; ?>>全部</option>
-                                <option value="1" <?php if(isset($_REQUEST['account']) && $_REQUEST['status'] == '1') echo 'selected'; ?>>操作成功</option>
-                                <option value="0" <?php if(isset($_REQUEST['account']) && $_REQUEST['status'] == '0') echo 'selected'; ?>>操作失败</option>
-                                </select>
-                                时间: <input type="text" name="start_time" id="start_time" value="<?php if(isset($_REQUEST['start_time'])) echo $_REQUEST['start_time']; ?>" size="21" class="input-text" readonly=""><script type="text/javascript">
-                                Calendar.setup({
-                                    weekNumbers: true,
-                                    inputField : "start_time",
-                                    trigger    : "start_time",
-                                    dateFormat: "%Y-%m-%d %H:%M:%S",
-                                    showTime: true,
-                                    minuteStep: 1,
-                                    onSelect   : function() {this.hide();}
-                                });</script>  至  <input type="text" name="end_time" id="end_time" value="<?php if(isset($_REQUEST['end_time'])) echo $_REQUEST['end_time']; ?>" size="21" class="input-text" readonly=""><script type="text/javascript">
-                                Calendar.setup({
-                                    weekNumbers: true,
-                                    inputField : "end_time",
-                                    trigger    : "end_time",
-                                    dateFormat: "%Y-%m-%d %H:%M:%S",
-                                    showTime: true,
-                                    minuteStep: 1,
-                                    onSelect   : function() {this.hide();}
-                                });</script><input type="submit" value="确定搜索" class="button" name="dosubmit">
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
-    </div>
+    <form name="searchform" action="__MODULE__/Log/search" method="get" class="pad-lr-10 form-inline">
+        <input type="text" size="20" name="account" class="m-wrap small" value="<?php if(isset($_REQUEST['account'])) echo $_REQUEST['account']; ?>" placeholder="用户名"/>
+        <input type="text" size="20" name="login_ip" class="m-wrap small" placeholder="IP"/>
+        <select name="status" class="m-wrap small">
+            <option value="all" <?php if(isset($_REQUEST['account']) && $_REQUEST['status'] == 'all') echo 'selected'; ?>>登陆状态</option>
+            <option value="1" <?php if(isset($_REQUEST['account']) && $_REQUEST['status'] == '1') echo 'selected'; ?>>操作成功</option>
+            <option value="0" <?php if(isset($_REQUEST['account']) && $_REQUEST['status'] == '0') echo 'selected'; ?>>操作失败</option>
+        </select>
+        <?php echo \Org\Util\Form::date("start_time", isset($_REQUEST['start_time']) ? $_REQUEST['start_time'] : '', 1, "class='Wdate m-wrap small' placeholder='开始时间'"); ?> - &nbsp;
+        <?php echo \Org\Util\Form::date("end_time", isset($_REQUEST['end_time']) ? $_REQUEST['end_time'] : '', 1, "class='Wdate m-wrap small' placeholder='结束时间'"); ?> &nbsp;
+        <input type="submit" value="搜索" class="btn green" name="dosubmit" />
+    </form>
     <div class="pad-lr-10 table-list">
         <table width="100%" cellspacing="0">
             <thead>
@@ -86,8 +47,10 @@
             </tbody>
         </table>
     </div>
-    <div class="bk15"></div>
-    <div id="pages">
+    <div class="mt-20 clearfix">
         <?php echo $page; ?>
+        <div class="pull-right form-inline">
+            <?php echo \Org\Util\Form::select(C('list_rows_select'), cookie('list_rows_select'), 'class="m-wrap small" name="list_rows_select" onchange="change_list_rows()"'); ?>
+        </div>
     </div>
 </block>

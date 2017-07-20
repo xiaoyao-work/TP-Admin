@@ -148,6 +148,7 @@ class PageController extends CommonController {
                 if(in_array($_k, $not_allow_fields)) continue;
                 $all_field[$_k] = $_v;
             }
+            $this->assign('all_field', $all_field);
             $this->assign('template', $template);
             $this->assign('forbid_fields',$forbid_fields);
             $this->assign('forbid_delete',$forbid_delete);
@@ -247,8 +248,8 @@ class PageController extends CommonController {
      * 检查字段是否存在
      */
     public function public_checkfield() {
-        $field = strtolower($_GET['field']);
-        $oldfield = strtolower($_GET['oldfield']);
+        $field = I('get.field');
+        $oldfield = I('get.oldfield');
         if($field == $oldfield) exit('1');
 
         $template = I('get.template');

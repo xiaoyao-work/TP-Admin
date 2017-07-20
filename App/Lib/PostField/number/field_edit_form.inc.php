@@ -19,7 +19,7 @@
     </tr>
 	<tr>
       <td>输入框长度</td>
-      <td><input type="text" name="setting[size]" value="<?php echo $setting['size'];?>" size="3" class="input-text"> px</td>
+      <td><input type="text" name="setting[size]" value="<?php echo isset($setting['size']) ? $setting['size'] : '';?>" size="3" class="input-text"> px</td>
     </tr>
 	<tr>
       <td>默认值</td>

@@ -1,0 +1,50 @@
+<extend name="Layout:list" />
+<block name="title"><title>站点管理</title></block>
+<block name="subnav">
+    <a class="btn red" href="__CONTROLLER__/add">添加版位</a>　<a class="btn red-stripe" href="__CONTROLLER__/index">版位</a>　<a class="btn" href="__CONTROLLER__/poster_template">广告模板设置</a>
+</block>
+<block name="main">
+    <div class="table-list">
+        <form name="myform" id="myform" action="__GROUP__/User/add" method="post">
+            <table width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th align="center">模板名称</th>
+                        <th width="24%" align="center">管理操作</th>
+                    </tr>
+                </thead>
+                <!--列表信息-->
+                <tbody>
+                    <?php  if(is_array($templates)){ foreach($templates as $info) { ?>
+                    <tr>
+                        <td>
+                            <?php echo isset($poster_template[$info]['name']) ? $poster_template[$info]['name'] .' ('. $info . ')' : $info; ?>
+                        </td>
+                        <td align="center">
+                            <a href="javascript:<?php echo isset($poster_template[$info]['iscore']) ? 'check' : 'edit'; ?>('<?php echo addslashes(htmlspecialchars($info)); ?>', '<?php echo isset($poster_template[$info]['name']) ? addslashes(htmlspecialchars($poster_template[$info]['name'])) : ''; ?>');void(0);">
+                                <?php echo isset($poster_template[$info]['iscore']) ? "查看" : '<font color="#009933">设置</font>'; ?>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php } } ?>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</block>
+<block name="footer">
+    <script type="text/javascript">
+        function check(id, name) {
+            art.dialog.open('__MODULE__/Space/public_template_setting?template=' + id, {
+                id: 'public_template_setting',
+                width: "540px",
+                height: "360px",
+                title: name,
+                ok: true,
+                cancel: true,
+                lock: true,
+                background: "#000"
+            });
+        }
+    </script>
+</block>

@@ -1,8 +1,7 @@
 <extend name="Layout:list" />
 <block name="title"><title>角色管理</title></block>
 <block name='subnav'>
-    <a class="add fb" href="__MODULE__/Role/add"><em>添加角色</em></a>&nbsp;&nbsp;&nbsp;
-    <a class="on" href="__MODULE__/Role/index"><em>角色管理</em></a>
+    <a class="btn red" href="__MODULE__/Role/add">添加角色</a>　<a class="btn red-stripe" href="__MODULE__/Role/index">角色管理</a>
 </block>
 <block name="main">
     <form name="myform" action="__CONTROLLER__/listorder" method="post">

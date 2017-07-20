@@ -1,0 +1,65 @@
+<extend name="Layout:list" />
+<block name="title"><title>站点管理</title></block>
+<block name="subnav">
+    <a class="btn red" href="__CONTROLLER__/add">添加版位</a>　<a class="btn red-stripe" href="__CONTROLLER__/index">版位</a>　<a class="btn" href="__CONTROLLER__/poster_template">广告模板设置</a>
+</block>
+<block name="main">
+    <div class="table-list">
+        <form name="myform" action="__CONTROLLER__/delete" method="post">
+            <table width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th width="6%" align="center"><input type="checkbox" value="" id="check_box" onclick="selectall('spaceid[]');"></th>
+                        <th align="center">版位名称</th>
+                        <th width="12%" align="center">版位类型</th>
+                        <th width='10%' align="center">版位尺寸</th>
+                        <th width="10%" align="center">广告数</th>
+                        <th width="13%" align="center">版位描述</th>
+                        <th width="32%" align="center">管理操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (is_array($spaces)) {foreach ($spaces as $space) {?>
+                    <tr>
+                        <td align="center">
+                            <input type="checkbox" name="spaceid[]" value="<?php echo $space['spaceid']; ?>">
+                        </td>
+                        <td align="center"><?php echo $space['name'] ?></td>
+                        <td align="center"><?php echo $types[$space['type']] ?></td>
+                        <td align="center"><?php echo $space['width'] ?>*<?php echo $space['height'] ?></td>
+                        <td align="center"><?php echo $space['items'] ?></td>
+                        <td align="center"><?php echo $space['description'] ?></td>
+                        <td align="center">
+                            <a href="__MODULE__/Space/public_preview?spaceid=<?php echo $space['spaceid'] ?>" target="_blank">预览</a> | <a href="javascript:call(<?php echo $space['spaceid'] ?>);void(0);">获取代码</a> | <a href='__MODULE__/Poster/index?spaceid=<?php echo $space['spaceid'] ?>' >广告列表</a> | <a href="__URL__/edit/spaceid/<?php echo $space['spaceid'] ?>" title="修改">修改</a> | <a href='__MODULE__/Space/delete?spaceid=<?php echo $space['spaceid'] ?>' onClick="return confirm('<?php echo "确认删除" . addslashes(htmlspecialchars($space['name'])); ?>')">删除</a> | <a href="__MODULE__/Poster/add?spaceid=<?php echo $space['spaceid'] ?>">添加广告</a>
+                        </td>
+                    </tr>
+                    <?php }}?>
+                </tbody>
+            </table>
+
+            <div class="mt-20 clearfix">
+                <a href="javascript:$('#check_box').click();" class="btn">全选/取消</a>&nbsp; <input name="deletesubmit" type="submit" class="btn" value="删除" onclick="document.myform.action='__CONTROLLER__/delete';return confirm('确认要删除 『 选中 』 吗？')">
+                <?php echo $pages; ?>
+                <div class="pull-right form-inline">
+                    <?php echo \Org\Util\Form::select(C('list_rows_select'), cookie('list_rows_select'), 'class="m-wrap small" name="list_rows_select" onchange="change_list_rows()"'); ?>
+                </div>
+            </div>
+        </form>
+    </div>
+</block>
+<block name="footer">
+    <script type="text/javascript">
+        function call(id) {
+            art.dialog.open('__MODULE__/Space/public_call?spaceid=' + id, {
+                id: 'call',
+                width: "600px",
+                height: "470px",
+                title: '调用代码',
+                lock: true,
+                ok: true,
+                cancel: true,
+                background: "#000"
+            });
+        }
+    </script>
+</block>

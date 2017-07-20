@@ -1,9 +1,8 @@
 <extend name="Layout:list" />
-<block name="title"><title>模型管理</title></block>
+<block name="title"><title>模型管理--<?php echo $model['name']; ?>字段管理</title></block>
 <block name="subnav">
     <h2 class="title-1 line-x f14 fb blue lh28">模型管理--<?php echo $model['name']; ?>字段管理</h2>
-    <a class="add fb" href="__CONTROLLER__/add?modelid=<?php echo $model['id']; ?>"><em>添加字段</em></a>
-    　<a class="on" href="__CONTROLLER__/index?modelid=<?php echo $model['id']; ?>"><em>管理模型字段</em></a>
+    <a class="btn red" href="__CONTROLLER__/add?modelid=<?php echo $model['id']; ?>">添加字段</a>　<a class="btn red-stripe" href="__CONTROLLER__/index?modelid=<?php echo $model['id']; ?>">管理模型字段</a>
 </block>
 <block name="main">
     <form name="myform" id="myform" action="__CONTROLLER__/listorder" method="post">
@@ -40,7 +39,9 @@
                         <?php } ?>
                     </tbody>
                 </table>
-                <div class="btn"><input type="submit" class="button" name="dosubmit" value="排序" /></div>
+                <div class="mt-20">
+                    <input type="submit" class="btn" name="dosubmit" value="排序"/>
+                </div>
             </div>
         </form>
     </block>

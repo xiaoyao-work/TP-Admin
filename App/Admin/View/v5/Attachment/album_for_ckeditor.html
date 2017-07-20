@@ -69,10 +69,10 @@
                 <div class="img-wrap">
                     <a href="javascript:;" onclick="javascript:album_cancel(this,'<?php echo $attach['id']; ?>')">
                         <div class="icon"></div>
-                        <?php if( in_array($attach['ext'], array( 'jpg','gif','png','jpeg' ) )  ) { ?>
-                        <img src="<?php echo $attach['url']; ?>" width="100" height="88" path="<?php echo $attach['url']; ?>" title="<?php echo $attach['name']; ?>">
+                        <?php if( in_array(strtolower($attach['ext']), array( 'jpg','gif','png','jpeg' ) )  ) { ?>
+                        <img src="<?php echo  IMAGE_DOMAIN . $attach['url']; ?>" width="100" height="88" path="<?php echo IMAGE_DOMAIN . $attach['url']; ?>" title="<?php echo $attach['name']; ?>">
                         <?php } else { ?>
-                        <img src="IMG_PATH/admin/flv.png" width="80" path="<?php echo $attach['url']; ?>" title="<?php echo $attach['name']; ?>">
+                        <img src="<?php echo asset('images/admin/icon/'.$attach['ext'].'.png') ?>" width="80" path="<?php echo  IMAGE_DOMAIN . $attach['url']; ?>" title="<?php echo $attach['name']; ?>">
                         <?php } ?>
                     </a>
                 </div>

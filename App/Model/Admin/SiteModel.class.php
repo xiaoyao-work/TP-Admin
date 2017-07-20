@@ -14,9 +14,16 @@ use Model\BaseModel;
  * 站点模型
  */
 class SiteModel extends BaseModel {
+    // protected $connection = 'store';
 
-    function single($siteid) {
+    public function single($siteid) {
         return siteinfo($siteid);
+    }
+
+    public function getAccessibleSites() {
+        $table_prefix = C('store.DB_PREFIX');
+        $sites = $this->query('select site.* from ' . $table_prefix . 'site as site join ' . $table_prefix . 'access as access on site.id = access.siteid where access.role_id = ' . session('user_info.role_id') . ' and node_id not in (' . join([59, 58, 5, 312]) . ') group by site.id');
+        return $sites;
     }
 
 }

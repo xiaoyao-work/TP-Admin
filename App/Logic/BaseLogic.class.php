@@ -71,4 +71,10 @@ class BaseLogic {
     public function getServiceErrorInfo() {
         return empty($this->serviceErrorInfo) ? false : $this->serviceErrorInfo;
     }
+
+    public function verifyCodeValidate($verify_code, $session_key='verify_code') {
+        $session_verify_code = session($session_key);
+        session($session_key, null);
+        return md5($verify_code) == $session_verify_code;
+    }
 }

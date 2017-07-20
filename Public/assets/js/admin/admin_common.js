@@ -80,3 +80,12 @@ function SwapTab(name,cls_show,cls_hide,cnt,cur){
 function remove_div(id) {
 	$('#'+id).remove();
 }
+
+function change_list_rows(){
+	var list_rows = $("select[name*='list_rows_select']").val();
+	if(list_rows){
+		$.cookie("list_rows_select", list_rows, {path: window.location.pathname});
+		window.location.reload();
+	}
+
+}

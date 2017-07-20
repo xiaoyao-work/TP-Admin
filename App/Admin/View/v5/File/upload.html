@@ -11,6 +11,7 @@
     <script type="text/javascript">
         var IMAGE_DOMAIN = '<?php echo IMAGE_DOMAIN; ?>';
         var ASSETS_DOMAIN = '<?php echo ASSETS_DOMAIN; ?>';
+        var DOWNLOAD_DOMAIN = '<?php echo DOWNLOAD_DOMAIN; ?>';
     </script>
     <style type="text/css">
         .bar {
@@ -88,12 +89,16 @@
                 'queueSizeLimit'  : queueSizeLimit,
                 'uploadLimit'     : uploadLimit,
                 'onUploadError'   : function(file, errorCode, errorMsg, errorString) {
-                    $('#file_upload').uploadify('settings', 'uploadLimit', $('#file_upload').uploadify('settings', 'uploadLimit') + 1);
+                    $('#file_upload').uploadify('settings', 'uploadLimit', uploadLimit + 1);
+                    $('#file_upload').uploadify('settings', 'queueSizeLimit', queueSizeLimit + 1);
                     alert(file.name + ' 上传失败，错误原因: ' + errorString);
                 },
                 'onUploadSuccess' : function(file, data, response) {
                     var result = $.parseJSON(data);
                     set_thumb(result);
+                },
+                'onFallback' : function() {
+                    alert('未检测Flash插件！');
                 }
             });
         });
@@ -114,13 +119,15 @@
             } else {
                 if ($.inArray(result.data.ext.toLowerCase(), ['jpg', 'jpeg', 'png', 'gif', 'bmp']) == -1) {
                     var src = ASSETS_DOMAIN + "images/admin/icon/" + result.data.ext.toLowerCase() + ".png";
+                    var path = DOWNLOAD_DOMAIN + result.data.url;
                 }  else {
                     var src = IMAGE_DOMAIN + result.data.url;
+                    var path = IMAGE_DOMAIN + result.data.url;
                 }
                 var html = '<li><div id="attachment_' + result.data.id +'" class="img-wrap">';
                 html += '<a href="javascript:void(0);" onclick="javascript:att_cancel(this,' + result.data.id + ',\'upload\'' + ')" ' + ((attachment_length < uploadLimit) ?  'class="on"' : '') + '>';
                 html += '<div class="icon"></div>';
-                html += '<img src="' + src + '" width="80" imgid="' + result.data.id + '" path="' + IMAGE_DOMAIN + result.data.url + '" title="' + result.data.title + '">';
+                html += '<img src="' + src + '" width="80" imgid="' + result.data.id + '" path="' + path + '" title="' + result.data.title + '">';
                 html += '</a></div></li>';
                 $('#attachment_list').append(html);
                 if (attachment_length < uploadLimit) {

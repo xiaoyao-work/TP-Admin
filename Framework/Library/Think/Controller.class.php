@@ -13,7 +13,6 @@ namespace Think;
  * ThinkPHP 控制器基类 抽象类
  */
 abstract class Controller {
-
     /**
      * 视图实例对象
      * @var view
@@ -33,11 +32,9 @@ abstract class Controller {
      * @access public
      */
     public function __construct() {
-        global $app;
         Hook::listen('action_begin',$this->config);
         //实例化视图类
         $this->view     = Think::instance('Think\View');
-        $this->app      = $app;
         //控制器初始化
         if(method_exists($this,'_initialize'))
             $this->_initialize();
@@ -215,19 +212,27 @@ abstract class Controller {
             case 'JSON' :
                 // 返回JSON数据格式到客户端 包含状态信息
                 header('Content-Type:application/json; charset=utf-8');
+                // 应用结束标签
+                Hook::listen('app_end');
                 exit(json_encode($data,$json_option));
             case 'XML'  :
                 // 返回xml格式数据
                 header('Content-Type:text/xml; charset=utf-8');
+                // 应用结束标签
+                Hook::listen('app_end');
                 exit(xml_encode($data));
             case 'JSONP':
                 // 返回JSON数据格式到客户端 包含状态信息
                 header('Content-Type:application/json; charset=utf-8');
                 $handler  =   isset($_GET[C('VAR_JSONP_HANDLER')]) ? $_GET[C('VAR_JSONP_HANDLER')] : C('DEFAULT_JSONP_HANDLER');
+                // 应用结束标签
+                Hook::listen('app_end');
                 exit($handler.'('.json_encode($data,$json_option).');');
             case 'EVAL' :
                 // 返回可执行的js脚本
                 header('Content-Type:text/html; charset=utf-8');
+                // 应用结束标签
+                Hook::listen('app_end');
                 exit($data);
             default     :
                 // 用于扩展其他返回格式数据
@@ -307,5 +312,3 @@ abstract class Controller {
         Hook::listen('action_end');
     }
 }
-// 设置控制器别名 便于升级
-class_alias('Think\Controller','Think\Action');

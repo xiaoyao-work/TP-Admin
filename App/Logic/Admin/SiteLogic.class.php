@@ -15,19 +15,13 @@ use Logic\BaseLogic;
  * 站点Logic
  */
 class SiteLogic extends BaseLogic {
+
     public function getAccessibleSites() {
         $site_model = model('site', 'Admin');
         if (session(C('ADMIN_AUTH_KEY'))) {
             $sites = $site_model->select();
         } else {
-            $sites = $site_model->table('__ACCESS__ as access, __SITE__ as site')
-                ->where([
-                    'access.siteid'  => ['exp', ' = site.id'],
-                    'access.role_id' => session('user_info.role_id'),
-                    'access.node_id' => ['not in', [59, 58, 5, 312]],
-                ])
-                ->group('access.siteid')
-                ->select();
+            $sites = $site_model->getAccessibleSites();
         }
         return $sites;
     }

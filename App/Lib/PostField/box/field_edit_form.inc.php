@@ -51,8 +51,8 @@
 	<tr>
       <td>是否作为筛选字段</td>
       <td>
-	  <input type="radio" name="setting[filtertype]" value="1" <?php if($setting['filtertype']) echo 'checked';?> /> 是
-	  <input type="radio" name="setting[filtertype]" value="0" <?php if(!$setting['filtertype']) echo 'checked';?>/> 否
+	  <input type="radio" name="setting[filtertype]" value="1" <?php if(isset($setting['filtertype']) && $setting['filtertype']) echo 'checked';?> /> 是
+	  <input type="radio" name="setting[filtertype]" value="0" <?php if(!isset($setting['filtertype']) || !$setting['filtertype']) echo 'checked';?>/> 否
 	  </td>
     </tr>
 </table>

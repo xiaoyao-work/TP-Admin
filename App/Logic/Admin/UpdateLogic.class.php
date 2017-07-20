@@ -31,7 +31,7 @@ class UpdateLogic extends BaseLogic {
     }
 
     public function getSysBaseInfo($action) {
-        $site        = F('sitelist');
+        $site        = get_site_info();
         $sitename    = $site['1']['name'];
         $siturl      = $site['1']['domain'];
         $base_domain = $site['1']['base_domain'];

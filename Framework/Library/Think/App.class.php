@@ -237,9 +237,6 @@ class App {
         // 加载动态应用公共文件和配置
         load_ext_file(COMMON_PATH);
 
-        // 日志目录转换为绝对路径 默认情况下存储到公共模块下面
-        C('LOG_PATH', realpath(LOG_PATH) . '/Common/');
-
         // 定义当前请求的系统常量
         define('NOW_TIME', $_SERVER['REQUEST_TIME']);
         define('REQUEST_METHOD', $_SERVER['REQUEST_METHOD']);
@@ -247,6 +244,7 @@ class App {
         define('IS_POST', $this->request->isPost());
         define('IS_PUT', $this->request->isPut());
         define('IS_DELETE', $this->request->isDelete());
+        define('IS_AJAX', $this->request->isAjax());
 
         if (C('REQUEST_VARS_FILTER')) {
             // 全局安全过滤
@@ -254,7 +252,7 @@ class App {
             array_walk_recursive($_POST, 'think_filter');
             array_walk_recursive($_REQUEST, 'think_filter');
         }
-        define('IS_AJAX', $this->request->isAjax());
+        defined('__ROOT__') || define('__ROOT__', $this->environment['SCRIPT_NAME']);
 
         // TMPL_EXCEPTION_FILE 改为绝对地址
         C('TMPL_EXCEPTION_FILE', realpath(C('TMPL_EXCEPTION_FILE')));
@@ -271,20 +269,19 @@ class App {
         $current_route = $this->router->getCurrentRoute();
         if ($current_route) {
             try {
+                $module = self::getModule($current_route->getModule());
+                $current_domain = $current_route->getDomain();
+                if ($current_domain) {
+                    define('BIND_MODULE', $module);
+                }
+                define('MODULE_NAME', $module);
+                $this->loadModule();
+
                 $current_route->execMiddleware();
                 $dispatched = false;
                 $dispatched = call_user_func_array($current_route->getCallable(), array_values($current_route->getParams()));
-
-                // 未匹配处理
+                // 匹配控制器
                 if ($dispatched === false) {
-                    $module = self::getModule($current_route->getModule());
-                    $current_domain = $current_route->getDomain();
-                    if ($current_domain) {
-                        define('BIND_MODULE', $module);
-                    }
-                    define('MODULE_NAME', $module);
-                    $this->loadModule();
-
                     $controller = self::getController($current_route->getController(), $this->caseSensitive);
                     $action     = self::getAction($current_route->getAction(), $this->caseSensitive);
                     $this->loadController($controller, $action);
@@ -308,6 +305,16 @@ class App {
                 $method->invokeArgs($obj, [$action, '']);
             }
         } else {
+            $module = self::getModule();
+            define('MODULE_NAME', $module);
+            // 定义当前模块路径
+            define('MODULE_PATH', APP_PATH . MODULE_NAME . '/');
+            // 定义当前模块的模版缓存路径
+            C('CACHE_PATH', CACHE_PATH . MODULE_NAME . '/');
+            // 定义当前模块的日志目录
+            // C('LOG_PATH', realpath(LOG_PATH) . '/' . MODULE_NAME . '/');
+            C('LOG_PATH', realpath(LOG_PATH) . '/');
+
             E('路由未匹配~');
         }
     }
@@ -320,7 +327,8 @@ class App {
             // 定义当前模块的模版缓存路径
             C('CACHE_PATH', CACHE_PATH . MODULE_NAME . '/');
             // 定义当前模块的日志目录
-            C('LOG_PATH', realpath(LOG_PATH) . '/' . MODULE_NAME . '/');
+            // C('LOG_PATH', realpath(LOG_PATH) . '/' . MODULE_NAME . '/');
+            C('LOG_PATH', realpath(LOG_PATH) . '/');
 
             // 模块检测
             Hook::listen('module_check');
@@ -329,18 +337,12 @@ class App {
             if (is_file(MODULE_PATH . 'Conf/config' . CONF_EXT)) {
                 C(load_config(MODULE_PATH . 'Conf/config' . CONF_EXT));
             }
-
-            // 加载应用模式对应的配置文件
-            if ('common' != APP_MODE && is_file(MODULE_PATH . 'Conf/config_' . APP_MODE . CONF_EXT)) {
-                C(load_config(MODULE_PATH . 'Conf/config_' . APP_MODE . CONF_EXT));
+            // 加载模块函数文件
+            if (is_file(MODULE_PATH . 'Common/function.php')) {
+                include MODULE_PATH . 'Common/function.php';
             }
 
-            // 当前应用状态对应的配置文件
-            if (APP_STATUS && is_file(MODULE_PATH . 'Conf/' . APP_STATUS . CONF_EXT)) {
-                C(load_config(MODULE_PATH . 'Conf/' . APP_STATUS . CONF_EXT));
-            }
-
-            // 加载模块别名定义
+            /*// 加载模块别名定义
             if (is_file(MODULE_PATH . 'Conf/alias.php')) {
                 Think::addMap(include MODULE_PATH . 'Conf/alias.php');
             }
@@ -355,7 +357,7 @@ class App {
                 include MODULE_PATH . 'Common/function.php';
             }
             // 加载模块的扩展配置文件
-            load_ext_file(MODULE_PATH);
+            load_ext_file(MODULE_PATH);*/
         } else {
             E(L('_MODULE_NOT_EXIST_') . ':' . MODULE_NAME);
         }

@@ -46,11 +46,11 @@ switch($field_type) {
 	break;
 
 	case 'mediumtext':
-		$this->db->execute("ALTER TABLE `$tablename` CHANGE `$oldfield` `$field` MEDIUMTEXT NOT NULL DEFAULT '$defaultvalue'");
+		$this->db->execute("ALTER TABLE `$tablename` CHANGE `$oldfield` `$field` MEDIUMTEXT NOT NULL");
 	break;
 
 	case 'text':
-		$this->db->execute("ALTER TABLE `$tablename` CHANGE `$oldfield` `$field` TEXT NOT NULL DEFAULT '$defaultvalue'");
+		$this->db->execute("ALTER TABLE `$tablename` CHANGE `$oldfield` `$field` TEXT NOT NULL");
 	break;
 
 	case 'date':

@@ -252,23 +252,24 @@ class content_form {
         $string .= '<div id="info_' . $field . '" class="picList"></div>
 		</fieldset>
 		<div class="bk10"></div>';
-        $string .= "<div class='picBut cu'><a herf='javascript:void(0);' onclick=\"javascript:attachupload('{$field}_images', '附件上传','info_{$field}',attaches,'{$upload_number},{$upload_allowext},{$isselectimage}','images','" . U('File/upload') . "')\"/> 选择文件 </a></div>";
+        $string .= "<div class='picBut cu'><a herf='javascript:void(0);' onclick=\"javascript:attachupload('{$field}_images', '附件上传','info_{$field}',attaches,'{$upload_number},{$upload_allowext},{$isselectimage},,,,{$upload_maxsize}','images','" . U('File/upload') . "')\"/> 选择文件 </a></div>";
         return $string;
     }
 
     protected function image($field, $value, $fieldinfo) {
         $setting = string2array($fieldinfo['setting']);
         extract($setting);
+        $js_callback = isset($js_callback) && !empty($js_callback) ? $js_callback : 'thumb_images';
         $html = '';
         if (defined('IN_ADMIN')) {
-            $html = "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"$('#" . $field . "_preview').attr('src','" . asset('images/admin/icon/upload-pic.png') . "');$('#" . $field . "').val(' ');return false;\" value=\"取消图片\">";
+            $html = "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"$('#" . $field . "_preview').attr('src','" . asset('images/admin/icon/upload-pic.png') . "');$('#" . $field . "').val(' ');return false;\" value=\"取消附件\">";
         }
         if ($show_type && defined('IN_ADMIN')) {
             $preview_img = $value ? $value : asset('images/admin/icon/upload-pic.png');
-            return "<div class='upload-pic img-wrap'><input type='hidden' name='info[$field]' id='$field' value='$value'><a href='javascript:void(0);' onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$isselectimage,$images_width,$images_height,$watermark','image','" . U("File/upload") . "');return false;\">
-			<img src='$preview_img' id='{$field}_preview' width='135' height='113' style='cursor:hand' /></a>" . "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$isselectimage,$images_width,$images_height,$watermark','image','" . U("File/upload") . "');return false;\" value=\"上传图片\">" . $html . "</div>";
+            return "<div class='upload-pic img-wrap'><input type='hidden' name='info[$field]' id='$field' value='$value'><a href='javascript:void(0);' onclick=\"attachupload('{$field}_images', '附件上传','{$field}',".$js_callback.",'1,{$upload_allowext},{$isselectimage},{$images_width},{$images_height},{$watermark},{$upload_maxsize}','image','" . U("File/upload") . "');return false;\">
+			<img src='$preview_img' id='{$field}_preview' width='135' height='113' style='cursor:hand' /></a>" . "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"attachupload('{$field}_images', '附件上传','{$field}',".$js_callback.",'1,{$upload_allowext},{$isselectimage},{$images_width},{$images_height},{$watermark},{$upload_maxsize}','image','" . U("File/upload") . "');return false;\" value=\"上传附件\">" . $html . "</div>";
         } else {
-            return "<input type='text' name='info[$field]' id='$field' value='$value' size='$size' class='input-text' />  <input type='button' class='button' onclick=\"attachupload('{$field}_images', '附件上传','{$field}',thumb_images,'1,{$upload_allowext},$isselectimage,$images_width,$images_height,$watermark','image','" . U("File/upload") . "');return false;\"/ value='上传图片'>" . $html;
+            return "<input type='text' name='info[$field]' id='$field' value='$value' size='$size' class='input-text' />  <input type='button' class='button' onclick=\"attachupload('{$field}_images', '附件上传','{$field}',".$js_callback.",'1,{$upload_allowext},{$isselectimage},{$images_width},{$images_height},{$watermark},{$upload_maxsize}','image','" . U("File/upload") . "');return false;\"/ value='上传附件'>" . $html;
         }
     }
 
@@ -300,41 +301,14 @@ class content_form {
         extract(string2array($fieldinfo['setting']));
         $isdatetime = 0;
         $timesystem = 0;
-        if ($fieldtype == 'int') {
-            if (!$value) {
-                $value = time();
-            }
-
-            $format_txt = $format == 'm-d' ? 'm-d' : $format;
-            if ($format == 'Y-m-d Ah:i:s') {
-                $format_txt = 'Y-m-d h:i:s';
-            }
-
-            $value = date($format_txt, $value);
-
-            $isdatetime = strlen($format) > 6 ? 1 : 0;
-            if ($format == 'Y-m-d Ah:i:s') {
-
-                $timesystem = 0;
-            } else {
-                $timesystem = 1;
-            }
-        } elseif ($fieldtype == 'datetime') {
+        if ($fieldtype == 'datetime') {
             if (!$value) {
                 $value = date($format);
             }
-
             $isdatetime = 1;
             $timesystem = 1;
-        } elseif ($fieldtype == 'datetime_a') {
-            if (!$value) {
-                $value = date($format);
-            }
-
-            $isdatetime = 1;
-            $timesystem = 0;
         }
-        return \Org\Util\Form::date("info[$field]", $value, $isdatetime, 1, 'true', $timesystem);
+        return \Org\Util\Form::date("info[$field]", $value, $isdatetime, 0, true, $timesystem);
     }
 
     protected function copyfrom($field, $value, $fieldinfo) {
@@ -351,8 +325,12 @@ class content_form {
         if (!$value && isset($defaultvalue)) {
             $value = $defaultvalue;
         }
+
         $options = explode("\n", $fieldinfo['options']);
         foreach ($options as $_k) {
+            if (empty($_k)) {
+                continue;
+            }
             $v          = explode("|", $_k);
             $k          = trim($v[1]);
             $option[$k] = $v[0];

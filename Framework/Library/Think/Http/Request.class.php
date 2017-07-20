@@ -473,6 +473,14 @@ class Request {
     }
 
     /**
+     * 获取完整URL地址
+     * @return string
+     */
+    public function getFullUrl() {
+        $this->getUrl() . $this->getResourceUri() . (empty($this->env['QUERY_STRING']) ? '' : '?' . $this->env['QUERY_STRING']);
+    }
+
+    /**
      * Get IP
      * @return string
      */

@@ -1,9 +1,5 @@
 <extend name="Layout:list" />
 <block name="title"><title>菜单管理</title></block>
-<block name="subnav">
-    <a class="add fb" href="__MODULE__/Menu/add"><em>添加菜单</em></a>　
-    <a class="on" href="__MODULE__/Menu/index"><em>菜单管理</em></a>
-</block>
 <block name="main">
     <form name="myform" action="__CONTROLLER__/listorder" method="post" id="myform" >
         <div class="table-list">
@@ -20,7 +16,7 @@
                 <tbody>
                     <?php foreach ($menus as $key => $menu) { ?>
                     <tr>
-                        <td align="center"><input type="text" style="width: 36px; text-align: center; height: 18px;" name="sort[<?php echo $menu['id']; ?>]" value="<?php echo $menu['sort']; ?>" /></td>
+                        <td align="center"><input type="text" style="width: 36px; text-align: center; height: 18px; margin: 0;" name="sort[<?php echo $menu['id']; ?>]" value="<?php echo $menu['sort']; ?>" /></td>
                         <td  width="92" align='center'><?php echo $menu['id']; ?></td>
                         <td><?php echo cat_empty_deal($menu, isset($menus[$key+1]) ? $menus[$key+1]['pid'] : '', 'pid').$menu['title']; ?></td>
                         <td align="center"><?php if($menu['status']==1){echo "启用";}else{echo "禁用";} ?></td>
@@ -30,8 +26,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="btn">
-            <input type="submit" class="button" name="dosubmit" value="排序"/>
+        <div class="mt-20">
+            <input type="submit" class="btn" name="dosubmit" value="排序"/>
         </div>
     </form>
 </block>

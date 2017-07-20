@@ -1,0 +1,45 @@
+<extend name="Layout:list" />
+<block name="title"><title>版位设置</title></block>
+<block name="subnav"></block>
+<block name="main">
+    <table class="table_form" width="100%" cellspacing="0">
+        <tbody>
+            <tr>
+                <td width="200"><strong>模板文件名：</strong></td>
+                <td><?php echo $template; ?><input type="hidden" value="<?php echo $template; ?>" name="template"></td>
+            </tr>
+            <tr>
+                <td><strong>中文名：</strong></td>
+                <td><?php echo $info['name'] ?></td>
+            </tr>
+            <tr>
+                <td><strong>是否出现以下属性：</strong></td>
+                <td><label><input type="radio" value="align"<?php if (isset($info['align']) && $info['align'] == 'align') {?> checked<?php }?> name="info[align]" onclick="$('#choose_select').show();"> 全屏居中 </label> <label><input type="radio" value="scroll"<?php if (isset($info['align']) && $info['align'] == 'scroll') {?> checked<?php }?> name="info[align]" onclick="$('#choose_select').show();">随屏滚动</label></td>
+            </tr>
+            <tr id="choose_select" style="display: <?php if (empty($info['align'])) {?>none<?php }?>">
+                <td><strong>上述属性是否被选中：</strong></td>
+                <td><label><input type="radio" value="1" name="info[select]"<?php if (!isset($info) || $info['select'] == 1) {?> checked<?php }?>> 是 </label> <label><input type="radio" value="0" name="info[select]"<?php if (!isset($info) || $info['select'] == 0) {?> checked<?php }?>> 否</label></td>
+            </tr>
+            <tr>
+                <td><strong>是否设置版位位置：</strong></td>
+                <td><input type="radio" value="1" name="info[padding]"<?php if (!isset($info) || $info['padding'] == 1) {?> checked<?php }?>> 是 <input type="radio" value="0" name="info[padding]"<?php if (!isset($info) || $info['padding'] == 0) {?> checked<?php }?>> 否</td>
+            </tr>
+            <tr>
+                <td><strong>是否设置版位尺寸：</strong></td>
+                <td><input type="radio" value="1" name="info[size]"<?php if (!isset($info) || $info['size'] == 1) {?> checked<?php }?>> 是 <input type="radio" value="0" name="info[size]"<?php if (!isset($info) || $info['size'] == 0) {?> checked<?php }?>> 否</td>
+            </tr>
+            <tr>
+                <td><strong>版位下的广告：</strong></td>
+                <td><input type="radio" value="1" name="info[option]"<?php if (!isset($info) || $info['option'] == 1) {?> checked<?php }?>> 全部列出 <input type="radio" value="0" name="info[option]"<?php if (!isset($info) || $info['option'] == 0) {?> checked<?php }?>> 按排序列出一个</td>
+            </tr>
+            <tr>
+                <td><strong>可用广告类型：</strong></td>
+                <td><label><input type="checkbox" value="images" name="info[type][]"<?php if (is_array($info['type']) && in_array('images', $info['type'])) {?> checked<?php }?>> 图片 </label> <label><input type="checkbox" value="flash" name="info[type][]"<?php if (is_array($info['type']) && in_array('flash', $info['type'])) {?> checked<?php }?>> 动画 </label> <label><input type="checkbox" value="text" name="info[type][]"<?php if (is_array($info['type']) && in_array('text', $info['type'])) {?> checked<?php }?>> 文字</label></td>
+            </tr>
+            <tr>
+                <td><strong>一次最多添加的图片等元素数量：</strong></td>
+                <td><input type="text" size="10" value="<?php echo $info['num'] ?>" name="info[num]"></td>
+            </tr>
+        </tbody>
+    </table>
+</block>

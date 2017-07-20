@@ -1,0 +1,42 @@
+<extend name="Layout:form" />
+<block name="title"><title>联动菜单修改</title></block>
+<block name="subheader">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.formValidator.initConfig({autotip:true,formid:"myform",onerror:function(msg){}});
+        })
+    </script>
+</block>
+<block name="main">
+    <div class="common-form">
+        <form name="myform" action="__CONTROLLER__/edit" method="post" id="myform">
+            <input type="hidden" name="id" value="<?php echo $member['id']; ?>" />
+            <table width="100%" class="table_form contentWrap">
+                <tbody>
+                    <tr>
+                        <td width="200" align="right">UID: </td>
+                        <td><?php echo $member['uid']; ?></td>
+                    </tr>
+                    <tr>
+                        <td width="200" align="right">用户等级: </td>
+                        <td>
+                            <?php foreach (C('member.group') as $key => $value) { ?>
+                                <label><input name="info[vip_type]" type="radio" class="radio" value="<?php echo $key; ?>" <?php echo $key == $member['vip_type'] ? 'checked' : ''; ?> /><?php echo $value; ?></label>
+                            <?php } ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="200" align="right">到期时间：</td>
+                        <td>
+                            <?php echo \Org\Util\Form::date('info[endtime]', date('Y-m-d H:i:s', $member['endtime'])); ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="bk15"></div>
+            <div class="btn">
+                <input type="submit" name="dosubmit" id="dosubmit" value="提交" class='button'>
+            </div>
+        </form>
+    </div>
+</block>

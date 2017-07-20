@@ -48,7 +48,7 @@ class  Template {
         return str_replace(
             array('{','}','(',')','|','[',']','-','+','*','.','^','?'),
             array('\{','\}','\(','\)','\|','\[','\]','\-','\+','\*','\.','\^','\?'),
-            $str);        
+            $str);
     }
 
     // 模板变量获取和设置
@@ -244,7 +244,7 @@ class  Template {
     // 解析模板中的extend标签
     protected function parseExtend($content) {
         $begin      =   $this->config['taglib_begin'];
-        $end        =   $this->config['taglib_end'];        
+        $end        =   $this->config['taglib_end'];
         // 读取模板中的继承标签
         $find       =   preg_match('/'.$begin.'extend\s(.+?)\s*?\/'.$end.'/is',$content,$matches);
         if($find) {
@@ -393,7 +393,7 @@ class  Template {
             $className  =   $tagLib;
             $tagLib     =   substr($tagLib,strrpos($tagLib,'\\')+1);
         }else{
-            $className  =   'Think\\Template\TagLib\\'.ucwords($tagLib);            
+            $className  =   'Think\\Template\TagLib\\'.ucwords($tagLib);
         }
         $tLib       =   \Think\Think::instance($className);
         $that       =   $this;
@@ -679,13 +679,13 @@ class  Template {
      * @access private
      * @param string $tmplPublicName  模板文件名
      * @return string
-     */    
+     */
     private function parseTemplateName($templateName){
         if(substr($templateName,0,1)=='$')
             //支持加载变量文件名
             $templateName = $this->get(substr($templateName,1));
         $array  =   explode(',',$templateName);
-        $parseStr   =   ''; 
+        $parseStr   =   '';
         foreach ($array as $templateName){
             if(empty($templateName)) continue;
             if(false === strpos($templateName,$this->config['template_suffix'])) {
@@ -696,5 +696,5 @@ class  Template {
             $parseStr .= file_get_contents($templateName);
         }
         return $parseStr;
-    }    
+    }
 }

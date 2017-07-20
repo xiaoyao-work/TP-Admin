@@ -1,0 +1,57 @@
+<extend name="Layout:list" />
+<block name="title"><title>广告列表</title></block>
+<block name="subnav">
+    <a class="btn red" href="__CONTROLLER__/add?spaceid=<?php echo $_GET['spaceid'];?>">添加广告</a>　<a class="btn red-stripe" href="__MODULE__/Space/index">版位</a>　<a class="btn red-stripe" href="__MODULE__/Space/poster_template">广告模板设置</a>
+</block>
+<block name="main">
+    <form name="myform" action="__CONTROLLER__/listorder" method="post">
+        <div class="table-list">
+            <table width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th width="30" align="center"><input type="checkbox" value="" id="check_box" onclick="selectall('ids[]');"></th>
+                        <th width="35">ID</th>
+                        <th width="70">排序</th>
+                        <th align="center">广告标题</th>
+                        <th width="70" align="center">广告类型</th>
+                        <th width="200" align="center">所属版位</th>
+                        <th width="50" align="center">状态</th>
+                        <th width="50" align="center">点击数</th>
+                        <th width="130" align="center">添加时间</th>
+                        <th width="110" align="center">管理操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($posters as $key => $poster) { ?>
+                    <tr>
+                        <td align="center">
+                            <input type="checkbox" name="ids[]" value="<?php echo $poster['id']; ?>">
+                        </td>
+                        <td align="center"><?php echo $poster['id']; ?></td>
+                        <th width="70"><input type="text" size="3" name="listorder[<?php echo $poster['id']; ?>]" value="<?php echo $poster['listorder']; ?>" id="listorder" class="input-text-c input-text"></th>
+                        <td><?php echo $poster['name']; ?></td>
+                        <td align="center"><?php echo $types[$poster['type']]; ?></td>
+                        <td align="center"><?php echo $space['name']; ?></td>
+                        <td align="center"><a href="__CONTROLLER__/public_approval?passed=<?php echo 1 - $poster['disabled']; ?>&posterid=<?php echo $poster['id']; ?>"><?php echo ($poster['disabled'] ? "禁用" : "启用"); ?></a></td>
+                        <td align="center"><?php echo $poster['clicks']; ?></td>
+                        <td align="center"><?php echo date('Y-m-d H:i:s', $poster['addtime']); ?></td>
+                        <td align="center"><a href="__CONTROLLER__/edit/posterid/<?php echo $poster['id'] ?>">修改</a>|<a href="__CONTROLLER__/count/posterid/<?php echo $poster['id'] ?>">统计</a></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+
+            <div class="mt-20 clearfix">
+                <a href="javascript:$('#check_box').click();" class="btn">全选/取消</a>&nbsp;
+                <input name="submit" type="submit" class="btn" value="排序">&nbsp;
+                <input name="submit" type="submit" class="btn" value="启用" onclick="document.myform.action='__CONTROLLER__/public_approval?passed=0'">&nbsp;
+                <input name="submit" type="submit" class="btn" value="停用" onclick="document.myform.action='__CONTROLLER__/public_approval?passed=1'">&nbsp;
+                <input name="deletesubmit" type="submit" class="btn" value="删除" onclick="document.myform.action='__CONTROLLER__/delete';return confirm('确认要删除 『 选中 』 吗？')">
+                <?php echo $pages; ?>
+                <div class="pull-right form-inline">
+                <?php echo \Org\Util\Form::select(C('list_rows_select'), cookie('list_rows_select'), 'class="m-wrap small" name="list_rows_select" onchange="change_list_rows()"'); ?>
+                </div>
+            </div>
+        </div>
+    </form>
+</block>

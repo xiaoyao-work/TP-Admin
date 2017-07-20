@@ -1,7 +1,7 @@
 <extend name="Layout:list" />
 <block name="title"><title><?php echo $big_menu[1]; ?></title></block>
 <block name="subnav">
-    <a class="add fb" href="<?php echo $big_menu[0]; ?>"><em><?php echo $big_menu[1]; ?></em></a>&nbsp;&nbsp;&nbsp;<a class="on" href="__CONTROLLER__/index"><em>联动菜单管理</em></a>
+    <a class="btn red" href="<?php echo $big_menu[0]; ?>"><?php echo $big_menu[1]; ?></a>&nbsp;<a class="btn red-stripe" href="__CONTROLLER__/index">联动菜单管理</a>
 </block>
 <block name="main">
     <form name="myform" action="__CONTROLLER__/listorder" method="post">
@@ -31,8 +31,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="btn">
-            <input type="submit" class="button" name="排序" name="dosubmit" />
-        </div>
+        <input type="submit" class="btn mt-20" name="排序" name="dosubmit" />
     </form>
 </block>

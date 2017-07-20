@@ -2,7 +2,7 @@
 namespace Think\Http;
 
 /**
- * Slim HTTP Utilities
+ * HTTP Utilities
  *
  * This class provides useful methods for handling HTTP requests.
  *

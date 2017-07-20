@@ -2,10 +2,10 @@
 Default theme
 ***/
 /***
-Reset and overrides  
+Reset and overrides
 ***/
 body {
-  background-color: #3d3d3d !important;
+  background-color: #3d3d3d;
 }
 /***
 Page header
@@ -172,7 +172,7 @@ Horizontal Menu(new in v1.2)
   color: #d6d6d6;
 }
 /***
-Footer 
+Footer
 ***/
 .footer .footer-inner {
   color: #999999;
@@ -205,7 +205,7 @@ Footer Layouts (new in v1.3)
 }
 /* end:fixed footer */
 /***
-Gritter Notifications 
+Gritter Notifications
 ***/
 .gritter-top {
   background: url(../image/gritter.png) no-repeat left -30px !important;

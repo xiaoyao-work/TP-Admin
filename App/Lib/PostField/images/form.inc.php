@@ -18,5 +18,5 @@ $string .= $list_str;
 $string .= '<div id="info_'.$field.'" class="picList"></div>
 </fieldset>
 <div class="bk10"></div>';
-$string .= $str."<div class='picBut cu'><a herf='javascript:void(0);' onclick=\"javascript:attachupload('{$field}_images', '附件上传','info_{$field}',attaches,'{$upload_number},{$upload_allowext},{$isselectimage}','images','".U('File/upload')."')\"/> 选择文件 </a></div>";
+$string .= $str."<div class='picBut cu'><a herf='javascript:void(0);' onclick=\"javascript:attachupload('{$field}_images', '附件上传','info_{$field}',attaches,'{$upload_number},{$upload_allowext},{$isselectimage},,,,{$upload_maxsize}','images','".U('File/upload')."')\"/> 选择文件 </a></div>";
 return $string;

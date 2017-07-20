@@ -1,0 +1,26 @@
+<extend name="Layout:form" />
+<block name="title"><title>广告列表</title></block>
+<block name="main">
+    <h2 class="title-1 f14 lh28">(会员登陆页广告)广告版位调用</h2>
+    <div class="bk10"></div>
+    <div class="explain-col">
+        <strong>调用说明：</strong><br>
+        1、调用方式一对服务器环境无特殊要求，可统计广告展示次数和自动判断广告是否过期，但是消耗服务器资源，访问速度慢，不支持Google等JS类代码广告；<br>
+        2、调用方式二对服务器环境无特殊要求，消耗服务器资源少，访问速度快，但是不能自动判断广告有效期，要时常更新js。不支持Google等JS类代码广告；<br>
+        3、调用google、baidu等代码广告，只能使用唯一的一种方式。当网站使用静态页面时，修改广告代码后请更新广告所在的静态页；<br>
+        4、根据自身情况选择一种调用方式，然后把调用代码复制粘贴到需要显示广告的模板再更新相关网页即可。</div>
+        <div class="bk10"></div>
+        <fieldset>
+            <legend>调用方式一</legend>
+            JS调用代码（PHP动态调用）<font color="red">此方式可以统计展示次数。</font><br>
+            <input name="jscode1" id="jscode1" value="<script language='javascript' src='<?php echo U( C("DEFAULT_GROUP"). '/poster/show_poster?id='.intval($_GET['spaceid'])); ?>'></script>" style="width:410px" class="input-text"> <input type="button" onclick="$('#jscode1').select();document.execCommand('Copy');" value="复制代码至剪贴板" class="button" style="width:114px">
+        </fieldset>
+        <div class="bk10"></div>
+        <fieldset>
+            <legend>调用方式二</legend>
+            JS调用代码（JS静态调用）<br>
+            <input name="jscode2" id="jscode2" value="<script language='javascript' src='<?php echo U( C("DEFAULT_GROUP") . '/poster/show_poster?id='.intval($_GET['spaceid'])); ?>'></script>" style="width:410px" class="input-text">
+            <input type="button" onclick="$('#jscode2').select();$('#jscode2').val().execCommand('Copy');" class="button" style="width:114px" value="复制代码至剪贴板">
+        </fieldset>
+    </div>
+</block>

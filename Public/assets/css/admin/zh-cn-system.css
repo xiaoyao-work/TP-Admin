@@ -193,7 +193,7 @@ body fieldset.blue legend {
 }
 
 .subnav {
-    padding: 10px
+    padding: 0 0 10px;
 }
 
 .subnav h2 {
@@ -645,18 +645,6 @@ body fieldset.blue legend {
     color: #fff
 }
 
-
-/*发布内容
-.addContent{width:960px; margin:0 auto; overflow:hidden;}
-.addContent .col-auto{width:750px;margin-right:6px;_margin-right:5px;}
-.addContent .col-right .content h6{ border-bottom:1px solid #cfdce3; padding:8px 0 3px; margin-bottom:7px}
-.addContent .col-right .content input{max-width:182px}
-.addContent .col-right .content .upload-pic{width:180px;height:170px;text-align:center;overflow:hidden;}
-.addContent .col-right .content .upload-pic a{display:table-cell;vertical-align:middle;width:180px;height:145px;text-align:center;*display:block;*font-size:105px}
-.addContent .col-right .content .upload-pic{ background:#eef2f2; border:1px solid #dce6ea; zoom:1; padding:1px;}
-.addContent .col-right select#template{max-width:188px;*width:188px;_width:188px}
-*/
-
 .addContent {
     width: 980px;
     margin: 0 auto;
@@ -767,51 +755,6 @@ body fieldset.blue legend {
     overflow: hidden;
 }
 
-
-/*评论*/
-
-.comment {
-    padding: 8px 10px
-}
-
-.comment .title {
-    margin-bottom: 5px
-}
-
-.comment .title span {
-    position: relative;
-    top: -5px
-}
-
-.comment .content {
-    font-size: 14px;
-    background: #f6f9fb;
-    border: 1px solid #c4d5df;
-    zoom: 1;
-    padding: 8px 10px;
-    margin: 5px 0
-}
-
-.comment .content span {
-    display: block;
-}
-
-.comment_button {
-    margin-bottom: 15px;
-}
-
-.comment_button a {
-    padding: 5px;
-    border: solid 1px #C3D4E7;
-}
-
-.comment_button a.on {
-    background: #4C7FB6;
-    color: #fff;
-    border: solid 1px #3E73A9
-}
-
-
 /*地图*/
 
 .map_button {
@@ -869,146 +812,6 @@ body fieldset.blue legend {
     bottom: -1px;
     right: -1px;
 }
-
-
-/*工作流*/
-
-.workflow {
-    padding: 10px 140px 10px 10px;
-}
-
-.workflow .col {
-    padding-bottom: 20px;
-    background: url(../../images/admin/admin_img/arrowhead-y.png) no-repeat 10px bottom;
-}
-
-.workflow div.off {
-    padding: 0;
-    background: none
-}
-
-.workflow .content {
-    left: 130px;
-    position: relative;
-}
-
-.workflow .title {
-    position: absolute;
-    left: -130px;
-    top: -1px;
-    width: 90px;
-    font-size: 14px;
-    font-weight: 700;
-    text-align: center;
-    padding: 0 0 3px 0;
-    background: #fff
-}
-
-.workflow .title span.line {
-    border-bottom: 1px solid #95b9cf;
-    width: 32px;
-    height: 1px;
-    font-size: 1px;
-    position: absolute;
-    right: -37px;
-    top: 17px
-}
-
-.workflow .fillet {
-    background: #f6f9fb;
-    padding: 8px 10px 7px
-}
-
-.workflow .name {
-    font-size: 14px
-}
-
-
-/*锁频*/
-
-.ScreenLock {
-    background-color: #3a6ea5;
-    background-image: url("../../images/admin/admin_img/ScreenLock.png")
-}
-
-.ScreenLock {
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: 2000
-}
-
-.ScreenLock .inputpwd {
-    font-size: 14px;
-    height: 134px;
-    left: 50%;
-    margin: -102px 0 0 -150px;
-    padding: 28px;
-    position: absolute;
-    top: 50%;
-    width: 280px
-}
-
-.ScreenLock h5 {
-    height: 60px;
-    line-height: 60px;
-    padding-top: 10px;
-    padding-left: 40px;
-    background: url(../../images/admin/msg_img/msg_bg.png) no-repeat 0px -476px;
-}
-
-.ScreenLock .input-text {
-    border: 1px solid #A7A6AA;
-    height: 18px;
-    margin: 0 5px 0 0;
-    padding: 2px 0 2px 5px;
-    border: 1px solid #d0d0d0;
-    background: #FFF url(../../images/admin/admin_img/input.png) repeat-x;
-    font-family: Verdana, Geneva, sans-serif, "宋体";
-    font-size: 12px;
-}
-
-.ScreenLock .submit {
-    background: url(../../images/admin/admin_img/ScreenLockBut.png) no-repeat;
-    height: 24px;
-    width: 55px;
-    cursor: hand;
-    display: inline-block;
-    display: -moz-inline-stack;
-    zoom: 1;
-    *display: inline;
-    border: none
-}
-
-
-/*网站地图*/
-
-.map-menu ul {
-    margin: 4px;
-    width: 156px;
-    border: 1px solid #A4C0F7;
-}
-
-.map-menu ul li.title {
-    background: #EDF2F8;
-    font-weight: bold;
-    padding-left: 5px;
-}
-
-.map-menu ul li.title2 {
-    font-weight: bold;
-    padding-left: 10px;
-}
-
-.map-menu ul li {
-    padding: 4px;
-    padding-left: 20px;
-}
-
 
 /*附件 未使用-已使用*/
 

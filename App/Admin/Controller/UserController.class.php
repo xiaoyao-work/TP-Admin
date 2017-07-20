@@ -34,7 +34,7 @@ class UserController extends CommonController {
                 $this->error('操作失败！',__MODULE__.'/User/index');
             }
         } else {
-            $roles = $this->db->roleList();
+            $roles = model('role', 'Admin')->roleList();
             $this->assign("roles", $roles);
             $this->display();
         }

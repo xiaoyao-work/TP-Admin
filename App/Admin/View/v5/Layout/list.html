@@ -1,27 +1,35 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<!-- BEGIN HEAD -->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <block name="title"><title>后台管理中心</title></block>
-    <link href="{:asset('css/admin/reset.css')}" rel="stylesheet" type="text/css">
+    <block name="title"><title>红海螺 - 后台管理中心</title></block>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="逍遥·李志亮" name="author" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="<?php echo asset('admin/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo asset('admin/css/bootstrap-responsive.min.css') ?>" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo asset('admin/css/font-awesome.min.css') ?>" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo asset('admin/css/style-metro.css') ?>" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo asset('admin/css/style.css') ?>" rel="stylesheet" type="text/css"/>
+    <link href="<?php echo asset('admin/css/style-responsive.css') ?>" rel="stylesheet" type="text/css"/>
+
     <link href="{:asset('css/admin/zh-cn-system.css')}" rel="stylesheet" type="text/css">
     <link href="{:asset('css/admin/table_form.css')}" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="{:asset('js/jquery.min.js')}"></script>
-    <script type="text/javascript" src="{:asset('js/jquery.cookie.js')}"></script>
-    <script type="text/javascript" src="{:asset('js/admin/admin_common.js')}"></script>
-    <script src="{:asset('js/artdialog/jquery.artDialog.source.js')}&skin=default"></script>
-    <script src="{:asset('js/artdialog/plugins/iframeTools.source.js')}"></script>
+
+    <script src="<?php echo asset('admin/js/jquery-1.10.1.min.js'); ?>" type="text/javascript"></script>
     <block name="subheader"></block>
+
 </head>
 <body>
-    <div class="subnav">
-        <div class="content-menu ib-a blue line-x">
+    <div class="container-fluid" style="padding: 0;">
+        <div class="subnav">
             <block name="subnav">
-                <a class="add fb" href="__CONTROLLER__/add"><em>添加</em></a>　    <a class="on" href="__CONTROLLER__/index"><em>列表</em></a>
+                <a class="btn red" href="__CONTROLLER__/add">添加</a>　<a class="btn red-stripe" href="__CONTROLLER__/index">列表</a>
             </block>
         </div>
-    </div>
-    <div class="pad-lr-10">
         <block name="search"></block>
         <block name="main">
             <form name="myform" action="__CONTROLLER__/listorder" method="post">
@@ -69,10 +77,38 @@
             </form>
         </block>
     </div>
-    <block name="footer">
-        <script type="text/javascript">
-            window.top.$('#display_center_id').css('display','none');
-        </script>
-    </block>
+
+    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="<?php echo asset('admin/js/jquery-1.10.1.min.js'); ?>" type="text/javascript"></script>
+    <script src="<?php echo asset('admin/js/jquery-migrate-1.2.1.min.js'); ?>" type="text/javascript"></script>
+    <!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+    <script src="<?php echo asset('admin/js/jquery-ui-1.10.1.custom.min.js'); ?>" type="text/javascript"></script>
+    <script src="<?php echo asset('admin/js/bootstrap.min.js'); ?>" type="text/javascript"></script>
+    <!--[if lt IE 9]>
+    <script src="<?php echo asset('admin/js/excanvas.min.js'); ?>"></script>
+    <script src="<?php echo asset('admin/js/respond.min.js'); ?>"></script>
+    <![endif]-->
+    <script src="<?php echo asset('admin/js/jquery.cookie.min.js'); ?>" type="text/javascript"></script>
+    <script src="<?php echo asset('admin/js/app.js'); ?>" type="text/javascript"></script>
+
+    <script type="text/javascript" src="{:asset('js/admin/admin_common.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/admin/formvalidator.js')}"></script>
+    <script type="text/javascript" src="{:asset('js/admin/formvalidatorregex.js')}"></script>
+    <script src="{:asset('js/artdialog/jquery.artDialog.source.js')}&skin=default"></script>
+    <script src="{:asset('js/artdialog/plugins/iframeTools.source.js')}"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            App.init(); // initlayout and core plugins
+        });
+    </script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <block name="footer"></block>
+    <!-- END PAGE LEVEL SCRIPTS -->
+
+    <!-- END JAVASCRIPTS -->
 </body>
+<!-- END BODY -->
 </html>

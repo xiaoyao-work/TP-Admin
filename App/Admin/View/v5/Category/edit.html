@@ -1,5 +1,9 @@
 <extend name="Layout:form" />
 <block name="title"><title>修改栏目</title></block>
+<block name="subheader">
+    <script language="javascript" type="text/javascript" src="{:asset('js/admin/content_add.js')}" charset="UTF-8"></script>
+    <script type="text/javascript" src="{:asset('js/admin/attachupload.js')}"></script>
+</block>
 <block name="subnav">
     <a class="add fb" href="__MODULE__/Category/add?<?php echo $query_string; ?>"><em>添加栏目</em></a>　
     <a href="__MODULE__/Category/index?<?php echo $query_string; ?>"><em>栏目管理</em></a>
@@ -30,6 +34,12 @@
                             <option value="<?php echo $value['id'] ?>" <?php if($term['parentid'] == $value['id']) echo "selected"; ?>><?php echo cat_empty_deal($value, (isset($terms[$key+1]) ? $terms[$key+1]['parentid'] : 0),'parentid'); ?><?php echo $value['catname']; ?></option>
                             <?php } ?>
                         </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="100">缩略图：</th>
+                    <td>
+                        <?php echo \Org\Util\Form::image('thumb', $term['thumb'], ['upload_allowext' => 'jpg|png|gif|jpeg']); ?>
                     </td>
                 </tr>
                 <tr>

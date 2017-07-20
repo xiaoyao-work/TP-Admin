@@ -23,13 +23,13 @@ class PageModel extends BaseModel {
             return false;
         }
         if ($this->where("id = %d", $page_id)->save($data) !== false) {
-            return $this->savePageMeta($page_id, $meta_data);
+            return $this->savePageMeta($page, $page_id, $meta_data);
         } else {
             return false;
         }
     }
 
-    public function savePageMeta($page_id, $meta_data) {
+    public function savePageMeta($page, $page_id, $meta_data) {
         if (empty($meta_data)) {
             return true;
         }

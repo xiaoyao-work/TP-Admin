@@ -57,10 +57,11 @@ class IndexController extends CommonController {
 			);
 		$user_info = $_SESSION['user_info'];
 		$area = get_location($user_info['last_login_ip']);
-		ob_start();
-		include dirname(__DIR__) . '/View/' . C('DEFAULT_THEME') . '/Index/main.html';
-		$html = ob_get_contents();
-		ob_end_clean();
+		$view = new \Think\View();
+		$view->assign('user_info', $user_info);
+		$view->assign('area', $area);
+		$view->assign('system_info', $system_info);
+		$html = $view->fetch("Index:main");
 		system_information($html);
 	}
 
@@ -84,9 +85,20 @@ class IndexController extends CommonController {
 	 * 清理缓存，待完善
 	 */
 	public function cache_clean() {
-		echo "<span style='color: red;'>缓存清理中……</span><br/>";
+		echo "<span style='color: red;'>模板缓存清理中……</span><br/>";
 		$path = RUNTIME_PATH . "Cache/";
 		echo delDirAndFile($path);
-		echo "<br/><span style='color: red;'>缓存清理完毕。</span>";
+		echo "<br/><span style='color: red;'>模板缓存清理完毕。</span>";
+
+		echo "<span style='color: red;'>数据缓存清理中……</span><br/>";
+		$path = RUNTIME_PATH . "Data/";
+		echo delDirAndFile($path);
+		$path = RUNTIME_PATH . "Temp/";
+		echo delDirAndFile($path);
+		echo "<br/><span style='color: red;'>数据缓存清理完毕。</span>";
+	}
+
+	public function demo() {
+		$this->display();
 	}
 }
