@@ -392,7 +392,7 @@ class Route {
             $sub_domain_key = $match_origin[1];
             // 转换成标准整正则表达式
             $key = str_replace('{' . $sub_domain_key . '}', '([^\.]*)', $quote_key);
-            $result = preg_match('/' . $key . '/', $this->domain, $match);
+            $result = preg_match('/' . $key . '/', $domain, $match);
         }
         if ($result) {
             $this->domain = $domain;
