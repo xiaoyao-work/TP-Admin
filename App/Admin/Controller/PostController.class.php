@@ -60,11 +60,12 @@ class PostController extends CommonController {
 		$fields = $post_logic->getFields();
 		$post_logic->registerFilter('tax', $tax);
 		$post_logic->registerFilter('date', $date);
-		$post_logic->registerFilter('like', [$search_title_field => $title]);
 
+		$post_logic->registerFilter('like', [$search_title_field => $title]);
 		// 获取文章
 		$limit = cookie('list_rows_select') ? cookie('list_rows_select') : 20;
 		$data  = $post_logic->getPosts($fields['select_fields'], ['listorder' => 'desc', 'id' => 'desc'], $limit);
+
 		// 获取日期、分类信息
 		$months     = (isset($parent_model_table_name) ? $this->db->getMonths($parent_model_table_name) : $this->db->getMonths());
 		$post_types = [$model['tablename']];
@@ -124,7 +125,7 @@ class PostController extends CommonController {
 				// 分类处理结束
 
 				$this->db->commit();
-				$this->success('添加成功!', U('Post/index', ['moduleid' => $_POST['moduleid']]));
+				$this->success('添加成功!', U('Post/index') . '?moduleid=' . I('post.moduleid'));
 			} else {
 				$this->db->rollback();
 				$this->error('添加失败！');
@@ -236,7 +237,7 @@ class PostController extends CommonController {
 				}
 				// 分类处理结束
 				$this->db->commit();
-				$this->success('更新成功!', U('Post/index', ['moduleid' => $model['id']]));
+				$this->success('更新成功!', U('Post/index') . '?moduleid=' . $model['id']);
 			} else {
 				$this->db->rollback();
 				$this->error('更新失败！');

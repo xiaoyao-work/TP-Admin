@@ -2,10 +2,10 @@
 CREATE TABLE `$basic_table` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `siteid` smallint(5) NOT NULL,
-  `title` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL DEFAULT '',
   `listorder` smallint(5) unsigned NOT NULL DEFAULT 0,
   `creator` char(20) NOT NULL DEFAULT 0,
-  `template` varchar(255) NOT NULL,
+  `template` varchar(255) NOT NULL DEFAULT '',
   `status` tinyint(1) unsigned NOT NULL DEFAULT 0,
   `inputtime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01',
   `updatetime` timestamp NOT NULL DEFAULT '1970-01-01 08:00:01',

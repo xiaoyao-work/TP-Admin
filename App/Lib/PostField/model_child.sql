@@ -1,7 +1,7 @@
 -- 主表
 CREATE TABLE `$basic_table` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `template` varchar(255) NOT NULL,
+  `template` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) TYPE=InnoDB;
 

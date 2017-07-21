@@ -44,11 +44,9 @@
                     </h3>
                     <div class="inside">
                         <div class="major-content">
-                            <?php if($_SESSION['user_info']['role_id']==1) { ?>
                             <label for="post_status">状态：</label>
                             <label><input type="radio" name="info[status]" value="99" checked/> 发布 </label>
                             <label><input type="radio" name="info[status]" value="1" > 审核 </label>
-                            <?php } ?>
                             <?php if (isset($template_list)) { ?>
                             <p><strong>模板</strong></p>
                             <select name="info[template]">

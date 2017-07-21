@@ -106,7 +106,7 @@ class UserController extends CommonController {
             }
         } else {
             $this->assign('account', session('user_info'));
-            $this->display();
+            $this->display('changePassword');
         }
     }
 

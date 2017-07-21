@@ -42,6 +42,7 @@
                         <div class="span10" style="margin-left: 20px;">
                             <table id="treetable" class="form-inline" style="margin-top: 0;">
                                 <tbody>
+                                    <input type="hidden" name="site" value="<?php echo $current_site['id']; ?>">
                                     <?php foreach ($menus as $key => $menu) { ?>
                                     <tr data-tt-id='<?php echo $menu['id']; ?>' <?php if($menu['pid']) echo "data-tt-parent-id='".$menu['pid']."'"; ?>>
                                         <td>
