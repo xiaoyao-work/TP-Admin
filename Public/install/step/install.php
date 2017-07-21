@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>TP-Admin 安装 - 红海螺</title>
+    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./css/install.css">
 </head>
@@ -36,20 +37,20 @@
                     flush();
 
                     $user = $_POST['user'];
-                    $sql = "insert into `hhailuocms_user` (`account`, `password`, `email`, `role_id`, `status`) values ('{$user['username']}', '" . md5($user['password']) . "', '{$user['email']}', 1, 1);\n insert into `hhailuocms_role_user` (`role_id`, `user_id`) values (1, 1);";
+                    $sql = "insert into `xy_user` (`account`, `password`, `email`, `role_id`, `status`) values ('{$user['username']}', '" . md5($user['password']) . "', '{$user['email']}', 1, 1);\n insert into `xy_role_user` (`role_id`, `user_id`) values (1, 1);";
                     _sql_execute($link, $sql, $db_config['DB_PREFIX']);
                     echo '<p>创建管理员完成！</p>';
                     echo '<p>更新站点配置……</p>' . str_pad('', 4096) . "\n";
                     ob_flush();
                     flush();
 
-                    $sql = "update `hhailuocms_site` set `base_domain` = '{$domain}', `uuid` = '{$uuid}', `domain` = 'http://www." . $domain . "';\n insert into `hhailuocms_options` (`key`, `value`) values ('base_domain', '{$domain}');";
+                    $sql = "update `xy_site` set `base_domain` = '{$domain}', `uuid` = '{$uuid}', `domain` = 'http://www." . $domain . "';\n insert into `xy_options` (`key`, `value`) values ('base_domain', '{$domain}');";
                     _sql_execute($link, $sql, $db_config['DB_PREFIX']);
                     echo '<p>更新站点配置完成！</p>';
 
                     ?>
                     <p>安装完成</p>
-                    <p class="step"><a href="?action=grant" class="button button-large">下一步</a></p>
+                    <p class="step"><a href="?action=grant&uuid=<?php echo $uuid;?>&domain=<?php echo $domain; ?>" class="button button-large">下一步</a></p>
                 <?php
                 }
             }

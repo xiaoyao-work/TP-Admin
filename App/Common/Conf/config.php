@@ -3,14 +3,14 @@ return [
 	'SESSION_OPTIONS'       => [
 		'name'   => 'tp3_sessionid',
 		'expire' => 864000,
-		'domain' => '.hhailuocms.com',
+		'domain' => '.' . BASE_DOMAIN,
 		'path'   => '/',
 	],
 
 	// 'SHOW_PAGE_TRACE'   => true,
 	/* Cookie设置 */
 	'COOKIE_EXPIRE'         => 0, // Cookie有效期
-	'COOKIE_DOMAIN'         => 'hhailuocms.com', // Cookie有效域名
+	'COOKIE_DOMAIN'         => '' . BASE_DOMAIN, // Cookie有效域名
 	'COOKIE_PATH'           => '/', // Cookie路径
 
 	'TOKEN_ON'              => true, //是否开启令牌验证
@@ -32,17 +32,16 @@ return [
 
 	'DEFAULT_MODULE'        => 'Home',
 	'URL_MODEL'             => 2, //URL模式
-	'MODULE_ALLOW_LIST'     => ['Admin', 'Home', 'User'],
+	'MODULE_ALLOW_LIST'     => ['Admin', 'Home'],
 
 	'APP_SUB_DOMAIN_DEPLOY' => 1, // 开启子域名或者IP配置
 	'APP_SUB_DOMAIN_RULES'  => [
-		'admin.hhailuocms.com'    => 'Admin',
-		'u.hhailuocms.com'        => 'User',
-		'{domain}.hhailuocms.com' => 'Home',
+		'admin.' . BASE_DOMAIN    => 'Admin',
+		'{domain}.' . BASE_DOMAIN => 'Home',
 	],
 
 	'URL_CASE_INSENSITIVE'  => false,
 	'UUID'                  => '',
-	'BASE_DOMAIN'           => 'hhailuocms.com',
+	'BASE_DOMAIN'           => BASE_DOMAIN,
 
 ];

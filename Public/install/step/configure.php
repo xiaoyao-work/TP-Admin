@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>TP-Admin 安装 - 红海螺</title>
+    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./css/install.css">
 </head>
@@ -66,7 +67,7 @@
             <tr>
                 <th scope="row"><label for="domain">主域：</label></th>
                 <td>
-                    <input name="domain" id="domain" type="text" size="25" value="">
+                    <input name="domain" id="domain" type="text" size="25" value="hhailuocms.com">
                 </td>
             </tr>
             <tr>

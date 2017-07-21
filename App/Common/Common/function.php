@@ -450,14 +450,12 @@ function sizecount($filesize) {
 
 function size2int($filesize) {
 	$filesize = strtoupper($filesize);
-	if (strpos($filesize, 'GB')) {
+	if (strpos($filesize, 'G')) {
 		$filesize = intval($filesize) * 1073741824;
-	} elseif (strpos($filesize, 'MB')) {
+	} elseif (strpos($filesize, 'M')) {
 		$filesize = intval($filesize) * 1048576;
-	} elseif (strpos($filesize, 'KB')) {
+	} elseif (strpos($filesize, 'K')) {
 		$filesize = intval($filesize) * 1024;
-	} elseif (strpos($filesize, 'KB')) {
-		$filesize = intval($filesize);
 	}
 	return $filesize;
 }

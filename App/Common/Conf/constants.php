@@ -5,7 +5,7 @@ defined('ASSETS_DOMAIN') or define('ASSETS_DOMAIN', '/assets/');
 defined('UPLOAD_IMAGE_URL') or define('UPLOAD_IMAGE_URL', '/File/upload.html');
 
 // 系统版本
-defined('SYS_VERSION') or define('SYS_VERSION', '5.1.1');
+defined('SYS_VERSION') or define('SYS_VERSION', '5.2.0');
 
 // 官方服务地址
 defined('HHAILUO_API_DOMAIN') or define('HHAILUO_API_DOMAIN', 'http://api.hhailuo.com/');

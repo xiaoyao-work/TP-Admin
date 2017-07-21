@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>TP-Admin 安装 - 红海螺</title>
+    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./css/install.css">
 </head>
@@ -57,7 +58,7 @@
                     <td>开启</td>
                     <td>
                         <?php
-                        if (extension_loaded('gd') && function_exists('gd_info')) {
+                        if (in_array('gd', $extensions) && function_exists('gd_info')) {
                             echo "<span class='text-success'>通过</span>";
                         } else {
                             echo "<span class='text-danger'>未通过</span>";
@@ -71,7 +72,7 @@
                     <td>开启</td>
                     <td>
                         <?php
-                        if (extension_loaded('curl') && function_exists('curl_version')) {
+                        if (in_array('curl', $extensions) && function_exists('curl_version')) {
                             echo "<span class='text-success'>通过</span>";
                         } else {
                             echo "<span class='text-danger'>未通过</span>";
@@ -81,24 +82,52 @@
                 </tr>
                 <tr>
                     <td>5</td>
+                    <td>POD</td>
+                    <td>开启</td>
+                    <td>
+                        <?php
+                        if (in_array('pdo_mysql', $extensions)) {
+                            echo "<span class='text-success'>通过</span>";
+                        } else {
+                            echo "<span class='text-danger'>未通过</span>";
+                        }
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>mbstring</td>
+                    <td>开启</td>
+                    <td>
+                        <?php
+                        if (in_array('mbstring', $extensions)) {
+                            echo "<span class='text-success'>通过</span>";
+                        } else {
+                            echo "<span class='text-danger'>未通过</span>";
+                        }
+                        ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>7</td>
                     <td>文件权限检测</td>
                     <td>可写</td>
                     <td>
                         <p>
                         附件可写检测：<?php
-                            if (is_writable($root_path . '/Public/uploads')) {
+                            if (is_writable(dirname(dirname(__DIR__)) . '/uploads')) {
                                 echo "<span class='text-success'>通过</span>";
                             } else {
-                                echo "<span class='text-danger'>" . $root_path . '/Public/uploads' . "不可写</span>";
+                                echo "<span class='text-danger'>" . dirname(dirname(__DIR__)) . "/uploads 不可写</span>";
                             }
                         ?>
                         </p>
                         <p>
                             系统运行缓存：<?php
-                            if (is_writable($root_path . '/Public/Runtime')) {
+                            if (is_writable(dirname(dirname(__DIR__)) . '/Runtime')) {
                                 echo "<span class='text-success'>通过</span>";
                             } else {
-                                echo "<span class='text-danger'>" . $root_path . '/Public/Runtime' . "不可写</span>";
+                                echo "<span class='text-danger'>" . dirname(dirname(__DIR__)) . "/Runtime 不可写</span>";
                             }
                         ?>
                         </p>

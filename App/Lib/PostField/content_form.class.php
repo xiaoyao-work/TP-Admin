@@ -187,16 +187,6 @@ class content_form {
         return $style . $form_text . $script;
     }
 
-    protected function posid($field, $value, $fieldinfo) {
-        $setting = string2array($fieldinfo['setting']);
-        if ($value) {
-            $pos_str = model('Position')->getPositionCheckbox($this->modelid, $field, $this->id);
-        } else {
-            $pos_str = model('Position')->getPositionCheckbox($this->modelid, $field, '', $setting['defaultvalue']);
-        }
-        return $pos_str;
-    }
-
     protected function number($field, $value, $fieldinfo) {
         extract($fieldinfo);
         $setting = string2array($setting);
@@ -205,15 +195,6 @@ class content_form {
         }
 
         return "<input type='number' name='info[$field]' id='$field' value='$value' class='input-text' {$formattribute} {$css}>";
-    }
-
-    protected function map($field, $value, $fieldinfo) {
-        extract($fieldinfo);
-        $setting   = string2array($setting);
-        $errortips = $this->fields[$field]['errortips'];
-        $modelid   = $this->fields[$field]['modelid'];
-        return '<input type="text" name="info[' . $field . ']" value="' . $value . '" class="input-text" id="' . $field . '" >' .
-        '<input type="button" name="' . $field . '_mark" id="' . $field . '_mark" value="' . $tips . '" class="map_button" onclick="omnipotent(\'' . $field . '\',\'' . url('Map/markPosition') . '?point=' . $value . '&fieldid=' . $fieldid . '\',\'地图标记\',1,900,500)">';
     }
 
     protected function linkage($field, $value, $fieldinfo) {
@@ -233,7 +214,9 @@ class content_form {
     }
 
     protected function images($field, $value, $fieldinfo) {
-        extract($fieldinfo);
+        $setting = string2array($fieldinfo['setting']);
+        extract($setting);
+        $upload_maxsize = isset($upload_maxsize) ? $upload_maxsize : '';
         $list_str = '';
         if ($value) {
             $value = string2array(html_entity_decode($value, ENT_QUOTES));
@@ -259,6 +242,7 @@ class content_form {
     protected function image($field, $value, $fieldinfo) {
         $setting = string2array($fieldinfo['setting']);
         extract($setting);
+        $upload_maxsize = isset($upload_maxsize) ? $upload_maxsize : '';
         $js_callback = isset($js_callback) && !empty($js_callback) ? $js_callback : 'thumb_images';
         $html = '';
         if (defined('IN_ADMIN')) {
