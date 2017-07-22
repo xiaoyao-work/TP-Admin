@@ -13,6 +13,11 @@ if (version_compare(PHP_VERSION, '5.4.0', '<')) {
     die('require PHP > 5.4.0 !');
 }
 
+if (!file_exists(realpath("../install.lock"))) {
+    header('Location: ./install/index.php');
+    exit();
+}
+
 define("APP_ENV", isset($_SERVER['APP_ENV']) ? strtolower($_SERVER['APP_ENV']) : 'local');
 
 // 开启调试模式 建议开发阶段开启 部署阶段注释或者设为false
