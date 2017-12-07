@@ -24,14 +24,11 @@ class PostController extends CommonController {
 
 	public function index() {
 		// 分类，日期过滤
-		$tax  = I('post.tax');
-		$date = I('post.date');
+		$tax  = I('request.tax');
+		$date = I('request.date');
 		// 标题检索
-		$title   = I('post.title');
-		$modelid = I('get.moduleid', false);
-		if (IS_POST) {
-			unset($_GET['p']);
-		}
+		$title   = I('request.title');
+		$modelid = I('request.moduleid', false);
 		if (!$modelid) {
 			$this->error('模型参数缺失！');
 		}

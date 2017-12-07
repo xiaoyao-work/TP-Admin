@@ -25,8 +25,9 @@
     </div>
 </block>
 <block name="main">
-    <form name="myform" action="<?php echo U('Post/listorder') . "?moduleid=" . $module['id']; ?>" method="post">
+    <form name="myform" action="<?php echo U('Post/listorder') . "?moduleid=" . $module['id']; ?>" method="get">
         <input type="hidden" name="moduleid" value="<?php echo $module['id']; ?>">
+        <input type="hidden" name="p" value="1"/>
         <div class="table-list">
             <table width="100%" cellspacing="0">
                 <thead>
