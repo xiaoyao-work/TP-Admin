@@ -82,7 +82,7 @@ class Redis
     {
         $this->connect(0);
         $this->get_result = $this->handler->get($this->options['prefix'] . $sessID);
-        return $this->get_result;
+        return (string) $this->get_result;
     }
 
     /**

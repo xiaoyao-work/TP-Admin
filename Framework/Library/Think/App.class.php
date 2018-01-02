@@ -270,10 +270,8 @@ class App {
         if ($current_route) {
             try {
                 $module = self::getModule($current_route->getModule());
-                $current_domain = $current_route->getDomain();
-                if ($current_domain) {
-                    define('BIND_MODULE', $module);
-                }
+                // $current_domain = $current_route->getDomain();
+                define('BIND_MODULE', $module);
                 define('MODULE_NAME', $module);
                 $this->loadModule();
 
@@ -367,7 +365,7 @@ class App {
         defined('__APP__') || define('__APP__', $this->environment['SCRIPT_NAME']);
         // 模块URL地址
         $moduleName = defined('MODULE_ALIAS') ? MODULE_ALIAS : MODULE_NAME;
-        define('__MODULE__', (defined('BIND_MODULE') || !C('MULTI_MODULE')) ? __APP__ : __APP__ . '/' . ($this->caseSensitive ? strtolower($moduleName) : $moduleName));
+        define('__MODULE__', __APP__);
     }
 
     public function loadController($controller, $action) {

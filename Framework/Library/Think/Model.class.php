@@ -1439,6 +1439,9 @@ class Model {
             if(!empty($config) && is_string($config) && false === strpos($config,'/')) { // 支持读取配置参数
                 $config  =  C($config);
             }
+            if (isset($config['DB_PREFIX'])) {
+                $this->tablePrefix = $config['DB_PREFIX'];
+            }
             $this->_db[$linkNum]            =    Db::getInstance($config);
         }elseif(NULL === $config){
             $this->_db[$linkNum]->close(); // 关闭数据库连接
@@ -1904,6 +1907,10 @@ class Model {
         if(property_exists($this,$name))
             $this->$name = $value;
         return $this;
+    }
+
+    public function getTablePrefix() {
+        return $this->tablePrefix;
     }
 
 }

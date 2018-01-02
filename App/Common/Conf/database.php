@@ -6,5 +6,5 @@
   'DB_USER' => 'root',
   'DB_PWD' => '',
   'DB_HOST' => '10.10.19.117',
-  'DB_NAME' => 'hhailuocms',
+  'DB_NAME' => 'nlsd',
 );

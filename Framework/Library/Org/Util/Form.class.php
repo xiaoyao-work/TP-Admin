@@ -169,18 +169,14 @@ class Form {
         if ($default_option) {
             $string .= "<option value='' $default_selected>$default_option</option>";
         }
-
         if (!is_array($array) || count($array) == 0) {
             return false;
         }
-
-        $ids = [];
-        if (isset($id)) {
-            $ids = explode(',', $id);
+        if (!is_array($id)) {
+            $id = explode(',', $id);
         }
-
         foreach ($array as $key => $value) {
-            $selected = in_array($key, $ids) ? 'selected' : '';
+            $selected = in_array($key, $id) ? 'selected' : '';
             $string .= '<option value="' . $key . '" ' . $selected . '>' . $value . '</option>';
         }
         $string .= '</select>';
@@ -236,15 +232,10 @@ class Form {
         $string = '';
         foreach ($array as $key => $value) {
             $checked = trim($id) == trim($key) ? 'checked' : '';
-            if ($width) {
-                $string .= '<label class="ib" style="width:' . $width . 'px">';
-            }
-
+            $width = empty($width) ? '' : 'width:' . $width . 'px';
+                $string .= '<label class="ib" style="' . $width . '">';
             $string .= '<input type="radio" ' . $str . ' id="' . $field . '_' . htmlspecialchars($key) . '" ' . $checked . ' value="' . $key . '"> ' . $value;
-            if ($width) {
-                $string .= '</label>';
-            }
-
+            $string .= '</label>';
         }
         return $string;
     }
@@ -277,8 +268,8 @@ class Form {
             "<input type='hidden' name='{$field}' id='{$id}' value='$value'>" .
             "<a href='javascript:void(0);' onclick=\"attachupload('" . $id . "_images', '" . $title . "','" . $id . "'," . $js_callback . ",'1," . $upload_allowext . ",$isselectimage,$images_width,$images_height,$watermark,$upload_maxsize','image','" . $upload_url . "');return false;\">" .
             "<img src='$preview_img' id='" . $id . "_preview' width='135' height='113' style='cursor:hand' /></a>" .
-            "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"attachupload('" . $field . "_images', '" . $title . "','" . $field . "'," . $js_callback . ",'1," . $upload_allowext . ",$isselectimage,$images_width,$images_height,$watermark,$upload_maxsize','image','" . $upload_url . "');return false;\" value=\"" . $title . "\">" .
-            "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"$('#" . $field . "_preview').attr('src','" . asset('images/admin/icon/upload-pic.png') . "'); $('#" . $field . "').val(' ');return false;\" value=\"重置\">" .
+            "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"attachupload('" . $id . "_images', '" . $title . "','" . $id . "'," . $js_callback . ",'1," . $upload_allowext . ",$isselectimage,$images_width,$images_height,$watermark,$upload_maxsize','image','" . $upload_url . "');return false;\" value=\"" . $title . "\">" .
+            "<input type=\"button\" style=\"width: 66px;\" class=\"button\" onclick=\"$('#" . $id . "_preview').attr('src','" . asset('images/admin/icon/upload-pic.png') . "'); $('#" . $field . "').val(' ');return false;\" value=\"重置\">" .
                 "</div>";
             break;
         }
